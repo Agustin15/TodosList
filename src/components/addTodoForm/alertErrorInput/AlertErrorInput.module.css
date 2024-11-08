@@ -1,0 +1,38 @@
+#alertError {
+  width: 13rem;
+  padding: 0.3rem;
+  background-color: rgb(206, 9, 9);
+  padding-left: 0.2rem;
+  padding-bottom: 0.5rem;
+  font-size: 15px;
+  border-radius: 3px;
+  color: white;
+  box-shadow: 2px 2px 2px gray;
+  margin-top: -0.2rem;
+  margin-left: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.alertErrorShow {
+  display: flex;
+}
+
+.alertErrorHide {
+  display: none;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-top: 10px solid rgb(206, 9, 9);
+    border-right: 10px solid transparent;
+    transform: rotate(45deg);
+    position: absolute;
+    left:6.4rem;
+    top:-0.3rem;
+    
+    
+  }

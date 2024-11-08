@@ -1,0 +1,25 @@
+.alertErrorForm {
+  background-color: red;
+  width: 20rem;
+  padding: 0.5rem;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px gray;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alertCorrectForm {
+  background-color: rgb(28, 189, 7);
+  display: flex;
+  width: 20rem;
+  padding: 0.5rem;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px gray;
+  color: white;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+}
