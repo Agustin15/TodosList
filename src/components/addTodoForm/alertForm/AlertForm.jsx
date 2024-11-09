@@ -10,6 +10,7 @@ const AlertForm = ({ resultForm }) => {
             : classesStyle.alertCorrectForm
         }
       >
+        <img src={resultForm.icon}></img>
         <p>{resultForm.msj}</p>
       </div>
     );

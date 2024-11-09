@@ -2,10 +2,21 @@ import classesStyle from "./ContentForm.module.css";
 import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
 import AlertForm from "../alertForm/AlertForm";
 
-const ContentForm = ({ values, handleChange, errors, resultForm }) => {
-
+const ContentForm = ({ values, handleChange, errors, resultForm,cleanValues }) => {
   return (
     <div className={classesStyle.bodyForm}>
+      <div className={classesStyle.icon}>
+        <label>Icono de la tarea:</label>
+        <input
+          value={values.icon}
+          onChange={handleChange}
+          placeholder="Ingresa Icono"
+          type="text"
+          name="icon"
+        ></input>
+        <AlertErrorInput error={errors.icon} />
+      </div>
+
       <div className={classesStyle.rowForm}>
         <div className={classesStyle.name}>
           <label>Nombre de la tarea:</label>
@@ -44,10 +55,10 @@ const ContentForm = ({ values, handleChange, errors, resultForm }) => {
 
       <div className={classesStyle.buttons}>
         <button>Agregar</button>
-        <button>Limpiar</button>
+        <button type="reset" onClick={cleanValues}>Limpiar</button>
       </div>
 
-      <AlertForm resultForm={resultForm}/>
+      <AlertForm resultForm={resultForm} />
     </div>
   );
 };

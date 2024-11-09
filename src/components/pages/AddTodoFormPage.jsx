@@ -1,4 +1,4 @@
-import AddTodoForm from "../../addTodoForm/AddTodoForm"
+import AddTodoForm from "../addTodoForm/AddTodoForm"
 
 const AddTodoFormPage=()=>{
 

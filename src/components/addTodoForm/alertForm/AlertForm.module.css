@@ -1,25 +1,45 @@
 .alertErrorForm {
-  background-color: red;
-  width: 20rem;
-  padding: 0.5rem;
+  background-color: rgb(6, 38, 128);
+  width: auto;
+  padding: 0.8rem;
   border-radius: 2px;
   box-shadow: 2px 2px 2px gray;
   color: white;
   font-size: 16px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  gap: 1rem;
 }
 
 .alertCorrectForm {
-  background-color: rgb(28, 189, 7);
+  background-color: rgb(6, 38, 128);
   display: flex;
-  width: 20rem;
-  padding: 0.5rem;
+  width: auto;
+  padding: 0.8rem;
   border-radius: 2px;
   box-shadow: 2px 2px 2px gray;
   color: white;
   font-size: 16px;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  gap: 1rem;
+  animation-name: alertCorrectFormHide;
+  animation-duration: 4s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes alertCorrectFormHide {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
+
+.alertCorrectForm img,
+.alertErrorForm img {
+  width: 23px;
 }
