@@ -5,7 +5,7 @@
       "icon": "🛒",
       "name": "Buy groceries",
       "isCompleted": false,
-      "description": "🥛 Milk, 🍞 Bread, 🥚 Eggs, and 🍏 Fruitsmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+      "description": "🥛 Milk, 🍞 Bread, 🥚 Eggs, and 🍏 Fruits",
       "creator": "Alice"
     },
     {
@@ -39,6 +39,14 @@
       "isCompleted": true,
       "description": "📚 Finish reading 'The Great Gatsby'.",
       "creator": "Ethan"
+    },
+    {
+      "id": 6,
+      "icon": "🌯",
+      "name": "Eat a wrapp",
+      "creator": "Agustin",
+      "description": "Go to de subway",
+      "isCompleted": false
     }
   ]
 }
