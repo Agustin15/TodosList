@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect,useState } from "react";
 import styles from "./DetailsTask.module.css";
-import done from "../../assets/img/correctIcon.png";
-import cancel from "../../assets/img/cancel.png";
+import noFound from "../../assets/img/noFound.png";
+import ItemDetails from "./itemDetails/itemDetails";
 
 const DetailsTask = ({ params }) => {
-  const [task, setTask] = useState({});
-  const buttonState = useRef();
+  const [task, setTask] = useState();
 
   const getTaskById = async () => {
     let data = null;
@@ -27,36 +26,20 @@ const DetailsTask = ({ params }) => {
   useEffect(() => {
     const getDataTask = async () => {
       const data = await getTaskById();
-      setTask(...data);
+      if (data || data.length > 0) {
+        setTask(...data);
+      }
     };
     getDataTask();
-  }, []);
-
-  const changeButtonState = (color, icon) => {
-    buttonState.current.src = icon;
-    buttonState.current.style.backgroundColor = color;
-  };
-
-  useEffect(() => {
-    if (task.isCompleted) {
-      changeButtonState("red", cancel);
-    } else {
-      changeButtonState("green", done);
-    }
   }, [task]);
 
   const putTask = async () => {
-    let newState;
-    task.isCompleted ? newState == false : newState == true;
     try {
-      const response = await fetch(
-        "http://localhost:3000/todos/"+task.id,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({isCompleted: newState }),
-        }
-      );
+      const response = await fetch("http://localhost:3000/todos/" + task.id, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isCompleted: task.isCompleted ? false : true }),
+      });
       const result = await response.json();
       return result;
     } catch (error) {
@@ -66,49 +49,22 @@ const DetailsTask = ({ params }) => {
 
   const handleChangeState = async () => {
     let resultPut = await putTask();
-    console.log(resultPut);
+    if(!resultPut){
+      alert("No se puedo actualizar el estado de la tarea");
+    }
+  
   };
 
-  return (
-    <div className={styles.task}>
-      <div className={styles.info}>
-        <div className={styles.firstColumn}>
-          <h3>{task.name}</h3>
-          <span>{task.icon}</span>
-        </div>
-
-        <div className={styles.details}>
-          <div>
-            <h3>Creador:</h3>
-            <span>{task.creator}</span>
-          </div>
-          <div>
-            <h3>Descripcion:</h3>
-            <span>{task.description}</span>
-          </div>
-          <div
-            className={
-              task.isCompleted ? styles.stateCompleted : styles.statePending
-            }
-          >
-            <span>
-              <a>Estado: </a>
-              {task.isCompleted ? "Completado" : "Pendiente"}
-            </span>
-          </div>
-
-          <div className={styles.changeState}>
-            <span>
-              {task.isCompleted
-                ? "Marcar como Pendiente"
-                : "Marcar como realizada"}
-            </span>
-            <img onClick={handleChangeState} ref={buttonState}></img>
-          </div>
-        </div>
+  if (task) {
+    return <ItemDetails task={task} handleChangeState={handleChangeState} />;
+  } else {
+    return (
+      <div className={styles.noFound}>
+        <img src={noFound}></img>
+        <h3>Tarea no encontrada</h3>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default DetailsTask;

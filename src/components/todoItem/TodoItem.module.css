@@ -64,11 +64,22 @@
   font-weight: bold;
 }
 
+.task .options{
+
+  width: 99%;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.options a:hover{
+
+  cursor: pointer;
+  
+}
 .task .details {
   padding: 0.2rem;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
   text-decoration: none;
 }
 

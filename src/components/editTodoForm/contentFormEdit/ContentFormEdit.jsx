@@ -1,13 +1,15 @@
-import classesStyle from "./ContentForm.module.css";
-import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
-import AlertForm from "../alertForm/AlertForm";
+import { act, useState } from "react";
+import styles from "./ContentFormEdit.module.css";
 import { useForm } from "../../../context/FormContext";
-const ContentForm = ({ handleChange }) => {
-  const { values, errors, resultForm, cleanValues } = useForm();
+import AlertErrorInput from "../../addTodoForm/alertErrorInput/AlertErrorInput";
+import AlertForm from "../../addTodoForm/alertForm/AlertForm";
+
+const ContentFormEdit = ({ values, handleChange }) => {
+  const { errors, resultForm } = useForm();
 
   return (
-    <div className={classesStyle.bodyForm}>
-      <div className={classesStyle.icon}>
+    <div className={styles.bodyForm}>
+      <div className={styles.icon}>
         <label>Task icon:</label>
         <input
           value={values.icon}
@@ -19,8 +21,8 @@ const ContentForm = ({ handleChange }) => {
         <AlertErrorInput error={errors.icon} />
       </div>
 
-      <div className={classesStyle.rowForm}>
-        <div className={classesStyle.name}>
+      <div className={styles.rowForm}>
+        <div className={styles.name}>
           <label>Task name:</label>
           <input
             value={values.name}
@@ -31,7 +33,7 @@ const ContentForm = ({ handleChange }) => {
           ></input>
           <AlertErrorInput error={errors.name} />
         </div>
-        <div className={classesStyle.creator}>
+        <div className={styles.creator}>
           <label>Creator:</label>
           <input
             value={values.creator}
@@ -44,7 +46,7 @@ const ContentForm = ({ handleChange }) => {
         </div>
       </div>
 
-      <div className={classesStyle.description}>
+      <div className={styles.description}>
         <label>Description:</label>
         <textarea
           value={values.description}
@@ -55,11 +57,9 @@ const ContentForm = ({ handleChange }) => {
         <AlertErrorInput error={errors.description} />
       </div>
 
-      <div className={classesStyle.buttons}>
-        <button>Add</button>
-        <button type="reset" onClick={cleanValues}>
-          Clean
-        </button>
+      <div className={styles.buttons}>
+        <button>Update</button>
+        <button type="reset">Clean</button>
       </div>
 
       <AlertForm resultForm={resultForm} />
@@ -67,4 +67,4 @@ const ContentForm = ({ handleChange }) => {
   );
 };
 
-export default ContentForm;
+export default ContentFormEdit;

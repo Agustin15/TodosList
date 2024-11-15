@@ -3,62 +3,21 @@ import ContentForm from "./contentForm/ContentForm";
 import { data } from "@remix-run/router";
 import iconCorrect from "../../assets/img/correctIcon.png";
 import iconError from "../../assets/img/errorIcon.png";
-import { useState } from "react";
+import iconAdd from "../../assets/img/addTask.png";
+import { useForm } from "../../context/FormContext";
+import { useTasks } from "../../context/TaskContext";
 
 const AddTodoForm = () => {
-  const [values, setValues] = useState({
-    icon: "",
-    name: "",
-    creator: "",
-    description: "",
-    isCompleted: false,
-  });
-  const [errors, setErrors] = useState({
-    icon: "",
-    name: "",
-    creator: "",
-    description: "",
-  });
+  const {
+    values,
+    setValues,
+    validationInput,
+    createId,
+    setResultForm,
+    cleanValues,
+  } = useForm();
 
-  const [resultForm, setResultForm] = useState();
-
-  const createId = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/todos");
-      const result = await response.json();
-      if (result) {
-        return result.length + 1;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const validationInput = (nameInput, value) => {
-    let validIcon = /\w/;
-    let validInput = value.length !== 0;
-    let msj;
-    switch (nameInput) {
-      case "name":
-        msj = "Complete el campo nombre";
-        break;
-      case "creator":
-        msj = "Complete el campo autor";
-        break;
-      case "description":
-        msj = "Complete el campo descripcion";
-        break;
-      case "icon":
-        msj = "Ingresa un icono";
-        validInput = !value.match(validIcon) && value.length !== 0;
-        break;
-    }
-
-    setErrors({
-      ...errors,
-      [nameInput]: validInput ? "" : msj,
-    });
-  };
+  const { addTask, getIfExistTask } = useTasks();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -90,21 +49,22 @@ const AddTodoForm = () => {
       return;
     }
 
-    let existTask = await getIfExistTask(
+    const taskExist = await getIfExistTask(
       values.description.trim(),
       values.creator.trim()
     );
-    if (existTask) {
+
+    if (taskExist) {
       setResultForm({
         result: "error",
-        msj: "Esta tarea ya existe",
+        msj: "Ups,esta tarea ya existe",
         icon: iconError,
       });
       return;
     } else {
       let idTask = await createId();
       values.id = idTask;
-      let resultPost = await postTask();
+      let resultPost = await addTask(values);
       if (resultPost) {
         setResultForm({
           result: "correct",
@@ -112,69 +72,20 @@ const AddTodoForm = () => {
           icon: iconCorrect,
         });
         cleanValues();
+
+        return;
       }
-      return;
     }
-  };
-
-  const getIfExistTask = async (description, creator) => {
-    let data = null;
-    try {
-      const response = await fetch(
-        "http://localhost:3000/todos?description=" +
-          description +
-          "&&creator=" +
-          creator
-      );
-      const result = await response.json();
-      if (result.length > 0) {
-        data = result;
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      return data;
-    }
-  };
-
-  const postTask = async () => {
-    try {
-      let data = null;
-      const response = await fetch("http://localhost:3000/todos", {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      const result = await response.json();
-      if (result) {
-        data = result;
-      }
-      data = result;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      return data;
-    }
-  };
-
-  const cleanValues = () => {
-    setValues({ ...values, icon: "", name: "", description: "", creator: "" });
   };
 
   return (
     <div className={classesStyle.containForm}>
       <form onSubmit={handleSubmit}>
-        <h3>Complete los detalles de su tarea</h3>
-        <ContentForm
-          values={values}
-          handleChange={handleChange}
-          errors={errors}
-          resultForm={resultForm}
-          cleanValues={cleanValues}
-        />
+        <div className={classesStyle.title}>
+          <h3>Complete task details</h3>
+          <img src={iconAdd}></img>
+        </div>
+        <ContentForm handleChange={handleChange} />
       </form>
     </div>
   );

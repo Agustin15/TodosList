@@ -25,3 +25,14 @@
 
 }
 
+.containForm .title{
+
+display: flex;
+align-items: center;
+gap: 1rem;
+}
+
+.containForm .title img{
+
+    width:60px;
+}

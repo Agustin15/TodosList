@@ -1,15 +1,15 @@
 {
   "todos": [
     {
-      "id": 1,
+      "id": "1",
       "icon": "🛒",
       "name": "Buy groceries",
       "isCompleted": false,
-      "description": "🥛 Milk, 🍞 Bread, 🥚 Eggs, and 🍏 Fruits",
+      "description": "🥛 Milk, 🍞 Bread, 🥚 Eggs",
       "creator": "Alice"
     },
     {
-      "id": 2,
+      "id": "2",
       "icon": "📊",
       "name": "Finish project report",
       "isCompleted": false,
@@ -17,7 +17,7 @@
       "creator": "Bob"
     },
     {
-      "id": 3,
+      "id": "3",
       "icon": "🏥",
       "name": "Schedule doctor appointment",
       "isCompleted": true,
@@ -25,7 +25,7 @@
       "creator": "Charlie"
     },
     {
-      "id": 4,
+      "id": "4",
       "icon": "🧹",
       "name": "Clean the house",
       "isCompleted": false,
@@ -33,7 +33,7 @@
       "creator": "Diana"
     },
     {
-      "id": 5,
+      "id": "5",
       "icon": "📖",
       "name": "Read a book",
       "isCompleted": true,
@@ -41,7 +41,7 @@
       "creator": "Ethan"
     },
     {
-      "id": 6,
+      "id": "6",
       "icon": "🌯",
       "name": "Eat a wrapp",
       "creator": "Agustin",

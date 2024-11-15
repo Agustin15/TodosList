@@ -15,8 +15,13 @@
   padding-left: 1rem;
 }
 
-.loading {
-  font-size: 23px;
+.loadingHide {
+  display: none;
+}
+
+.loadingShow {
+  display: block;
+  font-size: 28px;
   color: rgb(145, 145, 145);
   display: flex;
   margin-top: 2rem;
@@ -31,12 +36,12 @@
   gap: 1rem;
   margin-top: 4rem;
   height: 20rem;
-  font-size: 23px;
+  font-size: 18px;
 }
 
 .warningShow img {
-  width: 150px;
-  padding-left: 1.2rem;
+  width: 111px;
+
 }
 
 .warningHide {
