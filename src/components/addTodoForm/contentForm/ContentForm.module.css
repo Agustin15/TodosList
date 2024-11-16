@@ -24,9 +24,8 @@
   font-size: 16px;
 }
 
-.icon input{
-
-    width: 10rem;
+.icon input {
+  width: 10rem;
 }
 
 .bodyForm textarea {
@@ -57,6 +56,9 @@
 }
 
 .buttons button {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
   width: 12rem;
   padding: 0.5rem;
   border-radius: 3px;

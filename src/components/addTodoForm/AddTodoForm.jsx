@@ -8,16 +8,10 @@ import { useForm } from "../../context/FormContext";
 import { useTasks } from "../../context/TaskContext";
 
 const AddTodoForm = () => {
-  const {
-    values,
-    setValues,
-    validationInput,
-    createId,
-    setResultForm,
-    cleanValues,
-  } = useForm();
+  const { values, setValues, validationInput, setResultForm, cleanValues } =
+    useForm();
 
-  const { addTask, getIfExistTask } = useTasks();
+  const { tasks, addTask, getIfExistTask } = useTasks();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,50 +25,52 @@ const AddTodoForm = () => {
   };
 
   const handleSubmit = async (event) => {
+    let msj, result, icon;
     event.preventDefault();
 
     let validIcon = /\w/;
-    if (
-      values.name.length == 0 ||
-      values.creator.length == 0 ||
-      values.description.length == 0 ||
-      values.icon.length == 0 ||
-      values.icon.match(validIcon)
-    ) {
-      setResultForm({
-        result: "error",
-        msj: "Complete los campos correctamente",
-        icon: iconError,
-      });
-      return;
-    }
 
-    const taskExist = await getIfExistTask(
-      values.description.trim(),
-      values.creator.trim()
-    );
+    try {
+      if (
+        values.name.length == 0 ||
+        values.creator.length == 0 ||
+        values.description.length == 0 ||
+        values.icon.length == 0 ||
+        values.icon.match(validIcon)
+      ) {
+        throw "Fill correctly the fields please";
+      } else {
+        const taskExist = await getIfExistTask(
+          values.description.trim(),
+          values.creator.trim()
+        );
 
-    if (taskExist) {
-      setResultForm({
-        result: "error",
-        msj: "Ups,esta tarea ya existe",
-        icon: iconError,
-      });
-      return;
-    } else {
-      let idTask = await createId();
-      values.id = idTask;
-      let resultPost = await addTask(values);
-      if (resultPost) {
-        setResultForm({
-          result: "correct",
-          msj: "¡Tarea agregada exitosamente!",
-          icon: iconCorrect,
-        });
-        cleanValues();
-
-        return;
+        if (taskExist) {
+          throw "This task is exist";
+        } else {
+          let idTask = tasks.length + 1;
+          values.id = idTask.toString();
+          let errorPost = await addTask(values);
+          if (!errorPost) {
+            msj = "Task added succesfully!";
+            result = "correct";
+            icon = iconCorrect;
+            cleanValues();
+          } else {
+            throw "Ups,failed to add task";
+          }
+        }
       }
+    } catch (error) {
+      msj = error;
+      result = "error";
+      icon = iconError;
+    } finally {
+      setResultForm({
+        result: result,
+        msj: msj,
+        icon: icon,
+      });
     }
   };
 

@@ -5,7 +5,7 @@
       "icon": "🛒",
       "name": "Buy groceries",
       "isCompleted": false,
-      "description": "🥛 Milk, 🍞 Bread, 🥚 Eggs",
+      "description": "🥛 Milk, 🍞 Bread,🥚Eggs",
       "creator": "Alice"
     },
     {
@@ -41,12 +41,12 @@
       "creator": "Ethan"
     },
     {
-      "id": "6",
-      "icon": "🌯",
-      "name": "Eat a wrapp",
-      "creator": "Agustin",
-      "description": "Go to de subway",
-      "isCompleted": false
+      "id": "7",
+      "icon": "🥞",
+      "name": "make a breakfast",
+      "creator": "Valentin",
+      "description": "make a breakfast to 7:00 am",
+      "isCompleted": true
     }
   ]
 }

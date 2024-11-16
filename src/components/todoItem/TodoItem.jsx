@@ -2,13 +2,24 @@ import { useState } from "react";
 import styles from "./TodoItem.module.css";
 import { Link } from "react-router-dom";
 import EditTodoForm from "../editTodoForm/EditTodoForm";
+import iconDelete from "../../assets/img/deleteIcon.png";
+import Modal from "../modal/Modal";
+import DeleteTask from "../deleteTask/DeleteTaks";
 
 const TodoItem = ({ task }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   return (
     <>
       <li key={task.id} className={styles.task}>
+        <div className={styles.optionDelete}>
+          <img
+            title="Delete"
+            onClick={() => setOpenModalDelete(true)}
+            src={iconDelete}
+          ></img>
+        </div>
         <div className={styles.info}>
           <div className={styles.icon}>
             <span>{task.icon}</span>
@@ -31,7 +42,7 @@ const TodoItem = ({ task }) => {
               }
             >
               <a>State: </a>
-              {task.isCompleted ? "Completada" : "Pendiente"}
+              {task.isCompleted ? "Complete" : "Pending"}
             </span>
           </div>
         </div>
@@ -45,7 +56,15 @@ const TodoItem = ({ task }) => {
       </li>
 
       {openModalUpdate && (
-        <EditTodoForm task={task} setOpenModalUpdate={setOpenModalUpdate} />
+        <Modal>
+          <EditTodoForm task={task} setOpenModalUpdate={setOpenModalUpdate} />
+        </Modal>
+      )}
+
+      {openModalDelete && (
+        <Modal>
+          <DeleteTask task={task} setOpenModalDelete={setOpenModalDelete} />
+        </Modal>
       )}
     </>
   );

@@ -19,18 +19,6 @@ export const FormProvider = ({ children }) => {
 
   const [resultForm, setResultForm] = useState();
 
-  const createId = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/todos");
-      const result = await response.json();
-      if (result) {
-        return result.length + 1;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const validationInput = (nameInput, value) => {
     let validIcon = /\w/;
     let validInput = value.length !== 0;
@@ -70,7 +58,6 @@ export const FormProvider = ({ children }) => {
         resultForm,
         setResultForm,
         validationInput,
-        createId,
         cleanValues,
       }}
     >

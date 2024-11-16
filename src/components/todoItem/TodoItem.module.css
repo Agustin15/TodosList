@@ -3,12 +3,13 @@
   flex-direction: column;
   justify-content: start;
   width: 23rem;
-  height: 11.5rem;
+  height: 14rem;
   background-color: rgb(10, 10, 180);
   border-radius: 5px;
   box-shadow: 2px 2px 2px grey;
   color: white;
   padding: 1rem;
+  padding-top: 0;
   gap: 0.5rem;
 }
 
@@ -17,6 +18,26 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+}
+
+
+.task .optionDelete{
+
+  display: flex;
+  justify-content: flex-end;
+  width: 99%;
+  height: 1.5rem;
+  padding-top: 0.5rem;
+
+}
+
+.task .optionDelete img{
+  width: 30px;
+}
+
+.task .optionDelete img:hover{
+
+  cursor: pointer;
 }
 
 .task .icon {

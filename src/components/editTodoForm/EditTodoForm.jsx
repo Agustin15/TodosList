@@ -3,15 +3,13 @@ import ContentFormEdit from "./contentFormEdit/ContentFormEdit";
 import editIcon from "../../assets/img/editIcon.png";
 import iconError from "../../assets/img/errorIcon.png";
 import iconCorrect from "../../assets/img/correctIcon.png";
-
 import { useForm } from "../../context/FormContext";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 
 const EditTodoForm = ({ task, setOpenModalUpdate }) => {
-
   const [values, setValues] = useState({ ...task });
-  const { validationInput, setResultForm, cleanValues } = useForm();
+  const { validationInput, setResultForm } = useForm();
   const { updateTask } = useTasks();
 
   const handleChange = (event) => {
@@ -26,52 +24,64 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   };
 
   const handleSubmit = async (event) => {
+    let msj, result, icon;
+
     event.preventDefault();
 
     let validIcon = /\w/;
-    if (
-      values.name.length == 0 ||
-      values.creator.length == 0 ||
-      values.description.length == 0 ||
-      values.icon.length == 0 ||
-      values.icon.match(validIcon)
-    ) {
-      setResultForm({
-        result: "error",
-        msj: "Complete los campos correctamente",
-        icon: iconError,
-      });
-      return;
-    }
-    
-    let resultPost = await updateTask(values);
-    if (resultPost) {
-    
-      setResultForm({
-        result: "correct",
-        msj: "¡Tarea actualizada exitosamente!",
-        icon: iconCorrect,
-      });
-      cleanValues();
+    try {
+      if (
+        values.name.length == 0 ||
+        values.creator.length == 0 ||
+        values.description.length == 0 ||
+        values.icon.length == 0 ||
+        values.icon.match(validIcon)
+      ) {
+        throw "Fill correctly the fields please";
+      } else {
+        let errorPut = await updateTask(values);
 
-      return;
+        if (!errorPut) {
+          msj = "Task updated succesfully!";
+          result = "correct";
+          icon = iconCorrect;
+        } else {
+          throw "Ups,failed to update task";
+        }
+      }
+    } catch (error) {
+      icon = iconError;
+      msj = error;
+      result = "error";
+    } finally {
+      setResultForm({
+        result: result,
+        msj: msj,
+        icon: icon,
+      });
     }
   };
 
+  const cleanValues = () => {
+    setValues({ ...values, icon: "", name: "", creator: "", description: "" });
+  };
+
   return (
-    <div className={styles.modal}>
-      <div className={styles.containForm}>
-        <div className={styles.closeBtn}>
-          <button onClick={() => setOpenModalUpdate(false)}>X</button>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.title}>
-            <h3>Update task details</h3>
-            <img src={editIcon}></img>
-          </div>
-          <ContentFormEdit values={values} handleChange={handleChange} />
-        </form>
+    <div className={styles.containForm}>
+      <div className={styles.closeBtn}>
+        <button onClick={() => setOpenModalUpdate(false)}>X</button>
       </div>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.title}>
+          <h3>Update task details</h3>
+          <img src={editIcon}></img>
+        </div>
+        <ContentFormEdit
+          cleanValues={cleanValues}
+          values={values}
+          handleChange={handleChange}
+        />
+      </form>
     </div>
   );
 };

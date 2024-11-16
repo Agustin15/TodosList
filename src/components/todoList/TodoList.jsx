@@ -2,6 +2,7 @@ import styles from "./TodoList.module.css";
 import noTaskIcon from "../../assets/img/sinTareas.png";
 import TodoItem from "../todoItem/TodoItem";
 import { useTasks } from "../../context/TaskContext";
+import Loader from "../loader/Loader";
 
 const TodoList = () => {
   const { tasks } = useTasks();
@@ -9,9 +10,11 @@ const TodoList = () => {
 
   return (
     <div className={styles.containTasks}>
-      <h3 className={loadingState ? styles.loadingShow : styles.loadingHide}>
-        Loading tasks...
-      </h3>
+      <div className={loadingState ? styles.loadingShow : styles.loadingHide}>
+        <h3>loading tasks</h3>
+       
+         <Loader color="blue" size={8} />
+      </div>
 
       <div className={tasks ? styles.warningHide : styles.warningShow}>
         <img src={noTaskIcon}></img>

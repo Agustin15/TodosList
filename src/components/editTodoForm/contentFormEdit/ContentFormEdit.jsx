@@ -3,8 +3,9 @@ import styles from "./ContentFormEdit.module.css";
 import { useForm } from "../../../context/FormContext";
 import AlertErrorInput from "../../addTodoForm/alertErrorInput/AlertErrorInput";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
+import Loader from "../../loader/Loader";
 
-const ContentFormEdit = ({ values, handleChange }) => {
+const ContentFormEdit = ({ cleanValues, values, handleChange }) => {
   const { errors, resultForm } = useForm();
 
   return (
@@ -58,8 +59,13 @@ const ContentFormEdit = ({ values, handleChange }) => {
       </div>
 
       <div className={styles.buttons}>
-        <button>Update</button>
-        <button type="reset">Clean</button>
+        <button>
+          Update
+          <Loader color="white" size={3}/>
+        </button>
+        <button onClick={cleanValues} type="reset">
+          Clean
+        </button>
       </div>
 
       <AlertForm resultForm={resultForm} />

@@ -31,11 +31,11 @@ const ItemDetails = ({ task, handleChangeState }) => {
 
         <div className={styles.details}>
           <div>
-            <h3>Creador:</h3>
+            <h3>Creator:</h3>
             <span>{task.creator}</span>
           </div>
           <div>
-            <h3>Descripcion:</h3>
+            <h3>Description:</h3>
             <span>{task.description}</span>
           </div>
           <div
@@ -44,16 +44,16 @@ const ItemDetails = ({ task, handleChangeState }) => {
             }
           >
             <span>
-              <a>Estado: </a>
-              {task.isCompleted ? "Completado" : "Pendiente"}
+              <a>State: </a>
+              {task.isCompleted ? "Complete" : "Pending"}
             </span>
           </div>
 
           <div className={styles.changeState}>
             <span>
               {task.isCompleted
-                ? "Marcar como Pendiente"
-                : "Marcar como realizada"}
+                ? "Mark as pending"
+                : "Mark as complete"}
             </span>
             <img onClick={handleChangeState} ref={buttonState}></img>
           </div>

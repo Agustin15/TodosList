@@ -1,70 +1,68 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./DetailsTask.module.css";
 import noFound from "../../assets/img/noFound.png";
+import iconError from "../../assets/img/errorIcon2.png";
 import ItemDetails from "./itemDetails/itemDetails";
+import { useTasks } from "../../context/TaskContext";
+
+import Loader from "../loader/Loader";
+import Modal from "../modal/Modal";
 
 const DetailsTask = ({ params }) => {
   const [task, setTask] = useState();
-
-  const getTaskById = async () => {
-    let data = null;
-    try {
-      const response = await fetch(
-        "http://localhost:3000/todos?id=" + params.id
-      );
-      const result = await response.json();
-      if (result) {
-        data = result;
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      return data;
-    }
-  };
+  const [modal, setModal] = useState(false);
+  const { changeStateTask, getTaskById, loadingState } = useTasks();
 
   useEffect(() => {
     const getDataTask = async () => {
-      const data = await getTaskById();
-      if (data || data.length > 0) {
-        setTask(...data);
-      }
-    };
-    getDataTask();
-  }, [task]);
+      const data = await getTaskById(params);
 
-  const putTask = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/todos/" + task.id, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isCompleted: task.isCompleted ? false : true }),
-      });
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      setTask(...data);
+    };
+
+    getDataTask();
+  }, []);
 
   const handleChangeState = async () => {
-    let resultPut = await putTask();
-    if(!resultPut){
-      alert("No se puedo actualizar el estado de la tarea");
+    let result = await changeStateTask(task);
+
+    if (typeof result == "object") {
+      setTask(result);
+    } else {
+      setModal(true);
     }
-  
   };
 
-  if (task) {
-    return <ItemDetails task={task} handleChangeState={handleChangeState} />;
-  } else {
-    return (
-      <div className={styles.noFound}>
-        <img src={noFound}></img>
-        <h3>Tarea no encontrada</h3>
+  return (
+    <div className={styles.containTask}>
+      <div className={loadingState ? styles.loadingShow : styles.loadingHide}>
+        <h3>loading task</h3>
+
+        <Loader color="blue" size={7} />
       </div>
-    );
-  }
+
+      {task && (
+        <ItemDetails task={task} handleChangeState={handleChangeState} />
+      )}
+      <div
+        className={!task && !loadingState ? styles.noFound : styles.noFoundHide}
+      >
+        <img src={noFound}></img>
+        <h3>Ups,task not found</h3>
+      </div>
+
+      {modal && (
+        <Modal>
+          <div className={styles.alert}>
+            <img src={iconError}></img>
+            <span>Ups, Can't update task</span>
+
+            <button onClick={() => setModal(false)}>OK</button>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
 };
 
 export default DetailsTask;

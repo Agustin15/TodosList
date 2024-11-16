@@ -2,6 +2,8 @@ import classesStyle from "./ContentForm.module.css";
 import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
 import AlertForm from "../alertForm/AlertForm";
 import { useForm } from "../../../context/FormContext";
+import Loader from "../../loader/Loader";
+
 const ContentForm = ({ handleChange }) => {
   const { values, errors, resultForm, cleanValues } = useForm();
 
@@ -56,7 +58,10 @@ const ContentForm = ({ handleChange }) => {
       </div>
 
       <div className={classesStyle.buttons}>
-        <button>Add</button>
+        <button>
+          Add
+          <Loader color="white" size={3} />
+        </button>
         <button type="reset" onClick={cleanValues}>
           Clean
         </button>
