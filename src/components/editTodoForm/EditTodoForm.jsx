@@ -10,6 +10,7 @@ import { useState } from "react";
 const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const [values, setValues] = useState({ ...task });
   const { validationInput, setResultForm } = useForm();
+  const { setErrors } = useForm();
   const { updateTask } = useTasks();
 
   const handleChange = (event) => {
@@ -69,7 +70,20 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   return (
     <div className={styles.containForm}>
       <div className={styles.closeBtn}>
-        <button onClick={() => setOpenModalUpdate(false)}>X</button>
+        <button
+          onClick={() => {
+            setErrors({
+              icon: "",
+              name: "",
+              creator: "",
+              description: "",
+            }),
+              setResultForm(null),
+              setOpenModalUpdate(false);
+          }}
+        >
+          X
+        </button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className={styles.title}>

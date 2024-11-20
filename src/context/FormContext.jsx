@@ -55,6 +55,7 @@ export const FormProvider = ({ children }) => {
         values,
         setValues,
         errors,
+        setErrors,
         resultForm,
         setResultForm,
         validationInput,

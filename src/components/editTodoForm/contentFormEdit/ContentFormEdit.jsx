@@ -61,14 +61,14 @@ const ContentFormEdit = ({ cleanValues, values, handleChange }) => {
       <div className={styles.buttons}>
         <button>
           Update
-          <Loader color="white" size={3}/>
+          <Loader color="white" size={3} />
         </button>
         <button onClick={cleanValues} type="reset">
           Clean
         </button>
       </div>
 
-      <AlertForm resultForm={resultForm} />
+      {resultForm && <AlertForm />}
     </div>
   );
 };

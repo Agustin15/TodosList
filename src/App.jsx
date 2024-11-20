@@ -13,6 +13,7 @@ const App = () => {
         <Route path="/addNewTask" element={<AddTodoFormPage/>}></Route>
         <Route path="/tasks" element={<TodoListPage/>}></Route>
         <Route path="/tasks/:id" element={<DetailsTaskPage/>}></Route>
+        <Route path="/:id" element={<DetailsTaskPage/>}></Route>
       </Routes>
     </>
   );

@@ -4,7 +4,7 @@
       "id": "1",
       "icon": "🛒",
       "name": "Buy groceries",
-      "isCompleted": false,
+      "isCompleted": true,
       "description": "🥛 Milk, 🍞 Bread,🥚Eggs",
       "creator": "Alice"
     },
@@ -12,7 +12,7 @@
       "id": "2",
       "icon": "📊",
       "name": "Finish project report",
-      "isCompleted": false,
+      "isCompleted": true,
       "description": "📝 Complete the final report for the project.",
       "creator": "Bob"
     },
@@ -41,12 +41,20 @@
       "creator": "Ethan"
     },
     {
-      "id": "7",
+      "id": "6",
       "icon": "🥞",
       "name": "make a breakfast",
       "creator": "Valentin",
-      "description": "make a breakfast to 7:00 am",
-      "isCompleted": true
+      "description": "Make a breakfast at 8:00",
+      "isCompleted": false
+    },
+    {
+      "id": "7",
+      "icon": "🌯",
+      "name": "Eat a wrapp",
+      "creator": "Sebastian",
+      "description": "Eat a wrap in dinner",
+      "isCompleted": false
     }
   ]
 }

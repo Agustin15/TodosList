@@ -7,6 +7,7 @@ import Loader from "../../loader/Loader";
 const ContentForm = ({ handleChange }) => {
   const { values, errors, resultForm, cleanValues } = useForm();
 
+
   return (
     <div className={classesStyle.bodyForm}>
       <div className={classesStyle.icon}>
@@ -67,7 +68,7 @@ const ContentForm = ({ handleChange }) => {
         </button>
       </div>
 
-      <AlertForm resultForm={resultForm} />
+      {resultForm  && <AlertForm/>}
     </div>
   );
 };
