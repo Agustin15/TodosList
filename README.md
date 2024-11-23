@@ -1,5 +1,7 @@
-# TODO LIST REACT VITE
+# TODO LIST REACT VITE 
+
 ## Instalacion 📝 
+
 ### Crear proyecto con Vite: 
 
  -npm create vite@latest <nameProject>
