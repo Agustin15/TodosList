@@ -9,7 +9,7 @@
  -Seleccionar variante Javascript
  
  ### Instalar dependencias:
- -cd <nameProject> 
+ -cd "nameProject" 
  
  -npm install
  
