@@ -17,19 +17,21 @@
  
  - npm i -D react-router-do
 
- > Pasos extra
+ > ##### Extra: Instalacion JSON-SERVER
  
- - ##### Instalacion JSON-SERVER
-      
  -  ⁠npm install -g json-server
 
  -  Crear archivo dbTask.json
   
- -  Levantar el servidor localhost json con ***json-server --watch dbTask.json***
+ -  Levantar el localhost con ***json-server --watch dbTask.json***
 
- -  Editar dbTaks.json e ingresarle:
+ -  Editar dbTaks.json e ingresarle el documento ***todos*** :
+   
+         {"todos":[]}
 
- -  
+       
+    
+        
   
  
  
