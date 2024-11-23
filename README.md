@@ -17,7 +17,7 @@
  
  - npm i -D react-router-do
 
- > ##### Extra: Instalacion JSON-SERVER
+ > #### Extra: Instalacion JSON-SERVER
  
  -  ⁠npm install -g json-server
 
@@ -25,11 +25,11 @@
   
  -  Levantar el localhost con ***json-server --watch dbTask.json***
 
- -  Editar dbTaks.json e ingresarle el documento ***todos*** :
+ -  Editar dbTaks.json y crear el documento ***todos***  :
    
-         {"todos":[]}
+         {"todos":[{<task>}]}
 
-       
+   -//Podras cambiar el nombre del documento, pero tendras que modificar los endpoints de las solicitudes 
     
         
   
