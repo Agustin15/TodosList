@@ -33,8 +33,9 @@
     
    > #### Ultimo: arrancar la aplicacion
 
-     - npm run dev (le dara la url del localhost, http://localhost:PORT/)  
-     - Ya podra acceder ingresando la url en su navegador
+  - npm run dev (le dara la url del localhost, http://localhost:PORT/)  
+   
+   - Ya podra acceder ingresando la url en su navegador
   
  
  
