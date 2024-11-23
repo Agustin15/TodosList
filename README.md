@@ -31,7 +31,7 @@
 
          //Podras cambiar el nombre del documento, pero tendras que modificar los endpoints de las solicitudes 
     
-   > #### Ultimo: arrancar la aplicacion
+   > #### Arrancar la aplicacion
 
   - npm run dev (le dara la url del localhost, http://localhost:PORT/)  
    
