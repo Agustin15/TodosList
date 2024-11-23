@@ -7,7 +7,7 @@
  -Instalar dependencias:
  cd <nameProject> 
  npm install
- npm i -D react-router-dom
+ npm i -D react-router-do
  
  
 
