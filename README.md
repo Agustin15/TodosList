@@ -15,7 +15,7 @@
  
  - npm install
  
- - npm i -D react-router-do
+ - npm install react-router-dom
 
  > #### Extra: Instalacion JSON-SERVER
  
