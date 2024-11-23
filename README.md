@@ -2,7 +2,7 @@
 
 ## Instalacion 📝 
 
-#### Crear proyecto con [VITE] (https://vite.dev/guide/) 
+#### Crear proyecto con [VITE](https://vite.dev/guide/) 
 
  - npm create vite@latest "nameProject"
  
