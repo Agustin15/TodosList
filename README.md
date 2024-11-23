@@ -33,9 +33,8 @@
     
    > #### Iniciar la aplicacion
 
-  - npm run dev
+  - npm run dev (le dara la url del localhost VITE)
     
-          //le dara la url del localhost
           http://localhost:PORT/>
       
    - Ya podra acceder ingresando la url en su navegador
