@@ -35,7 +35,7 @@
 
   - npm run dev (le dara la url del localhost VITE)
     
-          http://localhost:PORT/>
+          http://localhost:PORT/
       
    - Ya podra acceder ingresando la url en su navegador
   
