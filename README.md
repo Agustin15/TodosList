@@ -23,7 +23,7 @@
 
  -  Crear archivo dbTask.json
   
- -  Levantar el localhost con ***json-server --watch dbTask.json***
+ -  ***cd <rutadbTaks.json>*** y levantar el localhost JSON con ***json-server --watch dbTask.json***
 
  -  Editar dbTaks.json y crear el documento ***todos***  :
    
@@ -31,7 +31,10 @@
 
          //Podras cambiar el nombre del documento, pero tendras que modificar los endpoints de las solicitudes 
     
-        
+   > #### Ultimo: arrancar la aplicacion
+
+     - npm run dev (le dara la url del localhost, http://localhost:PORT/)  
+     - Ya podra acceder ingresando la url en su navegador
   
  
  
