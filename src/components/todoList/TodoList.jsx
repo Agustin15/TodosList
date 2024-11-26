@@ -23,7 +23,9 @@ const TodoList = () => {
       {tasks ? (
         <ul className={styles.tasks}>
           {tasks.map((task) => (
+            <div key={task.id}>
             <TodoItem task={task}></TodoItem>
+            </div>
           ))}
         </ul>
       ) : (

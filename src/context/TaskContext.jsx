@@ -103,7 +103,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   const updateTask = async (task) => {
-    console.log(task);
+  
     setLoadingState(true);
     try {
       const response = await fetch("http://localhost:3000/todos/" + task.id, {
@@ -148,7 +148,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   const deleteTask = async (task) => {
-    console.log(task);
+   
     let errorFetch = false;
     try {
       const response = await fetch("http://localhost:3000/todos/" + task.id, {
@@ -156,7 +156,7 @@ export const TaskProvider = ({ children }) => {
       });
 
       const result = await response.json();
-      console.log(result);
+
       if (result) {
         dispatch({ type: "deleteTask", payload: result });
       }
