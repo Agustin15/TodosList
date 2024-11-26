@@ -1,4 +1,4 @@
-# TODO LIST REACT VITE 
+# TODO LIST REACT + VITE 
 
 > ## Instalacion 📝 
 
@@ -15,7 +15,7 @@
  
  - npm install
  
- - npm i -D react-router-do
+ - npm install react-router-dom
 
  > #### Extra: Instalacion JSON-SERVER
  
@@ -25,7 +25,7 @@
   
  -  ***cd <rutadbTaks.json>*** y levantar el localhost JSON con ***json-server --watch dbTask.json***
 
- -  Editar dbTaks.json y crear el documento ***todos***  :
+ -  Editar dbTaks.json y crear el arreglo ***todos***  :
    
          {"todos":[{<task>}]}
 
