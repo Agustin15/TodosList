@@ -47,14 +47,6 @@
       "creator": "Valentin",
       "description": "Make a breakfast at 8:00",
       "isCompleted": false
-    },
-    {
-      "id": "7",
-      "icon": "🌯",
-      "name": "Eat a wrapp",
-      "creator": "Sebastian",
-      "description": "Eat a wrapp in dinner",
-      "isCompleted": false
     }
   ]
 }

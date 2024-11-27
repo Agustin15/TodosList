@@ -3,10 +3,11 @@ import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
 import AlertForm from "../alertForm/AlertForm";
 import { useForm } from "../../../context/FormContext";
 import Loader from "../../loader/Loader";
+import { useTasks } from "../../../context/TaskContext";
 
 const ContentForm = ({ handleChange }) => {
   const { values, errors, resultForm, cleanValues } = useForm();
-
+  const {loadingState} = useTasks();
 
   return (
     <div className={classesStyle.bodyForm}>
@@ -61,14 +62,14 @@ const ContentForm = ({ handleChange }) => {
       <div className={classesStyle.buttons}>
         <button>
           Add
-          <Loader color="white" size={3} />
+          <Loader isLoading={loadingState} color="white" size={3} />
         </button>
         <button type="reset" onClick={cleanValues}>
           Clean
         </button>
       </div>
 
-      {resultForm  && <AlertForm/>}
+      {resultForm && <AlertForm />}
     </div>
   );
 };

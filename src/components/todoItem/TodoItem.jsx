@@ -16,7 +16,9 @@ const TodoItem = ({ task }) => {
         <div className={styles.optionDelete}>
           <img
             title="Delete"
-            onClick={() => setOpenModalDelete(true)}
+            onClick={() => {
+              window.scrollTo(0, 0), setOpenModalDelete(true);
+            }}
             src={iconDelete}
           ></img>
         </div>
@@ -48,7 +50,13 @@ const TodoItem = ({ task }) => {
         </div>
 
         <div className={styles.options}>
-          <a onClick={() => setOpenModalUpdate(true)}>Edit</a>
+          <a
+            onClick={() => {
+              window.scrollTo(0, 0), setOpenModalUpdate(true);
+            }}
+          >
+            Edit
+          </a>
           <Link className={styles.details} to={`${task.id}`}>
             Details
           </Link>

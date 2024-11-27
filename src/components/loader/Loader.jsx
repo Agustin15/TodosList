@@ -1,5 +1,5 @@
 import { PulseLoader } from "react-spinners";
-import { useTasks } from "../../context/TaskContext";
+
 
 const override = {
   display: "block",
@@ -7,13 +7,13 @@ const override = {
   opacity: "40%",
 };
 
-const Loader = ({ color, size }) => {
-  const { loadingState } = useTasks();
+const Loader = ({ isLoading,color, size }) => {
 
+  console.log(isLoading);
   return (
     <PulseLoader
       color={color}
-      loading={loadingState}
+      loading={isLoading}
       cssOverride={override}
       size={size}
       aria-label="Loading Spinner"

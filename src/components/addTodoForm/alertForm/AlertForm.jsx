@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import classesStyle from "./AlertForm.module.css";
 import { useForm } from "../../../context/FormContext";
 const AlertForm = () => {
@@ -15,7 +15,14 @@ const AlertForm = () => {
   }, [resultForm]);
 
   return (
-    <div ref={alert} className={classesStyle.alertForm}>
+    <div
+      ref={alert}
+      className={
+        resultForm.result == "correct"
+          ? classesStyle.alertFormCorrect
+          : classesStyle.alertFormError
+      }
+    >
       <img src={resultForm.icon}></img>
       <p>{resultForm.msj}</p>
     </div>

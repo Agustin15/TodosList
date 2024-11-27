@@ -4,9 +4,11 @@ import { useForm } from "../../../context/FormContext";
 import AlertErrorInput from "../../addTodoForm/alertErrorInput/AlertErrorInput";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import Loader from "../../loader/Loader";
+import { useTasks } from "../../../context/TaskContext";
 
 const ContentFormEdit = ({ cleanValues, values, handleChange }) => {
   const { errors, resultForm } = useForm();
+  const { loadingState } = useTasks();
 
   return (
     <div className={styles.bodyForm}>
@@ -61,7 +63,7 @@ const ContentFormEdit = ({ cleanValues, values, handleChange }) => {
       <div className={styles.buttons}>
         <button>
           Update
-          <Loader color="white" size={3} />
+          <Loader isLoading={loadingState} color="white" size={3} />
         </button>
         <button onClick={cleanValues} type="reset">
           Clean

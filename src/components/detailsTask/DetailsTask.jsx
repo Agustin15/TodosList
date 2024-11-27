@@ -38,7 +38,7 @@ const DetailsTask = ({ params }) => {
       <div className={loadingState ? styles.loadingShow : styles.loadingHide}>
         <h3>loading task</h3>
 
-        <Loader color="blue" size={7} />
+        <Loader isLoading={loadingState} color="blue" size={7} />
       </div>
 
       {task && (

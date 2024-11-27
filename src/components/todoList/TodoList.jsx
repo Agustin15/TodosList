@@ -12,24 +12,20 @@ const TodoList = () => {
     <div className={styles.containTasks}>
       <div className={loadingState ? styles.loadingShow : styles.loadingHide}>
         <h3>loading tasks</h3>
-       
-         <Loader color="blue" size={8} />
+
+        <Loader isLoading={loadingState} color="blue" size={8} />
       </div>
 
       <div className={tasks ? styles.warningHide : styles.warningShow}>
         <img src={noTaskIcon}></img>
         <h3>Not Tasks </h3>
       </div>
-      {tasks ? (
+      {tasks && (
         <ul className={styles.tasks}>
           {tasks.map((task) => (
-            <div key={task.id}>
-            <TodoItem task={task}></TodoItem>
-            </div>
+            <TodoItem key={task.id} task={task}></TodoItem>
           ))}
         </ul>
-      ) : (
-        ""
       )}
     </div>
   );
