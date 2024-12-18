@@ -6,9 +6,13 @@
 
       git clone https://github.com/Agustin15/TodosList.git
  
- #### Navegar hasta frontend e instalar dependencias:
+ #### Navegar hasta frontend:
  
-          npm install
+           cd frontend          
+
+#### Instalar dependencias:
+
+        npm install
 
  > #### Extra: Instalacion JSON-SERVER
  
