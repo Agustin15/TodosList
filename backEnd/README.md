@@ -13,11 +13,11 @@
 
             npm install
 
-***Dependencias:***
+> ***Dependencias:***
  - express
 
  - nodemon
     
  - mongoose
 
- -dotenv 
+ - dotenv 
