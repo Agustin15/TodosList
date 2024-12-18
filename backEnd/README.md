@@ -2,7 +2,7 @@
 
 ***Clonar respositorio:***
 
-   git clone https://github.com/Agustin15/TodosList.git
+    git clone https://github.com/Agustin15/TodosList.git
 
              
 ***Dirigirse a a la carpeta backEnd:***
