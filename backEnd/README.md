@@ -32,6 +32,6 @@
 
       npm run start 
       
-> ## Comprobar funcionamiento del CRUD con coleciones en POSTMAN
+> ## Funcionamiento del CRUD con coleciones en POSTMAN
    
 - Abrir Postman e importar ***todo_list CRUD.postman_collection***  
