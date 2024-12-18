@@ -22,6 +22,12 @@
 
  - dotenv
 
+> ***Configuracion del archivo .env
+
+        PORT=3000
+        DATABASE_URL=mongodb+srv://<userDB>:<passwordDB>@cluster0.u5vpn.mongodb.net/<databaseName>?retryWrites=true&w=majority&appName=Cluster0
+
+
 > ## Iniciar ▶   
 
 > ***Iniciar localhost watch live con nodemon***
@@ -32,6 +38,8 @@
 
       npm run start 
       
-> ## Funcionamiento del CRUD con coleciones en POSTMAN
+> ## Funcionamiento en POSTMAN
    
-- Abrir Postman e importar ***todo_list CRUD.postman_collection***  
+- Abrir Postman e importar ***todo_list CRUD.postman_collection***
+- 
+- Tendra las requests para realizar al backend
