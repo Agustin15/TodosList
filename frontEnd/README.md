@@ -16,7 +16,7 @@
 
  > #### Extra: Instalacion JSON-SERVER
  
-         npm install -g json-server
+       npm install -g json-server
 
  -  Crear archivo dbTask.json
   
