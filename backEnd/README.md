@@ -2,16 +2,16 @@
 
 ***Clonar respositorio:***
 
-  git clone https://github.com/Agustin15/TodosList.git
+   git clone https://github.com/Agustin15/TodosList.git
 
              
 ***Dirigirse a a la carpeta backEnd:***
 
-   cd backEnd
+    cd backEnd
  
 ***Instalar dependencias:***
 
-   npm install
+    npm install
 
 ***Dependencias:***
 
@@ -33,11 +33,11 @@
 
 ***Iniciar localhost watch live con nodemon***
 
-   npm run dev 
+    npm run dev 
 
 ***Para iniciar localhost pero sin watch live con node***
 
-   npm run start 
+    npm run start 
       
 ## Funcionamiento en POSTMAN
    
