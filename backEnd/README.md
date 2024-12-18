@@ -14,8 +14,8 @@
             npm install
 
    > Dependencias:
-    - ExpressJs
+   > - ExpressJs
 
-    - Nodemon
+   > - Nodemon
     
-    - mongoose
+   > - mongoose
