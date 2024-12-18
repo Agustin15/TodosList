@@ -8,25 +8,25 @@
  
  #### Navegar hasta frontend:
  
-           cd frontend          
+      cd frontend          
 
 #### Instalar dependencias:
 
-        npm install
+      npm install
 
  > #### Extra: Instalacion JSON-SERVER
  
-           ⁠npm install -g json-server
+         npm install -g json-server
 
  -  Crear archivo dbTask.json
   
  - Navegar hasta la carpeta backend
 
-            cd backend  
+    cd backend  
   
  - Levantar el servidor json-web server
 
-          json-web server --watch dbTask.json
+     json-web server --watch dbTask.json
              
  -  Editar dbTaks.json y crear el arreglo ***todos***  :
    
