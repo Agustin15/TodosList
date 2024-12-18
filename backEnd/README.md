@@ -24,11 +24,11 @@
 
 > ## Iniciar ▶   
 
-> ***Iniciar servidor local watch live con nodemon***
+> ***Iniciar localhost watch live con nodemon***
 
       npm run dev 
 
-> *** O iniciar servidor sin watch live***
+> ***Para iniciar localhost pero sin watch live con node***
 
       npm run start 
       
