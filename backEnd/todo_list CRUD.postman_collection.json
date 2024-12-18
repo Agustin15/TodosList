@@ -13,7 +13,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/todos/",
+					"raw": "http://localhost:/todos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
