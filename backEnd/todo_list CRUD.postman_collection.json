@@ -13,12 +13,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:/todos/",
+					"raw": "http://localhost:{{PORT}}/todos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{PORT}}",
 					"path": [
 						"todos",
 						""
@@ -34,12 +34,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/todos/675caf06d677f7380d28f7d1",
+					"raw": "http://localhost:{{PORT}}/todos/675caf06d677f7380d28f7d1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{PORT}}",
 					"path": [
 						"todos",
 						"675caf06d677f7380d28f7d1"
@@ -64,12 +64,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/todos/",
+					"raw": "http://localhost:{{PORT}}/todos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{PORT}}",
 					"path": [
 						"todos",
 						""
@@ -86,7 +86,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n        \"isCompleted\": false\r\n    }",
+					"raw": " {\r\n        \"isCompleted\": false\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -94,12 +94,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/todos/675caf06d677f7380d28f7d1",
+					"raw": "http://localhost:{{PORT}}/todos/675caf06d677f7380d28f7d1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{PORT}}",
 					"path": [
 						"todos",
 						"675caf06d677f7380d28f7d1"
@@ -115,12 +115,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/todos/675caf06d677f7380d28f7d1",
+					"raw": "http://localhost:{{PORT}}/todos/675caf06d677f7380d28f7d1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "{{PORT}}",
 					"path": [
 						"todos",
 						"675caf06d677f7380d28f7d1"
