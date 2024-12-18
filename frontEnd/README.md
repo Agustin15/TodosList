@@ -2,15 +2,11 @@
 
 > ## Instalacion ⚙ 
 
-#### Crear proyecto con [VITE](https://vite.dev/guide/) 
+#### Clonar repositorio 
 
-       npm create vite@latest "nameProject"
+      git clone https://github.com/Agustin15/TodosList.git
  
- - Seleccionar react como framework
- 
- - Seleccionar variante Javascript
- 
- #### Instalar dependencias:
+ #### Navegar hasta frontend e instalar dependencias:
  
           npm install
 
@@ -20,8 +16,14 @@
 
  -  Crear archivo dbTask.json
   
- -  ***cd <rutadbTaks.json>*** y levantar el localhost JSON con ***json-server --watch dbTask.json***
+ - Navegar hasta la carpeta backend
 
+            cd backend  
+  
+ - Levantar el servidor json-web server
+
+          json-web server --watch dbTask.json
+             
  -  Editar dbTaks.json y crear el arreglo ***todos***  :
    
          {"todos":[{<task>}]}
