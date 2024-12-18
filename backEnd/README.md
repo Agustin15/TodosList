@@ -1,14 +1,18 @@
 > # Instalacion ⚙
 
- -Clonar respositorio:
+> -Clonar respositorio:
 
              git clone https://github.com/Agustin15/TodosList.git
 
              
--Dirigirse a a la carpeta backEnd:
+> -Dirigirse a a la carpeta backEnd:
 
             cd backEnd
 
- -Instalar dependencias:
+> -Instalar dependencias:
 
             npm install
+
+   > Dependencias:
+   > - ExpressJs
+   > - nodemon 
