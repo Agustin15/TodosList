@@ -22,7 +22,7 @@
 
  - dotenv
 
-> ***Configuracion del archivo .env
+> ***Configuracion del archivo .env***
 
         PORT=3000
         DATABASE_URL=mongodb+srv://<userDB>:<passwordDB>@cluster0.u5vpn.mongodb.net/<databaseName>?retryWrites=true&w=majority&appName=Cluster0
