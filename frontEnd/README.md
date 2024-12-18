@@ -4,20 +4,19 @@
 
 #### Crear proyecto con [VITE](https://vite.dev/guide/) 
 
- - npm create vite@latest "nameProject"
+       npm create vite@latest "nameProject"
  
  - Seleccionar react como framework
  
  - Seleccionar variante Javascript
  
  #### Instalar dependencias:
- - cd "nameProject" 
  
- - npm install
+          npm install
 
  > #### Extra: Instalacion JSON-SERVER
  
- -  ⁠npm install -g json-server
+           ⁠npm install -g json-server
 
  -  Crear archivo dbTask.json
   
@@ -31,7 +30,7 @@
     
    > #### Iniciar la aplicacion
 
-  - npm run dev (le dara la url del localhost VITE)
+          npm run dev 
     
           http://localhost:PORT/
       
