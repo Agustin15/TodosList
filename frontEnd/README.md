@@ -1,6 +1,6 @@
 # TODO LIST REACT + VITE 
 
-> ## Instalacion 📝 
+> ## Instalacion ⚙ 
 
 #### Crear proyecto con [VITE](https://vite.dev/guide/) 
 
