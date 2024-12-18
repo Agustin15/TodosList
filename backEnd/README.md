@@ -14,10 +14,10 @@
             npm install
 
    > Dependencias:
-> - express
+ - express
 
-> - nodemon
+ - nodemon
     
-> - mongoose
-   
-> -dotenv 
+ - mongoose
+
+ -dotenv 
