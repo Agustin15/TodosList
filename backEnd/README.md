@@ -20,4 +20,16 @@
     
  - mongoose
 
- - dotenv 
+ - dotenv
+
+> ## Iniciar ▶   
+
+> ***Iniciar servidor local watch live con nodemon***
+
+      npm run dev 
+
+> *** O iniciar servidor sin watch live***
+
+      npm run start 
+      
+      
