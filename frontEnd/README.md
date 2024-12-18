@@ -14,8 +14,6 @@
  - cd "nameProject" 
  
  - npm install
- 
- - npm install react-router-dom
 
  > #### Extra: Instalacion JSON-SERVER
  
