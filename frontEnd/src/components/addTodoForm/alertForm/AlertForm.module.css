@@ -1,0 +1,56 @@
+
+
+.alertFormCorrect{
+  background: linear-gradient(rgb(2, 2, 201),rgb(3, 3, 143));
+  width: auto;
+  padding: 0.8rem;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px gray;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.alertFormCorrect img{
+
+  width: 30px;
+}
+
+.alertFormError{
+  background: linear-gradient(rgb(223, 22, 22),rgb(153, 9, 9));
+  width: auto;
+  padding: 0.8rem;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px gray;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.alertFormError img{
+
+  width: 30px;
+}
+
+.alertFormCorrect .info,
+.alertFormError .info{
+
+  display: flex;
+  gap: 0.2rem;
+  flex-direction: column;
+  align-items: start;
+}
+
+.alertFormCorrect .info span,
+.alertFormError .info span{
+
+  font-weight: bold;
+}
