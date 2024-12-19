@@ -28,7 +28,7 @@
 - react-dom
 - react-spinners
 
-> # Instalacion backend ⚙
+> ## Instalacion backend ⚙
 
 **_Dirigirse a a la carpeta backEnd:_**
 
