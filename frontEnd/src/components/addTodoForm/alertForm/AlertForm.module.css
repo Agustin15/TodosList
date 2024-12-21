@@ -1,8 +1,6 @@
-
-
-.alertFormCorrect{
-  background: linear-gradient(rgb(2, 2, 201),rgb(3, 3, 143));
-  width: auto;
+.alertFormCorrect {
+  background: linear-gradient(rgb(2, 2, 201), rgb(3, 3, 143));
+  width: 20rem;
   padding: 0.8rem;
   border-radius: 4px;
   box-shadow: 2px 2px 2px gray;
@@ -14,15 +12,13 @@
   gap: 1rem;
 }
 
-
-.alertFormCorrect img{
-
+.alertFormCorrect img {
   width: 30px;
 }
 
-.alertFormError{
-  background: linear-gradient(rgb(223, 22, 22),rgb(153, 9, 9));
-  width: auto;
+.alertFormError {
+  background: linear-gradient(rgb(223, 22, 22), rgb(153, 9, 9));
+  width: 20rem;
   padding: 0.8rem;
   border-radius: 4px;
   box-shadow: 2px 2px 2px gray;
@@ -34,15 +30,12 @@
   gap: 1rem;
 }
 
-
-.alertFormError img{
-
+.alertFormError img {
   width: 30px;
 }
 
 .alertFormCorrect .info,
-.alertFormError .info{
-
+.alertFormError .info {
   display: flex;
   gap: 0.2rem;
   flex-direction: column;
@@ -50,7 +43,6 @@
 }
 
 .alertFormCorrect .info span,
-.alertFormError .info span{
-
+.alertFormError .info span {
   font-weight: bold;
 }

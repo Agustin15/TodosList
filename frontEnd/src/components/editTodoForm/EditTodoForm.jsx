@@ -33,21 +33,19 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
     try {
       if (
         values.name.length == 0 ||
-        values.creator.length == 0 ||
         values.description.length == 0 ||
         values.icon.length == 0 ||
         values.icon.match(validIcon)
       ) {
-        throw "Fill correctly the fields please";
+        throw "Complete correctly the fields please";
       } else {
-        let errorPut = await updateTask(values);
-
-        if (!errorPut) {
+        let taskUpdated = await updateTask(values);
+        if (taskUpdated) {
           msj = "Task updated succesfully!";
           result = "correct";
           icon = iconCorrect;
         } else {
-          throw "Ups,failed to update task";
+          throw "Oops,failed to update task";
         }
       }
     } catch (error) {

@@ -9,8 +9,8 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
   const [alert, setAlert] = useState(false);
 
   const handleDelete = async () => {
-    let errorDelete = await deleteTask(task);
-    if (!errorDelete) {
+    let taskDeleted = await deleteTask(task._id);
+    if (taskDeleted) {
       setOpenModalDelete(false);
     } else {
       setAlert(true);
@@ -27,8 +27,7 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
 
       {alert && (
         <div className={styles.alert}>
-
-            <img src={iconError}></img>
+          <img src={iconError}></img>
           <span>oops,Can't delete task</span>
         </div>
       )}

@@ -7,23 +7,23 @@ import { useTasks } from "../../../context/TaskContext";
 
 const ContentForm = ({ handleChange }) => {
   const { values, errors, resultForm, cleanValues } = useForm();
-  const {loadingState} = useTasks();
+  const { loadingState } = useTasks();
 
   return (
     <div className={classesStyle.bodyForm}>
-      <div className={classesStyle.icon}>
-        <label>Task icon:</label>
-        <input
-          value={values.icon}
-          onChange={handleChange}
-          placeholder="Enter task icon"
-          type="text"
-          name="icon"
-        ></input>
-        <AlertErrorInput error={errors.icon} />
-      </div>
-
       <div className={classesStyle.rowForm}>
+        <div className={classesStyle.icon}>
+          <label>Task icon:</label>
+          <input
+            value={values.icon}
+            onChange={handleChange}
+            placeholder="Enter task icon"
+            type="text"
+            name="icon"
+          ></input>
+          <AlertErrorInput error={errors.icon} />
+        </div>
+
         <div className={classesStyle.name}>
           <label>Task name:</label>
           <input
@@ -35,17 +35,6 @@ const ContentForm = ({ handleChange }) => {
           ></input>
           <AlertErrorInput error={errors.name} />
         </div>
-        <div className={classesStyle.creator}>
-          <label>Creator:</label>
-          <input
-            value={values.creator}
-            onChange={handleChange}
-            placeholder="Enter task creator"
-            type="text"
-            name="creator"
-          ></input>
-          <AlertErrorInput error={errors.creator} />
-        </div>
       </div>
 
       <div className={classesStyle.description}>
@@ -56,7 +45,10 @@ const ContentForm = ({ handleChange }) => {
           placeholder="Description..."
           name="description"
         ></textarea>
-        <AlertErrorInput className={classesStyle.alertErrorDescription} error={errors.description} />
+        <AlertErrorInput
+          className={classesStyle.alertErrorDescription}
+          error={errors.description}
+        />
       </div>
 
       <div className={classesStyle.buttons}>

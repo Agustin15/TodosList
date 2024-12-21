@@ -4,7 +4,17 @@ import { TaskModel } from "../model/todoModel.js";
 export const getAllTasks = async (req, res) => {
   try {
     const tasks = await TaskModel.find();
-    res.status(200).json({ tasks });
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(404).json({ messageError: error.message });
+  }
+};
+
+export const getTasksByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const tasks = await TaskModel.find({user:username});
+    res.status(200).json(tasks);
   } catch (error) {
     res.status(404).json({ messageError: error.message });
   }
@@ -20,7 +30,8 @@ export const getTaskById = async (req, res) => {
     if (!taskFoundById) {
       throw new Error("Task not found");
     }
-    res.status(200).json({ taskFoundById });
+
+    res.status(200).json(taskFoundById);
   } catch (error) {
     res.status(404).json({ messageError: error.message });
   }
@@ -30,25 +41,27 @@ export const createTask = async (req, res) => {
   const task = req.body;
 
   try {
-    const taskExisting = await findTaskExisted(task);
+    const taskExisting = await findTaskExisting(task);
 
     if (taskExisting) {
       throw new Error("This task already exists");
     }
     const taskCreated = await TaskModel.create(task);
-    res.status(201).json({ taskCreated });
+
+    res.status(201).json(taskCreated);
   } catch (error) {
     res.status(502).json({ messageError: error.message });
   }
 };
 
-const findTaskExisted = async (task) => {
+const findTaskExisting = async (task) => {
   try {
     let taskToFind = {
-      icon: task.icon,
       name: task.name,
       description: task.description,
+      user: task.username,
     };
+
     const taskExisting = await TaskModel.findOne(taskToFind);
     return taskExisting;
   } catch (error) {
@@ -68,7 +81,7 @@ export const updateTask = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({ taskUpdated });
+    res.status(200).json(taskUpdated);
   } catch (error) {
     res.status(404).json({ messageError: error.message });
   }

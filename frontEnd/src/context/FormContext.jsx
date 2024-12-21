@@ -6,14 +6,12 @@ export const FormProvider = ({ children }) => {
   const [values, setValues] = useState({
     icon: "",
     name: "",
-    creator: "",
     description: "",
     isCompleted: false,
   });
   const [errors, setErrors] = useState({
     icon: "",
     name: "",
-    creator: "",
     description: "",
   });
 

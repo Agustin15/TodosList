@@ -1,0 +1,51 @@
+.containWelcome {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background: linear-gradient(rgb(17, 17, 212), rgb(3, 3, 138));
+}
+
+.welcome {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1rem;
+margin-top: 4rem;
+}
+
+.welcome h3 {
+  font-size: 22px;
+}
+.welcome img {
+  width: 130px;
+  margin-top: 5rem;
+}
+.welcome p {
+  font-size: 19px;
+}
+
+.linkLogin{
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 17px;
+
+}
+.linkLogin a{
+
+  text-decoration: underline;
+  cursor: pointer;
+  color: white;
+}
+.linkLogin a:hover{
+
+  opacity: 80%;
+}

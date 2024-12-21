@@ -12,19 +12,19 @@ const ContentFormEdit = ({ cleanValues, values, handleChange }) => {
 
   return (
     <div className={styles.bodyForm}>
-      <div className={styles.icon}>
-        <label>Task icon:</label>
-        <input
-          value={values.icon}
-          onChange={handleChange}
-          placeholder="Enter task icon"
-          type="text"
-          name="icon"
-        ></input>
-        <AlertErrorInput error={errors.icon} />
-      </div>
-
       <div className={styles.rowForm}>
+        <div className={styles.icon}>
+          <label>Task icon:</label>
+          <input
+            value={values.icon}
+            onChange={handleChange}
+            placeholder="Enter task icon"
+            type="text"
+            name="icon"
+          ></input>
+          <AlertErrorInput error={errors.icon} />
+        </div>
+
         <div className={styles.name}>
           <label>Task name:</label>
           <input
@@ -35,17 +35,6 @@ const ContentFormEdit = ({ cleanValues, values, handleChange }) => {
             name="name"
           ></input>
           <AlertErrorInput error={errors.name} />
-        </div>
-        <div className={styles.creator}>
-          <label>Creator:</label>
-          <input
-            value={values.creator}
-            onChange={handleChange}
-            placeholder="Enter task creator"
-            type="text"
-            name="creator"
-          ></input>
-          <AlertErrorInput error={errors.creator} />
         </div>
       </div>
 

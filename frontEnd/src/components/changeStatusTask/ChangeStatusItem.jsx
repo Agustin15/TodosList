@@ -6,11 +6,16 @@ import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 
 const ChangeStatusItem = ({ task, setOpenModalChangeStatus }) => {
-  const { changeStateTask } = useTasks();
+  const { updateTask } = useTasks();
   const [alertError, setAlertError] = useState(false);
 
   const handleChangeStatusTask = async (task) => {
-    const result = await changeStateTask(task);
+    const taskToUpdate = {
+      _id: task._id,
+      isCompleted: task.isCompleted ? false : true,
+    };
+
+    const result = await updateTask(taskToUpdate);
 
     if (result) {
       setOpenModalChangeStatus(false);
@@ -39,7 +44,7 @@ const ChangeStatusItem = ({ task, setOpenModalChangeStatus }) => {
       {alertError && (
         <div className={classesStyle.alertError}>
           <img src={iconError}></img>
-          <span>oops,failed to update task</span>
+          <span>Oops,failed to update task</span>
         </div>
       )}
     </div>

@@ -1,14 +1,19 @@
 import TodoList from "../todoList/TodoList";
 import { TaskProvider } from "../../context/TaskContext";
 import { FormProvider } from "../../context/FormContext";
+import Header from "../header/Header";
 
 const TodoListPage = () => {
   return (
-    <TaskProvider>
-      <FormProvider>
-        <TodoList />
-      </FormProvider>
-    </TaskProvider>
+    <>
+
+        <Header></Header>
+        <TaskProvider>
+          <FormProvider>
+            <TodoList />
+          </FormProvider>
+        </TaskProvider>
+    </>
   );
 };
 

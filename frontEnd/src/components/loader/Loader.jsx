@@ -2,9 +2,7 @@ import { PulseLoader } from "react-spinners";
 
 
 const override = {
-  display: "block",
-  margin: "0 auto",
-  opacity: "40%",
+  opacity: "100%",
 };
 
 const Loader = ({ isLoading,color, size }) => {

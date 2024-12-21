@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getAllTasks,
+  getTasksByUsername,
   getTaskById,
   createTask,
   updateTask,
@@ -9,7 +9,7 @@ import {
 
 export const tasksRouter = express.Router();
 
-tasksRouter.get("/", getAllTasks);
+tasksRouter.get("/:username", getTasksByUsername);
 tasksRouter.get("/:id", getTaskById);
 tasksRouter.post("/", createTask);
 tasksRouter.put("/:id", updateTask);

@@ -1,11 +1,17 @@
 import express from "express";
+import cors from "cors";
 import { tasksRouter } from "./routes/todoRoutes.js";
+import { signUpRouter } from "./routes/signUpRoutes.js";
+import { loginRoutes } from "./routes/loginRoutes.js";
 
 export const app = express();
 
 app.use(express.json());
 
+app.use(cors({ origin: true, credentials: true }));
 app.use("/todos", tasksRouter);
+app.use("/signup", signUpRouter);
+app.use("/login", loginRoutes);
 
 app.use((error, req, res, next) => {
   console.log("Error", error);

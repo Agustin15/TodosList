@@ -13,8 +13,7 @@
   align-items: start;
 }
 
-.bodyForm .rowForm input,
-.icon input {
+.bodyForm input {
   width: 16rem;
   height: 2.5rem;
   border-radius: 4px;
@@ -22,10 +21,6 @@
   outline: none;
   padding-left: 1rem;
   font-size: 16px;
-}
-
-.icon input {
-  width: 10rem;
 }
 
 .bodyForm textarea {
@@ -38,7 +33,6 @@
 }
 
 .name,
-.creator,
 .description,
 .icon {
   display: flex;

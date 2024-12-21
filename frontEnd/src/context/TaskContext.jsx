@@ -17,13 +17,12 @@ const taskReducer = (state, action) => {
       return [...state, action.payload];
 
     case "updateTask":
-    case "changeStateTask":
       return state.map((task) =>
-        task.id == action.payload.id ? action.payload : task
+        task._id == action.payload._id ? action.payload : task
       );
 
     case "deleteTask":
-      return state.filter((task) => task.id !== action.payload.id);
+      return state.filter((task) => task._id !== action.payload);
 
     default:
       return state;
@@ -33,66 +32,50 @@ const taskReducer = (state, action) => {
 export const TaskProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
   const [loadingState, setLoadingState] = useState(true);
-
+  const username = JSON.parse(localStorage.getItem("username"));
+  console.log("taskProvider:", tasks);
   useEffect(() => {
-    const getTasks = async () => {
+    const getTasksByUser = async () => {
       setLoadingState(true);
-      let data = null;
       try {
-        const response = await fetch("http://localhost:3000/todos");
+        const response = await fetch("http://localhost:3000/todos/" + username);
         const result = await response.json();
-        if (result.length > 0) {
-          data = result;
+        if (!response.ok) {
+          throw result.messageError;
+        } else if (result.length > 0) {
+          dispatch({ type: "setTasks", payload: result });
         }
       } catch (error) {
         console.log(error);
       } finally {
         setLoadingState(false);
-        dispatch({ type: "setTasks", payload: data });
       }
     };
 
-    getTasks();
+    getTasksByUser();
   }, []);
 
   const addTask = async (values) => {
-    let errorFetch = false;
+    let data;
     setLoadingState(true);
+    values.user = username;
     try {
-      const response = await fetch("http://localhost:3000/todos", {
+      const response = await fetch("http://localhost:3000/todos/", {
         method: "POST",
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-
       const result = await response.json();
-      if (result) {
-        dispatch({ type: "addTask", payload: result });
+
+      if (!response.ok) {
+        throw result.messageError;
       }
-    } catch (error) {
-      console.log(error);
-      errorFetch = true;
-      return errorFetch;
-    } finally {
-      setLoadingState(false);
-    }
-  };
 
-  const getIfExistTask = async (description, creator) => {
-    let data = null;
-    setLoadingState(true);
-    try {
-      const response = await fetch(
-        "http://localhost:3000/todos?creator=" +
-          creator +
-          "&&description" +
-          description
-      );
-      const result = await response.json();
-      if (result.length > 0) {
+      if (result) {
         data = result;
+        dispatch({ type: "addTask", payload: result });
       }
     } catch (error) {
       console.log(error);
@@ -103,67 +86,54 @@ export const TaskProvider = ({ children }) => {
   };
 
   const updateTask = async (task) => {
-  
     setLoadingState(true);
+
+    let data;
     try {
-      const response = await fetch("http://localhost:3000/todos/" + task.id, {
+      const response = await fetch("http://localhost:3000/todos/" + task._id, {
         method: "PUT",
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ ...task }),
       });
       const result = await response.json();
 
+      if (!response.ok) {
+        throw result.messageError;
+      }
       if (result) {
+        data = result;
         dispatch({ type: "updateTask", payload: result });
       }
     } catch (error) {
       console.log(error);
-      errorFetch = true;
-      return errorFetch;
     } finally {
       setLoadingState(false);
+      return data;
     }
   };
 
-  const changeStateTask = async (task) => {
-    let errorFetch = false;
+  const deleteTask = async (id) => {
+    let data;
     try {
-      const response = await fetch("http://localhost:3000/todos/" + task.id, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isCompleted: task.isCompleted ? false : true }),
-      });
-      const result = await response.json();
-      if (result) {
-        dispatch({ type: "changeStateTask", payload: result });
-        return result;
-      }
-    } catch (error) {
-      console.log(error);
-      errorFetch = true;
-      return errorFetch;
-    }
-  };
-
-  const deleteTask = async (task) => {
-   
-    let errorFetch = false;
-    try {
-      const response = await fetch("http://localhost:3000/todos/" + task.id, {
+      const response = await fetch("http://localhost:3000/todos/" + id, {
         method: "DELETE",
       });
 
       const result = await response.json();
 
+      if (!response.ok) {
+        throw result.messageError;
+      }
       if (result) {
-        dispatch({ type: "deleteTask", payload: result });
+        data = result;
+        dispatch({ type: "deleteTask", payload: id });
       }
     } catch (error) {
       console.log(error);
-      errorFetch = true;
-      return errorFetch;
+    } finally {
+      return data;
     }
   };
 
@@ -192,9 +162,7 @@ export const TaskProvider = ({ children }) => {
         tasks,
         loadingState,
         addTask,
-        getIfExistTask,
         updateTask,
-        changeStateTask,
         getTaskById,
         deleteTask,
       }}

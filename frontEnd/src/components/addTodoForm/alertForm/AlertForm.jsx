@@ -10,7 +10,7 @@ const AlertForm = () => {
       setTimeout(() => {
         alert.current.style.display = "none";
         setResultForm(null);
-      }, 2000);
+      }, 4000);
     }
   }, [resultForm]);
 
