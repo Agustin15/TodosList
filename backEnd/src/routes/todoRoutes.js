@@ -1,16 +1,24 @@
 import express from "express";
 import {
   getTasksByUsername,
-  getTaskById,
+  getStateTasksByUsername,
   createTask,
   updateTask,
-  deleteTask
+  deleteTask,
 } from "../controllers/todoController.js";
 
 export const tasksRouter = express.Router();
 
-tasksRouter.get("/:username", getTasksByUsername);
-tasksRouter.get("/:id", getTaskById);
+tasksRouter.get("/:optionGetTasks", (req, res) => {
+  const { option } = JSON.parse(req.params.optionGetTasks);
+  switch (option) {
+    case "getTasksByUsername":
+      return getTasksByUsername(req, res);
+
+    case "getStateTasksByUsername":
+      return getStateTasksByUsername(req, res);
+  }
+});
 tasksRouter.post("/", createTask);
 tasksRouter.put("/:id", updateTask);
-tasksRouter.delete("/:id",deleteTask);
+tasksRouter.delete("/:id", deleteTask);

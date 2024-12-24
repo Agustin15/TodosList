@@ -1,0 +1,51 @@
+.bodyContainAlert {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.containAlert {
+  position: absolute;  
+  top: -20rem;
+  animation-name: alertDisplay;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  width: 20rem;
+  height: 2.5rem;
+  background-color: rgb(6, 6, 163);
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bodyAlert {
+  font-size: 15px;
+  width: 98%;
+  background-color: rgb(4, 4, 143);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  gap: 1rem;
+  color: white;
+  justify-content: center;
+}
+
+.bodyAlert img {
+  width: 40px;
+}
+
+@keyframes alertDisplay {
+  from {
+    top: -20rem;
+  }
+
+  to {
+    top: 5rem;
+  }
+}

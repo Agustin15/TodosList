@@ -14,6 +14,9 @@ const taskReducer = (state, action) => {
       return action.payload;
 
     case "addTask":
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
       return [...state, action.payload];
 
     case "updateTask":
@@ -32,28 +35,46 @@ const taskReducer = (state, action) => {
 export const TaskProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
   const [loadingState, setLoadingState] = useState(true);
+  const [failedAuth, setFailedAuth] = useState(false);
   const username = JSON.parse(localStorage.getItem("username"));
-  console.log("taskProvider:", tasks);
-  useEffect(() => {
-    const getTasksByUser = async () => {
-      setLoadingState(true);
-      try {
-        const response = await fetch("http://localhost:3000/todos/" + username);
-        const result = await response.json();
-        if (!response.ok) {
-          throw result.messageError;
-        } else if (result.length > 0) {
-          dispatch({ type: "setTasks", payload: result });
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoadingState(false);
-      }
-    };
+  const token = JSON.parse(localStorage.getItem("token"));
 
+  useEffect(() => {
     getTasksByUser();
   }, []);
+
+  const getTasksByUser = async () => {
+    setLoadingState(true);
+    const optionGetTasks = {
+      option: "getTasksByUsername",
+      username: username,
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.stringify(token)}`,
+          },
+        }
+      );
+      const result = await response.json();
+      if (!response.ok) {
+        throw result.messageError;
+      } else if (result.length > 0) {
+        dispatch({ type: "setTasks", payload: result });
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.indexOf("Authentication") > -1) {
+        setFailedAuth(true);
+      }
+    } finally {
+      setLoadingState(false);
+    }
+  };
 
   const addTask = async (values) => {
     let data;
@@ -64,6 +85,7 @@ export const TaskProvider = ({ children }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.stringify(token)}`,
         },
         body: JSON.stringify(values),
       });
@@ -79,6 +101,10 @@ export const TaskProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+
+      if (error.indexOf("Authentication") > -1) {
+        setFailedAuth(true);
+      }
     } finally {
       setLoadingState(false);
       return data;
@@ -94,6 +120,7 @@ export const TaskProvider = ({ children }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.stringify(token)}`,
         },
         body: JSON.stringify({ ...task }),
       });
@@ -102,12 +129,16 @@ export const TaskProvider = ({ children }) => {
       if (!response.ok) {
         throw result.messageError;
       }
+
       if (result) {
         data = result;
         dispatch({ type: "updateTask", payload: result });
       }
     } catch (error) {
       console.log(error);
+      if (error.indexOf("Authentication") > -1) {
+        setFailedAuth(true);
+      }
     } finally {
       setLoadingState(false);
       return data;
@@ -119,6 +150,10 @@ export const TaskProvider = ({ children }) => {
     try {
       const response = await fetch("http://localhost:3000/todos/" + id, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.stringify(token)}`,
+        },
       });
 
       const result = await response.json();
@@ -132,6 +167,9 @@ export const TaskProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      if (error.indexOf("Authentication") > -1) {
+        setFailedAuth(true);
+      }
     } finally {
       return data;
     }
@@ -140,9 +178,19 @@ export const TaskProvider = ({ children }) => {
   const getTaskById = async (params) => {
     let data = null;
     setLoadingState(true);
+    const optionGetTasks = {
+      option: "getTaskById",
+      id: params.id,
+    };
     try {
       const response = await fetch(
-        "http://localhost:3000/todos?id=" + params.id
+        "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const result = await response.json();
       if (result) {
@@ -150,9 +198,48 @@ export const TaskProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      if (error.indexOf("Authentication") > -1) {
+        setFailedAuth(true);
+      }
     } finally {
       setLoadingState(false);
       return data;
+    }
+  };
+
+  const getTasksStateFilter = async (state) => {
+    setLoadingState(true);
+    const optionGetTasks = {
+      option: "getStateTasksByUsername",
+      isCompleted: state,
+      username: username,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.stringify(token)}`,
+          },
+        }
+      );
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw result.messageError;
+      } else if (result.length > 0) {
+        dispatch({ type: "setTasks", payload: result });
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.indexOf("Authentication") > -1) {
+        setFailedAuth(true);
+      }
+    } finally {
+      setLoadingState(false);
     }
   };
 
@@ -165,6 +252,9 @@ export const TaskProvider = ({ children }) => {
         updateTask,
         getTaskById,
         deleteTask,
+        getTasksStateFilter,
+        getTasksByUser,
+        failedAuth,
       }}
     >
       {children}

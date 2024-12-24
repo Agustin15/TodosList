@@ -6,9 +6,8 @@ import Header from "../header/Header";
 const TodoListPage = () => {
   return (
     <>
-
-        <Header></Header>
         <TaskProvider>
+        <Header></Header>
           <FormProvider>
             <TodoList />
           </FormProvider>

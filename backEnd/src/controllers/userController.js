@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
 import { UserModel } from "../model/userModel.js";
 import jwt from "jsonwebtoken";
 
@@ -61,3 +60,4 @@ export const verifyUserLogin = async (req, res) => {
     res.status(401).json({ messageError: error.message });
   }
 };
+
