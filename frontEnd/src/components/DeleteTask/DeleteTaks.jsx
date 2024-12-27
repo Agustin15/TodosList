@@ -21,7 +21,7 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
       <img src={iconDelete}></img>
       <span>Do you want to delete "{task.name}"?</span>
       <div className={styles.containButtons}>
-        <button onClick={handleDelete}>Accept</button>
+        <button onClick={handleDelete}>Confirm</button>
         <button onClick={() => setOpenModalDelete(false)}>Cancel</button>
       </div>
 

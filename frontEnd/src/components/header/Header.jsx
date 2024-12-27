@@ -11,12 +11,14 @@ import { useState } from "react";
 import { useTasks } from "../../context/TaskContext";
 
 const Header = () => {
-  const [openModalAdd, setOpenModalAdd] = useState(false);
-  const { failedAuth } = useTasks();
   const username = JSON.parse(localStorage.getItem("username"));
+
   if (!username) {
     location.href = "http://localhost:5173/login";
   }
+
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const { failedAuth } = useTasks();
 
   return (
     <>

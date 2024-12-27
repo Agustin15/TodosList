@@ -230,7 +230,7 @@ export const TaskProvider = ({ children }) => {
 
       if (!response.ok) {
         throw result.messageError;
-      } else if (result.length > 0) {
+      } else if (result) {
         dispatch({ type: "setTasks", payload: result });
       }
     } catch (error) {
@@ -247,6 +247,7 @@ export const TaskProvider = ({ children }) => {
     <TaskContext.Provider
       value={{
         tasks,
+        dispatch,
         loadingState,
         addTask,
         updateTask,

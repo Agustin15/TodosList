@@ -51,6 +51,7 @@ const TodoList = () => {
         </div>
 
         <div className={styles.containFilterTasks}>
+     
           <div className={styles.containSelect}>
             <span>Filter tasks:</span>
             <div className={styles.rowSelect}>
@@ -83,7 +84,7 @@ const TodoList = () => {
         <h3>Not Tasks </h3>
       </div>
       {tasks && (
-        <ul className={styles.tasks}>
+        <ul id="ulTasks" className={styles.tasks}>
           {tasks.map((task) => (
             <TodoItem key={task._id} task={task}></TodoItem>
           ))}

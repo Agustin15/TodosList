@@ -32,16 +32,16 @@ const TodoItem = ({ task }) => {
         </div>
 
         <div className={styles.options}>
-          <li onClick={() => setOpenModalDelete(true)}>
+          <div onClick={() => setOpenModalDelete(true)}>
             <img src={iconDelete}></img>
-          </li>
-          <li
+          </div>
+          <div
             onClick={() => {
               setOpenModalUpdate(true);
             }}
           >
             <img src={iconEdit}></img>
-          </li>
+          </div>
         </div>
       </li>
 
