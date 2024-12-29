@@ -14,8 +14,6 @@ import { useToken } from "../../context/TokenContext";
 const Header = () => {
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
-  const [openAlertToken, setOpenAlertToken] = useState(false);
-  const [verfiyToken, setVerifyToken] = useState(false);
   const { logout, verifyToTokenExpired } = useToken();
 
   const username = localStorage.getItem("username");
