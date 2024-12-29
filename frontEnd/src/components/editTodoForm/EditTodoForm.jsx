@@ -65,23 +65,21 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
     setValues({ ...values, icon: "", name: "", creator: "", description: "" });
   };
 
+  const handleClose = () => {
+    setErrors({
+      icon: "",
+      name: "",
+      creator: "",
+      description: "",
+    }),
+      setOpenModalUpdate(false);
+      setResultForm(null);
+  };
+
   return (
     <div className={styles.containForm}>
       <div className={styles.closeBtn}>
-        <button
-          onClick={() => {
-            setErrors({
-              icon: "",
-              name: "",
-              creator: "",
-              description: "",
-            }),
-              setResultForm(null),
-              setOpenModalUpdate(false);
-          }}
-        >
-          X
-        </button>
+        <button onClick={handleClose}>X</button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className={styles.title}>

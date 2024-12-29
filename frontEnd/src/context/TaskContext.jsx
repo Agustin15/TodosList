@@ -35,13 +35,18 @@ const taskReducer = (state, action) => {
 export const TaskProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
   const [loadingState, setLoadingState] = useState(true);
-  const [failedAuth, setFailedAuth] = useState(false);
-  const username = JSON.parse(localStorage.getItem("username"));
-  const token = JSON.parse(localStorage.getItem("token"));
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     getTasksByUser();
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    location.href = "http://localhost:5173/login";
+  };
 
   const getTasksByUser = async () => {
     setLoadingState(true);
@@ -49,6 +54,7 @@ export const TaskProvider = ({ children }) => {
       option: "getTasksByUsername",
       username: username,
     };
+
     try {
       const response = await fetch(
         "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
@@ -68,8 +74,9 @@ export const TaskProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+
       if (error.indexOf("Authentication") > -1) {
-        setFailedAuth(true);
+        logout();
       }
     } finally {
       setLoadingState(false);
@@ -87,6 +94,7 @@ export const TaskProvider = ({ children }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.stringify(token)}`,
         },
+
         body: JSON.stringify(values),
       });
       const result = await response.json();
@@ -103,7 +111,7 @@ export const TaskProvider = ({ children }) => {
       console.log(error);
 
       if (error.indexOf("Authentication") > -1) {
-        setFailedAuth(true);
+        logout();
       }
     } finally {
       setLoadingState(false);
@@ -137,7 +145,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        setFailedAuth(true);
+        logout();
       }
     } finally {
       setLoadingState(false);
@@ -154,6 +162,7 @@ export const TaskProvider = ({ children }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.stringify(token)}`,
         },
+        credentials: "include",
       });
 
       const result = await response.json();
@@ -168,7 +177,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        setFailedAuth(true);
+        logout();
       }
     } finally {
       return data;
@@ -188,7 +197,7 @@ export const TaskProvider = ({ children }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${JSON.stringify(token)}`,
           },
         }
       );
@@ -199,7 +208,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        setFailedAuth(true);
+        logout();
       }
     } finally {
       setLoadingState(false);
@@ -236,7 +245,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        setFailedAuth(true);
+        logout();
       }
     } finally {
       setLoadingState(false);
@@ -255,7 +264,6 @@ export const TaskProvider = ({ children }) => {
         deleteTask,
         getTasksStateFilter,
         getTasksByUser,
-        failedAuth,
       }}
     >
       {children}

@@ -1,18 +1,9 @@
-import { useEffect, useRef } from "react";
+import {useRef } from "react";
 import classesStyle from "./AlertForm.module.css";
 import { useForm } from "../../../context/FormContext";
 const AlertForm = () => {
   const alert = useRef();
-  const { resultForm, setResultForm } = useForm();
-
-  useEffect(() => {
-    if (resultForm.result == "correct") {
-      setTimeout(() => {
-        alert.current.style.display = "none";
-        setResultForm(null);
-      }, 4000);
-    }
-  }, [resultForm]);
+  const { resultForm } = useForm();
 
   return (
     <div

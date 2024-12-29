@@ -38,6 +38,7 @@ const findUserByUsername = async (username) => {
 export const verifyUserLogin = async (req, res) => {
   const { username, password } = req.body;
   const secretKey = process.env.JWT_SECRET_KEY;
+  const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
 
   try {
     const userNameFound = await findUserByUsername(username);
@@ -54,10 +55,16 @@ export const verifyUserLogin = async (req, res) => {
         expiresIn: "1h",
       });
 
-      res.status(200).json({ token });
+      const refreshToken = jwt.sign(
+        { username: userNameFound.username },
+        secretKeyRefresh,
+        {
+          expiresIn: "24h",
+        }
+      );
+      res.status(200).json({ accessToken: token, refreshToken: refreshToken });
     }
   } catch (error) {
     res.status(401).json({ messageError: error.message });
   }
 };
-

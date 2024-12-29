@@ -27,12 +27,13 @@ const ContentLogin = () => {
   useEffect(() => {
     if (user) {
       const resultSignIn = async () => {
-        const token = await fetchLogin(user, "http://localhost:3000/login/");
-        if (token) {
+        const login = await fetchLogin(user, "http://localhost:3000/login/");
+
+        if (login.accessToken && login.refreshToken) {
           cleanForm();
-          localStorage.setItem("token", JSON.stringify(token));
-          localStorage.setItem("username", JSON.stringify(user.username));
-          location.href = "http://localhost:5173/tasks";
+          localStorage.setItem("token", login.accessToken);
+          localStorage.setItem("username", user.username);
+          location.href="http://localhost:5173/tasks";
         }
       };
 

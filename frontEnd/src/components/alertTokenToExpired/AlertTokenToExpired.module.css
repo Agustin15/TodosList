@@ -7,13 +7,13 @@
 }
 
 .containAlert {
-  position: absolute;  
+  position: absolute;
   top: -20rem;
   animation-name: alertDisplay;
   animation-duration: 2s;
   animation-fill-mode: forwards;
   width: 20rem;
-  height: 2.5rem;
+  height: 4.3rem;
   background-color: rgb(6, 6, 163);
   padding: 0.7rem;
   display: flex;
@@ -24,20 +24,51 @@
 }
 
 .bodyAlert {
-  font-size: 15px;
+  font-size: 17px;
   width: 98%;
   background-color: rgb(4, 4, 143);
   border-radius: 4px;
   display: flex;
   align-items: center;
-  padding-left: 0.5rem;
-  gap: 1rem;
-  color: white;
   justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: white;
 }
 
 .bodyAlert img {
-  width: 40px;
+  width: 35px;
+}
+
+.containAlert .containButton{
+
+  display: flex;
+  justify-content: center;
+  width: 105%;
+}
+.containAlert button{
+
+  border: none;
+  background:white;
+  height: 1.3rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.3rem;
+  box-shadow: 1px 1px 1px rgb(0, 0, 0);
+  width: 8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.containAlert button img{
+
+  width: 16px;
+}
+
+.containAlert button:hover{
+  background-color: rgb(226, 226, 226);
 }
 
 @keyframes alertDisplay {

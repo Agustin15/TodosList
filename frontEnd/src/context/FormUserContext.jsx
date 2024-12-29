@@ -93,6 +93,14 @@ export const FormUserProvider = ({ children }) => {
       setResultForm();
     }
 
+    if (setErrorsInputsSignUp) {
+      setErrorsInputsSignIn({
+        name: "",
+        lastname: "",
+        username: "",
+        password: "",
+      });
+    }
     const formData = new FormData(event.target);
     const userSignUp = {};
     const inputsError = {
@@ -104,7 +112,6 @@ export const FormUserProvider = ({ children }) => {
 
     let errorForm = iterationInputsForm(formData, inputsError, userSignUp);
     setErrorsInputsSignUp(inputsError);
-
 
     if (errorForm) {
       setResultForm({
@@ -122,6 +129,10 @@ export const FormUserProvider = ({ children }) => {
     if (resultForm) {
       setResultForm();
     }
+
+    if (errorsInputsSignIn) {
+      setErrorsInputsSignIn({ username: "", password: "" });
+    }
     const formData = new FormData(event.target);
     const userSignIn = {};
     const inputsError = {
@@ -130,8 +141,8 @@ export const FormUserProvider = ({ children }) => {
     };
 
     let errorForm = iterationInputsForm(formData, inputsError, userSignIn);
-    if(errorForm){
-    setErrorsInputsSignIn(inputsError);
+    if (errorForm) {
+      setErrorsInputsSignIn(inputsError);
     }
 
     if (errorForm) {

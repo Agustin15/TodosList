@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { TaskModel } from "../model/todoModel.js";
 import authRequest from "../auth/auth.js";
 
-
 export const getAllTasks = async (req, res) => {
   try {
     const validAuthRequest = authRequest(req);
@@ -17,12 +16,13 @@ export const getAllTasks = async (req, res) => {
 
 export const getTasksByUsername = async (req, res) => {
   const { username } = JSON.parse(req.params.optionGetTasks);
-
   try {
     const validAuthRequest = authRequest(req, res);
     if (validAuthRequest) {
       const tasks = await TaskModel.find({ user: username });
       res.status(200).json(tasks);
+    } else {
+      res.redirect("http://localhost:5173/login");
     }
   } catch (error) {
     res.status(404).json({ messageError: error.message });
@@ -31,6 +31,7 @@ export const getTasksByUsername = async (req, res) => {
 
 export const getStateTasksByUsername = async (req, res) => {
   const { isCompleted, username } = JSON.parse(req.params.optionGetTasks);
+
   try {
     const validAuthRequest = authRequest(req);
     if (validAuthRequest) {

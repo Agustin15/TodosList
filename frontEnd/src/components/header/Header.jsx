@@ -1,28 +1,48 @@
 import classesStyle from "./Header.module.css";
 import iconLogo from "../../assets/img/iconLogo.png";
 import btnImgPlus from "../../assets/img/plus.png";
-import accountIcon from "../../assets/img/account.png";
+import accountIcon from "../../assets/img/profile.png";
+import logOutIcon from "../../assets/img/logOut.png";
 import Modal from "../modal/Modal";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
-import AlertNotToken from "../alertNotToken/AlertNotToken";
+import AlertTokenToExpired from "../alertTokenToExpired/AlertTokenToExpired";
 import { TaskProvider } from "../../context/TaskContext";
 import { FormProvider } from "../../context/FormContext";
-import { useState } from "react";
-import { useTasks } from "../../context/TaskContext";
+import { useEffect, useState } from "react";
+import { useToken } from "../../context/TokenContext";
 
 const Header = () => {
-  const username = JSON.parse(localStorage.getItem("username"));
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
+  const [openAlertToken, setOpenAlertToken] = useState(false);
+  const [verfiyToken, setVerifyToken] = useState(false);
+  const { logout, verifyToTokenExpired } = useToken();
 
-  if (!username) {
-    location.href = "http://localhost:5173/login";
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    logout();
   }
 
-  const [openModalAdd, setOpenModalAdd] = useState(false);
-  const { failedAuth } = useTasks();
+  useEffect(() => {
+    setInterval(async () => {
+      const resultVerifiyExpired = await verifyToTokenExpired();
+      if (resultVerifiyExpired == "to expire") {
+        setOpenAlertToken(true);
+      }
+    }, 3546600);
+  }, []);
+
+  const handleOpenDetailsProfile = () => {
+    setOpenDetailsProfile(true);
+  };
 
   return (
     <>
-      {failedAuth && <AlertNotToken />}
+      {openAlertToken && (
+        <AlertTokenToExpired setOpenAlertToken={setOpenAlertToken} />
+      )}
       <header className={classesStyle.header}>
         <nav>
           <div className={classesStyle.initHeader}>
@@ -38,8 +58,23 @@ const Header = () => {
             </ul>
           </div>
           <div className={classesStyle.containProfile}>
-            <span>{username}</span>
-            <img src={accountIcon}></img>
+            <img onClick={handleOpenDetailsProfile} src={accountIcon}></img>
+            <div
+              className={
+                openDetailsProfile
+                  ? classesStyle.containDetailsProfileShow
+                  : classesStyle.containDetailsProfileHidden
+              }
+            >
+              <div className={classesStyle.rowOne}>
+                <img src={accountIcon}></img>
+                <span>{username}</span>
+              </div>
+              <div className={classesStyle.logOut}>
+                <img src={logOutIcon}></img>
+                <span onClick={logout}>Logout</span>
+              </div>
+            </div>
           </div>
         </nav>
       </header>

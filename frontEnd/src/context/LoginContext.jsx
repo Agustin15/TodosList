@@ -4,7 +4,7 @@ import { useForm } from "./FormContext";
 const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
-  const {setResultForm } = useForm();
+  const { setResultForm } = useForm();
   const [loading, setLoading] = useState(false);
 
   const fetchLogin = async (user, url) => {
@@ -38,6 +38,7 @@ export const LoginProvider = ({ children }) => {
       return data;
     }
   };
+
 
 
   return (
