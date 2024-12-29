@@ -27,6 +27,7 @@
 - react
 - react-dom
 - react-spinners
+- react-router
 
 > ## Instalacion backend ⚙
 
@@ -61,9 +62,3 @@
 **_Para iniciar localhost pero sin watch live con node_**
 
     npm run start
-
-## Funcionamiento en POSTMAN 🕹
-
-- Abrir Postman e importar **_todo_list CRUD.postman_collection_**
-
-- Tendra las requests para realizar al backend
