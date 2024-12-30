@@ -33,7 +33,7 @@ const ContentLogin = () => {
           cleanForm();
           localStorage.setItem("token", login.accessToken);
           localStorage.setItem("username", user.username);
-          location.href="http://localhost:5173/tasks";
+          location.href = "http://localhost:5173/tasks";
         }
       };
 
@@ -51,6 +51,7 @@ const ContentLogin = () => {
       ></WelcomeFormSignUp>
       <div className={classesStyle.form}>
         <div className={classesStyle.title}>
+          <h3 className={classesStyle.titleResponsive}>Welcome to TodoList!</h3>
           <img src={loginIcon}></img>
           <h3>Enter your data for sign in</h3>
         </div>
@@ -92,6 +93,12 @@ const ContentLogin = () => {
               Log in
               <Loader isLoading={loading} color="white" size={6} />
             </button>
+          </div>
+          <div className={classesStyle.haveAccountResponsive}>
+            <p>
+              Don't have an account?
+              <a href="http://localhost:5173/signup"> Sign up</a>
+            </p>
           </div>
 
           {resultForm && <AlertForm />}

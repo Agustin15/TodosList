@@ -1,6 +1,15 @@
-.msjError{
-color: rgb(226, 0, 0);
-font-size: 17px;
-position: absolute;
-margin-top: 5rem;
+.msjError {
+  color: rgb(226, 0, 0);
+  font-size: 17px;
+  position: absolute;
+  margin-top: 5rem;
+}
+
+@media (width <= 480px) {
+  .msjError {
+    color: rgb(226, 0, 0);
+    font-size: 15px;
+    position: absolute;
+    margin-top: 5rem;
+  }
 }

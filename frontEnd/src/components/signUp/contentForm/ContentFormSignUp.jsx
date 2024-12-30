@@ -52,6 +52,7 @@ const ContentFormSignUp = () => {
       ></WelcomeFormSignUp>
       <div className={classesStyle.form}>
         <div className={classesStyle.title}>
+          <h3 className={classesStyle.titleResponsive}>Welcome to TodoList!</h3>
           <img src={iconSignUp}></img>
           <h3>Enter your data for sign up</h3>
         </div>
@@ -123,6 +124,9 @@ const ContentFormSignUp = () => {
               Sign up
               <Loader isLoading={loading} color="white" size={6} />
             </button>
+          </div>
+          <div className={classesStyle.haveAccountResponsive}>
+            <p>Already have a account? <a href="http://localhost:5173/login">Login</a></p>
           </div>
 
           {resultForm && <AlertForm />}

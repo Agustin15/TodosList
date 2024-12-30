@@ -45,7 +45,6 @@
   outline: none;
 }
 
-
 .form form input::placeholder {
   color: rgb(87, 87, 87);
   font-size: 16px;
@@ -55,10 +54,18 @@
   border: 2px solid blue;
 }
 
+.form .titleResponsive {
+  display: none;
+}
+
+.form .haveAccountResponsive{
+  display: none;
+}
+
 .rowFormOne,
 .rowFormTwo {
   display: flex;
-  align-items:start;
+  align-items: start;
   justify-content: center;
   gap: 2rem;
 }
@@ -157,4 +164,107 @@
   font-size: 16px;
   border-radius: 4px;
   outline: none;
+}
+
+@media (width <= 480px) {
+  .form {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    background: white;
+    border: 1px solid rgb(233, 233, 233);
+    box-shadow: 0.5px 0.5px 0.5px gray;
+  }
+
+  .form label {
+    font-size: 16px;
+  }
+
+  .form .titleResponsive {
+    display: flex;
+  }
+
+  .form input {
+    padding-left: 2rem;
+    width: 7.4rem;
+    height: 2.5rem;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 2px solid rgb(204, 204, 204);
+    outline: none;
+  }
+  .form .title img {
+    width: 110px;
+  }
+  .form .title h3 {
+    font-size: 16px;
+  }
+
+  .form form .containPassword input {
+    padding-left: 0.5rem;
+    padding-right: 2.5rem;
+    width: 6.5rem;
+  }
+
+  .containPassword img {
+    position: absolute;
+    width: 18px;
+    margin-top: 2.4rem;
+    cursor: pointer;
+    margin-left: 8rem;
+  }
+
+  .form form input::placeholder {
+    color: rgb(87, 87, 87);
+    font-size: 14px;
+  }
+  .form input {
+    background-position-y: 0.6rem;
+    background-position-x: 0.5rem;
+    background-size: 17px;
+    background-repeat: no-repeat;
+  }
+
+  .containSignUp button {
+    width: 11rem;
+    height: 2.2rem;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 3px;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(22, 22, 211);
+  }
+
+  .inputAlert {
+    border: 2px solid rgb(238, 0, 0);
+    padding-left: 2.5rem;
+    width: 13rem;
+    height: 2.5rem;
+    font-size: 14px;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  .form .haveAccountResponsive{
+    font-size: 14px;
+    display: flex;
+    margin-top:-1rem ;
+  }
+  .form .haveAccountResponsive a{
+    cursor: pointer;
+    color:black;
+    text-decoration: none;
+  }
+  .form .haveAccountResponsive a:hover{
+    text-decoration: underline;
+  }
 }

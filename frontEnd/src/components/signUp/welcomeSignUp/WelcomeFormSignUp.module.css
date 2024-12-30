@@ -49,3 +49,12 @@ margin-top: 4rem;
 
   opacity: 80%;
 }
+
+@media (width <= 480px) {
+
+  .containWelcome {
+
+    display: none;
+   
+  }
+}
