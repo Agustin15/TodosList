@@ -30,11 +30,15 @@ const Header = () => {
       if (resultVerifiyExpired == "to expire") {
         setOpenAlertToken(true);
       }
-    }, 3546600);
+    }, 354000);
   }, []);
 
   const handleOpenDetailsProfile = () => {
-    setOpenDetailsProfile(true);
+    if (openDetailsProfile) {
+      setOpenDetailsProfile(false);
+    } else {
+      setOpenDetailsProfile(true);
+    }
   };
 
   return (

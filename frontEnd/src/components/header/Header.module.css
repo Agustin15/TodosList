@@ -141,7 +141,7 @@
   opacity: 55%;
 }
 
-@media (width <= 480px) {
+@media (min-width: 375px) and (max-width: 478px) {
   .header {
     width: 100%;
     height: 4rem;
@@ -208,6 +208,7 @@
     box-shadow: 2px 2px 2px gray;
     color: gray;
     position: absolute;
+    z-index: 3;
     right: 1rem;
     width: 6rem;
     height: 4rem;
@@ -230,7 +231,7 @@
     justify-content: center;
     align-items: center;
     font-size: 15px;
-    width: 122%; 
+    width: 122%;
     gap: 0.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgb(179, 179, 179);
@@ -257,4 +258,74 @@
     width: 21px;
     opacity: 55%;
   }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+  .header {
+    width: 100%;
+    height: 4rem;
+    font-size: 15px;
+  }
+
+  .header nav img {
+    width: 27px;
+  }
+
+  .header li button {
+    width: auto;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 15px;
+    border: none;
+    color: black;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .header li button img {
+    width: 16px;
+  }
+
+  .header .containProfile {
+    margin-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header .containProfile img {
+    width: 28px;
+    cursor: pointer;
+  }
+
+  .containDetailsProfileShow {
+    position: absolute;
+    z-index: 3;
+    right: 1rem;
+    width: 6rem;
+    height: 4rem;
+    top: 3.2rem;
+  }
+
+  .containDetailsProfileHidden {
+    display: none;
+  }
+
+
+  .containDetailsProfileShow .rowOne {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    width: 122%;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgb(179, 179, 179);
+  }
+
 }

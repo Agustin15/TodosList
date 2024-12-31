@@ -40,16 +40,14 @@
   width: 35px;
 }
 
-.containAlert .containButton{
-
+.containAlert .containButton {
   display: flex;
   justify-content: center;
   width: 105%;
 }
-.containAlert button{
-
+.containAlert button {
   border: none;
-  background:white;
+  background: white;
   height: 1.3rem;
   display: flex;
   gap: 0.5rem;
@@ -62,12 +60,11 @@
   cursor: pointer;
 }
 
-.containAlert button img{
-
+.containAlert button img {
   width: 16px;
 }
 
-.containAlert button:hover{
+.containAlert button:hover {
   background-color: rgb(226, 226, 226);
 }
 
@@ -78,5 +75,58 @@
 
   to {
     top: 5rem;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 478px) {
+  .bodyContainAlert {
+    z-index: 3;
+  }
+
+  .containAlert {
+    position: absolute;
+    top: -20rem;
+    width: 16rem;
+    height: 4rem;
+  }
+
+  .bodyAlert {
+    font-size: 14px;
+    width: 98%;
+  }
+
+  .bodyAlert img {
+    width: 28px;
+  }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+  .bodyContainAlert {
+    z-index: 3;
+  }
+
+  .containAlert {
+    position: absolute;
+    top: -20rem;
+    width: 16rem;
+    height: 3.5rem;
+  }
+
+  .bodyAlert {
+    font-size: 13px;
+    width: 98%;
+  }
+
+  .bodyAlert img {
+    width: 25px;
+  }
+  .containAlert button {
+    height: 1.1rem;
+    font-size: 12px;
+    display: flex;
+  }
+
+  .containAlert button img {
+    width: 15px;
   }
 }

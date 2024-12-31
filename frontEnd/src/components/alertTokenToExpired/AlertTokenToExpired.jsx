@@ -16,7 +16,7 @@ const AlertTokenToExpired = ({ setOpenAlertToken }) => {
         secondsRef.current.textContent = " " + valueSecondsRef;
       }
       if (valueSecondsRef == 0) {
-        logout();
+        // logout();
       }
     }, 1400);
   }, 3000);

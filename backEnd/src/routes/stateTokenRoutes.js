@@ -11,16 +11,16 @@ stateTokenRoutes.get("/", (req, res) => {
     throw new Error("Authentication failed, missing token");
   }
   if (secretKey) {
-  
     try {
       const decodeToken = jwt.verify(token, secretKey);
-      if (decodeToken.exp - Date.now() / 1000 <= 23) {
+      if (decodeToken.exp - Date.now() / 1000 <= 35) {
         res.status(200).json({ message: true });
       } else {
         res.status(200).json({ message: false });
       }
     } catch (error) {
-      res.status(404)
+      res
+        .status(404)
         .json({ messageError: "Authentication failed,invalid token" });
     }
   }

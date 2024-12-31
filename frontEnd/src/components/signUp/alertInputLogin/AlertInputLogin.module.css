@@ -5,11 +5,20 @@
   margin-top: 5rem;
 }
 
-@media (width <= 480px) {
+@media (min-width: 375px) and (max-width: 478px) {
   .msjError {
     color: rgb(226, 0, 0);
     font-size: 15px;
     position: absolute;
     margin-top: 5rem;
+  }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+  .msjError {
+    color: rgb(226, 0, 0);
+    font-size: 12px;
+    position: absolute;
+    margin-top: 4rem;
   }
 }

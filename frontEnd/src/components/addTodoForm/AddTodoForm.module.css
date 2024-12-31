@@ -1,74 +1,124 @@
-.containForm{
-
-    margin: auto;
-    margin-top: 5rem;;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
-    padding-bottom: 2rem;
+.containForm {
+  margin: auto;
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-bottom: 2rem;
 }
 
-.containForm .header{
+.containForm .header {
+  width: 100%;
+  display: flex;
+  height: 2rem;
+  justify-content: flex-end;
+  align-items: center;
+  background: linear-gradient(rgb(1, 1, 201), rgb(0, 0, 158));
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
+.containForm .header button {
+  background: none;
+  border: none;
+  width: 2rem;
+  margin-right: 0.7rem;
+  background-color: rgb(231, 0, 0);
+  height: 1.5rem;
+  width: 1.5rem;
+  font-weight: bold;
+  box-shadow: 1px 1px 1px black;
+  cursor: pointer;
+  color: white;
+  border-radius: 2px;
+}
+
+.containForm .header button:hover {
+  background-color: rgb(184, 0, 0);
+}
+
+.containForm form {
+  padding: 1rem;
+  width: 37rem;
+  height: auto;
+  padding-bottom: 2rem;
+  border-radius: 3px;
+  background-color: white;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 1rem;
+}
+
+.containForm .title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.containForm .title img {
+  width: 60px;
+}
+
+@media (min-width: 375px) and (max-width: 478px) {
+  .containForm form {
+    width: 19rem;
+    padding-top: 0.5rem;
+  }
+
+  .containForm .title {
+    font-size: 15px;
+  }
+
+  .containForm .title img {
+    width: 40px;
+  }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+  .containForm {
+    margin-top: 12rem;
+  
+  }
+
+  .containForm form {
+    width: 23rem;
+  }
+
+  .containForm .title {
+    font-size: 14px;
+  }
+
+  .containForm .title img {
+    width: 40px;
+  }
+
+  .containForm .header {
     width: 100%;
     display: flex;
-    height: 2rem;
+    height: 1.7rem;
     justify-content: flex-end;
     align-items: center;
-    background:linear-gradient(rgb(1, 1, 201),rgb(0, 0, 158));
+    background: linear-gradient(rgb(1, 1, 201), rgb(0, 0, 158));
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-}
+  }
 
-.containForm .header button{
-
+  .containForm .header button {
     background: none;
     border: none;
-    width: 2rem;
     margin-right: 0.7rem;
     background-color: rgb(231, 0, 0);
-    height:1.5rem;
-    width: 1.5rem;
+    height: 1.3rem;
+    width: 1.3rem;
     font-weight: bold;
     box-shadow: 1px 1px 1px black;
     cursor: pointer;
     color: white;
     border-radius: 2px;
-    
-}
-
-.containForm .header button:hover {
-    background-color: rgb(184, 0, 0);
-
-}
-
-.containForm form{
-
-    padding: 1rem;
-    width: 37rem;
-    height: auto;
-    padding-bottom: 2rem;
-    border-radius: 3px;
-    background-color: white;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding-top: 1rem;
-
-}
-
-.containForm .title{
-
-display: flex;
-align-items: center;
-gap: 1rem;
-}
-
-.containForm .title img{
-
-    width:60px;
+  }
 }

@@ -11,11 +11,11 @@
 }
 
 .welcome {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 1rem;
-margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
 }
 
 .welcome h3 {
@@ -29,32 +29,52 @@ margin-top: 4rem;
   font-size: 19px;
 }
 
-.linkLogin{
-  
+.linkLogin {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 2rem;
   font-size: 17px;
-
 }
-.linkLogin a{
-
+.linkLogin a {
   text-decoration: underline;
   cursor: pointer;
   color: white;
 }
-.linkLogin a:hover{
-
+.linkLogin a:hover {
   opacity: 80%;
 }
 
-@media (width <= 480px) {
-
+@media (min-width: 375px) and (max-width: 478px) {
   .containWelcome {
-
     display: none;
-   
+  }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+ 
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0rem;
+  }
+
+  .welcome h3 {
+    font-size: 17px;
+  }
+  .welcome img {
+    width:88px;
+    margin-top: 5rem;
+  }
+  .welcome p {
+    font-size: 14px;
+  }
+
+  .linkLogin {
+  
+    font-size: 13px;
   }
 }

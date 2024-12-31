@@ -1,0 +1,278 @@
+.contain {
+  margin: auto;
+  margin-top: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-bottom: 2rem;
+}
+
+.contain .header {
+  width: 100%;
+  display: flex;
+  height: 2rem;
+  justify-content: flex-end;
+  align-items: center;
+  background: linear-gradient(rgb(1, 1, 201), rgb(0, 0, 158));
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.contain .header button {
+  background: none;
+  border: none;
+  width: 2rem;
+  margin-right: 0.7rem;
+  background-color: rgb(231, 0, 0);
+  height: 1.5rem;
+  width: 1.5rem;
+  font-weight: bold;
+  box-shadow: 1px 1px 1px black;
+  cursor: pointer;
+  color: white;
+  border-radius: 2px;
+}
+
+.contain .header button:hover {
+  background-color: rgb(184, 0, 0);
+}
+
+.contain .containDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 40rem;
+  height: 19rem;
+}
+
+.contain .containDetails .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.contain .containDetails .title img {
+  width: 50px;
+}
+
+.contain .details {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  width: 83%;
+  border: 1px solid rgb(187, 187, 187);
+  height: 10.6rem;
+  justify-content: start;
+  margin-top: 1rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px;
+  padding: 1rem;
+  color: rgb(0, 0, 0);
+}
+
+.contain .iconAndName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(223, 223, 223);
+  padding: 1rem;
+  margin-top: 0.3rem;
+  height: 8.1rem;
+  width: 6rem;
+  border-radius: 3px;
+}
+
+.contain .iconAndName .title {
+  font-size: 17px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.contain .containDetails .icon {
+  font-size: 50px;
+}
+
+.contain .containDetails .description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 26rem;
+  margin-top: 0.3rem;
+}
+
+.contain .containDetails .state {
+  padding: 1rem 1rem 1rem 0.7rem;
+  background-color: rgb(223, 223, 223);
+  border-radius: 4px;
+}
+
+.contain .containDetails span {
+  font-weight: bold;
+}
+.contain .containDetails .stateComplete {
+  color: rgb(2, 175, 2);
+  font-weight: bold;
+}
+
+.contain .containDetails .stateIncomplete {
+  color: rgb(204, 29, 29);
+  font-weight: bold;
+}
+.contain .containDetails .containParragraph {
+  padding: 0.7rem;
+  background-color: rgb(223, 223, 223);
+  border-radius: 4px;
+  width: 23rem;
+  overflow-y: scroll;
+  height: 5rem;
+}
+
+.contain .containDetails .containParragraph span {
+  font-weight: bold;
+}
+
+.contain .containDetails .descriptionParragraph {
+  margin-top: 0.2rem;
+  word-break: break-all;
+}
+
+@media (min-width: 375px) and (max-width: 478px) {
+  .contain .containDetails {
+    width: 22rem;
+    height: 26rem;
+  }
+
+  .contain .containDetails .title {
+    font-size: 15px;
+  }
+
+  .contain .containDetails .title img {
+    width: 40px;
+  }
+
+  .contain .details {
+    flex-direction: column;
+    gap: 1rem;
+    width: 83%;
+    border: 1px solid rgb(187, 187, 187);
+    height: 18rem;
+  }
+
+  .contain .iconAndName {
+    margin-top: 0.3rem;
+    height: 4.1rem;
+    width: 5rem;
+    border-radius: 3px;
+  }
+
+  .contain .iconAndName .title {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .contain .containDetails .icon {
+    font-size: 30px;
+  }
+
+  .contain .containDetails .description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 18rem;
+    margin-top: 0.3rem;
+  }
+
+  .contain .containDetails .containParragraph {
+    padding: 0.7rem;
+    background-color: rgb(223, 223, 223);
+    border-radius: 4px;
+    width: 16.5rem;
+    overflow-y: scroll;
+    height: 5rem;
+  }
+
+  .contain .containDetails .descriptionParragraph {
+    margin-top: 0.2rem;
+    word-break: break-all;
+  }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+  .contain {
+    margin-top: 6.7rem;
+  }
+  .contain .containDetails {
+    width: 33rem;
+    height: 16rem;
+  }
+
+  .contain .containDetails .title {
+    font-size: 14px;
+  }
+
+  .contain .containDetails .title img {
+    width: 36px;
+  }
+
+  .contain .details {
+    gap: 1rem;
+    width: 83%;
+    border: 1px solid rgb(187, 187, 187);
+    height: 9rem;
+    font-size: 14px;
+  }
+
+  .contain .iconAndName {
+    margin-top: 0.3rem;
+    height: 7rem;
+    width: 7rem;
+    border-radius: 3px;
+  }
+
+  .contain .iconAndName .title {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .contain .containDetails .icon {
+    font-size: 30px;
+  }
+
+  .contain .containDetails .description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 18rem;
+    margin-top: 0.3rem;
+  }
+
+  .contain .containDetails .containParragraph {
+    padding: 0.7rem;
+    background-color: rgb(223, 223, 223);
+    border-radius: 4px;
+    width: 16.5rem;
+    overflow-y: scroll;
+    height: 4rem;
+  }
+
+  .contain .containDetails .descriptionParragraph {
+    margin-top: 0.2rem;
+    word-break: break-all;
+  }
+
+  .contain .header {
+    height: 1.8rem;
+  }
+
+  .contain .header button {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+}

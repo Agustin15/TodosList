@@ -28,7 +28,7 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
       {alert && (
         <div className={styles.alert}>
           <img src={iconError}></img>
-          <span>oops,Can't delete task</span>
+          <span>Oops,can't delete task</span>
         </div>
       )}
     </div>
