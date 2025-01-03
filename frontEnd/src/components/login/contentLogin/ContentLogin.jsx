@@ -68,7 +68,6 @@ const ContentLogin = () => {
               <AlertInputLogin error={errorsInputsSignIn["username"]} />
             )}
           </div>
-
           <div className={classesStyle.containPassword}>
             <label>Password</label>
             <input
@@ -87,6 +86,12 @@ const ContentLogin = () => {
               <AlertInputLogin error={errorsInputsSignIn["password"]} />
             )}
           </div>
+          <a
+            className={classesStyle.forgotPassword}
+            href="http://localhost:5173/resetPassword"
+          >
+            forgot your password?
+          </a>
 
           <div className={classesStyle.containSignIn}>
             <button type="submit">
@@ -100,7 +105,6 @@ const ContentLogin = () => {
               <a href="http://localhost:5173/signup"> Sign up</a>
             </p>
           </div>
-
           {resultForm && <AlertForm />}
         </form>
       </div>

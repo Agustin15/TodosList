@@ -1,3 +1,9 @@
+.contentBody {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .containTasks {
   display: flex;
   justify-content: center;
@@ -173,6 +179,9 @@
 }
 
 @media (min-width: 375px) and (max-width: 478px) {
+  .contentBody {
+    flex-direction: column-reverse;
+  }
   .containTasks {
     display: flex;
     justify-content: center;
@@ -352,6 +361,10 @@
 }
 
 @media (min-width: 667px) and (max-width: 768px) {
+
+  .contentBody {
+    flex-direction: column-reverse;
+  }
   .containTasks {
     display: flex;
     justify-content: center;
@@ -392,7 +405,6 @@
     align-items: center;
     width: 100%;
   }
-  
 
   .containSelect {
     width: 12rem;

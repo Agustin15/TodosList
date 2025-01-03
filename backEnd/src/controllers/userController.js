@@ -68,3 +68,12 @@ export const verifyUserLogin = async (req, res) => {
     res.status(401).json({ messageError: error.message });
   }
 };
+
+export const getUsername = async (req, res) => {
+  try {
+    const userFound = await UserModel.findOne({ username: req.params.username });
+    res.status(200).json(userFound);
+  } catch (error) {
+    res.status(404).json({ messageError: error.message });
+  }
+};

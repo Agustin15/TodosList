@@ -35,12 +35,18 @@ const taskReducer = (state, action) => {
 export const TaskProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
   const [loadingState, setLoadingState] = useState(true);
+  const [completeTasks, setCompleteTasks] = useState();
+  const [inCompleteTasks, setIncompleteTasks] = useState();
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     getTasksByUser();
   }, []);
+
+  useEffect(() => {
+    statisticsTasks();
+  }, [tasks]);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -216,6 +222,24 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+
+  const statisticsTasks = () => {
+    if (tasks.length > 0) {
+      let taskComplete = tasks.reduce((ac, task) => {
+        task.isCompleted ? ac++ : ac;
+        return ac;
+      }, 0);
+
+      let taskIncomplete = tasks.reduce((ac, task) => {
+        !task.isCompleted ? ac++ : ac;
+        return ac;
+      }, 0);
+
+      setCompleteTasks(taskComplete);
+      setIncompleteTasks(taskIncomplete);
+    }
+  };
+
   const getTasksStateFilter = async (state) => {
     setLoadingState(true);
     const optionGetTasks = {
@@ -264,6 +288,8 @@ export const TaskProvider = ({ children }) => {
         deleteTask,
         getTasksStateFilter,
         getTasksByUser,
+        completeTasks,
+        inCompleteTasks,
       }}
     >
       {children}

@@ -1,0 +1,40 @@
+.containMsj {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 1px solid grey;
+  border-bottom: 3px solid rgb(0, 0, 0);
+  box-shadow: 2px 2px 2px grey;
+  border-radius: 3px;
+  color: black;
+  position: absolute;
+  margin: auto;
+  top: -15rem;
+  padding: 1rem;
+  animation-name: showAlert;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes showAlert {
+  from {
+    top: -15rem;
+  }
+
+  to {
+    top: 2rem;
+  }
+}
+.containMsj img {
+  width: 22px;
+}
+
+.containMsj p {
+  width: 27rem;
+}
+
+.containMsj a {
+  font-weight: bold;
+}
