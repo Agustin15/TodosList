@@ -16,7 +16,7 @@ resetPasswordRoutes.post("/", async (req, res) => {
     const secretKey = process.env.JWT_SECRET_KEY;
 
     const tokenResetPassword = jwt.sign({ mail: mail }, secretKey, {
-      expiresIn: "1h",
+      expiresIn: "15m",
     });
 
     const transporter = nodemailer.createTransport({
@@ -56,6 +56,7 @@ resetPasswordRoutes.post("/", async (req, res) => {
         </div>
         <div>
             <p>If you are not the one who should receive this message, please ignore it.</p>
+             <p>Link is valid by 15 minutes</p>
         </div>
     </div>
 </body>

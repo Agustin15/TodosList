@@ -42,10 +42,9 @@
 **_Dependencias:_**
 
 - express
-
 - nodemon
 - mongoose
-
+- nodemail
 - dotenv
 
 **_Configuracion del archivo .env_**

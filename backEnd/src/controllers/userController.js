@@ -76,7 +76,6 @@ export const updatePasswordUserByEmail = async (req, res) => {
     const newPassword = req.body.password;
 
     const decodeTokenAuth = authRequest(req);
-    console.log(mail);
 
     if (decodeTokenAuth) {
       bcrypt.hash(newPassword, 10, async (err, hash) => {
