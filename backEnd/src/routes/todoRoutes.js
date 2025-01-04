@@ -1,7 +1,7 @@
 import express from "express";
 import {
-  getTasksByUsername,
-  getStateTasksByUsername,
+  getTasksByEmail,
+  getStateTasksByEmail,
   createTask,
   updateTask,
   deleteTask,
@@ -12,11 +12,11 @@ export const tasksRouter = express.Router();
 tasksRouter.get("/:optionGetTasks", (req, res) => {
   const { option } = JSON.parse(req.params.optionGetTasks);
   switch (option) {
-    case "getTasksByUsername":
-      return getTasksByUsername(req, res);
+    case "getTasksByEmail":
+      return getTasksByEmail(req, res);
 
-    case "getStateTasksByUsername":
-      return getStateTasksByUsername(req, res);
+    case "getStateTasksByEmail":
+      return getStateTasksByEmail(req, res);
   }
 });
 tasksRouter.post("/", createTask);

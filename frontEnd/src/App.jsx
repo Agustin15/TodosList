@@ -3,6 +3,7 @@ import SignUpPage from "./components/pages/SignUpPage";
 import TodoListPage from "./components/pages/TodoListPage";
 import LoginPage from "./components/pages/LoginPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
+import NewPasswordPage from "./components/pages/newPasswordPage";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/tasks" element={<TodoListPage />}></Route>
         <Route path="/resetPassword" element={<ResetPasswordPage />}></Route>
+        <Route path="/newPassword" element={<NewPasswordPage/>}></Route>
       </Routes>
     </>
   );

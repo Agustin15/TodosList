@@ -1,4 +1,4 @@
-.containMsj {
+.containAlert {
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -10,6 +10,8 @@
   border-radius: 3px;
   color: black;
   position: absolute;
+  background-color: white;
+  z-index: 1;
   margin: auto;
   top: -15rem;
   padding: 1rem;
@@ -27,30 +29,43 @@
     top: 2rem;
   }
 }
-.containMsj img {
+.containAlert img {
   width: 22px;
 }
 
-.containMsj p {
+.containAlert p {
   width: 27rem;
 }
 
-.containMsj a {
+.containAlert a {
   font-weight: bold;
 }
 
 @media (min-width: 375px) and (max-width: 478px) {
-  .containMsj p {
-    width: 18rem;
+  @keyframes showAlert {
+    from {
+      top: -15rem;
+    }
+
+    to {
+      top: 1rem;
+    }
+  }
+
+  .containAlert p {
+    width: 17rem;
   }
 }
 
 @media (min-width: 667px) and (max-width: 768px) {
-  .containMsj {
-    font-size: 15px;
-    position: static;
+  .containAlert {
+    font-size: 16px;
+    color: black;
+    background-color: white;
     margin: auto;
     margin-top: -15rem;
+    padding: 1rem;
+    position:static;
     animation-name: showAlert;
     animation-duration: 1s;
     animation-fill-mode: forwards;
@@ -62,8 +77,9 @@
     }
 
     to {
-      margin-top: 8rem;
+      margin-top: 11rem;
     }
   }
- 
+
+  
 }

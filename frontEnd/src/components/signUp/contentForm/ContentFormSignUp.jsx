@@ -87,15 +87,15 @@ const ContentFormSignUp = () => {
 
           <div className={classesStyle.rowFormTwo}>
             <div className={classesStyle.containUsername}>
-              <label>Username</label>
+              <label>Email</label>
               <input
                 autoComplete="off"
-                name="username"
+                name="email"
                 type="text"
-                placeholder="Enter username"
+                placeholder="Enter email"
               ></input>
-              {errorsInputsSignUp["username"] && (
-                <AlertInputLogin error={errorsInputsSignUp["username"]} />
+              {errorsInputsSignUp["email"] && (
+                <AlertInputLogin error={errorsInputsSignUp["email"]} />
               )}
             </div>
 
@@ -126,7 +126,10 @@ const ContentFormSignUp = () => {
             </button>
           </div>
           <div className={classesStyle.haveAccountResponsive}>
-            <p>Already have a account? <a href="http://localhost:5173/login">Login</a></p>
+            <p>
+              Already have a account?{" "}
+              <a href="http://localhost:5173/login">Login</a>
+            </p>
           </div>
 
           {resultForm && <AlertForm />}

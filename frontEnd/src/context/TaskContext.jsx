@@ -37,7 +37,7 @@ export const TaskProvider = ({ children }) => {
   const [loadingState, setLoadingState] = useState(true);
   const [completeTasks, setCompleteTasks] = useState();
   const [inCompleteTasks, setIncompleteTasks] = useState();
-  const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -50,15 +50,15 @@ export const TaskProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.removeItem("email");
     location.href = "http://localhost:5173/login";
   };
 
   const getTasksByUser = async () => {
     setLoadingState(true);
     const optionGetTasks = {
-      option: "getTasksByUsername",
-      username: username,
+      option: "getTasksByEmail",
+      email: email,
     };
 
     try {
@@ -92,7 +92,7 @@ export const TaskProvider = ({ children }) => {
   const addTask = async (values) => {
     let data;
     setLoadingState(true);
-    values.user = username;
+    values.email = email;
     try {
       const response = await fetch("http://localhost:3000/todos/", {
         method: "POST",
@@ -168,7 +168,6 @@ export const TaskProvider = ({ children }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.stringify(token)}`,
         },
-        credentials: "include",
       });
 
       const result = await response.json();
@@ -222,7 +221,6 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-
   const statisticsTasks = () => {
     if (tasks.length > 0) {
       let taskComplete = tasks.reduce((ac, task) => {
@@ -243,9 +241,9 @@ export const TaskProvider = ({ children }) => {
   const getTasksStateFilter = async (state) => {
     setLoadingState(true);
     const optionGetTasks = {
-      option: "getStateTasksByUsername",
+      option: "getStateTasksByEmail",
       isCompleted: state,
-      username: username,
+      email: email,
     };
 
     try {

@@ -4,53 +4,50 @@ import Loader from "../loader/Loader";
 import Alert from "../resetPassword/alert/Alert";
 
 const ResetPassword = () => {
-  const [inputs, setInputs] = useState({ username: "", mail: "" });
-  const [errorsInputs, setErrorsInputs] = useState({ username: "", mail: "" });
+  const [mail, setMail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMail, setErrorMail] = useState("");
   const [error, setError] = useState("");
   const [alert, setAlert] = useState(false);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputs({ ...inputs, [name]: value });
+  const handleChange = async (event) => {
+    setMail(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     let regexMail = /\S+@\S+\.\S+/;
+    setError("");
+    setErrorMail("");
 
-    if (inputs.mail.trim().length == 0 || !regexMail.test(inputs.mail)) {
-      setErrorsInputs({ ...errorsInputs, ["mail"]: "Enter a valid email" });
-    } else if (inputs.username.length == 0) {
-      setErrorsInputs({
-        ...errorsInputs,
-        ["username"]: "Enter a valid username",
-      });
+    if (mail.length == 0 || !regexMail.test(mail)) {
+      setErrorMail("*Enter a valid email");
     } else {
-      let resultUser = await verifyUser();
-      if (resultUser) {
-        let mailResult = await sendMail();
-        if (mailResult) {
-          setAlert(true);
-        }
+      let idMail = await sendMail();
+      if (idMail) {
+        setAlert(true);
+        setTimeout(() => {
+          location.href = "http://localhost:5173/login";
+        }, 5111);
       }
     }
   };
 
   const sendMail = async () => {
     setLoading(true);
-    let data;
+    let data, userNotFound;
     try {
-      const response = await fetch("http://localhost:3000/mail/", {
+      const response = await fetch("http://localhost:3000/resetPassword/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ mail: inputs.mail, username: inputs.username }),
+        body: JSON.stringify({ mail: mail }),
       });
 
       const result = await response.json();
       if (!response.ok) {
+        userNotFound = true;
         throw result.messageError;
       }
 
@@ -61,6 +58,10 @@ const ResetPassword = () => {
       console.log(error);
     } finally {
       setLoading(false);
+      if (userNotFound) {
+        setError("*User not recognized");
+        return;
+      }
       if (!data) {
         setError("*Oops, failed to send mail");
       }
@@ -68,35 +69,9 @@ const ResetPassword = () => {
     }
   };
 
-  const verifyUser = async () => {
-    setLoading(true);
-    let data;
-    try {
-      const response = await fetch(
-        "http://localhost:3000/login/" + inputs.username
-      );
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw result.messageError;
-      }
-
-      if (result) {
-        data = result;
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-      if (!data) {
-        setError("*User not recognized");
-      }
-      return data;
-    }
-  };
   return (
     <div className={styles.containBody}>
-      {alert && <Alert mail={inputs.mail}></Alert>}
+      {alert && <Alert mail={mail}></Alert>}
       <h2>TodoList</h2>
       <div className={styles.containForm}>
         <form onSubmit={handleSubmit}>
@@ -104,25 +79,14 @@ const ResetPassword = () => {
           <div className={styles.containMail}>
             <label>Email</label>
             <input
-              name="mail"
               onChange={handleChange}
+              name="mail"
+              autoComplete="off"
               placeholder="Enter a email"
             ></input>
-            {errorsInputs.mail && (
-              <p className={styles.alertInput}>*Enter valid email</p>
-            )}
+            {errorMail && <p className={styles.alertInput}> {errorMail}</p>}
           </div>
-          <div className={styles.containMail}>
-            <label>Username</label>
-            <input
-              name="username"
-              onChange={handleChange}
-              placeholder="Enter your username"
-            ></input>
-            {errorsInputs.username && (
-              <p className={styles.alertInput}>*Enter valid username</p>
-            )}
-          </div>
+
           <button>Send</button>
           {loading && (
             <div className={styles.loading}>

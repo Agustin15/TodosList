@@ -114,7 +114,7 @@
 }
 
 .containUsername input {
-  background-image: url("../../../assets/img/username.png");
+  background-image: url("../../../assets/img/email.png");
   background-size: 22px;
   background-position-y: 0.5rem;
 }

@@ -14,12 +14,12 @@ export const FormUserProvider = ({ children }) => {
   const [errorsInputsSignUp, setErrorsInputsSignUp] = useState({
     name: "",
     lastname: "",
-    username: "",
+    email: "",
     password: "",
   });
 
   const [errorsInputsSignIn, setErrorsInputsSignIn] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -50,35 +50,42 @@ export const FormUserProvider = ({ children }) => {
     return newValue.join("");
   };
 
-  const validationMsj = (key) => {
+  const validationMsj = (key, value, option) => {
+
+    let regexMail = /\S+@\S+\.\S+/;
     const validationsMsjs = [
-      { key: "name", msj: "Enter a name" },
+      { key: "name", msj: "Enter a valid name", validation: value.length > 0 },
       {
         key: "lastname",
-        msj: "Enter a lastname",
+        msj: "Enter a valid  lastname",
+        validation: value.length > 0,
       },
       {
-        key: "username",
-        msj: "Enter a username",
+        key: "email",
+        msj: "Enter a valid email",
+        validation: value.length > 0 && regexMail.test(value),
       },
       {
         key: "password",
-        msj: "Enter a password",
+        msj: (option == "signIn"
+          ? "Enter a valid password"
+          : "Weak password (min 6 chars)"),
+        validation: (option == "signIn" ? value.length > 0 : value.length >= 6),
       },
     ];
 
     return validationsMsjs.find((validation) => validation.key == key);
   };
 
-  const iterationInputsForm = (formData, inputsError, userForm) => {
+  const iterationInputsForm = (formData, inputsError, userForm, option) => {
     let errorForm = false;
     formData.forEach((value, key) => {
       if (key == "name" || key == "lastname") {
         value = toUpperCase(value);
       }
-
-      if (value.length == 0) {
-        inputsError[key] = validationMsj(key).msj;
+      let validationInput = validationMsj(key, value, option);
+      if (!validationInput.validation) {
+        inputsError[key] = validationInput.msj;
         errorForm = true;
       }
       userForm[key] = value.trim();
@@ -97,7 +104,7 @@ export const FormUserProvider = ({ children }) => {
       setErrorsInputsSignIn({
         name: "",
         lastname: "",
-        username: "",
+        email: "",
         password: "",
       });
     }
@@ -106,11 +113,16 @@ export const FormUserProvider = ({ children }) => {
     const inputsError = {
       name: "",
       lastname: "",
-      username: "",
+      email: "",
       password: "",
     };
 
-    let errorForm = iterationInputsForm(formData, inputsError, userSignUp);
+    let errorForm = iterationInputsForm(
+      formData,
+      inputsError,
+      userSignUp,
+      "signUp"
+    );
     setErrorsInputsSignUp(inputsError);
 
     if (errorForm) {
@@ -131,16 +143,21 @@ export const FormUserProvider = ({ children }) => {
     }
 
     if (errorsInputsSignIn) {
-      setErrorsInputsSignIn({ username: "", password: "" });
+      setErrorsInputsSignIn({ email: "", password: "" });
     }
     const formData = new FormData(event.target);
     const userSignIn = {};
     const inputsError = {
-      username: "",
+      email: "",
       password: "",
     };
 
-    let errorForm = iterationInputsForm(formData, inputsError, userSignIn);
+    let errorForm = iterationInputsForm(
+      formData,
+      inputsError,
+      userSignIn,
+      "signIn"
+    );
     if (errorForm) {
       setErrorsInputsSignIn(inputsError);
     }

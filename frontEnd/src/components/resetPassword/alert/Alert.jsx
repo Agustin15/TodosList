@@ -7,7 +7,7 @@ const Msj = ({ mail }) => {
       <img src={iconTick}></img>
       <p>
         We have sent an email to <a>{mail}</a> for restore password,please check
-        it, will be redirected to login in 5 seconds
+        it, will be redirected to login...
       </p>
     </div>
   );

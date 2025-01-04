@@ -14,12 +14,12 @@ export const getAllTasks = async (req, res) => {
   }
 };
 
-export const getTasksByUsername = async (req, res) => {
-  const { username } = JSON.parse(req.params.optionGetTasks);
+export const getTasksByEmail = async (req, res) => {
+  const { email} = JSON.parse(req.params.optionGetTasks);
   try {
     const validAuthRequest = authRequest(req, res);
     if (validAuthRequest) {
-      const tasks = await TaskModel.find({ user: username });
+      const tasks = await TaskModel.find({ email: email });
       res.status(200).json(tasks);
     } else {
       res.redirect("http://localhost:5173/login");
@@ -29,15 +29,15 @@ export const getTasksByUsername = async (req, res) => {
   }
 };
 
-export const getStateTasksByUsername = async (req, res) => {
-  const { isCompleted, username } = JSON.parse(req.params.optionGetTasks);
+export const getStateTasksByEmail= async (req, res) => {
+  const { isCompleted, email } = JSON.parse(req.params.optionGetTasks);
 
   try {
     const validAuthRequest = authRequest(req);
     if (validAuthRequest) {
       const tasksStateSelected = await TaskModel.find({
         isCompleted: isCompleted,
-        user: username,
+        email: email,
       });
 
       res.status(200).json(tasksStateSelected);
@@ -95,7 +95,7 @@ const findTaskExisting = async (task) => {
     let taskToFind = {
       name: task.name,
       description: task.description,
-      user: task.username,
+      email: task.email,
     };
 
     const taskExisting = await TaskModel.findOne(taskToFind);

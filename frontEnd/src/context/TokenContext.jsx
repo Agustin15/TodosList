@@ -3,13 +3,13 @@ import { createContext, useContext } from "react";
 const TokenContext = createContext();
 
 export const TokenProvider = ({ children }) => {
-  const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.removeItem("email");
     location.href = "http://localhost:5173/login";
   };
 
@@ -35,7 +35,7 @@ export const TokenProvider = ({ children }) => {
 
   const fetchToRefreshToken = async () => {
     try {
-      const response = await fetch("http://localhost:3000/token/" + username, {
+      const response = await fetch("http://localhost:3000/token/" + email, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${JSON.stringify(refreshToken)}`,

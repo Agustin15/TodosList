@@ -32,7 +32,7 @@ const ContentLogin = () => {
         if (login.accessToken && login.refreshToken) {
           cleanForm();
           localStorage.setItem("token", login.accessToken);
-          localStorage.setItem("username", user.username);
+          localStorage.setItem("email", user.email);
           location.href = "http://localhost:5173/tasks";
         }
       };
@@ -57,15 +57,15 @@ const ContentLogin = () => {
         </div>
         <form onSubmit={handleSubmitSignIn}>
           <div className={classesStyle.containUsername}>
-            <label>Username</label>
+            <label>Email</label>
             <input
               autoComplete="off"
-              name="username"
+              name="email"
               type="text"
-              placeholder="Enter username"
+              placeholder="Enter email"
             ></input>
-            {errorsInputsSignIn["username"] && (
-              <AlertInputLogin error={errorsInputsSignIn["username"]} />
+            {errorsInputsSignIn["email"] && (
+              <AlertInputLogin error={errorsInputsSignIn["email"]} />
             )}
           </div>
           <div className={classesStyle.containPassword}>

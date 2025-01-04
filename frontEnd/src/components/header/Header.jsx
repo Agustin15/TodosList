@@ -17,7 +17,7 @@ const Header = () => {
   const [openAlertToken, setOpenAlertToken] = useState(false);
   const { logout, verifyToTokenExpired } = useToken();
 
-  const username = localStorage.getItem("username");
+  const email= localStorage.getItem("email");
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -71,7 +71,7 @@ const Header = () => {
             >
               <div className={classesStyle.rowOne}>
                 <img src={accountIcon}></img>
-                <span>{username}</span>
+                <span title={email}>{email}</span>
               </div>
               <div className={classesStyle.logOut}>
                 <img src={logOutIcon}></img>
