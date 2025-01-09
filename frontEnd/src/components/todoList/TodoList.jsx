@@ -62,9 +62,10 @@ const TodoList = () => {
               <span>Filter tasks:</span>
               <div className={styles.rowSelect}>
                 <select ref={selectFilterTasks}>
+                <option value={"allTasks"}>All Tasks</option>
                   <option value={true}>Complete Tasks</option>
                   <option value={false}>Pending Tasks</option>
-                  <option value={"allTasks"}>All Tasks</option>
+                  
                 </select>
                 <button onClick={handleFilterTasks}>
                   <img src={iconSearch}></img>

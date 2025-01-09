@@ -56,7 +56,7 @@ resetPasswordRoutes.post("/", async (req, res) => {
         </div>
         <div>
             <p>If you are not the one who should receive this message, please ignore it.</p>
-             <p>Link is valid by 15 minutes</p>
+             <p>Link is valid by 15 minutes.</p>
         </div>
     </div>
 </body>
