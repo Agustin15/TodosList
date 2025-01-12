@@ -101,3 +101,146 @@
 
   width: 80px;
 }
+
+@media (min-width:375px) and (max-width:478px) {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  
+  .header nav {
+    margin-left: 0.5rem;
+  }
+  
+  .header nav {
+    color: white;
+    font-weight: bold;
+  }
+  .header nav img {
+    width: 20px;
+  }
+  
+  .initHeader {
+    font-size: 17px;
+    gap: 0.5rem;
+  }
+  
+  .header .back img {
+    width: 20px;
+  }
+  
+  .header .title {
+    margin-right: 1.5rem;
+    font-size: 11px;
+  }
+  
+  .header .title img {
+    width: 28px;
+  }
+  
+  .contentBody {
+    margin-top: 0rem;
+    width: 19rem;
+    height: 29rem;
+    background-color: white;
+    border:none;
+    box-shadow: none;
+    border-radius: 0;
+    padding-top: 1rem;
+  }
+  
+  .contentLoading{
+    gap: 0.5rem;
+    font-size: 20px;
+    opacity: 70%;
+    height: 95%;
+  
+  }
+
+  .noData{
+    gap: 0.5rem;
+    height: 90%;
+    font-size: 17px;
+    opacity: 70%;
+  
+  }
+  .noData img{
+  
+    width: 60px;
+  }
+
+  
+}
+
+
+@media (min-width:667px) and (max-width:768px) {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .header nav {
+    margin-left: 0.5rem;
+  }
+  
+  .header nav {
+    color: white;
+    font-weight: bold;
+  }
+  .header nav img {
+    width: 20px;
+  }
+  
+  .initHeader {
+    font-size: 18px;
+    gap: 0.5rem;
+  }
+  
+  .header .back img {
+    width: 23px;
+  }
+  
+  .header .title {
+    margin-right: 1.5rem;
+    font-size: 13px;
+  }
+  
+  .header .title img {
+    width: 30px;
+  }
+  
+  .contentBody {
+    margin-top: 0rem;
+    width: 19rem;
+    height: 29rem;
+    background-color: white;
+    border:none;
+    box-shadow: none;
+    border-radius: 0;
+    padding-top: 1rem;
+
+  }
+  
+  .contentLoading{
+    gap: 0.5rem;
+    font-size: 20px;
+    opacity: 70%;
+    height: 50%;
+  
+  }
+
+  .noData{
+    gap: 0.5rem;
+    height: 90%;
+    font-size: 17px;
+    opacity: 70%;
+  
+  }
+  .noData img{
+  
+    width: 60px;
+  }
+
+  
+}

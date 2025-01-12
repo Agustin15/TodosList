@@ -22,6 +22,11 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
 
   const token = localStorage.getItem("token");
 
+  const handleClose = () => {
+    setModalEditEmail(false);
+    setResultForm();
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -119,9 +124,9 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.navBar}>
-        <button onClick={() => setModalEditEmail(false)}>X</button>
+        <button onClick={handleClose}>X</button>
       </div>
       <div className={styles.title}>
         <h4>Edit email</h4>
@@ -156,6 +161,7 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
             name="password"
             type="password"
             placeholder="Enter password"
+            autoComplete="off"
           ></input>
           <p className={styles.error}>{errors.password}</p>
           <img
@@ -165,10 +171,12 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
           ></img>
         </div>
       </div>
-      <button type="submit">
-        Update
-        <Loader isLoading={loading} color="white" size={7} />
-      </button>
+      <div className={styles.containButton}>
+        <button type="submit">
+          Update
+          <Loader isLoading={loading} color="white" size={7} />
+        </button>
+      </div>
 
       {resultForm && <AlertForm />}
     </form>

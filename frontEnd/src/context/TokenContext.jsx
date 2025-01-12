@@ -49,6 +49,7 @@ export const TokenProvider = ({ children }) => {
         location.reload();
       }
     } catch (error) {
+      logout();
       console.log(error);
     }
   };

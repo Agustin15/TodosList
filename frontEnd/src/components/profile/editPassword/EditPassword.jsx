@@ -24,6 +24,10 @@ const EditPassword = ({ setModalEditPassword }) => {
   const token = localStorage.getItem("token");
   const mail = localStorage.getItem("email");
 
+  const handleClose = () => {
+    setModalEditPassword(false);
+    setResultForm();
+  };
   const handlePassword = (event) => {
     let icon = event.target;
     let input = icon.parentElement.querySelector("input");
@@ -132,9 +136,9 @@ const EditPassword = ({ setModalEditPassword }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.navBar}>
-        <button onClick={() => setModalEditPassword(false)}>X</button>
+        <button onClick={handleClose}>X</button>
       </div>
       <div className={styles.title}>
         <h4>Edit password</h4>
@@ -149,6 +153,7 @@ const EditPassword = ({ setModalEditPassword }) => {
             name="currentPassword"
             placeholder="Enter current password"
             type="password"
+            autoComplete="off"
           ></input>
           <img onClick={handlePassword} src={iconPasswordHide}></img>
           <p className={styles.error}>{errors.currentPassword}</p>
@@ -160,6 +165,7 @@ const EditPassword = ({ setModalEditPassword }) => {
             name="newPassword"
             type="password"
             placeholder="Enter new password"
+            autoComplete="off"
           ></input>
           <img onClick={handlePassword} src={iconPasswordHide}></img>
           <p className={styles.error}>{errors.newPassword}</p>
@@ -171,15 +177,19 @@ const EditPassword = ({ setModalEditPassword }) => {
             name="repeatPassword"
             type="password"
             placeholder="Repeat password"
+            autoComplete="off"
           ></input>
           <p className={styles.error}>{errors.repeatPassword}</p>
           <img onClick={handlePassword} src={iconPasswordHide}></img>
         </div>
       </div>
-      <button type="submit">
-        Update
-        <Loader isLoading={loading} color="white" size={7} />
-      </button>
+
+      <div className={styles.containButton}>
+        <button type="submit">
+          Update
+          <Loader isLoading={loading} color="white" size={7} />
+        </button>
+      </div>
 
       {resultForm && <AlertForm />}
     </form>

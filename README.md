@@ -28,6 +28,7 @@
 - react-dom
 - react-spinners
 - react-router
+- canvasjs/react-charts
 
 > ## Instalacion backend ⚙
 

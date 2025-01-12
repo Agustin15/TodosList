@@ -1,50 +1,153 @@
-
 .title {
-    font-size: 20px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.title img {
+  width: 50px;
+}
+
+.containDataUser {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 98%;
+  padding-left: 5rem;
+}
+.dataUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 1px solid gray;
+  box-shadow: 2px 2px 2px gray;
+  border-radius: 4px;
+}
+
+.dataUser .head {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  height: 2rem;
+  font-weight: bold;
+  width: 105%;
+  border-bottom: 1px solid rgb(187, 187, 187);
+}
+
+.dataUser .head img {
+  width: 40px;
+}
+
+.dataUser ul {
+  padding-top: 0.5rem;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 106%;
+  gap: 0.4rem;
+  margin-left: 2rem;
+  border-radius: 3px;
+}
+.dataUser ul li {
+  list-style: none;
+}
+.dataUser ul span {
+  font-weight: bold;
+}
+
+.containOptions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  height: auto;
+  margin-top: 2.4rem;
+}
+.editMailOption,
+.editPasswordOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 20rem;
+  height: 11.3rem;
+  border: 1px solid rgb(187, 187, 187);
+  box-shadow: 2px 2px 2px gray;
+  border-radius: 3px;
+}
+
+.containIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 90%;
+}
+
+.containIcon img {
+  width: 85px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(rgb(0, 86, 184), rgb(1, 48, 151));
+  padding: 1rem;
+  width: 90.5%;
+  font-size: 15px;
+}
+
+.footer span {
+  cursor: pointer;
+}
+.footer img {
+  width: 15px;
+  cursor: pointer;
+}
+
+@media (min-width: 375px) and (max-width: 478px) {
+  .title {
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: end;
     gap: 1rem;
   }
-  
+
   .title img {
-    width: 50px;
+    width: 37px;
   }
-  
+
   .containDataUser {
-    display: flex;
-    align-items: center;
-    justify-content: start;
     width: 98%;
-    padding-left: 5rem;
+    padding-left: 2rem;
   }
   .dataUser {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
-    padding: 0.5rem;
-    border: 1px solid gray;
-    box-shadow: 2px 2px 2px gray;
-    border-radius: 4px;
   }
-  
+
   .dataUser .head {
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    height: 2rem;
-    font-weight: bold;
-    width: 105%;
-    border-bottom: 1px solid rgb(187, 187, 187);
+    font-size: 17px;
   }
-  
+
   .dataUser .head img {
-    width: 40px;
+    width: 32px;
   }
-  
+
   .dataUser ul {
     padding-top: 0.5rem;
     font-size: 16px;
@@ -56,64 +159,112 @@
     margin-left: 2rem;
     border-radius: 3px;
   }
-  .dataUser ul li {
-    list-style: none;
-  }
-  .dataUser ul span {
-    font-weight: bold;
-  }
-  
+
   .containOptions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    height: auto;
-    margin-top: 2.4rem;
-  }
-  .editMailOption,
-  .editPasswordOption {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    width: 20rem;
-    height: 11.3rem;
-    border: 1px solid rgb(187, 187, 187);
-    box-shadow: 2px 2px 2px gray;
-    border-radius: 3px;
+    height: auto;
+    margin-top: 1.5rem;
   }
-  
-  .containIcon {
+  .editMailOption,
+  .editPasswordOption {
+    width: 16.3rem;
+    height: 9.6rem;
+  }
+
+  .containIcon img {
+    width: 65px;
+  }
+
+  .footer {
+    gap: 0.5rem;
+    padding: 0.8rem;
+    width: 91%;
+    font-size: 14px;
+  }
+
+  .footer img {
+    width: 13px;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 667px) and (max-width: 768px) {
+  .title {
+    font-size: 18px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    width: 90%;
+    justify-content: end;
+    gap: 1rem;
   }
-  
-  .containIcon img {
-    width: 85px;
+
+  .title img {
+    width: 37px;
   }
-  
-  .footer {
+
+
+  .containDataUser {
     display: flex;
     align-items: center;
     justify-content: start;
-    gap: 0.5rem;
-    color: white;
-    font-weight: bold;
-    background: linear-gradient(rgb(0, 86, 184), rgb(1, 48, 151));
-    padding: 1rem;
-    width: 90.5%;
-    font-size: 15px;
+    width: auto;
+    padding-left: 0;
   }
-  
-  .footer span {
-    cursor: pointer;
+  .dataUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
   }
+
+  .dataUser .head {
+    font-size: 17px;
+  }
+
+  .dataUser .head img {
+    width: 32px;
+  }
+
+  .dataUser ul {
+    padding-top: 0.5rem;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 106%;
+    gap: 0.4rem;
+    margin-left: 2rem;
+    border-radius: 3px;
+  }
+
+  .containOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    height: auto;
+    margin-top: 1.5rem;
+  }
+  .editMailOption,
+  .editPasswordOption {
+    width: 13.3rem;
+    height: 9.6rem;
+  }
+
+  .containIcon img {
+    width: 65px;
+  }
+
+  .footer {
+    padding: 0.8rem;
+    width: 88.6%;
+    font-size: 14px;
+  }
+
   .footer img {
-    width: 15px;
+    width: 13px;
     cursor: pointer;
   }
-  
+}

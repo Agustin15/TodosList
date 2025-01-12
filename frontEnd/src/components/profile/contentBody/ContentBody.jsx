@@ -5,13 +5,14 @@ import iconUserInfo from "../../../assets/img/infoUser.png";
 import iconEditMail from "../../../assets/img/editMail.png";
 import iconEditPassword from "../../../assets/img/editPassword.png";
 
-const ContentBody = ({ user,setModalEditEmail,setModalEditPassword }) => {
+const ContentBody = ({ user, setModalEditEmail, setModalEditPassword }) => {
   return (
     <>
       <div className={styles.title}>
         <h4>{`${user.name} ${user.lastname}`}</h4>
         <img src={iconProfile}></img>
       </div>
+
       <div className={styles.containDataUser}>
         <div className={styles.dataUser}>
           <div className={styles.head}>

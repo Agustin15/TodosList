@@ -223,50 +223,27 @@
   }
 
   .containDetailsProfileShow {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 4px;
-    background-color: white;
-    box-shadow: 2px 2px 2px gray;
-    color: gray;
-    position: absolute;
-    z-index: 3;
     right: 1rem;
-    width: 6rem;
-    height: 4rem;
-    top: 3.6rem;
+    width: 9rem;
+    height: 5.7rem;
+    top: 3.3rem;
   }
 
   .containDetailsProfileHidden {
     display: none;
   }
 
-  .containDetailsProfileShow span {
-    text-overflow: ellipsis;
-    width: 5rem;
-    overflow: hidden;
-    white-space: nowrap;
+
+  .header .dataProfile {
+    font-size: 13px;
   }
 
-  .containDetailsProfileShow .rowOne {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    width: 122%;
-    gap: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgb(179, 179, 179);
+  .header .containDetailsProfileShow button {
+    font-size: 12px;
   }
 
-  .containDetailsProfileShow .rowOne img {
-    width: 21px;
-  }
   .logOut {
-    font-size: 15px;
+    font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -275,12 +252,8 @@
     width: 111%;
   }
 
-  .logOut span:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
   .header .containProfile .logOut img {
-    width: 21px;
+    width: 20px;
     opacity: 55%;
   }
 }
@@ -329,26 +302,23 @@
   }
 
   .containDetailsProfileShow {
-    position: absolute;
-    z-index: 3;
     right: 1rem;
-    width: 6rem;
-    height: 4rem;
-    top: 3.2rem;
+    width: 9rem;
+    height: 5.2rem;
+    top: 3.3rem;
   }
 
   .containDetailsProfileHidden {
     display: none;
   }
 
-  .containDetailsProfileShow .rowOne {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    width: 122%;
-    gap: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgb(179, 179, 179);
+
+  .header .dataProfile {
+    font-size: 13px;
   }
+
+  .header .containDetailsProfileShow button {
+    font-size: 12px;
+  }
+
 }
