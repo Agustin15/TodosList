@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../model/userModel.js";
 import jwt from "jsonwebtoken";
 import authRequest from "../auth/auth.js";
+import { updateUserOfAllTasks } from "./todoController.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -24,6 +25,16 @@ export const createUser = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ messageError: error.message });
+  }
+};
+
+export const getUserByEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const userFound = await UserModel.findOne({ email: email });
+    res.status(200).json(userFound);
+  } catch (error) {
+    res.status(502).json({ messageError: error.message });
   }
 };
 
@@ -75,6 +86,21 @@ export const updatePasswordUserByEmail = async (req, res) => {
     const mail = req.params.mail;
     const newPassword = req.body.password;
 
+    if (req.body.currentPassword) {
+      const currentPassword = req.body.currentPassword;
+      const userFound = await findUserByEmail(mail);
+      if (userFound) {
+        const passwordVerify = await bcrypt.compare(
+          currentPassword,
+          userFound.password
+        );
+
+        if (!passwordVerify) {
+          throw new Error("Invalid current password");
+        }
+      }
+    }
+
     const decodeTokenAuth = authRequest(req);
 
     if (decodeTokenAuth) {
@@ -95,5 +121,56 @@ export const updatePasswordUserByEmail = async (req, res) => {
     }
   } catch (error) {
     res.status(502).json({ messageError: error.message });
+  }
+};
+
+export const updateEmailUser = async (req, res) => {
+  const secretTokenKey = process.env.JWT_SECRET_KEY;
+  const emailCurrent = req.params.email;
+  const newEmail = req.body.newEmail;
+  const password = req.body.password;
+
+  try {
+    const userFoundExisted = await findUserByEmail(newEmail);
+
+    if (userFoundExisted) {
+      throw new Error("Updated failed, email in use");
+    }
+
+    const currentUser = await findUserByEmail(emailCurrent);
+    const validAuth = authRequest(req);
+    if (validAuth) {
+      const passwordVerify = await bcrypt.compare(
+        password,
+        currentUser.password
+      );
+
+      if (!passwordVerify) {
+        throw new Error("Updated failed, invalid password");
+      } else {
+        const userUpdated = await UserModel.updateOne(
+          { email: emailCurrent },
+          {
+            $set: { email: newEmail },
+          }
+        );
+
+        if (userUpdated) {
+          const tasksOfUserUpdated = await updateUserOfAllTasks(
+            emailCurrent,
+            newEmail
+          );
+          if (tasksOfUserUpdated) {
+            const token = jwt.sign({ email: newEmail }, secretTokenKey, {
+              expiresIn: "1h",
+            });
+
+            res.status(200).json(token);
+          }
+        }
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ messageError: error.message });
   }
 };

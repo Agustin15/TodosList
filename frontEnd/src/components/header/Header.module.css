@@ -89,16 +89,19 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  align-items: center;
+  align-items: start;
   padding: 1rem;
+  padding-left: 0.2rem;
   border-radius: 4px;
   background-color: white;
   box-shadow: 2px 2px 2px gray;
+  border: 1px solid rgb(199, 199, 199);
   color: gray;
   position: absolute;
+  z-index: 1;
   right: 2rem;
-  width: 7rem;
-  height: 4.6rem;
+  width: 9rem;
+  height: 5.7rem;
   top: 3.6rem;
 }
 
@@ -108,18 +111,41 @@
 
 .containDetailsProfileShow span {
   text-overflow: ellipsis;
-  width: 5rem;
+  width: 7rem;
   overflow: hidden;
   white-space: nowrap;
 }
-.containDetailsProfileShow .rowOne {
+
+.header .dataProfile {
+  font-size: 14px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 122%;
-  gap: 0.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgb(179, 179, 179);
+}
+.containDetailsProfileShow .rowOne {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header .containDetailsProfileShow button {
+  font-size: 12px;
+  font-weight: bold;
+  background-color: rgb(24, 179, 10);
+  color: white;
+  border: none;
+  width: 4.4rem;
+  height: 1.5rem;
+  margin-left: 2.5rem;
+  border-radius: 4px;
+}
+
+.header .containDetailsProfileShow button:hover {
+  background-color: rgb(24, 153, 12);
+  cursor: pointer;
 }
 
 .logOut {
@@ -127,7 +153,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0.5rem;
   gap: 0.6rem;
   width: 111%;
 }
@@ -316,7 +341,6 @@
     display: none;
   }
 
-
   .containDetailsProfileShow .rowOne {
     display: flex;
     justify-content: center;
@@ -327,5 +351,4 @@
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgb(179, 179, 179);
   }
-
 }

@@ -13,6 +13,7 @@ import Loader from "../loader/Loader";
 import { useRef, useState } from "react";
 
 const TodoList = () => {
+
   const { tasks, loadingState, getTasksStateFilter, getTasksByUser } =
     useTasks();
   const selectFilterTasks = useRef();
@@ -33,6 +34,7 @@ const TodoList = () => {
     titleRef.current.textContent = optionFind.title;
     imgTitleRef.current.src = optionFind.img;
   };
+
 
   const handleFilterTasks = () => {
     let option = selectFilterTasks.current.value;

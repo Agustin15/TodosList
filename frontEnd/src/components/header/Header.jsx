@@ -17,7 +17,7 @@ const Header = () => {
   const [openAlertToken, setOpenAlertToken] = useState(false);
   const { logout, verifyToTokenExpired } = useToken();
 
-  const email= localStorage.getItem("email");
+  const email = localStorage.getItem("email");
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -30,7 +30,7 @@ const Header = () => {
       if (resultVerifiyExpired == "to expire") {
         setOpenAlertToken(true);
       }
-    }, 354000);
+    }, 6000);
   }, []);
 
   const handleOpenDetailsProfile = () => {
@@ -69,10 +69,20 @@ const Header = () => {
                   : classesStyle.containDetailsProfileHidden
               }
             >
-              <div className={classesStyle.rowOne}>
-                <img src={accountIcon}></img>
-                <span title={email}>{email}</span>
+              <div className={classesStyle.dataProfile}>
+                <div className={classesStyle.rowOne}>
+                  <img src={accountIcon}></img>
+                  <span title={email}>{email}</span>
+                </div>
+                <button
+                  onClick={() =>
+                    (location.href = "http://localhost:5173/profile")
+                  }
+                >
+                  Edit profile
+                </button>
               </div>
+
               <div className={classesStyle.logOut}>
                 <img src={logOutIcon}></img>
                 <span onClick={logout}>Logout</span>

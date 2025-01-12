@@ -3,7 +3,6 @@ import styles from "./Chart.module.css";
 let CanvasJS = CanvasJSReact.CanvasJS;
 let CanvasJSChart = CanvasJSReact.CanvasJSChart;
 import { useTasks } from "../../context/TaskContext";
-import { useState } from "react";
 CanvasJS.addColorSet("customColor", ["#a50606", "#05ad0d"]);
 
 const Chart = () => {

@@ -18,7 +18,7 @@
 
 .alertFormError {
   background: linear-gradient(rgb(223, 22, 22), rgb(153, 9, 9));
-  width: 20rem;
+  max-width: 26rem;
   padding: 0.8rem;
   border-radius: 4px;
   box-shadow: 2px 2px 2px gray;

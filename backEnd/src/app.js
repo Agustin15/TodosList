@@ -5,6 +5,7 @@ import { signUpRouter } from "./routes/signUpRoutes.js";
 import { loginRoutes } from "./routes/loginRoutes.js";
 import { stateTokenRoutes } from "./routes/stateTokenRoutes.js";
 import { resetPasswordRoutes } from "./routes/resetPasswordRoutes.js";
+import { userDataRoutes } from "./routes/userDataRoutes.js";
 
 export const app = express();
 
@@ -16,6 +17,7 @@ app.use("/signup", signUpRouter);
 app.use("/login", loginRoutes);
 app.use("/token", stateTokenRoutes);
 app.use("/resetPassword", resetPasswordRoutes);
+app.use("/userData", userDataRoutes);
 
 app.use((error, req, res, next) => {
   console.log("Error", error);

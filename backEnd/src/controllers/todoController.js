@@ -15,7 +15,7 @@ export const getAllTasks = async (req, res) => {
 };
 
 export const getTasksByEmail = async (req, res) => {
-  const { email} = JSON.parse(req.params.optionGetTasks);
+  const { email } = JSON.parse(req.params.optionGetTasks);
   try {
     const validAuthRequest = authRequest(req, res);
     if (validAuthRequest) {
@@ -29,7 +29,7 @@ export const getTasksByEmail = async (req, res) => {
   }
 };
 
-export const getStateTasksByEmail= async (req, res) => {
+export const getStateTasksByEmail = async (req, res) => {
   const { isCompleted, email } = JSON.parse(req.params.optionGetTasks);
 
   try {
@@ -143,5 +143,17 @@ export const deleteTask = async (req, res) => {
     }
   } catch (error) {
     res.status(404).json({ messageError: error.message });
+  }
+};
+
+export const updateUserOfAllTasks = async (emailCurrent, newEmail) => {
+  try {
+    const tasksUpdated = await TaskModel.updateMany(
+      { email: emailCurrent },
+      { $set: { email: newEmail } }
+    );
+    return tasksUpdated;
+  } catch (error) {
+    throw new Error(error.message);
   }
 };
