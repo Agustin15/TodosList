@@ -1,4 +1,4 @@
-import NewPassword from "../newPassword/newPassword";
+import NewPassword from "../newPassword/NewPassword";
 const NewPasswordPage = () => {
   return <NewPassword></NewPassword>;
 };

@@ -3,7 +3,7 @@ import SignUpPage from "./components/pages/SignUpPage";
 import TodoListPage from "./components/pages/TodoListPage";
 import LoginPage from "./components/pages/LoginPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
-import NewPasswordPage from "./components/pages/newPasswordPage";
+import NewPasswordPage from "./components/pages/NewPasswordPage";
 import ProfilePage from "./components/pages/ProfilePage";
 
 const App = () => {

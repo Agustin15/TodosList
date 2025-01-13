@@ -8,7 +8,7 @@ import iconEdit from "../../assets/img/editing.png";
 import EditTodoForm from "../editTodoForm/EditTodoForm";
 import DetailsTodo from "../detailsTodo/DetailsTodo";
 import Modal from "../modal/Modal";
-import DeleteTask from "../deleteTask/DeleteTaks";
+import DeleteTask from "../DeleteTask/DeleteTaks";
 import ChangeStatusItem from "../changeStatusTask/ChangeStatusItem";
 
 const TodoItem = ({ task }) => {
