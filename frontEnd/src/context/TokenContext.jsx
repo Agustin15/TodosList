@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 const TokenContext = createContext();
 
 export const TokenProvider = ({ children }) => {
@@ -10,7 +10,7 @@ export const TokenProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
-    location.href = "http://localhost:5173/login";
+    location.href = `${urlFront}login`;
   };
 
   const verifyToTokenExpired = async () => {

@@ -1,18 +1,25 @@
 .containChart {
   width: 18rem;
+  height: 15rem;
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 @media (min-width: 375px) and (max-width: 478px) {
   .containChart {
-    width: 16rem;
-    padding-left:1.3rem;
+    width: 18.2rem;
+    height: 13rem;
+    margin-top: 2.5rem;
   }
 }
 
 @media (min-width: 667px) and (max-width: 768px) {
   .containChart {
-    width: 26rem;
+    width: 33.6rem;
     margin-top: 1rem;
-    padding-left: 5rem;
+    
   }
 }

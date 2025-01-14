@@ -32,7 +32,7 @@
 .containStatistics .body {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   gap: 1rem;
   padding: 0.5rem;
   border-bottom-left-radius: 4px;
@@ -81,6 +81,7 @@
   font-size: 18px;
   font-weight: bold;
   height: 89%;
+  width: 100%;
   color: grey;
 }
 
@@ -91,6 +92,29 @@
 }
 
 .noDataHide {
+  display: none;
+}
+
+.loadingShow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 19px;
+  width: 100%;
+  height: 80%;
+}
+.loadingShow img {
+  width: 50px;
+  opacity: 60%;
+}
+
+.loadingShow span {
+  opacity: 80%;
+}
+
+.loadingHide {
   display: none;
 }
 
@@ -130,6 +154,29 @@
     opacity: 76%;
     padding-left: 0.6rem;
   }
+
+  .loadingShow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 18px;
+    width: 100%;
+    height: 80%;
+  }
+  .loadingShow img {
+    width: 50px;
+    opacity: 60%;
+  }
+
+  .loadingShow span {
+    opacity: 80%;
+  }
+
+  .loadingHide {
+    display: none;
+  }
 }
 
 @media (min-width: 667px) and (max-width: 768px) {
@@ -148,7 +195,7 @@
 
   .containStatistics .body {
     width: 34.2rem;
-    height: 18.5rem;
+    height: 20rem;
   }
 
   .containStatistics .body li img {
@@ -163,5 +210,26 @@
     display: none;
   }
 
- 
+  .loadingShow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 19px;
+    width: 100%;
+    height: 80%;
+  }
+  .loadingShow img {
+    width: 50px;
+    opacity: 60%;
+  }
+
+  .loadingShow span {
+    opacity: 80%;
+  }
+
+  .loadingHide {
+    display: none;
+  }
 }

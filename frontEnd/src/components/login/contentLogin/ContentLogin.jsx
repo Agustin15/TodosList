@@ -9,6 +9,7 @@ import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ContentLogin = () => {
   const {
@@ -33,7 +34,7 @@ const ContentLogin = () => {
           cleanForm();
           localStorage.setItem("token", login.accessToken);
           localStorage.setItem("email", user.email);
-          location.href = "http://localhost:5173/tasks";
+          location.href = `${urlFront}tasks`;
         }
       };
 
@@ -47,7 +48,7 @@ const ContentLogin = () => {
         paragraphWelcome={"Sign in to access his tasks!"}
         paragraphAccount={"Don't have an account?"}
         optionLink={"Sign up"}
-        link={"http://localhost:5173/signup"}
+        link={`${urlFront}signup`}
       ></WelcomeFormSignUp>
       <div className={classesStyle.form}>
         <div className={classesStyle.title}>
@@ -88,7 +89,7 @@ const ContentLogin = () => {
           </div>
           <a
             className={classesStyle.forgotPassword}
-            href="http://localhost:5173/resetPassword"
+            href={`${urlFront}resetPassword`}
           >
             forgot your password?
           </a>
@@ -102,7 +103,7 @@ const ContentLogin = () => {
           <div className={classesStyle.haveAccountResponsive}>
             <p>
               Don't have an account?
-              <a href="http://localhost:5173/signup"> Sign up</a>
+              <a href={`${urlFront}signup`}> Sign up</a>
             </p>
           </div>
           {resultForm && <AlertForm />}

@@ -10,6 +10,7 @@ import { TaskProvider } from "../../context/TaskContext";
 import { FormProvider } from "../../context/FormContext";
 import { useEffect, useState } from "react";
 import { useToken } from "../../context/TokenContext";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Header = () => {
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -74,11 +75,7 @@ const Header = () => {
                   <img src={accountIcon}></img>
                   <span title={email}>{email}</span>
                 </div>
-                <button
-                  onClick={() =>
-                    (location.href = "http://localhost:5173/profile")
-                  }
-                >
+                <button onClick={() => (location.href = `${urlFront}profile`)}>
                   Edit profile
                 </button>
               </div>

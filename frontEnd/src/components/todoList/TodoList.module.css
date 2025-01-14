@@ -129,12 +129,12 @@
 
 .loadingShow {
   font-size: 25px;
-  color: rgb(0, 3, 194);
+  color: rgb(49, 49, 49);
   opacity: 50%;
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 10rem;
+  margin-top: 6rem;
 }
 
 .warningShow {
@@ -310,7 +310,7 @@
 
   .loadingShow {
     font-size: 17px;
-    color: rgb(0, 3, 194);
+    color: rgb(49, 49, 49);
     opacity: 50%;
     display: flex;
     align-items: center;
@@ -361,7 +361,6 @@
 }
 
 @media (min-width: 667px) and (max-width: 768px) {
-
   .contentBody {
     flex-direction: column-reverse;
   }
@@ -492,7 +491,7 @@
 
   .loadingShow {
     font-size: 17px;
-    color: rgb(0, 3, 194);
+    color: rgb(49, 49, 49);
     opacity: 50%;
     display: flex;
     align-items: center;

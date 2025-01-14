@@ -78,8 +78,7 @@ const TodoList = () => {
         </div>
         <div className={loadingState ? styles.loadingShow : styles.loadingHide}>
           <h3>loading tasks</h3>
-
-          <Loader isLoading={loadingState} color="blue" size={8} />
+          <Loader isLoading={loadingState} color="gray" size={8} />
         </div>
 
         <div

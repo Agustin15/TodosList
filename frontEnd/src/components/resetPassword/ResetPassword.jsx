@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./ResetPassword.module.css";
 import Loader from "../loader/Loader";
 import Alert from "../resetPassword/alert/Alert";
+const urlFront= import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ResetPassword = () => {
   const [mail, setMail] = useState("");
@@ -27,7 +28,7 @@ const ResetPassword = () => {
       if (idMail) {
         setAlert(true);
         setTimeout(() => {
-          location.href = "http://localhost:5173/login";
+          location.href = `${urlFront}login`;
         }, 5111);
       }
     }

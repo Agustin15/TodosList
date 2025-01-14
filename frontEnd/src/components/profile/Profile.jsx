@@ -11,6 +11,7 @@ import EditPassword from "./editPassword/EditPassword";
 import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import Loader from "../loader/Loader";
+const urlFront=import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Profile = () => {
   const { logout, verifyToTokenExpired } = useToken();
@@ -94,7 +95,7 @@ const Profile = () => {
           </div>
           <div className={styles.back}>
             <img
-              onClick={() => (location.href = "http://localhost:5173/tasks")}
+              onClick={() => (location.href = `${urlFront}tasks`)}
               src={iconBack}
             ></img>
           </div>

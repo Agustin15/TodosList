@@ -5,6 +5,7 @@ import {
   useReducer,
   useState,
 } from "react";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const TaskContext = createContext();
 
@@ -51,7 +52,7 @@ export const TaskProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
-    location.href = "http://localhost:5173/login";
+    location.href = `${urlFront}login`;
   };
 
   const getTasksByUser = async () => {

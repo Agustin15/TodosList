@@ -10,6 +10,7 @@ import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import AlertInputLogin from "../alertInputLogin/AlertInputLogin";
 import WelcomeFormSignUp from "../welcomeSignUp/WelcomeFormSignUp";
 import Loader from "../../loader/Loader";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ContentFormSignUp = () => {
   const {
@@ -48,7 +49,7 @@ const ContentFormSignUp = () => {
         paragraphWelcome={"Sign up to organize and not forget your tasks!"}
         paragraphAccount={"Already have a account?"}
         optionLink={"Login"}
-        link={"http://localhost:5173/login"}
+        link={`${urlFront}login`}
       ></WelcomeFormSignUp>
       <div className={classesStyle.form}>
         <div className={classesStyle.title}>
@@ -127,8 +128,7 @@ const ContentFormSignUp = () => {
           </div>
           <div className={classesStyle.haveAccountResponsive}>
             <p>
-              Already have a account?{" "}
-              <a href="http://localhost:5173/login">Login</a>
+              Already have a account? <a href={`${urlFront}login`}>Login</a>
             </p>
           </div>
 

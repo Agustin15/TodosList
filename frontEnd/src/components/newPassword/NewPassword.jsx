@@ -4,6 +4,7 @@ import iconHiddenEye from "../../assets/img/hidden.png";
 import iconEye from "../../assets/img/eye.png";
 import Loader from "../loader/Loader";
 import AlertRedirect from "./alertRedirect/AlertRedirect";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const NewPassword = () => {
   const [errorsInputs, setErrorsInputs] = useState({
@@ -19,7 +20,7 @@ const NewPassword = () => {
   let mail = urlParams.get("mail");
 
   if (!token) {
-    location.href = "http://localhost:5173/resetPassword";
+    location.href = `${urlFront}resetPassword`;
   }
 
   const changePassword = async () => {
@@ -61,7 +62,7 @@ const NewPassword = () => {
           cleanForm();
           setAlert(true);
           setTimeout(() => {
-            location.href = "http://localhost:5173/login";
+            location.href = `${urlFront}login`;
           }, 4000);
         }
       }
