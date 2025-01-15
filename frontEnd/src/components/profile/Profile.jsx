@@ -11,7 +11,7 @@ import EditPassword from "./editPassword/EditPassword";
 import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import Loader from "../loader/Loader";
-const urlFront=import.meta.env.VITE_LOCALHOST_FRONT;
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Profile = () => {
   const { logout, verifyToTokenExpired } = useToken();
@@ -34,7 +34,7 @@ const Profile = () => {
       if (resultVerifiyExpired == "to expire") {
         setOpenAlertToken(true);
       }
-    }, 6000);
+    }, 9000);
   }, []);
 
   useEffect(() => {

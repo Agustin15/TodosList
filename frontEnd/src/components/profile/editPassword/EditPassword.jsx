@@ -124,11 +124,16 @@ const EditPassword = ({ setModalEditPassword }) => {
       }
     } catch (error) {
       console.log(error);
-      setResultForm({
-        icon: errorIcon,
-        result: "error",
-        msj: error,
-      });
+      if (error.indexOf("Authentication") > -1) {
+        localStorage.setItem("tokenExpired", true);
+        logout();
+      } else {
+        setResultForm({
+          icon: errorIcon,
+          result: "error",
+          msj: error,
+        });
+      }
     } finally {
       setLoading(false);
       return data;

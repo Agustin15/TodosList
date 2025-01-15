@@ -22,11 +22,12 @@ export const TokenProvider = ({ children }) => {
         },
       });
       const result = await response.json();
-
       if (!response.ok) {
         throw result.messageError;
-      } else if (result.message == true) {
+      } else if (result.message) {
         return "to expire";
+      } else {
+        return "valid";
       }
     } catch (error) {
       console.log(error);
