@@ -360,9 +360,10 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .contentBody {
     flex-direction: column-reverse;
+    flex-direction: column;
   }
   .containTasks {
     display: flex;

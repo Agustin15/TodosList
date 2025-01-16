@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 const TokenContext = createContext();
 
 export const TokenProvider = ({ children }) => {
@@ -15,7 +16,7 @@ export const TokenProvider = ({ children }) => {
 
   const verifyToTokenExpired = async () => {
     try {
-      const response = await fetch("http://localhost:3000/token/", {
+      const response = await fetch(`${urlBack}token/`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${JSON.stringify(token)}`,
@@ -36,7 +37,7 @@ export const TokenProvider = ({ children }) => {
 
   const fetchToRefreshToken = async () => {
     try {
-      const response = await fetch("http://localhost:3000/token/" + email, {
+      const response = await fetch(`${urlBack}token/` + email, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${JSON.stringify(refreshToken)}`,

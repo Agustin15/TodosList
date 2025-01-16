@@ -98,7 +98,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .bodyForm label {
     font-size: 14px;
   }

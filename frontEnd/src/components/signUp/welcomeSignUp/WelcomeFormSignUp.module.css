@@ -52,7 +52,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
  
   .welcome {
     display: flex;
@@ -66,15 +66,15 @@
     font-size: 17px;
   }
   .welcome img {
-    width:88px;
+    width:94px;
     margin-top: 5rem;
   }
   .welcome p {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .linkLogin {
   
-    font-size: 13px;
+    font-size: 15px;
   }
 }

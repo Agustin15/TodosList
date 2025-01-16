@@ -16,7 +16,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .containChart {
     width: 33.6rem;
     margin-top: 1rem;

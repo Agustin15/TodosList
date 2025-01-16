@@ -5,6 +5,7 @@ import iconEye from "../../assets/img/eye.png";
 import Loader from "../loader/Loader";
 import AlertRedirect from "./alertRedirect/AlertRedirect";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const NewPassword = () => {
   const [errorsInputs, setErrorsInputs] = useState({
@@ -29,17 +30,14 @@ const NewPassword = () => {
     if (mail) {
       setLoading(true);
       try {
-        const response = await fetch(
-          "http://localhost:3000/resetPassword/" + mail,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${JSON.stringify(token)}`,
-            },
-            body: JSON.stringify({ password }),
-          }
-        );
+        const response = await fetch(`${urlBack}resetPassword/` + mail, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.stringify(token)}`,
+          },
+          body: JSON.stringify({ password }),
+        });
 
         const result = await response.json();
         if (!response.ok) {

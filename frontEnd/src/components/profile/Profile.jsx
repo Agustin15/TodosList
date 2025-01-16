@@ -12,6 +12,8 @@ import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import Loader from "../loader/Loader";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
+
 
 const Profile = () => {
   const { logout, verifyToTokenExpired } = useToken();
@@ -51,7 +53,7 @@ const Profile = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/userData/" + email, {
+      const response = await fetch(`${urlBack}userData/` + email, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -112,7 +114,7 @@ const Profile = () => {
 
         {loading && (
           <div className={styles.contentLoading}>
-            <span>Loading data</span>
+            <span>loading data</span>
             <Loader isLoading={true} color="gray" size={8}></Loader>
           </div>
         )}

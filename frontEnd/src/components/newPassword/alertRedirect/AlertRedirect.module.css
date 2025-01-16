@@ -57,7 +57,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .containAlert {
     font-size: 16px;
     color: black;

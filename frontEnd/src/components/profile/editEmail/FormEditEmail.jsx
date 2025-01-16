@@ -8,6 +8,7 @@ import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormContext";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import Loader from "../../loader/Loader";
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const FormEditEmail = ({ email, setModalEditEmail }) => {
   const { handlePassword, passwordIcon, passwordInput } = useFormUser();
@@ -89,20 +90,17 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
     let data;
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:3000/userData/" + values.email,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.stringify(token)}`,
-          },
-          body: JSON.stringify({
-            newEmail: values.newEmail,
-            password: values.password,
-          }),
-        }
-      );
+      const response = await fetch(`${urlBack}userData/` + values.email, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.stringify(token)}`,
+        },
+        body: JSON.stringify({
+          newEmail: values.newEmail,
+          password: values.password,
+        }),
+      });
 
       const newToken = await response.json();
       if (!response.ok) {

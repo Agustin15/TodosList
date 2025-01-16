@@ -203,7 +203,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .contain {
     margin-top: 6.7rem;
   }

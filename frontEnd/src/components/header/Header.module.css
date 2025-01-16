@@ -258,7 +258,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width:915px) {
   .header {
     width: 100%;
     height: 4rem;

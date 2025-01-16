@@ -191,7 +191,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width:915px) {
   .title {
     font-size: 18px;
     display: flex;

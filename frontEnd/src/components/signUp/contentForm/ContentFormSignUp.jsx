@@ -11,6 +11,7 @@ import AlertInputLogin from "../alertInputLogin/AlertInputLogin";
 import WelcomeFormSignUp from "../welcomeSignUp/WelcomeFormSignUp";
 import Loader from "../../loader/Loader";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack= import.meta.env.VITE_LOCALHOST_BACK;
 
 const ContentFormSignUp = () => {
   const {
@@ -28,7 +29,7 @@ const ContentFormSignUp = () => {
   useEffect(() => {
     if (user) {
       const resultSignUp = async () => {
-        const result = await fetchLogin(user, "http://localhost:3000/signup/");
+        const result = await fetchLogin(user, `${urlBack}signup/`);
         if (result) {
           cleanForm();
           setResultForm({

@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const TaskContext = createContext();
 
@@ -64,7 +65,7 @@ export const TaskProvider = ({ children }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
+        `${urlBack}todos/` + JSON.stringify(optionGetTasks),
         {
           method: "GET",
           headers: {
@@ -95,7 +96,7 @@ export const TaskProvider = ({ children }) => {
     setLoadingState(true);
     values.email = email;
     try {
-      const response = await fetch("http://localhost:3000/todos/", {
+      const response = await fetch(`${urlBack}todos/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +132,7 @@ export const TaskProvider = ({ children }) => {
 
     let data;
     try {
-      const response = await fetch("http://localhost:3000/todos/" + task._id, {
+      const response = await fetch(`${urlBack}todos/` + task._id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -163,7 +164,7 @@ export const TaskProvider = ({ children }) => {
   const deleteTask = async (id) => {
     let data;
     try {
-      const response = await fetch("http://localhost:3000/todos/" + id, {
+      const response = await fetch(`${urlBack}todos/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -199,7 +200,7 @@ export const TaskProvider = ({ children }) => {
     };
     try {
       const response = await fetch(
-        "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
+        `${urlBack}todos/` + JSON.stringify(optionGetTasks),
         {
           headers: {
             "Content-Type": "application/json",
@@ -249,7 +250,7 @@ export const TaskProvider = ({ children }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/todos/" + JSON.stringify(optionGetTasks),
+        `${urlBack}todos/` + JSON.stringify(optionGetTasks),
         {
           method: "GET",
           headers: {

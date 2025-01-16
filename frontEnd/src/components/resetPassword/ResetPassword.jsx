@@ -2,7 +2,8 @@ import { useState } from "react";
 import styles from "./ResetPassword.module.css";
 import Loader from "../loader/Loader";
 import Alert from "../resetPassword/alert/Alert";
-const urlFront= import.meta.env.VITE_LOCALHOST_FRONT;
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const ResetPassword = () => {
   const [mail, setMail] = useState("");
@@ -38,7 +39,7 @@ const ResetPassword = () => {
     setLoading(true);
     let data, userNotFound;
     try {
-      const response = await fetch("http://localhost:3000/resetPassword/", {
+      const response = await fetch(`${urlBack}resetPassword/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

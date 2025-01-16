@@ -9,6 +9,7 @@ import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormContext";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import Loader from "../../loader/Loader";
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const EditPassword = ({ setModalEditPassword }) => {
   const { resultForm, setResultForm } = useForm();
@@ -101,20 +102,17 @@ const EditPassword = ({ setModalEditPassword }) => {
     let data;
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:3000/resetPassword/" + mail,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.stringify(token)}`,
-          },
-          body: JSON.stringify({
-            currentPassword: values.currentPassword,
-            password: values.newPassword,
-          }),
-        }
-      );
+      const response = await fetch(`${urlBack}resetPassword/` + mail, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.stringify(token)}`,
+        },
+        body: JSON.stringify({
+          currentPassword: values.currentPassword,
+          password: values.newPassword,
+        }),
+      });
 
       const result = await response.json();
       if (!response.ok) {

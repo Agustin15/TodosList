@@ -92,7 +92,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .containChangeStatus {
     width: 16rem;
     font-size: 14px;

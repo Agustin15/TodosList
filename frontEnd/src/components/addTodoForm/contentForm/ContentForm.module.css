@@ -102,7 +102,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .bodyForm input {
     width: 8rem;
     height: 2rem;

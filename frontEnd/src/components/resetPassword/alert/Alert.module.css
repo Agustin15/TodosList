@@ -45,7 +45,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .containMsj {
     font-size: 15px;
     position: static;

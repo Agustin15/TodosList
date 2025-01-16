@@ -90,7 +90,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .deleteTask {
     width: 18rem;
     font-size: 15px;

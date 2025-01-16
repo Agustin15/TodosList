@@ -8,16 +8,16 @@
 @media (min-width: 375px) and (max-width: 478px) {
   .msjError {
     color: rgb(226, 0, 0);
-    font-size: 15px;
+    font-size: 17px;
     position: absolute;
-    margin-top: 5rem;
+    margin-top: 5.1rem;
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .msjError {
     color: rgb(226, 0, 0);
-    font-size: 12px;
+    font-size: 13px;
     position: absolute;
     margin-top: 4rem;
   }

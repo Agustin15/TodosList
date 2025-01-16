@@ -76,7 +76,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width:915px) {
   .containForm {
     margin-top: 10rem;
   }

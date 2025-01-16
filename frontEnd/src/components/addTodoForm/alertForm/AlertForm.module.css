@@ -51,7 +51,7 @@
   .alertFormCorrect {
     width: 17rem;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .alertFormCorrect img {
@@ -60,11 +60,11 @@
 
   .alertFormError {
     width: 18rem;
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   .alertFormCorrect {
     width: 15rem;
     color: white;

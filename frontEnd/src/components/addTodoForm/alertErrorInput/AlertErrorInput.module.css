@@ -76,9 +76,8 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 768px) {
+@media (min-width: 667px) and (max-width: 915px) {
   #alertError {
-  
     font-size: 11px;
     color: white;
     box-shadow: 2px 2px 2px gray;
