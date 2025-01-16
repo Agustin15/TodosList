@@ -31,6 +31,11 @@
 - react-chartjs-2
 - chartjs-plugin-datalabels
 
+**_Configuracion del archivo .env_**
+
+    VITE_LOCALHOST_FRONT=http://localhost:PORT/
+    VITE_LOCALHOST_BACK=http://localhost:PORT/
+    
 > ## Instalacion backend ⚙
 
 **_Dirigirse a a la carpeta backEnd:_**
