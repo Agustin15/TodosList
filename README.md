@@ -53,6 +53,10 @@
 
     PORT=3000
     DATABASE_URL=mongodb+srv://<userDB>:<passwordDB>@cluster0.u5vpn.mongodb.net/<databaseName>?retryWrites=true&w=majority&appName=Cluster0
+    JWT_SECRET_KEY=###
+    JWT_SECRET_KEY_REFRESH=###
+    USER_MAIL=###
+    PASSWORD_APP_MAIL=###
 
 > ## Iniciar ▶
 
