@@ -4,7 +4,7 @@ import iconEditUser from "../../assets/img/editUser.png";
 import iconBack from "../../assets/img/back.png";
 import iconNoDataUser from "../../assets/img/noDataUser.png";
 import { useEffect, useState } from "react";
-import { useToken } from "../../context/TokenContext";
+import { useTasks } from "../../context/TaskContext";
 import AlertTokenToExpired from "../alertTokenToExpired/AlertTokenToExpired";
 import FormEditEmail from "./editEmail/FormEditEmail";
 import EditPassword from "./editPassword/EditPassword";
@@ -14,11 +14,9 @@ import Loader from "../loader/Loader";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
-
 const Profile = () => {
-  const { logout, verifyToTokenExpired } = useToken();
   const [loading, setLoading] = useState(false);
-  const [openAlertToken, setOpenAlertToken] = useState(false);
+  const { openAlertToken, setOpenAlertToken } = useTasks();
   const [modalEditEmail, setModalEditEmail] = useState(false);
   const [modalEditPassword, setModalEditPassword] = useState(false);
   const [user, setUser] = useState();
@@ -29,15 +27,6 @@ const Profile = () => {
   if (!token) {
     logout();
   }
-
-  useEffect(() => {
-    setInterval(async () => {
-      const resultVerifiyExpired = await verifyToTokenExpired();
-      if (resultVerifiyExpired == "to expire") {
-        setOpenAlertToken(true);
-      }
-    }, 9000);
-  }, []);
 
   useEffect(() => {
     const dataUser = async () => {
@@ -57,8 +46,8 @@ const Profile = () => {
         method: "GET",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`,
-        },
+          Authorization: `Bearer ${JSON.stringify(token)}`
+        }
       });
 
       const result = await response.json();
@@ -73,7 +62,7 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 import styles from "./AlertTokenToExpired.module.css";
-import iconSession from "../../assets/img/session.png";
-import iconOverTime from "../../assets/img/plus.png";
+import iconSession from "../../assets/img/sandClock.gif";
+import iconOverTime from "../../assets/img/newCookie.png";
 import { useRef } from "react";
 import { useToken } from "../../context/TokenContext";
 
@@ -19,7 +19,7 @@ const AlertTokenToExpired = ({ setOpenAlertToken }) => {
         logout();
       }
     }, 1400);
-  }, 3000);
+  }, 1000);
 
   const handleExtendSession = () => {
     setOpenAlertToken(false);
@@ -32,7 +32,7 @@ const AlertTokenToExpired = ({ setOpenAlertToken }) => {
         <div className={styles.bodyAlert}>
           <img src={iconSession}></img>
           <p>
-            Your session will expire in <span ref={secondsRef}>{20}</span>
+            Your session expired, returning in <span ref={secondsRef}>{20}</span>
           </p>
         </div>
         <div className={styles.containButton}>

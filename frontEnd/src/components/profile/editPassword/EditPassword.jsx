@@ -5,8 +5,8 @@ import iconPasswordShow from "../../../assets/img/eye.png";
 import errorIcon from "../../../assets/img/errorIcon.png";
 import correctIcon from "../../../assets/img/correctIcon.png";
 import { useEffect, useState } from "react";
-import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormContext";
+import { useTasks } from "../../../context/TaskContext";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import Loader from "../../loader/Loader";
 const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
@@ -17,9 +17,10 @@ const EditPassword = ({ setModalEditPassword }) => {
   const [errors, setErrors] = useState({
     currentPassword: "",
     newPassword: "",
-    repeatPassword: "",
+    repeatPassword: ""
   });
 
+  const { setOpenAlertToken } = useTasks();
   const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
@@ -46,7 +47,7 @@ const EditPassword = ({ setModalEditPassword }) => {
     setResultForm({
       icon: errorIcon,
       result: "error",
-      msj: msj,
+      msj: msj
     });
   };
   const handleSubmit = (event) => {
@@ -56,7 +57,7 @@ const EditPassword = ({ setModalEditPassword }) => {
     let errorsInputs = {
       currentPassword: "",
       newPassword: "",
-      repeatPassword: "",
+      repeatPassword: ""
     };
     const data = {};
     setErrors(errorsInputs);
@@ -89,7 +90,7 @@ const EditPassword = ({ setModalEditPassword }) => {
           setResultForm({
             icon: correctIcon,
             result: "correct",
-            msj: "Password updated sucesfully!",
+            msj: "Password updated sucesfully!"
           });
         }
       };
@@ -106,12 +107,12 @@ const EditPassword = ({ setModalEditPassword }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`,
+          Authorization: `Bearer ${JSON.stringify(token)}`
         },
         body: JSON.stringify({
           currentPassword: values.currentPassword,
-          password: values.newPassword,
-        }),
+          password: values.newPassword
+        })
       });
 
       const result = await response.json();
@@ -123,13 +124,12 @@ const EditPassword = ({ setModalEditPassword }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        localStorage.setItem("tokenExpired", true);
-        logout();
+        setOpenAlertToken(true);
       } else {
         setResultForm({
           icon: errorIcon,
           result: "error",
-          msj: error,
+          msj: error
         });
       }
     } finally {

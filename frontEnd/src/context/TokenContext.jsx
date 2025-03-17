@@ -5,7 +5,6 @@ const TokenContext = createContext();
 
 export const TokenProvider = ({ children }) => {
   const email = localStorage.getItem("email");
-  const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
 
   const logout = () => {
@@ -14,34 +13,13 @@ export const TokenProvider = ({ children }) => {
     location.href = `${urlFront}login`;
   };
 
-  const verifyToTokenExpired = async () => {
-    try {
-      const response = await fetch(`${urlBack}token/`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${JSON.stringify(token)}`,
-        },
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw result.messageError;
-      } else if (result.message) {
-        return "to expire";
-      } else {
-        return "valid";
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const fetchToRefreshToken = async () => {
     try {
       const response = await fetch(`${urlBack}token/` + email, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${JSON.stringify(refreshToken)}`,
-        },
+          Authorization: `Bearer ${JSON.stringify(refreshToken)}`
+        }
       });
       const newToken = await response.json();
       if (!response.ok) {
@@ -60,8 +38,7 @@ export const TokenProvider = ({ children }) => {
     <TokenContext.Provider
       value={{
         logout,
-        verifyToTokenExpired,
-        fetchToRefreshToken,
+        fetchToRefreshToken
       }}
     >
       {children}

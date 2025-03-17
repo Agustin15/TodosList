@@ -6,6 +6,7 @@ import correctIcon from "../../../assets/img/correctIcon.png";
 import { useEffect, useState } from "react";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormContext";
+import { useTasks } from "../../../context/TaskContext";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import Loader from "../../loader/Loader";
 const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
@@ -16,9 +17,10 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
   const [values, setValues] = useState();
   const [errors, setErrors] = useState({
     newEmail: "",
-    password: "",
+    password: ""
   });
 
+  const { setOpenAlertToken } = useTasks();
   const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
@@ -34,7 +36,7 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
     let error = false;
     let errorsInputs = {
       email: "",
-      password: "",
+      password: ""
     };
     const data = {};
     let regexMail = /\S+@\S+\.\S+/;
@@ -59,7 +61,7 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
       setResultForm({
         icon: errorIcon,
         result: "error",
-        msj: "Please, complete correctly the fields",
+        msj: "Please, complete correctly the fields"
       });
       setErrors(errorsInputs);
     } else {
@@ -75,7 +77,7 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
           setResultForm({
             icon: correctIcon,
             result: "correct",
-            msj: "Email updated sucesfully!",
+            msj: "Email updated sucesfully!"
           });
           localStorage.setItem("email", values.newEmail);
           localStorage.setItem("token", newToken);
@@ -94,12 +96,12 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`,
+          Authorization: `Bearer ${JSON.stringify(token)}`
         },
         body: JSON.stringify({
           newEmail: values.newEmail,
-          password: values.password,
-        }),
+          password: values.password
+        })
       });
 
       const newToken = await response.json();
@@ -110,10 +112,13 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
       }
     } catch (error) {
       console.log(error);
+      if (error.indexOf("Authenticacion") > -1) {
+        setOpenAlertToken(true);
+      }
       setResultForm({
         icon: errorIcon,
         result: "error",
-        msj: error,
+        msj: error
       });
     } finally {
       setLoading(false);

@@ -6,7 +6,7 @@ import logOutIcon from "../../assets/img/logOut.png";
 import Modal from "../modal/Modal";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
 import AlertTokenToExpired from "../alertTokenToExpired/AlertTokenToExpired";
-import { TaskProvider } from "../../context/TaskContext";
+import { TaskProvider, useTasks } from "../../context/TaskContext";
 import { FormProvider } from "../../context/FormContext";
 import { useEffect, useState } from "react";
 import { useToken } from "../../context/TokenContext";
@@ -15,8 +15,8 @@ const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 const Header = () => {
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
-  const [openAlertToken, setOpenAlertToken] = useState(false);
-  const { logout, verifyToTokenExpired } = useToken();
+  const { openAlertToken, setOpenAlertToken } = useTasks();
+  const { logout } = useToken();
 
   const email = localStorage.getItem("email");
   const token = localStorage.getItem("token");
@@ -24,15 +24,6 @@ const Header = () => {
   if (!token) {
     logout();
   }
-
-  useEffect(() => {
-    setInterval(async () => {
-      const resultVerifiyExpired = await verifyToTokenExpired();
-      if (resultVerifiyExpired == "to expire") {
-        setOpenAlertToken(true);
-      }
-    }, 9000);
-  }, []);
 
   const handleOpenDetailsProfile = () => {
     if (openDetailsProfile) {

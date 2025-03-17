@@ -10,7 +10,7 @@ import { useForm } from "../../../context/FormContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
-const urlBack=import.meta.env.VITE_LOCALHOST_BACK;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const ContentLogin = () => {
   const {
@@ -20,7 +20,7 @@ const ContentLogin = () => {
     handlePassword,
     handleSubmitSignIn,
     errorsInputsSignIn,
-    cleanForm,
+    cleanForm
   } = useFormUser();
 
   const { resultForm } = useForm();
@@ -34,6 +34,7 @@ const ContentLogin = () => {
         if (login.accessToken && login.refreshToken) {
           cleanForm();
           localStorage.setItem("token", login.accessToken);
+          localStorage.setItem("refreshToken", login.refreshToken);
           localStorage.setItem("email", user.email);
           location.href = `${urlFront}tasks`;
         }

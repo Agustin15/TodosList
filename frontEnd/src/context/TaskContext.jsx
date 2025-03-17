@@ -3,8 +3,9 @@ import {
   useContext,
   useEffect,
   useReducer,
-  useState,
+  useState
 } from "react";
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
@@ -39,6 +40,8 @@ export const TaskProvider = ({ children }) => {
   const [loadingState, setLoadingState] = useState(true);
   const [completeTasks, setCompleteTasks] = useState();
   const [inCompleteTasks, setIncompleteTasks] = useState();
+  const [openAlertToken, setOpenAlertToken] = useState(false);
+
   const email = localStorage.getItem("email");
   const token = localStorage.getItem("token");
 
@@ -60,7 +63,7 @@ export const TaskProvider = ({ children }) => {
     setLoadingState(true);
     const optionGetTasks = {
       option: "getTasksByEmail",
-      email: email,
+      email: email
     };
 
     try {
@@ -70,8 +73,8 @@ export const TaskProvider = ({ children }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.stringify(token)}`,
-          },
+            Authorization: `Bearer ${JSON.stringify(token)}`
+          }
         }
       );
       const result = await response.json();
@@ -84,7 +87,7 @@ export const TaskProvider = ({ children }) => {
       console.log(error);
 
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       setLoadingState(false);
@@ -100,10 +103,10 @@ export const TaskProvider = ({ children }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`,
+          Authorization: `Bearer ${JSON.stringify(token)}`
         },
 
-        body: JSON.stringify(values),
+        body: JSON.stringify(values)
       });
       const result = await response.json();
 
@@ -119,7 +122,7 @@ export const TaskProvider = ({ children }) => {
       console.log(error);
 
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       setLoadingState(false);
@@ -136,9 +139,9 @@ export const TaskProvider = ({ children }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`,
+          Authorization: `Bearer ${JSON.stringify(token)}`
         },
-        body: JSON.stringify({ ...task }),
+        body: JSON.stringify({ ...task })
       });
       const result = await response.json();
 
@@ -153,7 +156,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       setLoadingState(false);
@@ -168,8 +171,8 @@ export const TaskProvider = ({ children }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`,
-        },
+          Authorization: `Bearer ${JSON.stringify(token)}`
+        }
       });
 
       const result = await response.json();
@@ -184,7 +187,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       return data;
@@ -196,7 +199,7 @@ export const TaskProvider = ({ children }) => {
     setLoadingState(true);
     const optionGetTasks = {
       option: "getTaskById",
-      id: params.id,
+      id: params.id
     };
     try {
       const response = await fetch(
@@ -204,8 +207,8 @@ export const TaskProvider = ({ children }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.stringify(token)}`,
-          },
+            Authorization: `Bearer ${JSON.stringify(token)}`
+          }
         }
       );
       const result = await response.json();
@@ -215,7 +218,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       setLoadingState(false);
@@ -245,7 +248,7 @@ export const TaskProvider = ({ children }) => {
     const optionGetTasks = {
       option: "getStateTasksByEmail",
       isCompleted: state,
-      email: email,
+      email: email
     };
 
     try {
@@ -255,8 +258,8 @@ export const TaskProvider = ({ children }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.stringify(token)}`,
-          },
+            Authorization: `Bearer ${JSON.stringify(token)}`
+          }
         }
       );
       const result = await response.json();
@@ -269,7 +272,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       if (error.indexOf("Authentication") > -1) {
-        logout();
+        setOpenAlertToken(true);
       }
     } finally {
       setLoadingState(false);
@@ -290,6 +293,8 @@ export const TaskProvider = ({ children }) => {
         getTasksByUser,
         completeTasks,
         inCompleteTasks,
+        openAlertToken,
+        setOpenAlertToken
       }}
     >
       {children}

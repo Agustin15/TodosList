@@ -18,12 +18,11 @@ export const getTasksByEmail = async (req, res) => {
   const { email } = JSON.parse(req.params.optionGetTasks);
   try {
     const validAuthRequest = authRequest(req, res);
+
     if (validAuthRequest) {
       const tasks = await TaskModel.find({ email: email });
       res.status(200).json(tasks);
-    } else {
-      res.redirect("http://localhost:5173/login");
-    }
+    } 
   } catch (error) {
     res.status(404).json({ messageError: error.message });
   }

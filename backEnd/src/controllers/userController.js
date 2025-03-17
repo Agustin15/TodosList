@@ -64,14 +64,14 @@ export const verifyUserLogin = async (req, res) => {
       throw new Error("Authentication failed,invalid password entered");
     } else {
       const token = jwt.sign({ email: emailFound.email }, secretKey, {
-        expiresIn: "1h",
+        expiresIn: "1h"
       });
 
       const refreshToken = jwt.sign(
         { email: emailFound.email },
         secretKeyRefresh,
         {
-          expiresIn: "24h",
+          expiresIn: "24h"
         }
       );
       res.status(200).json({ accessToken: token, refreshToken: refreshToken });
@@ -112,7 +112,7 @@ export const updatePasswordUserByEmail = async (req, res) => {
         const userUpdated = await UserModel.updateOne(
           { email: mail },
           {
-            $set: { password: hash },
+            $set: { password: hash }
           }
         );
 
@@ -151,7 +151,7 @@ export const updateEmailUser = async (req, res) => {
         const userUpdated = await UserModel.updateOne(
           { email: emailCurrent },
           {
-            $set: { email: newEmail },
+            $set: { email: newEmail }
           }
         );
 
@@ -162,7 +162,7 @@ export const updateEmailUser = async (req, res) => {
           );
           if (tasksOfUserUpdated) {
             const token = jwt.sign({ email: newEmail }, secretTokenKey, {
-              expiresIn: "1h",
+              expiresIn: "1h"
             });
 
             res.status(200).json(token);
