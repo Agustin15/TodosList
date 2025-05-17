@@ -3,24 +3,40 @@ import ContentForm from "./contentForm/ContentForm";
 import iconCorrect from "../../assets/img/correctIcon.png";
 import iconError from "../../assets/img/errorIcon.png";
 import iconAdd from "../../assets/img/addTask.png";
-import { useForm } from "../../context/FormContext";
+import { useForm } from "../../context/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 
 const AddTodoForm = ({ setOpenModalAdd }) => {
-  const { values, setValues, validationInput, setResultForm, cleanValues } =
-    useForm();
-
+  const {
+    values,
+    setValues,
+    filesSizeExceeded,
+    validationInput,
+    setResultForm,
+    cleanForm,
+    cleanValues
+  } = useForm();
   const { addTask } = useTasks();
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let value, name;
+    name = event.target.name;
+    value =
+      name == "filesUploaded"
+        ? Array.from(event.target.files)
+        : event.target.value;
 
     setValues({
       ...values,
-      [name]: value,
+      [name]: value
     });
 
     validationInput(name, value);
+  };
+
+  const handleClose = () => {
+    cleanForm();
+    setOpenModalAdd(false);
   };
 
   const handleSubmit = async (event) => {
@@ -31,15 +47,16 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
 
     try {
       if (
-        values.name.length == 0 ||
-        values.description.length == 0 ||
+        filesSizeExceeded ||
+        values.descriptionTask.length == 0 ||
         values.icon.length == 0 ||
-        values.icon.match(validIcon)
+        values.icon.match(validIcon) ||
+        values.datetimeTask.length == 0
       ) {
         throw "Complete correctly the fields please";
       } else {
         let taskAdded = await addTask(values);
-        
+
         if (taskAdded) {
           msj = "Task added succesfully!";
           result = "correct";
@@ -57,7 +74,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
       setResultForm({
         result: result,
         msj: msj,
-        icon: icon,
+        icon: icon
       });
     }
   };
@@ -65,13 +82,16 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
   return (
     <div className={classesStyle.containForm}>
       <div className={classesStyle.header}>
-        <button onClick={() => setOpenModalAdd(false)}>X</button>
-      </div>
-      <form onSubmit={handleSubmit}>
         <div className={classesStyle.title}>
           <h3>Complete task details</h3>
           <img src={iconAdd}></img>
         </div>
+
+        <div className={classesStyle.btnClose}>
+          <button onClick={handleClose}>X</button>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit}>
         <ContentForm handleChange={handleChange} />
       </form>
     </div>

@@ -3,25 +3,45 @@ import ContentFormEdit from "./contentFormEdit/ContentFormEdit";
 import editIcon from "../../assets/img/editIcon.png";
 import iconError from "../../assets/img/errorIcon.png";
 import iconCorrect from "../../assets/img/correctIcon.png";
-import { useForm } from "../../context/FormContext";
+import { useForm } from "../../context/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 
 const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const [values, setValues] = useState({ ...task });
-  const { validationInput, setResultForm } = useForm();
-  const { setErrors } = useForm();
+  const {
+    validationInput,
+    setResultForm,
+    cleanForm,
+    filesSizeExceeded,
+    filesUploadedUpdateForm,
+    setFilesUploadedUpdateForm
+  } = useForm();
   const { updateTask } = useTasks();
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let name, value;
+    name = event.target.name;
+
+    if (name == "filesUploaded") {
+      setFilesUploadedUpdateForm(
+        [filesUploadedUpdateForm, ...event.target.files].flat()
+      );
+    } else {
+      value = event.target.value;
+    }
 
     setValues({
       ...values,
-      [name]: value,
+      [name]: value
     });
 
-    validationInput(name, value);
+    validationInput(
+      name,
+      name != "filesUploaded"
+        ? value
+        : [filesUploadedUpdateForm, ...event.target.files].flat()
+    );
   };
 
   const handleSubmit = async (event) => {
@@ -32,14 +52,15 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
     let validIcon = /\w/;
     try {
       if (
-        values.name.length == 0 ||
-        values.description.length == 0 ||
-        values.icon.length == 0 ||
-        values.icon.match(validIcon)
+        (filesSizeExceeded,
+        values.datetimeTask.length == 0 ||
+          values.descriptionTask.length == 0 ||
+          values.icon.length == 0 ||
+          values.icon.match(validIcon))
       ) {
         throw "Complete correctly the fields please";
       } else {
-        let taskUpdated = await updateTask(values);
+        let taskUpdated = await updateTask(values, filesUploadedUpdateForm);
         if (taskUpdated) {
           msj = "Task updated succesfully!";
           result = "correct";
@@ -56,41 +77,31 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
       setResultForm({
         result: result,
         msj: msj,
-        icon: icon,
+        icon: icon
       });
     }
   };
 
-  const cleanValues = () => {
-    setValues({ ...values, icon: "", name: "", creator: "", description: "" });
-  };
-
   const handleClose = () => {
-    setErrors({
-      icon: "",
-      name: "",
-      creator: "",
-      description: "",
-    }),
-      setOpenModalUpdate(false);
-      setResultForm(null);
+    cleanForm();
+    setFilesUploadedUpdateForm([]);
+    setOpenModalUpdate(false);
   };
 
   return (
     <div className={styles.containForm}>
-      <div className={styles.closeBtn}>
-        <button onClick={handleClose}>X</button>
-      </div>
-      <form onSubmit={handleSubmit}>
+      <div className={styles.header}>
         <div className={styles.title}>
-          <h3>Update task details</h3>
+          <h3>Complete task details</h3>
           <img src={editIcon}></img>
         </div>
-        <ContentFormEdit
-          cleanValues={cleanValues}
-          values={values}
-          handleChange={handleChange}
-        />
+
+        <div className={styles.btnClose}>
+          <button onClick={handleClose}>X</button>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <ContentFormEdit values={values} handleChange={handleChange} />
       </form>
     </div>
   );

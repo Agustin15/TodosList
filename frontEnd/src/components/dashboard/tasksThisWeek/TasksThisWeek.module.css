@@ -1,0 +1,207 @@
+.containTasksWeek {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 29rem;
+    width: 41%;
+    padding-bottom: 1rem;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px gray;
+    border: 1px solid rgb(230, 230, 230);
+    font-family: Arial, Helvetica, sans-serif;
+}
+.containTasksWeek button {
+    background: linear-gradient(rgb(61, 169, 212), rgb(15, 77, 158));
+    border: none;
+    width: 7rem;
+    border-radius: 96px;
+    height: 1.6rem;
+    color: white;
+    font-weight: bold;
+    box-shadow: 2px 2px 2px gray;
+    cursor: pointer;
+}
+
+.containTasksWeek button {
+    background: linear-gradient(rgb(61, 169, 212), rgb(15, 77, 158));
+    border: none;
+    width: 7rem;
+    border-radius: 96px;
+    height: 1.6rem;
+    color: white;
+    font-weight: bold;
+    box-shadow: 2px 2px 2px gray;
+    cursor: pointer;
+}
+
+.containTasksWeek button:hover {
+    background: linear-gradient(rgb(45, 126, 158), rgb(15, 77, 158));
+}
+
+.containTasksWeek .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-image: radial-gradient(
+            circle at 40% 91%,
+            rgba(50, 34, 141, 0.04) 0%,
+            rgba(50, 34, 141, 0.04) 50%,
+            rgba(68, 21, 203, 0.04) 50%,
+            rgba(68, 21, 203, 0.04) 100%
+        ),
+        radial-gradient(
+            circle at 66% 97%,
+            rgba(36, 36, 36, 0.04) 0%,
+            rgba(36, 36, 36, 0.04) 50%,
+            rgba(46, 46, 46, 0.04) 50%,
+            rgba(46, 46, 46, 0.04) 100%
+        ),
+        radial-gradient(
+            circle at 86% 7%,
+            rgba(40, 40, 40, 0.04) 0%,
+            rgba(40, 40, 40, 0.04) 50%,
+            rgba(200, 200, 200, 0.04) 50%,
+            rgba(200, 200, 200, 0.04) 100%
+        ),
+        radial-gradient(
+            circle at 15% 16%,
+            rgba(99, 99, 99, 0.04) 0%,
+            rgba(99, 99, 99, 0.04) 50%,
+            rgba(45, 45, 45, 0.04) 50%,
+            rgba(45, 45, 45, 0.04) 100%
+        ),
+        radial-gradient(
+            circle at 75% 99%,
+            rgba(243, 243, 243, 0.04) 0%,
+            rgba(243, 243, 243, 0.04) 50%,
+            rgba(37, 37, 37, 0.04) 50%,
+            rgba(37, 37, 37, 0.04) 100%
+        ),
+        linear-gradient(188deg, rgb(34, 105, 237), rgb(31, 14, 69));
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: 2.5rem;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    color: white;
+}
+.containTasksWeek .header img {
+    width: 35px;
+}
+.containTasksWeek .list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 99%;
+    height: 84%;
+}
+
+.containLoading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    height: 88%;
+}
+.containLoading img {
+    width: 75px;
+    opacity: 46%;
+    margin-right: 1rem;
+}
+
+.containTasksWeek .list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 99%;
+    height: 3rem;
+    padding: 0.4rem;
+    border-radius: 3px;
+    font-size: 11px;
+    color: rgb(0, 0, 0);
+}
+.containTasksWeek .list .liGray {
+    background-color: rgb(243, 243, 243);
+}
+.containTasksWeek .list .liWhite {
+    background-color: white;
+}
+
+.containTasksWeek .list li .rowOne {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.containTasksWeek .list li .rowOne .iconTask {
+    font-size: 21px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 99px;
+    background: linear-gradient(rgb(61, 169, 212), rgb(15, 77, 158));
+}
+
+.containTasksWeek .list li .columnOne {
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.2rem;
+}
+
+.containTasksWeek .list li .columnTwo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+.containTasksWeek .list li .columnTwo img {
+    width: 14px;
+    height: 14px;
+}
+
+.containTasksWeek .list li .columnTwo .stateTaskCompleted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    border-radius: 55px;
+    background-color: rgb(1, 185, 47);
+    color: white;
+    font-weight: bold;
+}
+.containTasksWeek .list li .columnTwo .stateTaskIncompleted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    border-radius: 45px;
+    background-color: rgb(207, 18, 49);
+    color: white;
+    font-weight: bold;
+}
+
+.containNotTasks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    height: 89%;
+    color: gray;
+}
+
+.containNotTasks img {
+    width: 122px;
+    height: 122px;
+    opacity: 71%;
+}

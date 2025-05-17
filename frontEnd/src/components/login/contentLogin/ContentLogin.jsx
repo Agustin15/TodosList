@@ -6,7 +6,7 @@ import AlertForm from "../../addTodoForm/alertForm/AlertForm.jsx";
 import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
 import Loader from "../../loader/Loader.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
-import { useForm } from "../../../context/FormContext";
+import { useForm } from "../../../context/FormTaskContext.jsx";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
@@ -19,8 +19,7 @@ const ContentLogin = () => {
     passwordInput,
     handlePassword,
     handleSubmitSignIn,
-    errorsInputsSignIn,
-    cleanForm
+    errorsInputsSignIn
   } = useFormUser();
 
   const { resultForm } = useForm();
@@ -29,14 +28,10 @@ const ContentLogin = () => {
   useEffect(() => {
     if (user) {
       const resultSignIn = async () => {
-        const login = await fetchLogin(user, `${urlBack}login/`);
+        const login = await fetchLogin(user, `/api/login/`);
 
-        if (login.accessToken && login.refreshToken) {
-          cleanForm();
-          localStorage.setItem("token", login.accessToken);
-          localStorage.setItem("refreshToken", login.refreshToken);
-          localStorage.setItem("email", user.email);
-          location.href = `${urlFront}tasks`;
+        if (login) {
+          location.href = `${urlFront}dashboard`;
         }
       };
 

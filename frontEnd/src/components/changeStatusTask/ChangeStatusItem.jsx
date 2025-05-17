@@ -6,16 +6,14 @@ import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 
 const ChangeStatusItem = ({ task, setOpenModalChangeStatus }) => {
-  const { updateTask } = useTasks();
+  const { patchStateTask } = useTasks();
   const [alertError, setAlertError] = useState(false);
 
   const handleChangeStatusTask = async (task) => {
-    const taskToUpdate = {
-      _id: task._id,
-      isCompleted: task.isCompleted ? false : true,
-    };
-
-    const result = await updateTask(taskToUpdate);
+    const result = await patchStateTask(
+      task.isCompleted ? false : true,
+      task.idTask
+    );
 
     if (result) {
       setOpenModalChangeStatus(false);
@@ -27,7 +25,7 @@ const ChangeStatusItem = ({ task, setOpenModalChangeStatus }) => {
     <div className={classesStyle.containChangeStatus}>
       <img src={task.isCompleted ? iconPendingTask : iconCompleteTask}></img>
       <p>
-        Do you want to mark the task "{task.name}" as
+        Do you want to mark this task as  
         {task.isCompleted ? " pending" : " complete"}?
       </p>
       <div

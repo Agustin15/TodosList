@@ -1,19 +1,16 @@
 import Profile from "../profile/Profile";
-import { TokenProvider } from "../../context/TokenContext";
 import { TaskProvider } from "../../context/TaskContext";
 import { FormUserProvider } from "../../context/FormUserContext";
-import { FormProvider } from "../../context/FormContext";
+import { FormTaskProvider } from "../../context/FormTaskContext";
 
 const ProfilePage = () => {
   return (
     <TaskProvider>
-      <FormProvider>
+      <FormTaskProvider>
         <FormUserProvider>
-          <TokenProvider>
-            <Profile></Profile>
-          </TokenProvider>
+          <Profile></Profile>
         </FormUserProvider>
-      </FormProvider>
+      </FormTaskProvider>
     </TaskProvider>
   );
 };

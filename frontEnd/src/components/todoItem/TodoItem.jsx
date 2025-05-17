@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./TodoItem.module.css";
 import iconDelete from "../../assets/img/delete.png";
 import iconInfo from "../../assets/img/info.png";
@@ -11,47 +11,80 @@ import Modal from "../modal/Modal";
 import DeleteTask from "../DeleteTask/DeleteTaks";
 import ChangeStatusItem from "../changeStatusTask/ChangeStatusItem";
 
-const TodoItem = ({ task }) => {
+const TodoItem = ({ task, index }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openModalInfo, setOpenModalInfo] = useState(false);
   const [openModalChangeStatus, setOpenModalChangeStatus] = useState(false);
 
+  const formatToStringDate = (date) => {
+    let dateTask = new Date(date);
+
+    let datetimeString = new Intl.DateTimeFormat("en-UY", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric"
+    }).format(dateTask);
+
+    return datetimeString;
+  };
+
   return (
     <>
-      <li key={task.id} className={styles.task}>
+      <li
+        key={task.id}
+        style={{ background: index % 2 == 0 ? "rgb(240, 238, 238)" : "white" }}
+        className={styles.task}
+      >
         <div className={styles.info}>
-          <img
+          <button
+            className={
+              task.isCompleted
+                ? styles.btnStateComplete
+                : styles.btnStateIncomplete
+            }
             onClick={() => setOpenModalChangeStatus(true)}
-            src={task.isCompleted ? completeIcon : pendingIcon}
-          ></img>
+          >
+            <img src={task.isCompleted ? completeIcon : pendingIcon}></img>
+          </button>
           <div className={styles.icon}>
             <span>{task.icon}</span>
           </div>
-          <div className={styles.descriptionAndName}>
-            <span>{task.name}</span>
-            <p>{task.description}</p>
+          <div className={styles.descriptionAndDate}>
+            <span>{formatToStringDate(task.datetimeTask)}</span>
+            <p>{task.descriptionTask}</p>
+            <span className={styles.files}>
+              Files attachment:{task.filesUploaded.length}
+            </span>
           </div>
         </div>
 
         <div className={styles.options}>
-          <div onClick={() => setOpenModalDelete(true)}>
+          <button
+            className={styles.btnDelete}
+            onClick={() => setOpenModalDelete(true)}
+          >
             <img src={iconDelete}></img>
-          </div>
-          <div
+          </button>
+          <button
+            className={styles.btnUpdate}
             onClick={() => {
               setOpenModalUpdate(true);
             }}
           >
             <img src={iconEdit}></img>
-          </div>
-          <div
+          </button>
+          <button
+            className={styles.btnDetails}
             onClick={() => {
               setOpenModalInfo(true);
             }}
           >
             <img src={iconInfo}></img>
-          </div>
+          </button>
         </div>
       </li>
 

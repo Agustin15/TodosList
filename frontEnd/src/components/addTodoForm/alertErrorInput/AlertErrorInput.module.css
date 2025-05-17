@@ -1,20 +1,19 @@
 #alertError {
   width: auto;
-  padding: 0.4rem;
-  padding: 0.4rem;
-  background-color: rgb(206, 9, 9);
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-  font-size: 15px;
+  font-size: 13px;
   border-radius: 3px;
-  color: white;
-  box-shadow: 2px 2px 2px gray;
-  margin-top: -0.8rem;
-  margin-left: 0.5rem;
-  flex-direction: column;
+  color: rgb(218, 9, 9);
+  margin-left: 0rem;
+  justify-content: center;
+  gap: 0.5rem;
   align-items: start;
   text-align: center;
-  position: relative;
+  position: absolute;
+}
+
+#alertError img {
+  width: 15px;
+  height: 15px;
 }
 
 .alertErrorShow {
@@ -25,16 +24,6 @@
   display: none;
 }
 
-.triangle {
-  width: 0;
-  height: 0;
-  border-top: 10px solid rgb(206, 9, 9);
-  border-right: 10px solid transparent;
-  transform: rotate(45deg);
-  position: absolute;
-  top: -0.2rem;
-  left: 0.2rem;
-}
 
 @media (min-width: 375px) and (max-width: 478px) {
   #alertError {

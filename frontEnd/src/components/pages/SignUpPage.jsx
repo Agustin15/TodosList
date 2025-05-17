@@ -1,17 +1,17 @@
 import FormSignUp from "../signUp/FormSignUp";
 import { FormUserProvider } from "../../context/FormUserContext";
-import { FormProvider } from "../../context/FormContext";
+import { FormTaskProvider } from "../../context/FormTaskContext";
 import { LoginProvider } from "../../context/LoginContext";
 
 const SignUpPage = () => {
   return (
-    <FormProvider>
+    <FormTaskProvider>
       <FormUserProvider>
         <LoginProvider>
           <FormSignUp></FormSignUp>
         </LoginProvider>
       </FormUserProvider>
-    </FormProvider>
+    </FormTaskProvider>
   );
 };
 

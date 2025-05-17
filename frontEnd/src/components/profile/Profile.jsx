@@ -5,7 +5,6 @@ import iconBack from "../../assets/img/back.png";
 import iconNoDataUser from "../../assets/img/noDataUser.png";
 import { useEffect, useState } from "react";
 import { useTasks } from "../../context/TaskContext";
-import AlertTokenToExpired from "../alertTokenToExpired/AlertTokenToExpired";
 import FormEditEmail from "./editEmail/FormEditEmail";
 import EditPassword from "./editPassword/EditPassword";
 import Modal from "../modal/Modal";
@@ -16,17 +15,9 @@ const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
-  const { openAlertToken, setOpenAlertToken } = useTasks();
   const [modalEditEmail, setModalEditEmail] = useState(false);
   const [modalEditPassword, setModalEditPassword] = useState(false);
   const [user, setUser] = useState();
-
-  const email = localStorage.getItem("email");
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    logout();
-  }
 
   useEffect(() => {
     const dataUser = async () => {

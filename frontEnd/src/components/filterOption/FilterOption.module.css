@@ -1,0 +1,56 @@
+.containFilterOption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    height: auto;
+    border-bottom: 2px solid rgb(204, 204, 204);
+    width: 100%;
+}
+
+.containFilterOption ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-right: 1rem;
+}
+
+.containFilterOption ul img {
+    width: 23px;
+    height: 23px;
+    opacity: 47%;
+}
+
+.containFilterOption ul button {
+    width: 6rem;
+    height: 1.6rem;
+    border-radius: 11px;
+    background: linear-gradient(rgb(24, 151, 201), rgb(16, 106, 141));
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.containFilterOption ul button:hover {
+       background: linear-gradient(rgb(21, 135, 180), rgb(16, 106, 141));
+}
+
+.containFilterOption li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 15px;
+}
+
+.containFilterOption select {
+    width: 7rem;
+    height: 1.6rem;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid rgb(177, 177, 177);
+}

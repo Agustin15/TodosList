@@ -1,113 +1,123 @@
 import styles from "./TodoList.module.css";
 import noTaskIcon from "../../assets/img/sinTareas.png";
-import iconPendingTasks from "../../assets/img/unfinished.png";
 import iconNoFound from "../../assets/img/noFound.png";
-import iconCompleteTasks from "../../assets/img/completeTasks.png";
-import iconSearch from "../../assets/img/search.png";
 import iconAllTasks from "../../assets/img/allTasksIcon.png";
+import iconAddTask from "../../assets/img/iconAddTask.png";
+import gifLoadingTasks from "../../assets/img/loadingTasks.gif";
 import TodoItem from "../todoItem/TodoItem";
-import SearchTask from "../searchTask/SearchTask";
-import Statistics from "../statistics/Statistics";
+import Modal from "../modal/Modal";
+import { Pagination } from "../pagination/Pagination";
+import AddTodoForm from "../addTodoForm/AddTodoForm";
 import { useTasks } from "../../context/TaskContext";
-import Loader from "../loader/Loader";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { FilterOption } from "../filterOption/FilterOption";
 
 const TodoList = () => {
-
-  const { tasks, loadingState, getTasksStateFilter, getTasksByUser } =
-    useTasks();
-  const selectFilterTasks = useRef();
-  const titleRef = useRef();
-  const imgTitleRef = useRef();
+  const {
+    tasks,
+    loadingState,
+    getTasksThisWeekUser,
+    getTasksThisWeekUserLimit,
+    getTaskById
+  } = useTasks();
   const [taskNotFound, setTaskNotFound] = useState(false);
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const refSelectYear = useRef();
+  const refSelectMonth = useRef();
+  const refSelectState = useRef();
+  const { idTask } = useParams();
 
-  const optionTitlesAndIcons = [
-    { option: "allTasks", title: "All tasks", img: iconAllTasks },
-    { option: "true", title: "Complete tasks", img: iconCompleteTasks },
-    { option: "false", title: "Pending tasks", img: iconPendingTasks },
-  ];
-  const changeTitle = (option) => {
-    const optionFind = optionTitlesAndIcons.find(
-      (value) => value.option == option
-    );
-
-    titleRef.current.textContent = optionFind.title;
-    imgTitleRef.current.src = optionFind.img;
-  };
-
-
-  const handleFilterTasks = () => {
-    let option = selectFilterTasks.current.value;
-    if (option == "allTasks") {
-      getTasksByUser();
+  useEffect(() => {
+    if (idTask) {
+      getTaskById({ id: idTask });
     } else {
-      let isCompleted = option;
-      getTasksStateFilter(isCompleted);
+      getTasksThisWeekUser("tasksThisWeekQuantity");
+      getTasksThisWeekUserLimit(0);
     }
-
-    changeTitle(option);
-  };
+  }, []);
 
   return (
     <div className={styles.contentBody}>
-      <Statistics></Statistics>
       <div className={styles.containTasks}>
         <div className={styles.header}>
-          <div className={styles.title}>
-            <h3 ref={titleRef}>All tasks</h3>
-            <img ref={imgTitleRef} src={iconAllTasks}></img>
-          </div>
-
-          <div className={styles.containFilterTasks}>
-            <SearchTask setTaskNotFound={setTaskNotFound} />
-            <div className={styles.containSelect}>
-              <span>Filter tasks:</span>
-              <div className={styles.rowSelect}>
-                <select ref={selectFilterTasks}>
-                <option value={"allTasks"}>All Tasks</option>
-                  <option value={true}>Complete Tasks</option>
-                  <option value={false}>Pending Tasks</option>
-                  
-                </select>
-                <button onClick={handleFilterTasks}>
-                  <img src={iconSearch}></img>
-                </button>
-              </div>
+          <div className={styles.rowHeader}>
+            <div className={styles.title}>
+              <h3>List tasks</h3>
+              <img src={iconAllTasks}></img>
+            </div>
+            <div className={styles.addTask}>
+              <button onClick={() => setOpenModalAdd(true)}>
+                Add task
+                <img src={iconAddTask}></img>
+              </button>
             </div>
           </div>
         </div>
-        <div className={loadingState ? styles.loadingShow : styles.loadingHide}>
-          <h3>loading tasks</h3>
-          <Loader isLoading={loadingState} color="gray" size={8} />
-        </div>
+        {!idTask && (
+          <FilterOption
+            selectYear={refSelectYear}
+            selectMonth={refSelectMonth}
+            selectState={refSelectState}
+            setTaskNotFound={setTaskNotFound}
+          />
+        )}
 
-        <div
-          className={
-            tasks.length == 0 && !loadingState
-              ? styles.warningShow
-              : styles.warningHide
-          }
-        >
-          <img src={noTaskIcon}></img>
-          <h3>Not Tasks </h3>
-        </div>
-
-        <div
-          className={
-            taskNotFound ? styles.taskNotFoundShow : styles.taskNotFoundHide
-          }
-        >
-          <img src={iconNoFound}></img>
-          <h3>Task not found</h3>
-        </div>
         {tasks && (
           <ul id="ulTasks" className={styles.tasks}>
-            {tasks.map((task) => (
-              <TodoItem key={task._id} task={task}></TodoItem>
-            ))}
+            <div
+              className={loadingState ? styles.loadingShow : styles.loadingHide}
+            >
+              <img src={gifLoadingTasks}></img>
+              <h3>loading tasks</h3>
+            </div>
+
+            <div
+              className={
+                tasks.length == 0 && !loadingState
+                  ? styles.warningShow
+                  : styles.warningHide
+              }
+            >
+              <img src={noTaskIcon}></img>
+              <h3>Not Tasks </h3>
+            </div>
+
+            <div
+              className={
+                taskNotFound ? styles.taskNotFoundShow : styles.taskNotFoundHide
+              }
+            >
+              <img src={iconNoFound}></img>
+              <h3>Task not found</h3>
+            </div>
+            {!loadingState
+              ? tasks.map((task, index) => (
+                  <TodoItem
+                    index={index}
+                    key={task.idTask}
+                    task={task}
+                  ></TodoItem>
+                ))
+              : ""}
           </ul>
         )}
+
+        {!idTask && (
+          <Pagination
+            selectYear={refSelectYear}
+            selectMonth={refSelectMonth}
+            selectState={refSelectState}
+          />
+        )}
       </div>
+
+      {openModalAdd && (
+        <Modal>
+          <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
+        </Modal>
+      )}
     </div>
   );
 };

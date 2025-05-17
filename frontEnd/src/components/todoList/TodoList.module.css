@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 2rem;
 }
 
 .containTasks {
@@ -9,16 +10,15 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 0rem;
   margin: auto;
-  width: 60rem;
-  height: 31rem;
+  width: 95%;
+  height:99vh;
   margin-top: 2rem;
   background-color: white;
   box-shadow: 2px 2px 2px grey;
   border: 1px solid rgb(212, 212, 212);
   padding-bottom: 1rem;
-  padding-top: 1rem;
   border-radius: 5px;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -29,96 +29,77 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  font-size: 21px;
-  color: rgb(100, 100, 100);
+  padding-top: 0.5rem;
+  font-size: 19px;
+  background: linear-gradient(#f8f8f8, rgb(221, 221, 221));
   width: 100%;
   border-bottom: 1px solid rgb(206, 206, 206);
   padding-bottom: 1rem;
 }
 
+.header .rowHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
 .header .title {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 99%;
 }
 
 .header .title img {
-  width: 55px;
+  width: 45px;
 }
 
-.containFilterTasks {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.containSelect {
-  width: 13rem;
-  height: 5rem;
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-  gap: 0.4rem;
-  box-shadow: 2px 2px 2px gray;
-  border-radius: 4px;
-  font-size: 15px;
-  border: 1px solid rgb(221, 221, 221);
-  margin-right: 2rem;
-}
-.containSelect span {
-  background-color: rgb(228, 228, 228);
-  color: rgb(0, 0, 0);
-  padding: 0.4rem;
-  border-bottom: 1px solid rgb(196, 196, 196);
+.header .addTask {
   width: 94%;
-}
-
-.containSelect .rowSelect {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: end;
+  position: absolute;
+}
+
+.header button {
+  display: flex;
   justify-content: center;
-}
-
-.containSelect .rowSelect img {
-  width: 20px;
-}
-
-.containSelect .rowSelect button {
-  background-color: rgb(0, 119, 255);
-  box-shadow: 1px 1px 1px rgb(185, 185, 185);
-  border-radius: 3px;
+  align-items: center;
   border: none;
-  width: 2rem;
-  padding: 0.2rem;
+  width: 7rem;
+  height: 1.7rem;
+  background-color: rgb(6, 187, 6);
+  font-size: 13px;
+  font-weight: bold;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  color: white;
+  border-radius: 99px;
+  box-shadow: 2px 2px 2px gray;
   cursor: pointer;
 }
-
-.containSelect .rowSelect button:hover {
-  background-color: rgb(0, 120, 175);
+.header button:hover {
+  background-color: rgb(16, 168, 16);
 }
 
-.containFilterTasks select {
-  width: 9rem;
-  height: 2rem;
-  padding: 0.4rem;
-  margin-left: 0.3rem;
-  border-radius: 3px;
-  background-color: rgb(255, 252, 252);
-  border: 1px solid rgb(179, 179, 179);
-  color: rgb(0, 0, 0);
-  outline: none;
+.header button img {
+  width: 12px;
+  height: 12px;
 }
 
 .tasks {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
   height: 100%;
   width: 96%;
+  margin-top: 1rem;
   overflow-y: scroll;
+  border-bottom: 2px solid rgb(190, 190, 190);
+  overflow-x: hidden;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -128,15 +109,20 @@
 }
 
 .loadingShow {
-  font-size: 25px;
+  font-size: 16px;
   color: rgb(49, 49, 49);
-  opacity: 50%;
+  opacity: 80%;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-top: 6rem;
+  gap: 0.5rem;
+  height: 95%;
 }
-
+.loadingShow img {
+  width: 82px;
+  height: 82px;
+}
 .warningShow {
   opacity: 70%;
   display: flex;
@@ -144,8 +130,7 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-top: 3rem;
-  height: 20rem;
+  height: 95%;
   font-size: 18px;
 }
 
@@ -208,6 +193,7 @@
     gap: 1rem;
     font-size: 17px;
     color: rgb(100, 100, 100);
+    background: linear-gradient(#f8f8f8, rgb(221, 221, 221));
     width: 100%;
     border-bottom: 1px solid rgb(206, 206, 206);
     padding-bottom: 1rem;
@@ -311,11 +297,17 @@
   .loadingShow {
     font-size: 17px;
     color: rgb(49, 49, 49);
-    opacity: 50%;
+    opacity: 80%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
-    margin-top: 5rem;
+    gap: 0.5rem;
+    height: 99%;
+  }
+  .loadingShow img {
+    width: 45px;
+    height: 45px;
   }
 
   .warningShow {

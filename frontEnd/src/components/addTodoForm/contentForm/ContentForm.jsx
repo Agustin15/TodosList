@@ -1,12 +1,15 @@
 import classesStyle from "./ContentForm.module.css";
 import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
 import AlertForm from "../alertForm/AlertForm";
-import { useForm } from "../../../context/FormContext";
 import Loader from "../../loader/Loader";
+import iconFileNotUploaded from "../../../assets/img/cloudError.png";
+import iconFileUploaded from "../../../assets/img/cloudOk.png";
+import iconFile from "../../../assets/img/file.png";
+import { useForm } from "../../../context/FormTaskContext";
 import { useTasks } from "../../../context/TaskContext";
 
 const ContentForm = ({ handleChange }) => {
-  const { values, errors, resultForm, cleanValues } = useForm();
+  const { values, errors, resultForm, cleanForm } = useForm();
   const { loadingState } = useTasks();
 
   return (
@@ -25,30 +28,60 @@ const ContentForm = ({ handleChange }) => {
         </div>
 
         <div className={classesStyle.name}>
-          <label>Task name:</label>
-          <input
-            value={values.name}
-            onChange={handleChange}
-            placeholder="Enter task name"
-            type="text"
-            name="name"
-          ></input>
-          <AlertErrorInput error={errors.name} />
+          <label>Task date:</label>
+          <div className={classesStyle.dateTime}>
+            <input
+              name="datetimeTask"
+              value={values.datetimeTask}
+              onChange={handleChange}
+              type="datetime-local"
+            ></input>
+          </div>
+          <AlertErrorInput error={errors.datetimeTask} />
         </div>
       </div>
 
       <div className={classesStyle.description}>
         <label>Description:</label>
         <textarea
-          value={values.description}
+          value={values.descriptionTask}
           onChange={handleChange}
           placeholder="Description..."
-          name="description"
+          name="descriptionTask"
+          maxLength={130}
         ></textarea>
-        <AlertErrorInput
-          className={classesStyle.alertErrorDescription}
-          error={errors.description}
-        />
+        <AlertErrorInput input={"description"} error={errors.descriptionTask} />
+      </div>
+
+      <div className={classesStyle.containFile}>
+        <img
+          src={
+            values.filesUploaded.length > 0
+              ? iconFileUploaded
+              : iconFileNotUploaded
+          }
+        ></img>
+        <label htmlFor="inputFile">Upload file(limit:10MB)</label>
+        <input
+          id="inputFile"
+          multiple
+          name="filesUploaded"
+          onChange={handleChange}
+          type="file"
+        ></input>
+        <AlertErrorInput input={"filesUploaded"} error={errors.filesUploaded} />
+
+        <span>Archivos subidos:{values.filesUploaded.length}</span>
+        <ul>
+          {values.filesUploaded.length > 0
+            ? values.filesUploaded.map((file, index) => (
+                <li key={index}>
+                  <img src={iconFile}></img>
+                  <span>{file.name}</span>
+                </li>
+              ))
+            : ""}
+        </ul>
       </div>
 
       <div className={classesStyle.buttons}>
@@ -56,7 +89,7 @@ const ContentForm = ({ handleChange }) => {
           Add
           <Loader isLoading={loadingState} color="white" size={3} />
         </button>
-        <button type="reset" onClick={cleanValues}>
+        <button type="reset" onClick={cleanForm}>
           Clean
         </button>
       </div>

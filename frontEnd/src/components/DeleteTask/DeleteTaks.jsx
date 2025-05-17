@@ -9,7 +9,7 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
   const [alert, setAlert] = useState(false);
 
   const handleDelete = async () => {
-    let taskDeleted = await deleteTask(task._id);
+    let taskDeleted = await deleteTask(task.idTask);
     if (taskDeleted) {
       setOpenModalDelete(false);
     } else {
@@ -19,7 +19,7 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
   return (
     <div className={styles.deleteTask}>
       <img src={iconDelete}></img>
-      <span>Do you want to delete "{task.name}"?</span>
+      <span>Do you want to delete this task?</span>
       <div className={styles.containButtons}>
         <button onClick={handleDelete}>Confirm</button>
         <button onClick={() => setOpenModalDelete(false)}>Cancel</button>

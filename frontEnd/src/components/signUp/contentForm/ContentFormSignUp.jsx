@@ -3,7 +3,7 @@ import iconSignUp from "../../../assets/img/signUpIcon.gif";
 import hiddenEye from "../../../assets/img/hidden.png";
 import correctIcon from "../../../assets/img/correctIcon.png";
 import { useFormUser } from "../../../context/FormUserContext";
-import { useForm } from "../../../context/FormContext";
+import { useForm } from "../../../context/FormTaskContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
@@ -11,7 +11,7 @@ import AlertInputLogin from "../alertInputLogin/AlertInputLogin";
 import WelcomeFormSignUp from "../welcomeSignUp/WelcomeFormSignUp";
 import Loader from "../../loader/Loader";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
-const urlBack= import.meta.env.VITE_LOCALHOST_BACK;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const ContentFormSignUp = () => {
   const {
@@ -21,7 +21,7 @@ const ContentFormSignUp = () => {
     handlePassword,
     handleSubmitSignUp,
     errorsInputsSignUp,
-    cleanForm,
+    cleanForm
   } = useFormUser();
   const { resultForm, setResultForm } = useForm();
   const { fetchLogin, loading } = useLogin();
@@ -29,13 +29,13 @@ const ContentFormSignUp = () => {
   useEffect(() => {
     if (user) {
       const resultSignUp = async () => {
-        const result = await fetchLogin(user, `${urlBack}signup/`);
+        const result = await fetchLogin(user, `api/signup/`);
         if (result) {
           cleanForm();
           setResultForm({
             icon: correctIcon,
             result: "correct",
-            msj: "User registered successfully",
+            msj: "User registered successfully"
           });
         }
       };

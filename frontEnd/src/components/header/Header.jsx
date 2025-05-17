@@ -1,29 +1,21 @@
 import classesStyle from "./Header.module.css";
-import iconLogo from "../../assets/img/iconLogo.png";
-import btnImgPlus from "../../assets/img/plus.png";
+import logo from "../../assets/img/logo.png";
 import accountIcon from "../../assets/img/profile.png";
+import panelIcon from "../../assets/img/panel.png";
+import calendarMenu from "../../assets/img/calendarMenu.png";
+import allTasksIcon from "../../assets/img/allTasksIcon.png";
+import emailIcon from "../../assets/img/email.png";
 import logOutIcon from "../../assets/img/logOut.png";
-import Modal from "../modal/Modal";
-import AddTodoForm from "../addTodoForm/AddTodoForm";
-import AlertTokenToExpired from "../alertTokenToExpired/AlertTokenToExpired";
-import { TaskProvider, useTasks } from "../../context/TaskContext";
-import { FormProvider } from "../../context/FormContext";
 import { useEffect, useState } from "react";
-import { useToken } from "../../context/TokenContext";
-const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+import { useDataUser } from "../../context/userDataContext";
 
 const Header = () => {
-  const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
-  const { openAlertToken, setOpenAlertToken } = useTasks();
-  const { logout } = useToken();
+  const { user, getUserData, loadingUser, logoutSession } = useDataUser();
 
-  const email = localStorage.getItem("email");
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    logout();
-  }
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const handleOpenDetailsProfile = () => {
     if (openDetailsProfile) {
@@ -35,20 +27,23 @@ const Header = () => {
 
   return (
     <>
-      {openAlertToken && (
-        <AlertTokenToExpired setOpenAlertToken={setOpenAlertToken} />
-      )}
       <header className={classesStyle.header}>
         <nav>
           <div className={classesStyle.initHeader}>
-            <img src={iconLogo}></img>
+            <img src={logo}></img>
             <span>TodoList</span>
             <ul>
               <li>
-                <button onClick={() => setOpenModalAdd(true)}>
-                  Add new Task
-                  <img src={btnImgPlus}></img>
-                </button>
+                <img src={panelIcon}></img>
+                <a href="/dashboard">Dashboard</a>
+              </li>
+              <li>
+                <img src={allTasksIcon}></img>
+                <a href="/tasks">Tasks</a>
+              </li>
+              <li>
+                <img src={calendarMenu}></img>
+               <a href="/calendar">Calendar</a> 
               </li>
             </ul>
           </div>
@@ -64,31 +59,30 @@ const Header = () => {
               <div className={classesStyle.dataProfile}>
                 <div className={classesStyle.rowOne}>
                   <img src={accountIcon}></img>
-                  <span title={email}>{email}</span>
+                  <div className={classesStyle.columnOne}>
+                    <span>
+                      {loadingUser
+                        ? "loading..."
+                        : user.nameUser + " " + user.lastname}
+                    </span>
+                    <a>View profile</a>
+                  </div>
                 </div>
-                <button onClick={() => (location.href = `${urlFront}profile`)}>
-                  Edit profile
-                </button>
+
+                <div className={classesStyle.email}>
+                  <img src={emailIcon}></img>
+                  <span>{loadingUser ? "loading..." : user.email}</span>
+                </div>
               </div>
 
-              <div className={classesStyle.logOut}>
+              <div onClick={logoutSession} className={classesStyle.logOut}>
                 <img src={logOutIcon}></img>
-                <span onClick={logout}>Logout</span>
+                <span>Logout</span>
               </div>
             </div>
           </div>
         </nav>
       </header>
-
-      {openModalAdd && (
-        <Modal>
-          <TaskProvider>
-            <FormProvider>
-              <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
-            </FormProvider>
-          </TaskProvider>
-        </Modal>
-      )}
     </>
   );
 };

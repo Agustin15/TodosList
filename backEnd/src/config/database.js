@@ -1,22 +1,30 @@
-import mongoose from "mongoose";
+import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export const connectDB = async() => {
-  try {
-    if(!process.env.DATABASE_URL) {
+let connection;
 
-      throw new Error("DATABASE_URL is not defined");
-    }
-
-    mongoose.connect(process.env.DATABASE_URL);
-
-    console.log("Database connection succesfully");
-  } catch (error) {
-
-    console.error("Database connection failed,"+error);
-    process.exit(1);
+try {
+  if (
+    !process.env.DATABASE_HOST ||
+    !process.env.DATABASE_USER ||
+    !process.env.DATABASE_NAME ||
+    !process.env.DATABASE_PASSWORD
+  ) {
+    throw new Error("Config variables of database are not defined");
   }
-};
 
+  connection =await mysql.createConnection({
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME
+  });
+
+} catch (error) {
+  console.error("Database connection failed," + error);
+  process.exit(1);
+}
+
+export default connection;

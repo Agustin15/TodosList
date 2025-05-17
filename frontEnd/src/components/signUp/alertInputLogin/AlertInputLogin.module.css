@@ -5,7 +5,7 @@
   margin-top: 5rem;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .msjError {
     color: rgb(226, 0, 0);
     font-size: 17px;
@@ -14,10 +14,10 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 915px) {
   .msjError {
     color: rgb(226, 0, 0);
-    font-size: 13px;
+    font-size: 12px;
     position: absolute;
     margin-top: 4rem;
   }

@@ -15,7 +15,7 @@
 
 .form {
   width: 50%;
-  height: 100vh;
+  height: 115vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,7 +126,7 @@
   justify-content: center;
   cursor: pointer;
   border: none;
-  background-color: rgb(22, 22, 211);
+  background-color: rgb(24, 24, 168);
 }
 
 .containSignIn button:hover {
@@ -142,7 +142,7 @@
   text-decoration: underline;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .form {
     width: 100%;
     height: 100vh;
@@ -248,7 +248,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 915px) {
   .form .title {
     padding-top: 0.2rem;
     gap: 0.4rem;

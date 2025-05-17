@@ -10,12 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "chartjs-plugin-datalabels": "^2.2.0",
+    "@canvasjs/react-charts": "^1.0.2",
+    "@cyntler/react-doc-viewer": "^1.17.0",
+    "@fullcalendar/core": "^6.1.17",
+    "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/multimonth": "^6.1.17",
+    "@fullcalendar/react": "^6.1.17",
+    "cookie-parser": "^1.4.7",
     "react": "^18.3.1",
-    "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.1",
-    "react-spinners": "^0.14.1"
+    "react-spinners": "^0.14.1",
+    "styled-components": "^6.1.18"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
