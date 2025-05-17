@@ -37,7 +37,7 @@
 - styled-components
   
 
-**_Configuracion del proxy, archivo vite.config**
+**_Configuracion del proxy, archivo vite.config:_**
 
      server: {
     proxy: {
