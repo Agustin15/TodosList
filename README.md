@@ -28,13 +28,29 @@
 - react-dom
 - react-spinners
 - react-router
-- react-chartjs-2
-- chartjs-plugin-datalabels
+- canvasjs/react-charts
+- react-doc-viewer
+- fullcalendar/react
+- fullcalendar/core
+- fullcalendar/daygrid
+- fullcalendar/multimonth
+- styled-components
+
+**_Configuracion del archivo vite.config**
+
+     server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:PORT",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, "")
+      }
+    }
+  }
 
 **_Configuracion del archivo .env_**
 
     VITE_LOCALHOST_FRONT=http://localhost:PORT/
-    VITE_LOCALHOST_BACK=http://localhost:PORT/
     
 > ## Instalacion backend ⚙
 
@@ -50,14 +66,20 @@
 
 - express
 - nodemon
-- mongoose
 - nodemail
+- cookie-parser
+- bcrypt
+- multer
 - dotenv
+- mysql2
 
 **_Configuracion del archivo .env_**
 
     PORT=3000
-    DATABASE_URL=mongodb+srv://<userDB>:<passwordDB>@cluster0.u5vpn.mongodb.net/<databaseName>?retryWrites=true&w=majority&appName=Cluster0
+    DATABASE_HOST=###
+    DATABASE_NAME=###
+    DATABASE_USER=###
+    DATABASE_PASSWORD=###
     JWT_SECRET_KEY=###
     JWT_SECRET_KEY_REFRESH=###
     USER_MAIL=###
