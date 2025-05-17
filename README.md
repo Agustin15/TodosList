@@ -35,8 +35,9 @@
 - fullcalendar/daygrid
 - fullcalendar/multimonth
 - styled-components
+  
 
-**_Configuracion del archivo vite.config**
+**_Configuracion del proxy, archivo vite.config**
 
      server: {
     proxy: {
