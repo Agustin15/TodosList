@@ -1,17 +1,32 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import multiMonthPlugin from "@fullcalendar/multimonth";
+import interactionPlugin from "@fullcalendar/interaction";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { useState, useEffect } from "react";
-import iconCalendar from "../../assets/img/calendarMenu.png";
+import Modal from "../modal/Modal";
+import AddTodoForm from "../addTodoForm/AddTodoForm";
 import styled from "styled-components";
 import styles from "./CalendarEvents.module.css";
+import { useTasks } from "../../context/TaskContext";
 
 export const CalendarEvents = () => {
   const [eventsCalendar, setEventsCalendar] = useState([]);
+  const [eventAdded, setEventAdded] = useState(false);
+  const { formatDate } = useTasks();
+  const [modalAdd, setModalAdd] = useState(false);
+  const [dateSelected, setDateSelected] = useState();
 
   useEffect(() => {
     getTasksForCalendar();
-  }, []);
+  }, [eventAdded]);
+
+  useEffect(() => {
+    if (dateSelected) {
+      console.log(dateSelected);
+      setModalAdd(true);
+    }
+  }, [dateSelected]);
 
   const getTasksForCalendar = async () => {
     const optionGetTasks = {
@@ -50,16 +65,23 @@ export const CalendarEvents = () => {
     }
 
     .fc-button-group button {
-      background: linear-gradient(rgb(9, 108, 138), rgb(9, 108, 138));
-      color: white;
+      background: linear-gradient(rgb(245, 245, 245), rgb(218, 218, 218));
+      box-shadow: 2px 2px 2px gray;
+      border: 1px solid rgb(204, 204, 204);
+      color: rgb(90, 90, 90);
+    }
+
+    .fc-dayGridMonth-button {
       border: none;
     }
 
     .fc-button-group button:hover {
-      background: linear-gradient(rgb(8, 79, 100), rgb(21, 70, 85));
+      background: linear-gradient(rgb(204, 201, 201), rgb(218, 218, 218));
+      border: 1px solid rgb(204, 204, 204);
+      color: rgb(90, 90, 90);
     }
     .fc-today-button {
-      background: linear-gradient(rgb(9, 108, 138), rgb(12, 81, 102));
+      background: linear-gradient(rgb(161, 161, 161), rgb(95, 95, 95));
       color: white;
       border: none;
       opacity: 99%;
@@ -72,19 +94,31 @@ export const CalendarEvents = () => {
     let idTask = info.event._def.extendedProps.idTask;
     location.href = "tasks/" + idTask;
   };
+  const handleEventAddEvent = (info) => {
+    if (info.date >= new Date()) {
+      let date = new Date(info.date).getTime() + 24 * 60 * 60;
+      setDateSelected(formatDate(date));
+    }
+  };
 
   return (
     <>
       <div className={styles.containCalendar}>
         <Wrapper>
           <FullCalendar
-            plugins={[dayGridPlugin, multiMonthPlugin]}
+            plugins={[
+              dayGridPlugin,
+              multiMonthPlugin,
+              interactionPlugin,
+              timeGridPlugin
+            ]}
             initialView="dayGridMonth"
             events={eventsCalendar}
             height={464}
             dayMaxEventRows={1}
+            dateClick={handleEventAddEvent}
             headerToolbar={{
-              start: "dayGridMonth,dayGridWeek,multiMonthYear",
+              start: "dayGridMonth,timeGridDay,multiMonthYear",
               center: "title",
               end: "today prev,next"
             }}
@@ -103,6 +137,15 @@ export const CalendarEvents = () => {
         </ul>
       </div>
       <br></br>
+      {modalAdd && (
+        <Modal>
+          <AddTodoForm
+            setEventAdded={setEventAdded}
+            dateSelected={dateSelected}
+            setOpenModalAdd={setModalAdd}
+          ></AddTodoForm>
+        </Modal>
+      )}
     </>
   );
 };

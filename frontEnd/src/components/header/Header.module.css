@@ -144,11 +144,11 @@
   box-shadow: 2px 2px 2px gray;
   color: rgb(24, 24, 24);
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   right: 2rem;
   width: 14rem;
   height: 8rem;
-  top: 3.6rem;
+  top: 3.2rem;
   box-shadow: 2px 2px 2px rgb(87, 87, 87);
 }
 

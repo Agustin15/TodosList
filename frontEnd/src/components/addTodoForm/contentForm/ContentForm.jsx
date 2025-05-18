@@ -7,10 +7,17 @@ import iconFileUploaded from "../../../assets/img/cloudOk.png";
 import iconFile from "../../../assets/img/file.png";
 import { useForm } from "../../../context/FormTaskContext";
 import { useTasks } from "../../../context/TaskContext";
+import { useEffect } from "react";
 
-const ContentForm = ({ handleChange }) => {
-  const { values, errors, resultForm, cleanForm } = useForm();
+const ContentForm = ({ dateSelected, handleChange }) => {
+  const { values, setValues, errors, resultForm, cleanForm } = useForm();
   const { loadingState } = useTasks();
+
+  useEffect(() => {
+    if (dateSelected) {
+      setValues({ ...values, ["datetimeTask"]: dateSelected });
+    }
+  }, []);
 
   return (
     <div className={classesStyle.bodyForm}>

@@ -1,64 +1,135 @@
 import styles from "./ContentBody.module.css";
-import iconPencil from "../../../assets/img/pencil.png";
-import iconProfile from "../../../assets/img/profile.png";
-import iconUserInfo from "../../../assets/img/infoUser.png";
-import iconEditMail from "../../../assets/img/editMail.png";
-import iconEditPassword from "../../../assets/img/editPassword.png";
+import iconUser from "../../../assets/img/userAvatar.png";
+import iconEmail from "../../../assets/img/emailProfile.png";
+import iconError from "../../../assets/img/errorIcon.png";
+import gifLoadingForm from "../../../assets/img/loadingForm.gif";
+import iconCorrect from "../../../assets/img/correctIcon.png";
+import iconEdit from "../../../assets/img/edit.png";
+import { AlertInput } from "./alertInput/AlertInput";
+import { useDataUser } from "../../../context/userDataContext";
+import AlertForm from "./alertForm/AlertForm";
 
-const ContentBody = ({ user, setModalEditEmail, setModalEditPassword }) => {
+const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
+  const {
+    user,
+    handleChange,
+    values,
+    errors,
+    resultForm,
+    setResultForm,
+    updateUser,
+    loaderForm
+  } = useDataUser();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (errors.nameUser.length > 0 || errors.lastname.length > 0) {
+      setResultForm({
+        icon: iconError,
+        msj: "Complete correctly form",
+        state: "Error"
+      });
+    } else {
+      let result = await updateUser();
+      if (result) {
+        setResultForm({
+          icon: iconCorrect,
+          msj: "User updated succesfully",
+          state: "Correct"
+        });
+
+        setTimeout(() => {
+          setResultForm();
+        }, 3000);
+      }
+    }
+  };
+
   return (
     <>
-      <div className={styles.title}>
-        <h4>{`${user.name} ${user.lastname}`}</h4>
-        <img src={iconProfile}></img>
-      </div>
-
-      <div className={styles.containDataUser}>
-        <div className={styles.dataUser}>
-          <div className={styles.head}>
-            <span>User details</span>
-            <img src={iconUserInfo}></img>
-          </div>
-
-          <ul>
-            <li>
-              <span>Name:</span>
-              {user.name}
-            </li>
-            <li>
-              <span>Lastname:</span>
-              {user.lastname}
-            </li>
-            <li>
-              <span>Email:</span>
-              {user.email}
-            </li>
-          </ul>
+      <div className={styles.detailsUser}>
+        <div className={styles.avatar}>
+          <img src={iconUser}></img>
+          <span>
+            {user.nameUser} {user.lastname}
+          </span>
+        </div>
+        <div className={styles.email}>
+          <img src={iconEmail}></img>
+          <span>{user.email}</span>
         </div>
       </div>
-      <div className={styles.containOptions}>
-        <div className={styles.editMailOption}>
-          <div className={styles.containIcon}>
-            <img src={iconEditMail}></img>
+
+      <form onSubmit={handleSubmit}>
+        <div className={styles.rowForm}>
+          <div className={styles.columnInput}>
+            <label>Nombre</label>
+            <input
+              onChange={(event) => handleChange(event)}
+              defaultValue={values.nameUser}
+              placeholder="Enter name"
+              type="text"
+              name="nameUser"
+            ></input>
+            {errors.nameUser.length > 0 && (
+              <AlertInput msj={errors.nameUser}></AlertInput>
+            )}
           </div>
-          <div className={styles.footer}>
-            <span onClick={() => setModalEditEmail(true)}>Edit email</span>
-            <img src={iconPencil}></img>
+          <div className={styles.columnInput}>
+            <label>Apellido</label>
+            <input
+              onChange={(event) => handleChange(event)}
+              defaultValue={values.lastname}
+              placeholder="Enter lastname"
+              type="text"
+              name="lastname"
+            ></input>
+            {errors.lastname.length > 0 && (
+              <AlertInput msj={errors.lastname}></AlertInput>
+            )}
+          </div>
+        </div>
+        <div className={styles.rowForm}>
+          <div className={styles.columnInput}>
+            <label>Email</label>
+            <input
+              value={user.email}
+              type="text"
+              className={styles.inputEmail}
+            ></input>
+            <button
+              onClick={() => setModalEditEmail(true)}
+              type="button"
+              className={styles.editInput}
+            >
+              <img src={iconEdit}></img>
+            </button>
+          </div>
+          <div className={styles.columnInput}>
+            <label>Password</label>
+            <input
+              value={"**************************"}
+              readOnly
+              type="password"
+            ></input>
+            <button
+              type="button"
+              onClick={() => setModalEditPassword(true)}
+              className={styles.editInput}
+            >
+              <img src={iconEdit}></img>
+            </button>
           </div>
         </div>
 
-        <div className={styles.editPasswordOption}>
-          <div className={styles.containIcon}>
-            <img src={iconEditPassword}></img>
-          </div>
-          <div className={styles.footer}>
-            <span onClick={() => setModalEditPassword(true)}>
-              Edit password
-            </span>
-            <img src={iconPencil}></img>
-          </div>
-        </div>
-      </div>
+        <button type="submit">
+          Save
+          {loaderForm && <img src={gifLoadingForm}></img>}
+        </button>
+
+        {resultForm && <AlertForm result={resultForm}></AlertForm>}
+      </form>
     </>
   );
 };

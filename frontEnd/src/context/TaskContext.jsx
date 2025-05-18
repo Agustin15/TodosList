@@ -38,7 +38,7 @@ export const TaskProvider = ({ children }) => {
   const [tasksCompleteByWeekday, setTasksCompleteByWeekday] = useState([]);
   const [quantityTasks, setQuantityTask] = useState();
   const [indexSelected, setIndexSelected] = useState(0);
-  const [loadingState, setLoadingState] = useState(true);
+  const [loadingState, setLoadingState] = useState(false);
 
   useEffect(() => {
     if (location.href.indexOf("dashboard") > -1) {

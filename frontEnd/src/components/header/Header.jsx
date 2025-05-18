@@ -65,7 +65,7 @@ const Header = () => {
                         ? "loading..."
                         : user.nameUser + " " + user.lastname}
                     </span>
-                    <a>View profile</a>
+                    <a href="/profile">View profile</a>
                   </div>
                 </div>
 

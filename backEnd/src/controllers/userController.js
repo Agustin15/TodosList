@@ -117,6 +117,39 @@ export const updatePasswordUserByEmail = async (req, res) => {
   }
 };
 
+export const updateUserById = async (req, res) => {
+  try {
+    let result = false;
+    const idUser = req.params.id;
+    const { name, lastname } = req.body;
+    const userFound = await findUserByIdUser(idUser);
+    if (!userFound.length > 0) {
+      throw new Error("User not found");
+    }
+    const validAuth = await authRequest(req, res);
+
+    if (!validAuth) {
+      throw new Error("Invalid Authentication");
+    }
+
+    const userUpdated = await UserModel.updateUser(
+      name,
+      lastname,
+      userFound[0].email,
+      userFound[0].passwordUser,
+      userFound[0].idUser
+    );
+
+    if (userUpdated) {
+      result = true;
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(502).json({ messageError: error.message });
+  }
+};
+
 // export const updateEmailUser = async (req, res) => {
 //   const secretTokenKey = process.env.JWT_SECRET_KEY;
 //   const emailCurrent = req.params.email;

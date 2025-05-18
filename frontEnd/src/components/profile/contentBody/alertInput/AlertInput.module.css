@@ -1,0 +1,17 @@
+.containAlertInput {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 0.4rem;
+    position: absolute;
+    color: red;
+    font-size: 13px;
+    margin-top: 3.9rem;
+    margin-left: 0;
+    
+}
+
+.containAlertInput img {
+    width: 15px;
+    height: 15px;
+}

@@ -6,7 +6,7 @@ import iconAdd from "../../assets/img/addTask.png";
 import { useForm } from "../../context/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 
-const AddTodoForm = ({ setOpenModalAdd }) => {
+const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
   const {
     values,
     setValues,
@@ -35,6 +35,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
   };
 
   const handleClose = () => {
+    setEventAdded(false);
     cleanForm();
     setOpenModalAdd(false);
   };
@@ -61,6 +62,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
           msj = "Task added succesfully!";
           result = "correct";
           icon = iconCorrect;
+          if (dateSelected) setEventAdded(true);
           cleanValues();
         } else {
           throw "Oops,failed to add task";
@@ -92,7 +94,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <ContentForm handleChange={handleChange} />
+        <ContentForm dateSelected={dateSelected} handleChange={handleChange} />
       </form>
     </div>
   );

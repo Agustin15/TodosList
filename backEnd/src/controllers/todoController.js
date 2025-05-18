@@ -449,7 +449,7 @@ export const updateTask = async (req, res) => {
       req.params.id
     );
 
-    if (taskUpdated.affectedRows) {
+    if (taskUpdated) {
       let taskUpdatedFound = await findTasksByIdTask(req.params.id);
       taskUpdatedFound = taskUpdatedFound[0];
 
