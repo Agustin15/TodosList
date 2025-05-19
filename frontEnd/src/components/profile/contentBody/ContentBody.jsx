@@ -12,6 +12,7 @@ import AlertForm from "./alertForm/AlertForm";
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   const {
     user,
+    setUser,
     handleChange,
     values,
     errors,
@@ -31,14 +32,15 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
         state: "Error"
       });
     } else {
-      let result = await updateUser();
-      if (result) {
+      let userUpdated = await updateUser();
+      if (userUpdated) {
         setResultForm({
           icon: iconCorrect,
           msj: "User updated succesfully",
           state: "Correct"
         });
 
+        setUser(userUpdated);
         setTimeout(() => {
           setResultForm();
         }, 3000);
@@ -97,6 +99,7 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
               value={user.email}
               type="text"
               className={styles.inputEmail}
+              readOnly
             ></input>
             <button
               onClick={() => setModalEditEmail(true)}

@@ -76,42 +76,46 @@ export const getUserDataByToken = async (req, res) => {
   }
 };
 
-export const updatePasswordUserByEmail = async (req, res) => {
+export const updatePasswordUserById = async (req, res) => {
   try {
-    const mail = req.params.mail;
     const newPassword = req.body.password;
+
+    const decodeTokenAuth = await authRequest(req, res);
+
+    if (!decodeTokenAuth) {
+      throw new Error("Invalid Authenticacion");
+    }
 
     if (req.body.currentPassword) {
       const currentPassword = req.body.currentPassword;
-      const userFound = await findUserByEmail(mail);
-      if (userFound) {
-        const passwordVerify = await bcrypt.compare(
-          currentPassword,
-          userFound.password
-        );
 
-        if (!passwordVerify) {
-          throw new Error("Invalid current password");
-        }
+      const userFound = await findUserByIdUser(decodeTokenAuth.idUser);
+      if (!userFound.length > 0) {
+        throw new Error("User not found");
+      }
+
+      const passwordVerify = await bcrypt.compare(
+        currentPassword,
+        userFound[0].passwordUser
+      );
+
+      if (!passwordVerify) {
+        throw new Error("Invalid current password");
       }
     }
 
-    const decodeTokenAuth = authRequest(req);
+    bcrypt.hash(newPassword, 10, async (err, hash) => {
+      if (err) {
+        throw new Error({ messageError: "Internal server error" });
+      }
 
-    if (decodeTokenAuth) {
-      bcrypt.hash(newPassword, 10, async (err, hash) => {
-        if (err) {
-          throw new Error({ messageError: "Internal server error" });
-        }
+      const userUpdated = await UserModel.updatePasswordUserById(
+        hash,
+        decodeTokenAuth.idUser
+      );
 
-        const userUpdated = await UserModel.updatePasswordUserByEmail(
-          hash,
-          mail
-        );
-
-        res.status(200).json(userUpdated);
-      });
-    }
+      res.status(200).json(userUpdated);
+    });
   } catch (error) {
     res.status(502).json({ messageError: error.message });
   }
@@ -119,10 +123,11 @@ export const updatePasswordUserByEmail = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
   try {
-    let result = false;
+    let userFound;
     const idUser = req.params.id;
     const { name, lastname } = req.body;
-    const userFound = await findUserByIdUser(idUser);
+
+    userFound = await findUserByIdUser(idUser);
     if (!userFound.length > 0) {
       throw new Error("User not found");
     }
@@ -140,63 +145,62 @@ export const updateUserById = async (req, res) => {
       userFound[0].idUser
     );
 
-    if (userUpdated) {
-      result = true;
+    if (!userUpdated) {
+      throw new Error("User not updated");
     }
 
-    res.status(200).json(result);
+    userFound = await findUserByIdUser(idUser);
+    res.status(200).json(userFound[0]);
   } catch (error) {
     res.status(502).json({ messageError: error.message });
   }
 };
 
-// export const updateEmailUser = async (req, res) => {
-//   const secretTokenKey = process.env.JWT_SECRET_KEY;
-//   const emailCurrent = req.params.email;
-//   const newEmail = req.body.newEmail;
-//   const password = req.body.password;
+export const updateEmailUser = async (req, res) => {
+  const newEmail = req.body.newEmail;
+  const password = req.body.password;
 
-//   try {
-//     const userFoundExisted = await findUserByEmail(newEmail);
+  let userFound;
+  try {
+    const validAuth = await authRequest(req, res);
 
-//     if (userFoundExisted) {
-//       throw new Error("Updated failed, email in use");
-//     }
+    if (!validAuth) {
+      throw new Error("Invalid Authentication");
+    }
 
-//     const currentUser = await findUserByEmail(emailCurrent);
-//     const validAuth = authRequest(req);
-//     if (validAuth) {
-//       const passwordVerify = await bcrypt.compare(
-//         password,
-//         currentUser.password
-//       );
+    const userEmailUsed = await findUserByEmail(newEmail);
 
-//       if (!passwordVerify) {
-//         throw new Error("Updated failed, invalid password");
-//       } else {
-//         const userUpdated = await UserModel.updateOne(
-//           { email: emailCurrent },
-//           {
-//             $set: { email: newEmail }
-//           }
-//         );
+    if (userEmailUsed.length > 0) {
+      throw new Error("Updated failed, email in use");
+    }
 
-//         if (userUpdated) {
-//           const tasksOfUserUpdated = await updateUserOfAllTasks(
-//             emailCurrent,
-//             newEmail
-//           );
-//           if (tasksOfUserUpdated) {
-//             const token = jwt.sign({ email: newEmail }, secretTokenKey, {
-//               expiresIn: "1h"
-//             });
+    userFound = await findUserByIdUser(validAuth.idUser);
 
-//             res.status(200).json(token);
-//           }
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     res.status(500).json({ messageError: error.message });
-//   }
-// };
+    if (!userFound.length > 0) {
+      throw new Error("User not found");
+    }
+    const passwordVerify = await bcrypt.compare(
+      password,
+      userFound[0].passwordUser
+    );
+
+    if (!passwordVerify) {
+      throw new Error("Updated failed, invalid password");
+    }
+    let resultUpdated = await UserModel.updateEmailUserById(
+      newEmail,
+      validAuth.idUser
+    );
+
+    if (resultUpdated) {
+      userFound = await findUserByIdUser(validAuth.idUser);
+
+      if (!userFound.length > 0) {
+        throw new Error("User not found");
+      }
+      res.status(200).json(userFound[0]);
+    }
+  } catch (error) {
+    res.status(502).json({ messageError: error.message });
+  }
+};

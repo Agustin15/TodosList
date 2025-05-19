@@ -4,19 +4,19 @@ import jwt from "jsonwebtoken";
 
 import {
   findUserByEmail,
-  updatePasswordUserByEmail,
+  updatePasswordUserById
 } from "../controllers/userController.js";
 
 export const resetPasswordRoutes = express.Router();
 
-resetPasswordRoutes.put("/:mail", updatePasswordUserByEmail);
+resetPasswordRoutes.put("/", updatePasswordUserById);
 resetPasswordRoutes.post("/", async (req, res) => {
   try {
     const mail = req.body.mail;
     const secretKey = process.env.JWT_SECRET_KEY;
 
     const tokenResetPassword = jwt.sign({ mail: mail }, secretKey, {
-      expiresIn: "15m",
+      expiresIn: "15m"
     });
 
     const transporter = nodemailer.createTransport({
@@ -25,8 +25,8 @@ resetPasswordRoutes.post("/", async (req, res) => {
       secure: false,
       auth: {
         user: process.env.USER_MAIL,
-        pass: process.env.PASSWORD_APP_MAIL,
-      },
+        pass: process.env.PASSWORD_APP_MAIL
+      }
     });
 
     async function main() {
@@ -61,7 +61,7 @@ resetPasswordRoutes.post("/", async (req, res) => {
     </div>
 </body>
 
-</html>`,
+</html>`
       });
 
       return info.messageId;

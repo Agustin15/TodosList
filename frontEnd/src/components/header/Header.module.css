@@ -196,6 +196,8 @@
 
 .containDetailsProfileShow .columnOne a {
   cursor: pointer;
+  text-decoration: none;
+  color: blue;
 }
 
 .containDetailsProfileShow .columnOne a:hover {

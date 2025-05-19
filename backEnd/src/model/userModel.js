@@ -12,11 +12,22 @@ export const UserModel = {
       throw new Error(error.message);
     }
   },
-  updatePasswordUserByEmail: async function (password, email) {
+  updatePasswordUserById: async function (password, idUser) {
     try {
       const [result] = await connection.execute(
-        "Update users set passwordUser=? where email=?)",
-        [password, email]
+        "Update users set passwordUser=? where idUser=?",
+        [password, idUser]
+      );
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  updateEmailUserById: async function (email, idUser) {
+    try {
+      const [result] = await connection.execute(
+        "Update users set email=? where idUser=?",
+        [email, idUser]
       );
       return result;
     } catch (error) {

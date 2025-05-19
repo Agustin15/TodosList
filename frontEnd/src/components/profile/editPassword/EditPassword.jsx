@@ -1,141 +1,26 @@
 import styles from "./EditPassword.module.css";
 import iconEditPassword from "../../../assets/img/editPassword.png";
 import iconPasswordHide from "../../../assets/img/hidden.png";
-import iconPasswordShow from "../../../assets/img/eye.png";
-import errorIcon from "../../../assets/img/errorIcon.png";
-import correctIcon from "../../../assets/img/correctIcon.png";
-import { useEffect, useState } from "react";
-import { useForm } from "../../../context/FormTaskContext";
-import { useTasks } from "../../../context/TaskContext";
-import AlertForm from "../../addTodoForm/alertForm/AlertForm";
-import Loader from "../../loader/Loader";
-const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
+import iconWarningInput from "../../../assets/img/warningInput.png";
+import loadingForm from "../../../assets/img/loadingForm.gif";
+import AlertForm from "../contentBody/alertForm/AlertForm";
+import { useFormEditPassword } from "../../../context/FormEditPasswordContext";
 
 const EditPassword = ({ setModalEditPassword }) => {
-  const { resultForm, setResultForm } = useForm();
-  const [values, setValues] = useState();
-  const [errors, setErrors] = useState({
-    currentPassword: "",
-    newPassword: "",
-    repeatPassword: ""
-  });
-
-  const { setOpenAlertToken } = useTasks();
-  const [loading, setLoading] = useState(false);
-
-  const token = localStorage.getItem("token");
-  const mail = localStorage.getItem("email");
+  const {
+    handleSubmit,
+    handlePassword,
+    errors,
+    loading,
+    resultForm,
+    setResultForm,
+    setErrors,
+  } = useFormEditPassword();
 
   const handleClose = () => {
+    setResultForm();
+    setErrors({ currentPassword: "", newPassword: "", repeatPassword: "" });
     setModalEditPassword(false);
-    setResultForm();
-  };
-  const handlePassword = (event) => {
-    let icon = event.target;
-    let input = icon.parentElement.querySelector("input");
-
-    if (input.type == "password") {
-      input.type = "text";
-      icon.src = iconPasswordShow;
-    } else {
-      input.type = "password";
-      icon.src = iconPasswordHide;
-    }
-  };
-
-  const ErrorResultForm = (msj) => {
-    setResultForm({
-      icon: errorIcon,
-      result: "error",
-      msj: msj
-    });
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    let error = false;
-    let errorsInputs = {
-      currentPassword: "",
-      newPassword: "",
-      repeatPassword: ""
-    };
-    const data = {};
-    setErrors(errorsInputs);
-    setResultForm();
-
-    formData.forEach((value, key) => {
-      if (value.length < 6) {
-        error = true;
-        errorsInputs[key] = "*Weak password (min 6 chars)";
-      } else {
-        data[key] = value;
-      }
-    });
-
-    if (error) {
-      ErrorResultForm("Please, complete correctly the fields");
-      setErrors(errorsInputs);
-    } else if (data.newPassword != data.repeatPassword) {
-      ErrorResultForm("New password and repeat password not match");
-    } else {
-      setValues(data);
-    }
-  };
-
-  useEffect(() => {
-    if (values) {
-      const updatePassword = async () => {
-        let passwordUpdated = await fetchUpdatePassword();
-        if (passwordUpdated) {
-          setResultForm({
-            icon: correctIcon,
-            result: "correct",
-            msj: "Password updated sucesfully!"
-          });
-        }
-      };
-
-      updatePassword();
-    }
-  }, [values]);
-
-  const fetchUpdatePassword = async () => {
-    let data;
-    setLoading(true);
-    try {
-      const response = await fetch(`${urlBack}resetPassword/` + mail, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.stringify(token)}`
-        },
-        body: JSON.stringify({
-          currentPassword: values.currentPassword,
-          password: values.newPassword
-        })
-      });
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw result.messageError;
-      } else if (result) {
-        data = response;
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.indexOf("Authentication") > -1) {
-        setOpenAlertToken(true);
-      } else {
-        setResultForm({
-          icon: errorIcon,
-          result: "error",
-          msj: error
-        });
-      }
-    } finally {
-      setLoading(false);
-      return data;
-    }
   };
 
   return (
@@ -158,8 +43,18 @@ const EditPassword = ({ setModalEditPassword }) => {
             type="password"
             autoComplete="off"
           ></input>
-          <img onClick={handlePassword} src={iconPasswordHide}></img>
-          <p className={styles.error}>{errors.currentPassword}</p>
+          <img
+            className={styles.viewPassword}
+            onClick={handlePassword}
+            src={iconPasswordHide}
+          ></img>
+
+          {errors.currentPassword.length > 0 && (
+            <div className={styles.alertErrorInput}>
+              <img src={iconWarningInput}></img>
+              <p>{errors.currentPassword}</p>
+            </div>
+          )}
         </div>
         <div className={styles.containNewPassword}>
           <label>New Password</label>
@@ -170,8 +65,17 @@ const EditPassword = ({ setModalEditPassword }) => {
             placeholder="Enter new password"
             autoComplete="off"
           ></input>
-          <img onClick={handlePassword} src={iconPasswordHide}></img>
-          <p className={styles.error}>{errors.newPassword}</p>
+          <img
+            className={styles.viewPassword}
+            onClick={handlePassword}
+            src={iconPasswordHide}
+          ></img>
+          {errors.newPassword.length > 0 && (
+            <div className={styles.alertErrorInput}>
+              <img src={iconWarningInput}></img>
+              <p>{errors.newPassword}</p>
+            </div>
+          )}
         </div>
         <div className={styles.containRepeatPassword}>
           <label>Repeat Password</label>
@@ -182,19 +86,29 @@ const EditPassword = ({ setModalEditPassword }) => {
             placeholder="Repeat password"
             autoComplete="off"
           ></input>
-          <p className={styles.error}>{errors.repeatPassword}</p>
-          <img onClick={handlePassword} src={iconPasswordHide}></img>
+          <img
+            className={styles.viewPassword}
+            onClick={handlePassword}
+            src={iconPasswordHide}
+          ></img>
+
+          {errors.repeatPassword.length > 0 && (
+            <div className={styles.alertErrorInput}>
+              <img src={iconWarningInput}></img>
+              <p>{errors.repeatPassword}</p>
+            </div>
+          )}
         </div>
       </div>
 
       <div className={styles.containButton}>
         <button type="submit">
           Update
-          <Loader isLoading={loading} color="white" size={7} />
+          {loading && <img src={loadingForm}></img>}
         </button>
       </div>
 
-      {resultForm && <AlertForm />}
+      {resultForm && <AlertForm result={resultForm} />}
     </form>
   );
 };

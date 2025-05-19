@@ -109,6 +109,7 @@ export const UserDataProvider = ({ children }) => {
         resultForm,
         setResultForm,
         user,
+        setUser,
         loadingUser,
         loadingForm,
         logoutSession

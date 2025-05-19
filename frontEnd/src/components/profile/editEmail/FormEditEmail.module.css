@@ -5,8 +5,7 @@
   align-items: center;
   gap: 1rem;
   width: 30rem;
-  height: auto;
-  max-height: 32rem;
+  height: 32rem;
   padding: 1rem;
   background-color: white;
   border-radius: 4px;
@@ -28,7 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.7rem;
   margin-top: 1rem;
 }
 .form label {
@@ -36,21 +35,26 @@
 }
 
 .form input {
-  border: none;
-  border-bottom: 1px solid black;
+  border: 1px solid rgb(124, 124, 124);
   padding-left: 2rem;
-  width: 13rem;
-  height: 1.9rem;
+  width: 14.5rem;
+  height: 2rem;
+  border-radius: 4px;
   outline: none;
-  font-size: 17px;
-  background-size: 20px;
+  font-size: 14px;
+  background-size: 17px;
   background-repeat: no-repeat;
   background-position-x: 0.4rem;
-  background-position-y: 0.3rem;
+  background-position-y: 0.5rem;
+}
+.form input:hover {
+  border: 2px solid rgb(46, 122, 194);
 }
 
 .form .inputEmail {
   background-image: url("../../../assets/img/email.png");
+  background-size: 21px;
+  background-position-y: 0.3rem;
 }
 
 .form .inputNewEmail {
@@ -60,9 +64,17 @@
 
 .form .inputPassword {
   background-image: url("../../../assets/img/lock.png");
-  background-position-x: 0.2rem;
+  background-position-x: 0.4rem;
   padding-right: 2rem;
-  width: 11.2rem;
+  width: 12.6rem;
+}
+
+.containPassword .viewPassword {
+  width: 17px;
+  position: absolute;
+  margin-top: 2.2rem;
+  margin-left: 15rem;
+  cursor: pointer;
 }
 
 .form .containEmail,
@@ -74,13 +86,21 @@
   align-items: start;
   position: relative;
 }
-
-.containPassword img {
-  width: 20px;
+.alertErrorInput {
+  color: red;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   position: absolute;
-  top: 2.5rem;
-  left: 14rem;
-  cursor: pointer;
+  margin-top: 3.9rem;
+  margin-left: 0.2rem;
+}
+
+.alertErrorInput img {
+  width: 15px;
+  height: 15px;
 }
 .form button {
   font-size: 17px;

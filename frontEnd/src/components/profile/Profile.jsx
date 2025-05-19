@@ -63,7 +63,7 @@ const Profile = () => {
 
       {modalEditEmail && (
         <Modal>
-          <FormEditEmail setModalEditEmail={setModalEditEmail}></FormEditEmail>
+          <FormEditEmail email={user.email} setModalEditEmail={setModalEditEmail}></FormEditEmail>
         </Modal>
       )}
       {modalEditPassword && (
