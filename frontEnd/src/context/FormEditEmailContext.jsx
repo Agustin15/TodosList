@@ -56,17 +56,20 @@ export const FormEditEmailProvider = ({ children }) => {
     let data;
     setLoading(true);
     try {
-      const response = await fetch("api/userData/", {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          newEmail: values.newEmail,
-          password: values.password
-        })
-      });
+      const response = await fetch(
+        "api/userData/" + JSON.stringify({ option: "updateEmailUser" }),
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            newEmail: values.newEmail,
+            password: values.password
+          })
+        }
+      );
 
       const result = await response.json();
       if (!response.ok) {

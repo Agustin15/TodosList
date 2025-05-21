@@ -87,6 +87,11 @@
   width: 95%;
 }
 
+.contain .containDetails li a {
+  text-decoration: none;
+  color: black;
+}
+
 .contain .containDetails li .detailsDate {
   display: flex;
   align-items: center;
@@ -94,6 +99,7 @@
   gap: 0.4rem;
   padding: 0.5rem;
   border-radius: 56px;
+  border: none;
   background-color: rgb(219, 218, 218);
   font-size: 14px;
   cursor: pointer;

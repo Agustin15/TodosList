@@ -20,6 +20,7 @@ const App = () => {
         <Route path="/tasks" element={<TodoListPage />}></Route>
         <Route path="/tasks/:idTask" element={<TodoListPage />}></Route>
         <Route path="/calendar" element={<CalendarPage />}></Route>
+         <Route path="/calendar/:idTask" element={<CalendarPage />}></Route>
         <Route path="/fileViewer" element={<FileViewerPage />}></Route>
         <Route path="/resetPassword" element={<ResetPasswordPage />}></Route>
         <Route path="/newPassword" element={<NewPasswordPage />}></Route>

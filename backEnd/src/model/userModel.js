@@ -23,6 +23,18 @@ export const UserModel = {
       throw new Error(error.message);
     }
   },
+
+  updatePasswordUserByEmail: async function (password, email) {
+    try {
+      const [result] = await connection.execute(
+        "Update users set passwordUser=? where email=?",
+        [password, email]
+      );
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   updateEmailUserById: async function (email, idUser) {
     try {
       const [result] = await connection.execute(

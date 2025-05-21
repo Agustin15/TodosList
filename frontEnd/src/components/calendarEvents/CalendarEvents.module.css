@@ -52,9 +52,20 @@
     border-radius: 99%;
 }
 
+.dayDisabled {
+    background: linear-gradient(rgb(255, 255, 255), rgb(231, 231, 231));
+}
+.dayOfTask {
+    background: rgb(252, 252, 195);
+}
+
 .containCalendar .pending div {
     background-color: rgb(204, 18, 18);
 }
 .containCalendar .completed div {
     background-color: rgb(7, 196, 7);
+}
+
+.containCalendar .found div {
+    background: rgb(243, 255, 132);
 }

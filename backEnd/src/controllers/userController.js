@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { UserModel } from "../model/userModel.js";
-import authRequest from "../auth/auth.js";
+import { authRequest, authRequestResetPassword } from "../auth/auth.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -63,7 +63,6 @@ export const getUserDataByToken = async (req, res) => {
   let errorCodeResponse = 404;
   try {
     const validAuth = await authRequest(req, res);
-
     if (!validAuth) {
       errorCodeResponse = 401;
       throw new Error("Invalid Authentication");
@@ -118,6 +117,36 @@ export const updatePasswordUserById = async (req, res) => {
     });
   } catch (error) {
     res.status(502).json({ messageError: error.message });
+  }
+};
+
+export const updatePasswordByEmail = async (req, res) => {
+  let errorCodeResponse = 502;
+  try {
+    const newPassword = req.body.newPassword;
+
+    const decodeToken = await authRequestResetPassword(req, res);
+
+    if (!decodeToken) {
+      errorCodeResponse = 401;
+      throw new Error("Invalid Authenticacion");
+    }
+
+    console.log(decodeToken);
+    bcrypt.hash(newPassword, 10, async (err, hash) => {
+      if (err) {
+        throw new Error({ messageError: "Internal server error" });
+      }
+
+      const passwordUpdated = await UserModel.updatePasswordUserByEmail(
+        hash,
+        decodeToken.mail
+      );
+
+      res.status(200).json(passwordUpdated);
+    });
+  } catch (error) {
+    res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
 

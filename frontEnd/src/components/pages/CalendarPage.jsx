@@ -12,7 +12,9 @@ export const CalendarPage = () => {
       </UserDataProvider>
       <FormTaskProvider>
         <TaskProvider>
-          <CalendarEvents />
+          <CalendarEventsProvider>
+            <CalendarEvents />
+          </CalendarEventsProvider>
         </TaskProvider>
       </FormTaskProvider>
     </>

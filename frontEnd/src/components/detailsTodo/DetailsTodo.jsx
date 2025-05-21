@@ -49,10 +49,12 @@ const DetailsTodo = ({ task, setOpenModalInfo }) => {
         </li>
         <li>
           <h3>Date:</h3>
-          <div className={classesStyle.detailsDate}>
-            <img src={iconCalendar}></img>
-            <span>{formatToStringDate(task.datetimeTask)}</span>
-          </div>
+          <a href={"/calendar/" + task.idTask}>
+            <div className={classesStyle.detailsDate}>
+              <img src={iconCalendar}></img>
+              <span>{formatToStringDate(task.datetimeTask)}</span>
+            </div>
+          </a>
         </li>
         <li className={classesStyle.containDescriptionTask}>
           <h3>Description:</h3>

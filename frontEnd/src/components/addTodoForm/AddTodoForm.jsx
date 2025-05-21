@@ -35,7 +35,7 @@ const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
   };
 
   const handleClose = () => {
-    setEventAdded(false);
+    if (setEventAdded) setEventAdded(false);
     cleanForm();
     setOpenModalAdd(false);
   };

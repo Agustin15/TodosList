@@ -1,21 +1,33 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
+import { authRequestResetPassword } from "../auth/auth.js";
 
 import {
   findUserByEmail,
-  updatePasswordUserById
+  updatePasswordByEmail
 } from "../controllers/userController.js";
 
 export const resetPasswordRoutes = express.Router();
 
-resetPasswordRoutes.put("/", updatePasswordUserById);
+resetPasswordRoutes.get("/", async function (req, res) {
+  const decodeToken = await authRequestResetPassword(req, res);
+  res.status(200).json(decodeToken);
+});
+resetPasswordRoutes.patch("/", updatePasswordByEmail);
 resetPasswordRoutes.post("/", async (req, res) => {
+  let errorCodeResponse = 500;
   try {
     const mail = req.body.mail;
     const secretKey = process.env.JWT_SECRET_KEY;
 
+    const userFound = await findUserByEmail(mail);
+    if (!userFound || !userFound.length > 0) {
+      errorCodeResponse = 404;
+      throw new Error("Email not recognized");
+    }
     const tokenResetPassword = jwt.sign({ mail: mail }, secretKey, {
+      algorithm: "HS256",
       expiresIn: "15m"
     });
 
@@ -52,7 +64,7 @@ resetPasswordRoutes.post("/", async (req, res) => {
             </div>
             <p>Hello!, we have received a request to change password for username <a style="font-weight: bold;">${mail}</a>.</p>
             <p>Please enter the following link to set a new password</p>
-            <a style="text-decoration: underline; color:blue;" href="http://localhost:5173/newPassword?token=${tokenResetPassword}&&mail=${mail}">New Password </a>
+            <a style="text-decoration: underline; color:blue;" href="http://localhost:5173/newPassword?token=${tokenResetPassword}">New Password </a>
         </div>
         <div>
             <p>If you are not the one who should receive this message, please ignore it.</p>
@@ -66,16 +78,11 @@ resetPasswordRoutes.post("/", async (req, res) => {
 
       return info.messageId;
     }
-
-    const userFound = await findUserByEmail(mail);
-    if (!userFound) {
-      throw new Error("*Email not recognized");
-    }
     const idMessage = await main().catch(console.error);
     if (idMessage) {
       res.status(200).json(idMessage);
     }
   } catch (error) {
-    res.status(500).json({ messageError: error.message });
+    res.status(errorCodeResponse).json({ messageError: error.message });
   }
 });

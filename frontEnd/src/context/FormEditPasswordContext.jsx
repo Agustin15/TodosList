@@ -45,10 +45,12 @@ export const FormEditPasswordProvider = ({ children }) => {
     setErrors(errorsInputs);
     setResultForm();
 
+    let validPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
     formData.forEach((value, key) => {
-      if (value.length < 6) {
+      if (!validPassword.test(value)) {
         error = true;
-        errorsInputs[key] = "Password should has minime 6 characters";
+        errorsInputs[key] =
+          "Weak password (min 8 chars and should has letters, numbers)";
       } else {
         data[key] = value;
       }
@@ -93,17 +95,21 @@ export const FormEditPasswordProvider = ({ children }) => {
     let data;
     setLoading(true);
     try {
-      const response = await fetch("api/resetPassword/", {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          currentPassword: values.currentPassword,
-          password: values.newPassword
-        })
-      });
+      const response = await fetch(
+        "api/userData/" +
+          JSON.stringify({ option: "updatePasswordUserById" }),
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            currentPassword: values.currentPassword,
+            password: values.newPassword
+          })
+        }
+      );
 
       const result = await response.json();
       if (!response.ok) {

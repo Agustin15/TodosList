@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "./ResetPassword.module.css";
-import Loader from "../loader/Loader";
+import iconLogo from "../../assets/img/logo.png";
+import iconWarning from "../../assets/img/warningInput.png";
+import gifLoading from "../../assets/img/gifLoading.gif";
 import Alert from "../resetPassword/alert/Alert";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
-const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const ResetPassword = () => {
   const [mail, setMail] = useState("");
@@ -23,7 +24,7 @@ const ResetPassword = () => {
     setErrorMail("");
 
     if (mail.length == 0 || !regexMail.test(mail)) {
-      setErrorMail("*Enter a valid email");
+      setErrorMail("Enter a valid email");
     } else {
       let idMail = await sendMail();
       if (idMail) {
@@ -37,36 +38,32 @@ const ResetPassword = () => {
 
   const sendMail = async () => {
     setLoading(true);
-    let data, userNotFound;
+    let data;
     try {
-      const response = await fetch(`${urlBack}resetPassword/`, {
+      const response = await fetch("api/resetPassword/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ mail: mail }),
+        body: JSON.stringify({ mail: mail })
       });
 
       const result = await response.json();
       if (!response.ok) {
-        userNotFound = true;
-        throw result.messageError;
+        if (response.status == 404) {
+          throw result.messageError;
+        } else {
+          throw "Oops, failed to send mail";
+        }
       }
-
       if (result) {
         data = result;
       }
     } catch (error) {
       console.log(error);
+      setError(error);
     } finally {
       setLoading(false);
-      if (userNotFound) {
-        setError("*User not recognized");
-        return;
-      }
-      if (!data) {
-        setError("*Oops, failed to send mail");
-      }
       return data;
     }
   };
@@ -74,7 +71,10 @@ const ResetPassword = () => {
   return (
     <div className={styles.containBody}>
       {alert && <Alert mail={mail}></Alert>}
-      <h2>TodoList</h2>
+      <div className={styles.title}>
+        <img src={iconLogo}></img>
+        <h2>TodoList</h2>
+      </div>
       <div className={styles.containForm}>
         <form onSubmit={handleSubmit}>
           <h3>Reset password</h3>
@@ -86,19 +86,25 @@ const ResetPassword = () => {
               autoComplete="off"
               placeholder="Enter a email"
             ></input>
-            {errorMail && <p className={styles.alertInput}> {errorMail}</p>}
+            {errorMail && (
+              <div className={styles.alertInput}>
+                <img src={iconWarning}></img>
+                <p> {errorMail}</p>
+              </div>
+            )}
           </div>
 
           <button>Send</button>
           {loading && (
             <div className={styles.loading}>
-              <span>Loading</span>
-              <Loader isLoading={loading} color="gray" size={7} />
+              <span>loading</span>
+              <img src={gifLoading}></img>
             </div>
           )}
 
           {error && (
             <div className={styles.error}>
+              <img src={iconWarning}></img>
               <span>{error}</span>
             </div>
           )}

@@ -9,55 +9,34 @@ import AddTodoForm from "../addTodoForm/AddTodoForm";
 import styled from "styled-components";
 import styles from "./CalendarEvents.module.css";
 import { useTasks } from "../../context/TaskContext";
+import { useParams } from "react-router-dom";
+import { useCalendarEvents } from "../../context/CalendarEventsContext";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const CalendarEvents = () => {
-  const [eventsCalendar, setEventsCalendar] = useState([]);
-  const [eventAdded, setEventAdded] = useState(false);
-  const { formatDate } = useTasks();
+  const {
+    eventsCalendar,
+    eventAdded,
+    setEventAdded,
+    dateSelected,
+    setDateSelected,
+    getTasksForCalendar,
+    dayView,
+    initialDate
+  } = useCalendarEvents();
+
   const [modalAdd, setModalAdd] = useState(false);
-  const [dateSelected, setDateSelected] = useState();
+  const { idTask } = useParams();
 
   useEffect(() => {
-    getTasksForCalendar();
+    getTasksForCalendar(idTask);
   }, [eventAdded]);
 
   useEffect(() => {
     if (dateSelected) {
-      console.log(dateSelected);
       setModalAdd(true);
     }
   }, [dateSelected]);
-
-  const getTasksForCalendar = async () => {
-    const optionGetTasks = {
-      option: "getTasksForCalendarByUser"
-    };
-
-    try {
-      const response = await fetch(
-        "/api/todos/" + JSON.stringify(optionGetTasks),
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-
-      const result = await response.json();
-
-      if (response.status == 401) {
-        location.href = "/login";
-      }
-
-      if (result.length > 0) {
-        setEventsCalendar(result);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const Wrapper = styled.div`
     .fc-toolbar-title {
@@ -92,7 +71,7 @@ export const CalendarEvents = () => {
 
   const handleEventClickCalendar = (info) => {
     let idTask = info.event._def.extendedProps.idTask;
-    location.href = "tasks/" + idTask;
+    location.href = urlFront + "tasks/" + idTask;
   };
   const handleEventAddEvent = (info) => {
     if (info.date >= new Date()) {
@@ -115,6 +94,8 @@ export const CalendarEvents = () => {
             initialView="dayGridMonth"
             events={eventsCalendar}
             height={464}
+            initialDate={initialDate(idTask)}
+            dayCellDidMount={(info) => dayView(info, idTask)}
             dayMaxEventRows={1}
             dateClick={handleEventAddEvent}
             headerToolbar={{
@@ -133,6 +114,10 @@ export const CalendarEvents = () => {
           <li className={styles.completed}>
             <div></div>
             Completed
+          </li>
+          <li className={styles.found}>
+            <div></div>
+            Wanted
           </li>
         </ul>
       </div>

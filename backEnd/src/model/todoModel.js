@@ -155,11 +155,11 @@ export const TaskModel = {
     }
   },
 
-  getTaskById: async function (idTask) {
+  getTaskById: async function (idUser,idTask) {
     try {
       const [results] = await connection.execute(
-        "select * from tasks where idTask=?",
-        [idTask]
+        "select * from tasks where idUser=? && idTask=?",
+        [idUser,idTask]
       );
       return results;
     } catch (error) {
@@ -188,7 +188,7 @@ export const TaskModel = {
       throw new Error(error.message);
     }
   },
-    getAllTasksByUser: async function (idUser) {
+  getAllTasksByUser: async function (idUser) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=?",

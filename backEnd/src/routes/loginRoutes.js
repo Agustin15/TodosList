@@ -24,19 +24,21 @@ loginRoutes.post("/", async (req, res) => {
       throw new Error("Authentication failed,invalid password entered");
     } else {
       const token = jwt.sign({ idUser: userFound.idUser }, secretKey, {
-        expiresIn: "1h"
+        algorithm: "HS256",
+        expiresIn: "10"
       });
 
       const refreshToken = jwt.sign(
         { idUser: userFound.idUser },
         secretKeyRefresh,
         {
+          algorithm: "HS256",
           expiresIn: "24h"
         }
       );
 
       res.cookie("accessToken", token, {
-        maxAge: 60 * 60 * 1000,
+        maxAge: 10000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax"

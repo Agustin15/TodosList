@@ -1,25 +1,59 @@
 import jwt from "jsonwebtoken";
 
-const authRequest = async (req, res) => {
+export const authRequest = async (req, res) => {
   const secretKey = process.env.JWT_SECRET_KEY;
-
+  let token;
   try {
-    const token = req.cookies.accessToken;
+    token = req.cookies.accessToken;
 
     if (!token) {
-      let tokenCreated = await newAccessToken(req, res);
-      if (!tokenCreated) return;
+      let newToken = await newAccessToken(req, res);
+      if (!newToken) return;
+      token = newToken;
     }
 
     if (secretKey) {
       try {
-        const decodeToken = jwt.verify(token, secretKey);
+        const decodeToken = jwt.verify(token, secretKey, {
+          algorithm: "HS256"
+        });
+
         return decodeToken;
       } catch (error) {
         throw new Error("Authentication failed,invalid token");
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export const authRequestResetPassword = async (req, res) => {
+  const secretKey = process.env.JWT_SECRET_KEY;
+  const token = JSON.parse(req.header("Authorization").split(" ")[1]);
+
+  let decodeToken;
+  try {
+    if (!token) {
+      throw new Error("Invalid Authentication,token not found");
+    }
+
+    if (!secretKey) {
+      throw new Error("Secret key not found");
+    }
+
+    try {
+      decodeToken = jwt.verify(token, secretKey, {
+        algorithm: "HS256"
+      });
+    } catch {
+      throw new Error("Invalid Authentication,invalid token");
+    }
+
+    return decodeToken;
+  } catch (error) {
+    res.status(401).json({ messageError: error.message });
+  }
 };
 
 const newAccessToken = async (req, res) => {
@@ -36,9 +70,7 @@ const newAccessToken = async (req, res) => {
     const newToken = jwt.sign(
       { idUser: decodedRefreshToken.idUser },
       secretKey,
-      {
-        expiresIn: "1h"
-      }
+      { algorithm: "HS256", expiresIn: "1h" }
     );
 
     if (!newToken) {
@@ -51,10 +83,8 @@ const newAccessToken = async (req, res) => {
       sameSite: "lax"
     });
 
-    return true;
+    return newToken;
   } catch {
     return false;
   }
 };
-
-export default authRequest;

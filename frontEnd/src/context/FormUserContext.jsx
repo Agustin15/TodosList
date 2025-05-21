@@ -15,12 +15,12 @@ export const FormUserProvider = ({ children }) => {
     name: "",
     lastname: "",
     email: "",
-    password: "",
+    password: ""
   });
 
   const [errorsInputsSignIn, setErrorsInputsSignIn] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const cleanForm = () => {
@@ -51,27 +51,30 @@ export const FormUserProvider = ({ children }) => {
   };
 
   const validationMsj = (key, value, option) => {
-
     let regexMail = /\S+@\S+\.\S+/;
+    let validPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+
     const validationsMsjs = [
       { key: "name", msj: "Enter a valid name", validation: value.length > 0 },
       {
         key: "lastname",
         msj: "Enter a valid  lastname",
-        validation: value.length > 0,
+        validation: value.length > 0
       },
       {
         key: "email",
         msj: "Enter a valid email",
-        validation: value.length > 0 && regexMail.test(value),
+        validation: value.length > 0 && regexMail.test(value)
       },
       {
         key: "password",
-        msj: (option == "signIn"
-          ? "Enter a valid password"
-          : "Weak password (min 6 chars)"),
-        validation: (option == "signIn" ? value.length > 0 : value.length >= 6),
-      },
+        msj:
+          option == "signIn"
+            ? "Enter a valid password"
+            : "Weak password (min 8 chars and should has letters, numbers)",
+        validation:
+          option == "signIn" ? value.length > 0 : validPassword.test(value)
+      }
     ];
 
     return validationsMsjs.find((validation) => validation.key == key);
@@ -88,7 +91,7 @@ export const FormUserProvider = ({ children }) => {
         inputsError[key] = validationInput.msj;
         errorForm = true;
       }
-      userForm[key] = value.trim();
+      userForm[key] = value;
     });
 
     return errorForm;
@@ -105,7 +108,7 @@ export const FormUserProvider = ({ children }) => {
         name: "",
         lastname: "",
         email: "",
-        password: "",
+        password: ""
       });
     }
     const formData = new FormData(event.target);
@@ -114,7 +117,7 @@ export const FormUserProvider = ({ children }) => {
       name: "",
       lastname: "",
       email: "",
-      password: "",
+      password: ""
     };
 
     let errorForm = iterationInputsForm(
@@ -129,7 +132,7 @@ export const FormUserProvider = ({ children }) => {
       setResultForm({
         icon: errorIcon,
         result: "error",
-        msj: "Please, complete correctly the fields",
+        msj: "Please, complete correctly the fields"
       });
     } else {
       setUser(userSignUp);
@@ -149,7 +152,7 @@ export const FormUserProvider = ({ children }) => {
     const userSignIn = {};
     const inputsError = {
       email: "",
-      password: "",
+      password: ""
     };
 
     let errorForm = iterationInputsForm(
@@ -166,7 +169,7 @@ export const FormUserProvider = ({ children }) => {
       setResultForm({
         icon: errorIcon,
         result: "error",
-        msj: "Please, complete correctly the fields",
+        msj: "Please, complete correctly the fields"
       });
     } else {
       setUser(userSignIn);
@@ -185,7 +188,7 @@ export const FormUserProvider = ({ children }) => {
         handleSubmitSignUp,
         errorsInputsSignIn,
         handleSubmitSignIn,
-        cleanForm,
+        cleanForm
       }}
     >
       {children}

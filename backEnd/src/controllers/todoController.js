@@ -1,5 +1,5 @@
 import { TaskModel } from "../model/todoModel.js";
-import authRequest from "../auth/auth.js";
+import { authRequest } from "../auth/auth.js";
 import {
   addFile,
   findFilesByIdTask,
@@ -325,13 +325,17 @@ export const getTaskById = async (req, res) => {
   let errorCodeResponse = 404;
 
   try {
-    const validAuthRequest = authRequest(req);
+    const validAuthRequest = await authRequest(req);
 
     if (!validAuthRequest) {
       errorCodeResponse = 401;
       throw new Error("Invalid Authenticacion");
     }
-    const taskFoundById = await TaskModel.getTaskById(id);
+
+    const taskFoundById = await TaskModel.getTaskById(
+      validAuthRequest.idUser,
+      id
+    );
 
     if (!taskFoundById || taskFoundById.length == 0) {
       throw new Error("Task not found");
@@ -346,9 +350,9 @@ export const getTaskById = async (req, res) => {
   }
 };
 
-export const findTasksByIdTask = async (idTask) => {
+export const findTasksByIdTask = async (idTask, idUser) => {
   try {
-    const taskFound = await TaskModel.getTaskById(idTask);
+    const taskFound = await TaskModel.getTaskById(idUser, idTask);
     return taskFound;
   } catch (error) {
     throw new Error("Error,task not found");
@@ -433,7 +437,7 @@ export const updateTask = async (req, res) => {
     let task = req.body;
     let files = req.files;
 
-    const validAuthRequest = authRequest(req);
+    const validAuthRequest = await authRequest(req);
 
     if (!validAuthRequest) {
       errorCodeResponse = 401;
@@ -450,7 +454,11 @@ export const updateTask = async (req, res) => {
     );
 
     if (taskUpdated) {
-      let taskUpdatedFound = await findTasksByIdTask(req.params.id);
+      let taskUpdatedFound = await findTasksByIdTask(
+        req.params.id,
+        validAuthRequest.idUser
+      );
+
       taskUpdatedFound = taskUpdatedFound[0];
 
       let filesChanged = await findFilesChanged(req.params.id, files);
@@ -494,7 +502,10 @@ export const updateStateTask = async (req, res) => {
     );
 
     if (taskStateUpdated) {
-      let task = await findTasksByIdTask(req.params.id);
+      let task = await findTasksByIdTask(
+        req.params.id,
+        validAuthRequest.idUser
+      );
       let filesTask = await findFilesByIdTask(req.params.id);
       task[0].filesUploaded = filesTask;
       res.status(200).json(task[0]);

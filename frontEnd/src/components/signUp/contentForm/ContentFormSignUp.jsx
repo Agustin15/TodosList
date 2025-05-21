@@ -116,7 +116,10 @@ const ContentFormSignUp = () => {
                 src={hiddenEye}
               ></img>
               {errorsInputsSignUp["password"] && (
-                <AlertInputLogin error={errorsInputsSignUp["password"]} />
+                <AlertInputLogin
+                  value={"password"}
+                  error={errorsInputsSignUp["password"]}
+                />
               )}
             </div>
           </div>

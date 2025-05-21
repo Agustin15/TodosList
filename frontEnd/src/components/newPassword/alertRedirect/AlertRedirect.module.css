@@ -1,20 +1,22 @@
 .containAlert {
   font-size: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  gap: 0.4rem;
   border: 1px solid grey;
-  border-bottom: 3px solid rgb(0, 0, 0);
-  box-shadow: 2px 2px 2px grey;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  box-shadow: 2px 2px 2px rgb(41, 41, 41);
   border-radius: 3px;
   color: black;
+  text-align: center;
   position: absolute;
   background-color: white;
   z-index: 1;
   margin: auto;
+  width: auto;
+  padding: 0.5rem;
   top: -15rem;
-  padding: 1rem;
   animation-name: showAlert;
   animation-duration: 1s;
   animation-fill-mode: forwards;
@@ -26,19 +28,45 @@
   }
 
   to {
-    top: 2rem;
+    top: 1rem;
   }
 }
 .containAlert img {
   width: 22px;
 }
 
-.containAlert p {
-  width: 27rem;
+.containAlert .rowAlert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
-.containAlert a {
+.containAlert button {
+  width: auto;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  cursor: pointer;
+  height: 1.5rem;
+  color: white;
+  border-radius: 4px;
   font-weight: bold;
+  border: none;
+}
+
+.containAlert .btnRed {
+  background: linear-gradient(rgb(209, 12, 12), rgb(180, 47, 47));
+}
+.containAlert .btnRed:hover {
+  background: linear-gradient(rgb(209, 12, 12), rgb(153, 39, 39));
+}
+
+.containAlert .btnGreen {
+  background: linear-gradient(rgb(24, 153, 67), rgb(41, 156, 80));
+}
+
+.containAlert .btnGreen:hover {
+  background: linear-gradient(rgb(24, 153, 67), rgb(26, 117, 56));
 }
 
 @media (min-width: 375px) and (max-width: 478px) {
@@ -65,7 +93,7 @@
     margin: auto;
     margin-top: -15rem;
     padding: 1rem;
-    position:static;
+    position: static;
     animation-name: showAlert;
     animation-duration: 1s;
     animation-fill-mode: forwards;
@@ -80,6 +108,4 @@
       margin-top: 11rem;
     }
   }
-
-  
 }

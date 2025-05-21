@@ -4,9 +4,10 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  background-color: white;
   border: 1px solid grey;
-  border-bottom: 3px solid rgb(0, 0, 0);
-  box-shadow: 2px 2px 2px grey;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  box-shadow: 2px 2px 2px rgb(41, 41, 41);
   border-radius: 3px;
   color: black;
   position: absolute;
@@ -65,5 +66,4 @@
       margin-top: 8rem;
     }
   }
- 
 }
