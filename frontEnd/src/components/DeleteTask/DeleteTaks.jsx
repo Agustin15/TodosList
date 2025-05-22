@@ -3,19 +3,53 @@ import iconError from "../../assets/img/errorIcon3.png";
 import styles from "./DeleteTask.module.css";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
+import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
 const DeleteTask = ({ task, setOpenModalDelete }) => {
-  const { deleteTask } = useTasks();
+  const { deleteTask, dispatch, tasks } = useTasks();
   const [alert, setAlert] = useState(false);
+  const {
+    getQuantityTasksFilter,
+    getTasksFilter,
+    indexSelected,
+    setIndexSelected,
+    getTasksThisWeekUserLimit,
+    getTasksThisWeekUser,
+    refCheckBoxThisWeek
+  } = useFilterOptionTasks();
 
   const handleDelete = async () => {
     let taskDeleted = await deleteTask(task.idTask);
     if (taskDeleted) {
       setOpenModalDelete(false);
+      eventDeleted();
     } else {
       setAlert(true);
     }
   };
+
+  const eventDeleted = () => {
+    if (refCheckBoxThisWeek.current.checked) {
+      getTasksThisWeekUser();
+
+      getTasksThisWeekUserLimit(
+        tasks.length == 1 ? indexSelected - 10 : indexSelected,
+        dispatch
+      );
+    } else {
+      getQuantityTasksFilter("getQuantityTasksByFilterOption");
+      getTasksFilter(
+        "getTasksLimitByFilterOption",
+        tasks.length == 1 ? indexSelected - 10 : indexSelected,
+        dispatch
+      );
+    }
+
+    if (tasks.length == 1) {
+      setIndexSelected(indexSelected - 10);
+    }
+  };
+
   return (
     <div className={styles.deleteTask}>
       <img src={iconDelete}></img>

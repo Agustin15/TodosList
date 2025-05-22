@@ -21,7 +21,7 @@ export const TasksThisWeek = () => {
             <span>loading tasks...</span>
           </div>
         ) : tasksThisWeek.length > 0 ? (
-          tasksThisWeek.map((taskThisWeek, index) => (
+          tasksThisWeek.slice(0,6).map((taskThisWeek, index) => (
             <li
               key={index}
               className={
@@ -66,7 +66,7 @@ export const TasksThisWeek = () => {
       </ul>
 
       {tasksThisWeek.length > 0 ? (
-        <button onClick={() => (location.href = "/tasks")}>See</button>
+        <button onClick={() => (location.href = "/tasks")}>See more</button>
       ) : (
         ""
       )}

@@ -15,14 +15,10 @@ const taskReducer = (state, action) => {
     case "setTasks":
       return action.payload;
 
-    case "addTask":
-      return [...state, action.payload];
-
     case "updateTask":
       return state.map((task) =>
         task.idTask == action.payload.idTask ? action.payload : task
       );
-
     case "deleteTask":
       return state.filter((task) => task.idTask !== action.payload);
 
@@ -36,8 +32,6 @@ export const TaskProvider = ({ children }) => {
   const [tasksThisWeek, setTasksThisWeek] = useState([]);
   const [tasksIncompleteByWeekday, setTasksIncompleteByWeekday] = useState([]);
   const [tasksCompleteByWeekday, setTasksCompleteByWeekday] = useState([]);
-  const [quantityTasks, setQuantityTask] = useState();
-  const [indexSelected, setIndexSelected] = useState(0);
   const [loadingState, setLoadingState] = useState(false);
 
   useEffect(() => {
@@ -47,23 +41,11 @@ export const TaskProvider = ({ children }) => {
     }
   }, []);
 
-  const searchTasks = async (
-    optionFilter,
-    optionQuantity,
-    year,
-    month,
-    state,
-    offset
-  ) => {
-    await getTasksFilter(optionFilter, year, month, state, offset);
-    await getQuantityTasksFilter(optionQuantity, year, month, state);
-  };
-
   const logout = () => {
     location.href = `${urlFront}login`;
   };
 
-  const getTasksThisWeekUser = async (optionFilter) => {
+  const getTasksThisWeekUser = async () => {
     const optionGetTasks = {
       option: "getTasksThisWeekUser"
     };
@@ -86,40 +68,7 @@ export const TaskProvider = ({ children }) => {
         logout();
       }
       if (result) {
-        if (optionFilter != "tasksThisWeekQuantity") setTasksThisWeek(result);
-        else setQuantityTask(result.length);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingState(false);
-    }
-  };
-  const getTasksThisWeekUserLimit = async (offset) => {
-    const optionGetTasks = {
-      option: "getTasksThisWeekUserLimit",
-      offset: offset
-    };
-
-    setLoadingState(true);
-    try {
-      const response = await fetch(
-        `/api/todos/` + JSON.stringify(optionGetTasks),
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const result = await response.json();
-
-      if (response.status == 401) {
-        logout();
-      }
-      if (result) {
-        dispatch({ type: "setTasks", payload: result });
+        setTasksThisWeek(result);
       }
     } catch (error) {
       console.log(error);
@@ -162,109 +111,6 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const getYearsOfTasks = async () => {
-    const optionGetTasks = {
-      option: "getYearsTasks"
-    };
-    try {
-      const response = await fetch(
-        `/api/todos/` + JSON.stringify(optionGetTasks),
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const result = await response.json();
-      if (!response.ok) {
-        if (response.status == 401) {
-          logout();
-        }
-        throw result.messageError;
-      }
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getTasksFilter = async (optionFilter, year, month, state, offset) => {
-    setLoadingState(true);
-
-    const optionGetTasks = {
-      option: optionFilter,
-      year: year,
-      month: month,
-      state: state,
-      offset: offset
-    };
-
-    try {
-      const response = await fetch(
-        "/api/todos/" + JSON.stringify(optionGetTasks),
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const result = await response.json();
-
-      if (!response.ok) {
-        if (response.status == 401) {
-          logout();
-        }
-        throw result.messageError;
-      } else if (result) {
-        dispatch({ type: "setTasks", payload: result });
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingState(false);
-    }
-  };
-
-  const getQuantityTasksFilter = async (optionFilter, year, month, state) => {
-    setLoadingState(true);
-    const optionGetTasks = {
-      option: optionFilter,
-      year: year,
-      month: month,
-      state
-    };
-
-    try {
-      const response = await fetch(
-        "/api/todos/" + JSON.stringify(optionGetTasks),
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      const result = await response.json();
-
-      if (!response.ok) {
-        if (response.status == 401) {
-          logout();
-        }
-        throw result.messageError;
-      } else if (result) {
-        setQuantityTask(result);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingState(false);
-    }
-  };
-
   const addTask = async (values) => {
     let data;
     setLoadingState(true);
@@ -296,7 +142,6 @@ export const TaskProvider = ({ children }) => {
 
       if (result) {
         data = result;
-        dispatch({ type: "addTask", payload: result });
       }
     } catch (error) {
       console.log(error);
@@ -424,7 +269,6 @@ export const TaskProvider = ({ children }) => {
       }
       if (result) {
         data = result;
-        dispatch({ type: "deleteTask", payload: id });
       }
     } catch (error) {
       console.log(error);
@@ -474,9 +318,6 @@ export const TaskProvider = ({ children }) => {
     <TaskContext.Provider
       value={{
         tasks,
-        quantityTasks,
-        indexSelected,
-        setIndexSelected,
         dispatch,
         loadingState,
         addTask,
@@ -486,10 +327,6 @@ export const TaskProvider = ({ children }) => {
         deleteTask,
         tasksThisWeek,
         getTasksThisWeekUser,
-        getTasksFilter,
-        getTasksThisWeekUserLimit,
-        searchTasks,
-        getYearsOfTasks,
         tasksCompleteByWeekday,
         tasksIncompleteByWeekday,
         formatDate

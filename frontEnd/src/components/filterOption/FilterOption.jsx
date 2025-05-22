@@ -4,22 +4,23 @@ import SearchTask from "../searchTask/SearchTask";
 import { useTasks } from "../../context/TaskContext";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
+import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
-export const FilterOption = ({
-  selectYear,
-  selectMonth,
-  selectState,
-  setTaskNotFound
-}) => {
+export const FilterOption = ({ setTaskNotFound }) => {
   const [years, setYears] = useState([]);
+  const { dispatch } = useTasks();
+
   const {
+    refSelectMonth,
+    refSelectState,
+    refSelectYear,
+    refCheckBoxThisWeek,
     getYearsOfTasks,
-    searchTasks,
-    indexSelected,
+    getTasksFilter,
+    getQuantityTasksFilter,
     getTasksThisWeekUser,
     getTasksThisWeekUserLimit
-  } = useTasks();
-  const refCheckBoxThisWeek = useRef();
+  } = useFilterOptionTasks();
 
   const months = [
     "January",
@@ -49,17 +50,11 @@ export const FilterOption = ({
 
   const handleSearch = async () => {
     if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekUser("tasksThisWeekQuantity");
-      getTasksThisWeekUserLimit(0);
+      getTasksThisWeekUser();
+      getTasksThisWeekUserLimit(0, dispatch);
     } else {
-      searchTasks(
-        "getTasksLimitByFilterOption",
-        "getQuantityTasksByFilterOption",
-        selectYear.current.value,
-        selectMonth.current.value,
-        selectState.current.value,
-        0
-      );
+      getTasksFilter("getTasksLimitByFilterOption", 0, dispatch);
+      getQuantityTasksFilter("getQuantityTasksByFilterOption");
     }
   };
 
@@ -79,7 +74,7 @@ export const FilterOption = ({
         </li>
         <li>
           <span>Year</span>
-          <select ref={selectYear} defaultValue={new Date().getFullYear()}>
+          <select ref={refSelectYear} defaultValue={new Date().getFullYear()}>
             {years.map((year, index) => (
               <option key={index} value={Object.values(year)}>
                 {Object.values(year)}
@@ -90,7 +85,7 @@ export const FilterOption = ({
 
         <li>
           <span>Month</span>
-          <select ref={selectMonth} defaultValue={new Date().getMonth() + 1}>
+          <select ref={refSelectMonth} defaultValue={new Date().getMonth() + 1}>
             {months.map((month, index) => (
               <option key={index} value={index + 1}>
                 {month}
@@ -101,7 +96,7 @@ export const FilterOption = ({
 
         <li>
           <span>State</span>
-          <select ref={selectState} defaultValue={0}>
+          <select ref={refSelectState} defaultValue={0}>
             <option value={1}>Completed</option>
             <option value={0}>Pending</option>
           </select>

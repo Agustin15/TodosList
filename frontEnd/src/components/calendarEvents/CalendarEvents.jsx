@@ -124,11 +124,7 @@ export const CalendarEvents = () => {
       <br></br>
       {modalAdd && (
         <Modal>
-          <AddTodoForm
-            setEventAdded={setEventAdded}
-            dateSelected={dateSelected}
-            setOpenModalAdd={setModalAdd}
-          ></AddTodoForm>
+          <AddTodoForm setOpenModalAdd={setModalAdd}></AddTodoForm>
         </Modal>
       )}
     </>

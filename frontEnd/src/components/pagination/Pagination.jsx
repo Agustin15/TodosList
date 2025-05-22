@@ -2,20 +2,26 @@ import { useEffect, useState } from "react";
 import { useTasks } from "../../context/TaskContext";
 import styles from "./Pagination.module.css";
 import iconArrow from "../../assets/img/arrow.png";
+import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
-export const Pagination = ({ selectYear, selectMonth, selectState }) => {
-  const { quantityTasks, getTasksFilter, setIndexSelected, indexSelected } =
-    useTasks();
+export const Pagination = () => {
+  const { dispatch } = useTasks();
   const [pages, setPages] = useState();
+  const {
+    refCheckBoxThisWeek,
+    setIndexSelected,
+    indexSelected,
+    quantityTasks,
+    getTasksThisWeekUserLimit,
+    getTasksFilter
+  } = useFilterOptionTasks();
 
   const changePage = (newIndexSelected) => {
-    getTasksFilter(
-      "getTasksLimitByFilterOption",
-      selectYear.current.value,
-      selectMonth.current.value,
-      selectState.current.value,
-      newIndexSelected
-    );
+    if (refCheckBoxThisWeek.current.checked) {
+      getTasksThisWeekUserLimit(newIndexSelected, dispatch);
+    } else {
+      getTasksFilter("getTasksLimitByFilterOption", indexSelected, dispatch);
+    }
     setIndexSelected(newIndexSelected);
   };
 
@@ -34,13 +40,14 @@ export const Pagination = ({ selectYear, selectMonth, selectState }) => {
       }
     >
       <div className={styles.index}>
-        <li>{indexSelected + 1}</li>
+        <li>{indexSelected / 10 + 1}</li>
         de {pages}
       </div>
       <div className={styles.nextPrev}>
         <button
+          disabled={indexSelected == 0 ? true : false}
           className={
-            indexSelected + 1 == 1
+            indexSelected == 0 
               ? styles.btnPrevDisabled
               : styles.btnPrevEnabled
           }
@@ -49,10 +56,11 @@ export const Pagination = ({ selectYear, selectMonth, selectState }) => {
           <img src={iconArrow}></img>
         </button>
         <button
+          disabled={indexSelected / 10 + 1 < pages ? false : true}
           className={
-            indexSelected + 1 == pages
-              ? styles.btnNextDisabled
-              : styles.btnNextEnabled
+            indexSelected / 10 + 1 < pages
+              ? styles.btnNextEnabled
+              : styles.btnNextDisabled
           }
           onClick={() => changePage(indexSelected + 10)}
         >

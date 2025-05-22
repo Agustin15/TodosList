@@ -89,7 +89,7 @@ export const UserDataProvider = ({ children }) => {
       const result = await response.json();
 
       if (result.logout) {
-        location.href = urlFront + "/login";
+        location.href = urlFront + "login";
       }
     } catch (error) {
       console.log(error);

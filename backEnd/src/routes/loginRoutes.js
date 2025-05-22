@@ -25,7 +25,7 @@ loginRoutes.post("/", async (req, res) => {
     } else {
       const token = jwt.sign({ idUser: userFound.idUser }, secretKey, {
         algorithm: "HS256",
-        expiresIn: "10"
+        expiresIn: "1h"
       });
 
       const refreshToken = jwt.sign(
@@ -38,7 +38,7 @@ loginRoutes.post("/", async (req, res) => {
       );
 
       res.cookie("accessToken", token, {
-        maxAge: 10000,
+        maxAge: 60 * 60 * 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax"

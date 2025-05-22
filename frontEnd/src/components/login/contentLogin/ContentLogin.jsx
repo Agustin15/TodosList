@@ -88,7 +88,7 @@ const ContentLogin = () => {
             className={classesStyle.forgotPassword}
             href={`${urlFront}resetPassword`}
           >
-            forgot your password?
+            Do you forgot your password?
           </a>
 
           <div className={classesStyle.containSignIn}>

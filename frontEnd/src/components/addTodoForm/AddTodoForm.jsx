@@ -5,8 +5,10 @@ import iconError from "../../assets/img/errorIcon.png";
 import iconAdd from "../../assets/img/addTask.png";
 import { useForm } from "../../context/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
+import { useCalendarEvents } from "../../context/CalendarEventsContext";
+import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
-const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
+const AddTodoForm = ({ setOpenModalAdd }) => {
   const {
     values,
     setValues,
@@ -16,7 +18,16 @@ const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
     cleanForm,
     cleanValues
   } = useForm();
-  const { addTask } = useTasks();
+  const { setEventAdded, dateSelected } = useCalendarEvents();
+  const { addTask, dispatch } = useTasks();
+  const {
+    getQuantityTasksFilter,
+    getTasksFilter,
+    indexSelected,
+    getTasksThisWeekUserLimit,
+    getTasksThisWeekUser,
+    refCheckBoxThisWeek
+  } = useFilterOptionTasks();
 
   const handleChange = (event) => {
     let value, name;
@@ -62,7 +73,11 @@ const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
           msj = "Task added succesfully!";
           result = "correct";
           icon = iconCorrect;
-          if (dateSelected) setEventAdded(true);
+          if (dateSelected) {
+            setEventAdded(true);
+          } else {
+            eventAdded();
+          }
           cleanValues();
         } else {
           throw "Oops,failed to add task";
@@ -81,6 +96,16 @@ const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
     }
   };
 
+  const eventAdded = () => {
+    if (refCheckBoxThisWeek.current.checked) {
+      getTasksThisWeekUser();
+      getTasksThisWeekUserLimit(indexSelected, dispatch);
+    } else {
+      getQuantityTasksFilter("getQuantityTasksByFilterOption");
+      getTasksFilter("getTasksLimitByFilterOption", indexSelected, dispatch);
+    }
+  };
+
   return (
     <div className={classesStyle.containForm}>
       <div className={classesStyle.header}>
@@ -94,7 +119,7 @@ const AddTodoForm = ({ setEventAdded, dateSelected, setOpenModalAdd }) => {
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <ContentForm dateSelected={dateSelected} handleChange={handleChange} />
+        <ContentForm handleChange={handleChange} />
       </form>
     </div>
   );

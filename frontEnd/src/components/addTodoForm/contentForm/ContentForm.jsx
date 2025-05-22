@@ -8,10 +8,12 @@ import iconFile from "../../../assets/img/file.png";
 import { useForm } from "../../../context/FormTaskContext";
 import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
+import { useCalendarEvents } from "../../../context/CalendarEventsContext";
 
-const ContentForm = ({ dateSelected, handleChange }) => {
+const ContentForm = ({ handleChange }) => {
   const { values, setValues, errors, resultForm, cleanForm } = useForm();
   const { loadingState } = useTasks();
+  const { dateSelected } = useCalendarEvents();
 
   useEffect(() => {
     if (dateSelected) {

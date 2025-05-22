@@ -82,7 +82,7 @@ export const BarChart = () => {
   return (
     <div className={styles.containBarChart}>
       <div className={styles.header}>
-        <h3>Chart tasks this week</h3>
+        <h3>Chart state tasks this week</h3>
         <img src={iconBarChart}></img>
       </div>
       {loadingState ? (

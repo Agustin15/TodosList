@@ -9,32 +9,28 @@ import Modal from "../modal/Modal";
 import { Pagination } from "../pagination/Pagination";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
 import { useTasks } from "../../context/TaskContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
 import { FilterOption } from "../filterOption/FilterOption";
+import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
 const TodoList = () => {
-  const {
-    tasks,
-    loadingState,
-    getTasksThisWeekUser,
-    getTasksThisWeekUserLimit,
-    getTaskById
-  } = useTasks();
+  const { tasks, getTaskById, dispatch } = useTasks();
+  const { getTasksThisWeekUser, getTasksThisWeekUserLimit, loadingFilter } =
+    useFilterOptionTasks();
+
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
-  const refSelectYear = useRef();
-  const refSelectMonth = useRef();
-  const refSelectState = useRef();
+
   const { idTask } = useParams();
 
   useEffect(() => {
     if (idTask) {
       getTaskById({ id: idTask });
     } else {
-      getTasksThisWeekUser("tasksThisWeekQuantity");
-      getTasksThisWeekUserLimit(0);
+      getTasksThisWeekUser();
+      getTasksThisWeekUserLimit(0, dispatch);
     }
   }, []);
 
@@ -55,19 +51,14 @@ const TodoList = () => {
             </div>
           </div>
         </div>
-        {!idTask && (
-          <FilterOption
-            selectYear={refSelectYear}
-            selectMonth={refSelectMonth}
-            selectState={refSelectState}
-            setTaskNotFound={setTaskNotFound}
-          />
-        )}
+        {!idTask && <FilterOption setTaskNotFound={setTaskNotFound} />}
 
         {tasks && (
           <ul id="ulTasks" className={styles.tasks}>
             <div
-              className={loadingState ? styles.loadingShow : styles.loadingHide}
+              className={
+                loadingFilter ? styles.loadingShow : styles.loadingHide
+              }
             >
               <img src={gifLoadingTasks}></img>
               <h3>loading tasks</h3>
@@ -75,7 +66,7 @@ const TodoList = () => {
 
             <div
               className={
-                tasks.length == 0 && !loadingState
+                tasks.length == 0 && !loadingFilter
                   ? styles.warningShow
                   : styles.warningHide
               }
@@ -92,7 +83,7 @@ const TodoList = () => {
               <img src={iconNoFound}></img>
               <h3>Task not found</h3>
             </div>
-            {!loadingState
+            {!loadingFilter
               ? tasks.map((task, index) => (
                   <TodoItem
                     index={index}
@@ -104,18 +95,14 @@ const TodoList = () => {
           </ul>
         )}
 
-        {!idTask && (
-          <Pagination
-            selectYear={refSelectYear}
-            selectMonth={refSelectMonth}
-            selectState={refSelectState}
-          />
-        )}
+        {!idTask && <Pagination />}
       </div>
 
       {openModalAdd && (
         <Modal>
-          <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
+          <CalendarEventsProvider>
+            <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
+          </CalendarEventsProvider>
         </Modal>
       )}
     </div>

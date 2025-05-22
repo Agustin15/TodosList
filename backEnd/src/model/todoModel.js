@@ -62,7 +62,7 @@ export const TaskModel = {
   getTasksThisWeekUser: async function (idUser, firstSunday, nextSaturday) {
     try {
       const [results] = await connection.execute(
-        "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=?",
+        "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask asc",
         [idUser, firstSunday, nextSaturday]
       );
 
