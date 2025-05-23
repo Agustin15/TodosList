@@ -19,8 +19,6 @@ const taskReducer = (state, action) => {
       return state.map((task) =>
         task.idTask == action.payload.idTask ? action.payload : task
       );
-    case "deleteTask":
-      return state.filter((task) => task.idTask !== action.payload);
 
     default:
       return state;
@@ -124,7 +122,6 @@ export const TaskProvider = ({ children }) => {
 
     formData.append("datetimeTask", values.datetimeTask);
     formData.append("state", values.isCompleted);
-
     try {
       const response = await fetch("/api/todos/", {
         method: "POST",
@@ -139,7 +136,6 @@ export const TaskProvider = ({ children }) => {
         }
         throw result.messageError;
       }
-
       if (result) {
         data = result;
       }

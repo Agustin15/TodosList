@@ -12,7 +12,6 @@ export const ContainRingChart = ({
   tasksIncompleted,
   title
 }) => {
- 
   const { tasksThisWeek, loadingState } = useTasks();
   const chart = useRef();
 
@@ -59,17 +58,22 @@ export const ContainRingChart = ({
           <img src={iconLoadPie}></img>
           <span>loading chart ...</span>
         </div>
-      ) :tasksThisWeek.length > 0 ? (
+      ) : tasksThisWeek.length > 0 ? (
         <>
           <div className={styles.containPercentaje}>
-            <h3>
-              {Math.ceil(
-                option == "completed" ? tasksCompleted : tasksIncompleted
-              )}
-              %
-            </h3>
+            <div className={styles.percentaje}>
+              <h3>
+                {Math.ceil(
+                  option == "completed" ? tasksCompleted : tasksIncompleted
+                )}
+                %
+              </h3>
+            </div>
+            <CanvasJSChart
+              ref={chart}
+              options={optionsDoughnut}
+            ></CanvasJSChart>
           </div>
-          <CanvasJSChart ref={chart} options={optionsDoughnut}></CanvasJSChart>
         </>
       ) : (
         <div className={styles.noData}>

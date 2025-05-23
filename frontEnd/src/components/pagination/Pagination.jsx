@@ -9,6 +9,7 @@ export const Pagination = () => {
   const [pages, setPages] = useState();
   const {
     refCheckBoxThisWeek,
+    refInputNumberIndex,
     setIndexSelected,
     indexSelected,
     quantityTasks,
@@ -25,6 +26,12 @@ export const Pagination = () => {
     setIndexSelected(newIndexSelected);
   };
 
+  const handleChangeInput = (event) => {
+    if (event.target.value > 0 && event.target.value <= pages) {
+      let newIndexSelected = (event.target.value - 1) * 10;
+      changePage(newIndexSelected);
+    }
+  };
   useEffect(() => {
     if (quantityTasks > 0) {
       setPages(Math.ceil(quantityTasks / 10));
@@ -40,16 +47,21 @@ export const Pagination = () => {
       }
     >
       <div className={styles.index}>
-        <li>{indexSelected / 10 + 1}</li>
+        <input
+          ref={refInputNumberIndex}
+          onChange={(event) => handleChangeInput(event)}
+          type="number"
+          min={1}
+          max={pages}
+          defaultValue={1}
+        ></input>
         de {pages}
       </div>
       <div className={styles.nextPrev}>
         <button
           disabled={indexSelected == 0 ? true : false}
           className={
-            indexSelected == 0 
-              ? styles.btnPrevDisabled
-              : styles.btnPrevEnabled
+            indexSelected == 0 ? styles.btnPrevDisabled : styles.btnPrevEnabled
           }
           onClick={() => changePage(indexSelected - 10)}
         >

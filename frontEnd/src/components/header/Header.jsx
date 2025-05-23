@@ -8,6 +8,7 @@ import emailIcon from "../../assets/img/email.png";
 import logOutIcon from "../../assets/img/logOut.png";
 import { useEffect, useState } from "react";
 import { useDataUser } from "../../context/userDataContext";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Header = () => {
   const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
@@ -18,10 +19,14 @@ const Header = () => {
   }, []);
 
   const handleOpenDetailsProfile = () => {
-    if (openDetailsProfile) {
-      setOpenDetailsProfile(false);
+    if (window.innerWidth <= 699) {
+      location.href = urlFront + "profile";
     } else {
-      setOpenDetailsProfile(true);
+      if (openDetailsProfile) {
+        setOpenDetailsProfile(false);
+      } else {
+        setOpenDetailsProfile(true);
+      }
     }
   };
 
@@ -30,8 +35,10 @@ const Header = () => {
       <header className={classesStyle.header}>
         <nav>
           <div className={classesStyle.initHeader}>
-            <img src={logo}></img>
-            <span>TodoList</span>
+            <div className={classesStyle.logo}>
+              <img src={logo}></img>
+              <span>TodoList</span>
+            </div>
             <ul>
               <li>
                 <img src={panelIcon}></img>
@@ -43,12 +50,13 @@ const Header = () => {
               </li>
               <li>
                 <img src={calendarMenu}></img>
-               <a href="/calendar">Calendar</a> 
+                <a href="/calendar">Calendar</a>
               </li>
             </ul>
           </div>
           <div className={classesStyle.containProfile}>
             <img onClick={handleOpenDetailsProfile} src={accountIcon}></img>
+            {/* <span>{user.nameUser}</span> */}
             <div
               className={
                 openDetailsProfile

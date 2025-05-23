@@ -1,7 +1,9 @@
 import classesStyle from "../contentForm/contentForm.module.css";
 import iconSignUp from "../../../assets/img/signUpIcon.gif";
 import hiddenEye from "../../../assets/img/hidden.png";
+import gifLoading from "../../../assets/img/loadingForm.gif";
 import correctIcon from "../../../assets/img/correctIcon.png";
+import logo from "../../../assets/img/logo.png";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormTaskContext";
 import { useEffect } from "react";
@@ -9,9 +11,7 @@ import { useLogin } from "../../../context/LoginContext";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
 import AlertInputLogin from "../alertInputLogin/AlertInputLogin";
 import WelcomeFormSignUp from "../welcomeSignUp/WelcomeFormSignUp";
-import Loader from "../../loader/Loader";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
-const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const ContentFormSignUp = () => {
   const {
@@ -48,15 +48,18 @@ const ContentFormSignUp = () => {
     <>
       <WelcomeFormSignUp
         paragraphWelcome={"Sign up to organize and not forget your tasks!"}
-        paragraphAccount={"Already have a account?"}
+        paragraphAccount={"Do you already have a account?"}
         optionLink={"Login"}
         link={`${urlFront}login`}
       ></WelcomeFormSignUp>
       <div className={classesStyle.form}>
         <div className={classesStyle.title}>
-          <h3 className={classesStyle.titleResponsive}>Welcome to TodoList!</h3>
           <img src={iconSignUp}></img>
           <h3>Enter your data for sign up</h3>
+        </div>
+        <div className={classesStyle.titleResponsive}>
+          <h3>Welcome to TodoList!</h3>
+          <img src={logo}></img>
         </div>
         <form onSubmit={handleSubmitSignUp}>
           <div className={classesStyle.rowFormOne}>
@@ -127,12 +130,13 @@ const ContentFormSignUp = () => {
           <div className={classesStyle.containSignUp}>
             <button type="submit">
               Sign up
-              <Loader isLoading={loading} color="white" size={6} />
+              {loading && <img src={gifLoading}></img>}
             </button>
           </div>
           <div className={classesStyle.haveAccountResponsive}>
             <p>
-              Already have a account? <a href={`${urlFront}login`}>Login</a>
+              Do you already have a account?{" "}
+              <a href={`${urlFront}login`}>Login</a>
             </p>
           </div>
 

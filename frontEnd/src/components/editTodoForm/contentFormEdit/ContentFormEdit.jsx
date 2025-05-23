@@ -2,10 +2,10 @@ import styles from "./ContentFormEdit.module.css";
 import iconFileNotUploaded from "../../../assets/img/cloudError.png";
 import iconFile from "../../../assets/img/file.png";
 import iconFileUploaded from "../../../assets/img/cloudOk.png";
+import gifLoading from "../../../assets/img/loadingForm.gif";
 import iconDelete from "../../../assets/img/delete.png";
 import AlertErrorInput from "../../addTodoForm/alertErrorInput/AlertErrorInput";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm";
-import Loader from "../../loader/Loader";
 import { useForm } from "../../../context/FormTaskContext";
 import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
@@ -141,7 +141,7 @@ const ContentFormEdit = ({ values, handleChange }) => {
       <div className={styles.buttons}>
         <button type="submit">
           Update
-          <Loader isLoading={loadingState} color="white" size={3} />
+          {loadingState && <img src={gifLoading}></img>}
         </button>
         <button onClick={cleanForm} type="reset">
           Clean

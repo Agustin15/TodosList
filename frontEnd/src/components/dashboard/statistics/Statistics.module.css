@@ -80,7 +80,6 @@
   font-weight: bold;
 }
 
-
 .containDoughnutChart .containLoading img,
 .containBarChart .containLoading img {
   width: 45px;
@@ -110,11 +109,114 @@
 }
 
 .containPercentaje {
+  width: 12rem;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.percentaje {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 99%;
+  height: 100%;
+  padding-bottom: 1rem;
   z-index: 3;
   text-align: center;
+}
+
+@media only screen and (max-width: 699px) {
+  .containStatistics {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.3rem;
+    width: 99%;
+  }
+
+  .rowRings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    width: 96%;
+    margin-top: 1rem;
+  }
+  .containDoughnutChart,
+  .containBarChart {
+    height: 17rem;
+    width: 81%;
+  }
+
+  .containDoughnutChart {
+    height: 11rem;
+    width: 75%;
+    gap: 1rem;
+  }
+
+  .containDoughnutChart .noData,
+  .containBarChart .noData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
+    gap: 0.5rem;
+    font-size: 15px;
+    color: gray;
+    font-weight: bold;
+  }
+
+  .containBarChart .noData {
+    font-size: 16px;
+  }
+
+  .containDoughnutChart .noData img,
+  .containBarChart .noData img {
+    width: 46px;
+    height: 46px;
+    opacity: 75%;
+  }
+
+  .containBarChart .noData img {
+    width: 75px;
+    height: 75px;
+    opacity: 75%;
+  }
+
+  .containDoughnutChart .containLoading,
+  .containBarChart .containLoading {
+    height: 75%;
+    gap: 0.5rem;
+    font-size: 16px;
+  }
+
+  .containDoughnutChart .containLoading img,
+  .containBarChart .containLoading img {
+    width: 45px;
+    opacity: 65%;
+  }
+
+  .containDoughnutChart .header,
+  .containBarChart .header {
+    font-size: 10px;
+    padding-top: 0.4rem;
+    text-align: center;
+  }
+
+  .containDoughnutChart .header {
+    font-size: 11px;
+  }
+
+  .containDoughnutChart .header img {
+    width: 21px;
+  }
+
+  .containBarChart .header img {
+    width: 27px;
+  }
+
+
 }

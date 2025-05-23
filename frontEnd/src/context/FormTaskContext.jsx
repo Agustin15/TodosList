@@ -62,23 +62,23 @@ export const FormTaskProvider = ({ children }) => {
 
   const cleanValues = () => {
     setValues({
-      ...values,
       icon: "",
+      datetimeTask: "",
       descriptionTask: "",
-      filesUploaded: "",
-      datetimeTask: ""
+      filesUploaded: [],
+      isCompleted: false
     });
   };
 
   const cleanErrors = () => {
     setErrors({
-      ...errors,
       icon: "",
       descriptionTask: "",
       datetimeTask: "",
       filesUploaded: ""
     });
   };
+  
   const cleanForm = () => {
     setFilesSizeExceeded(false);
     setFilesUploadedUpdateForm([]);

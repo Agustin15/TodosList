@@ -69,7 +69,7 @@ export const FilesTask = ({ task }) => {
           </div>
           <ul>
             {task.filesUploaded.map((file, index) => (
-              <li>
+              <li key={index}>
                 <div className={classesStyle.rowOneFile}>
                   <span>File {index + 1}-</span>
                   <p>{file.nameFile}</p>

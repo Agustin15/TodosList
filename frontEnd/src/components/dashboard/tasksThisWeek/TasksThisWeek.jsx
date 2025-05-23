@@ -21,7 +21,7 @@ export const TasksThisWeek = () => {
             <span>loading tasks...</span>
           </div>
         ) : tasksThisWeek.length > 0 ? (
-          tasksThisWeek.slice(0,6).map((taskThisWeek, index) => (
+          tasksThisWeek.slice(0, 6).map((taskThisWeek, index) => (
             <li
               key={index}
               className={
@@ -36,7 +36,9 @@ export const TasksThisWeek = () => {
                 </div>
                 <div className={stylesTasksThisWeek.columnOne}>
                   <span>{taskThisWeek.date}</span>
-                  <span>{taskThisWeek.description}</span>
+                  <span className={stylesTasksThisWeek.description}>
+                    {taskThisWeek.description}
+                  </span>
                 </div>
               </div>
               <div className={stylesTasksThisWeek.columnTwo}>

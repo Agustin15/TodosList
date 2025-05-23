@@ -56,7 +56,6 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
     event.preventDefault();
 
     let validIcon = /\w/;
-
     try {
       if (
         filesSizeExceeded ||
@@ -68,7 +67,6 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
         throw "Complete correctly the fields please";
       } else {
         let taskAdded = await addTask(values);
-
         if (taskAdded) {
           msj = "Task added succesfully!";
           result = "correct";

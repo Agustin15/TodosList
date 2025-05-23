@@ -3,6 +3,7 @@
   font-size: 14px;
   position: absolute;
   margin-top: 5rem;
+  margin-left: 0.5rem;
 }
 
 .msjErrorPassword {
@@ -14,17 +15,29 @@
 
 @media only screen and (max-width: 699px) {
   .msjError {
-    color: rgb(226, 0, 0);
-    font-size: 17px;
+    font-size: 13px;
     position: absolute;
-    margin-top: 5.1rem;
+    margin-left: 0.7rem;
+    margin-top: 5.3rem;
+  }
+  .msjErrorPassword {
+    font-size: 13px;
+    margin-left: 0.5rem;
   }
 }
 
-@media only screen and (min-width: 700px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
   .msjError {
     color: rgb(226, 0, 0);
+    font-size: 11px;
+    position: absolute;
+    margin-left: 0.4rem;
+    margin-top: 4rem;
+  }
+  .msjErrorPassword {
+    color: rgb(226, 0, 0);
     font-size: 12px;
+    margin-left: 0.6rem;
     position: absolute;
     margin-top: 4rem;
   }

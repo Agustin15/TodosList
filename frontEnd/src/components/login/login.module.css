@@ -1,6 +1,6 @@
 .bodyPage {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   align-items: start;
   justify-content: center;
@@ -9,7 +9,7 @@
 
 .containForm {
   display: flex;
-  align-items: center;
+  align-items: start;
   width: 100%;
   height: auto;
 }
@@ -17,7 +17,7 @@
 @media only screen and (max-width: 699px) {
   .bodyPage {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
@@ -25,17 +25,16 @@
 
   .containForm {
     display: flex;
-    align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 }
 
-@media only screen and (min-width:700px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
   .bodyPage {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     align-items: start;
     justify-content: center;
@@ -44,8 +43,7 @@
 
   .containForm {
     display: flex;
-    align-items: center;
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 }

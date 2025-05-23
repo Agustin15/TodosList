@@ -48,7 +48,7 @@ export const BarChart = () => {
   const optionsBar = {
     animationEnabled: true,
     exportEnabled: true,
-    dataPointWidth: 31,
+    dataPointWidth: window.innerWidth <= 1024 ? 14 : 31,
 
     axisY: {
       title: "Tasks",
@@ -59,7 +59,10 @@ export const BarChart = () => {
       verticalAlign: "center",
       horizontalAlign: "right",
       reversed: true,
-      cursor: "pointer"
+      cursor: "pointer",
+      fontSize: window.innerWidth <= 1024 ? 10 : 12,
+      horizontalAlign: window.innerWidth <= 1024 ? "left" : "right",
+      verticalAlign: window.innerWidth <= 1024 ? "bottom" : "center"
     },
     data: [
       {

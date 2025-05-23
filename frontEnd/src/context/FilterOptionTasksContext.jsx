@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { createContext } from "react";
@@ -11,6 +11,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const refSelectMonth = useRef();
   const refSelectState = useRef();
   const refCheckBoxThisWeek = useRef();
+  const refInputNumberIndex = useRef();
   const [indexSelected, setIndexSelected] = useState(0);
   const [quantityTasks, setQuantityTask] = useState();
   const [loadingFilter, setLoadingFilter] = useState(false);
@@ -18,6 +19,12 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const logout = () => {
     location.href = `${urlFront}login`;
   };
+
+  useEffect(() => {
+    if (refInputNumberIndex.current) {
+      refInputNumberIndex.current.value = indexSelected / 10 + 1;
+    }
+  }, [indexSelected]);
 
   const getTasksThisWeekUser = async () => {
     const optionGetTasks = {
@@ -195,6 +202,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
         indexSelected,
         setIndexSelected,
         refCheckBoxThisWeek,
+        refInputNumberIndex,
         getTasksFilter,
         getQuantityTasksFilter,
         getTasksThisWeekUser,

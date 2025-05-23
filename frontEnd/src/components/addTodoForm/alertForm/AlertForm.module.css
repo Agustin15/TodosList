@@ -49,7 +49,7 @@
   font-weight: bold;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .alertFormCorrect {
     width: 17rem;
     color: white;
@@ -66,7 +66,7 @@
   }
 }
 
-@media (min-width: 667px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
   .alertFormCorrect {
     width: 15rem;
     color: white;
@@ -80,10 +80,10 @@
   .alertFormError {
     width: 16rem;
     font-size: 12px;
-    margin-top:-1rem;
+    margin-top: -1rem;
     height: 1.5rem;
   }
-  
+
   .alertFormError img {
     width: 22px;
     font-size: 14px;

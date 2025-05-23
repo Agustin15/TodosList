@@ -14,7 +14,7 @@
     border-radius: 5px;
 }
 
-.containPaginationShow li {
+.containPaginationShow li,.index input {
     list-style: none;
     padding: 0.3rem;
     width: 2rem;
@@ -28,6 +28,11 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+}
+
+.index input{
+    outline: none;
+    text-align: center;
 }
 
 .nextPrev {

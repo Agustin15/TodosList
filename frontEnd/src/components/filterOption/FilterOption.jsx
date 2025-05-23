@@ -15,6 +15,7 @@ export const FilterOption = ({ setTaskNotFound }) => {
     refSelectState,
     refSelectYear,
     refCheckBoxThisWeek,
+    setIndexSelected,
     getYearsOfTasks,
     getTasksFilter,
     getQuantityTasksFilter,
@@ -56,6 +57,7 @@ export const FilterOption = ({ setTaskNotFound }) => {
       getTasksFilter("getTasksLimitByFilterOption", 0, dispatch);
       getQuantityTasksFilter("getQuantityTasksByFilterOption");
     }
+    setIndexSelected(0);
   };
 
   return (
@@ -72,6 +74,7 @@ export const FilterOption = ({ setTaskNotFound }) => {
             defaultChecked
           ></input>
         </li>
+
         <li>
           <span>Year</span>
           <select ref={refSelectYear} defaultValue={new Date().getFullYear()}>

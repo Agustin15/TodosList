@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   color: white;
- background-image: radial-gradient(
+  background-image: radial-gradient(
       circle at 40% 91%,
       rgba(50, 34, 141, 0.04) 0%,
       rgba(50, 34, 141, 0.04) 50%,
@@ -66,7 +66,7 @@
 .linkLogin {
   display: flex;
   flex-direction: column;
-  align-items: center;;
+  align-items: center;
   gap: 0.5rem;
   margin-bottom: 2rem;
   font-size: 17px;
@@ -86,31 +86,8 @@
   }
 }
 
-@media only screen and (min-width: 700px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
   .containWelcome {
-    width: 45%;
-  }
-
-  .welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0rem;
-  }
-
-  .welcome h3 {
-    font-size: 17px;
-  }
-  .welcome img {
-    width: 94px;
-    margin-top: 5rem;
-  }
-  .welcome p {
-    font-size: 15px;
-  }
-
-  .linkLogin {
-    font-size: 15px;
+    display: none;
   }
 }

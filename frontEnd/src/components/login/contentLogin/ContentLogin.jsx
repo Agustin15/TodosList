@@ -1,16 +1,16 @@
 import classesStyle from "../contentLogin/ContentLogin.module.css";
 import loginIcon from "../../../assets/img/Login.gif";
+import gifLoading from "../../../assets/img/loadingForm.gif";
 import hiddenEye from "../../../assets/img/hidden.png";
+import logo from "../../../assets/img/logo.png";
 import WelcomeFormSignUp from "../../signUp/welcomeSignUp/WelcomeFormSignUp.jsx";
 import AlertForm from "../../addTodoForm/alertForm/AlertForm.jsx";
 import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
-import Loader from "../../loader/Loader.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useForm } from "../../../context/FormTaskContext.jsx";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
-
 
 const ContentLogin = () => {
   const {
@@ -48,8 +48,11 @@ const ContentLogin = () => {
         link={`${urlFront}signup`}
       ></WelcomeFormSignUp>
       <div className={classesStyle.form}>
+        <div className={classesStyle.titleResponsive}>
+          <img src={logo}></img>
+          <h3>Welcome to TodoList!</h3>
+        </div>
         <div className={classesStyle.title}>
-          <h3 className={classesStyle.titleResponsive}>Welcome to TodoList!</h3>
           <img src={loginIcon}></img>
           <h3>Enter your data for sign in</h3>
         </div>
@@ -94,7 +97,7 @@ const ContentLogin = () => {
           <div className={classesStyle.containSignIn}>
             <button type="submit">
               Log in
-              <Loader isLoading={loading} color="white" size={6} />
+              {loading && <img src={gifLoading}></img>}
             </button>
           </div>
           <div className={classesStyle.haveAccountResponsive}>

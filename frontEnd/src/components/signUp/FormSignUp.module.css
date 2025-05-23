@@ -9,7 +9,7 @@
 
 .containForm {
   display: flex;
-  align-items: center;
+  align-items: start;
   width: 100%;
   height: auto;
 }
@@ -31,7 +31,7 @@
   }
 }
 
-@media only screen and (min-width: 700px) and (max-width: 915px) {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
   .bodyPage {
     width: 100%;
     height: 100%;
@@ -43,7 +43,7 @@
 
   .containForm {
     display: flex;
-    align-items: center;
+    align-items: start;
     width: 100%;
     height: 100%;
   }

@@ -1,10 +1,10 @@
-import classesStyle from "./ContentForm.module.css";
-import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
-import AlertForm from "../alertForm/AlertForm";
-import Loader from "../../loader/Loader";
 import iconFileNotUploaded from "../../../assets/img/cloudError.png";
 import iconFileUploaded from "../../../assets/img/cloudOk.png";
 import iconFile from "../../../assets/img/file.png";
+import gifLoading from "../../../assets/img/loadingForm.gif";
+import classesStyle from "./ContentForm.module.css";
+import AlertErrorInput from "../alertErrorInput/AlertErrorInput";
+import AlertForm from "../alertForm/AlertForm";
 import { useForm } from "../../../context/FormTaskContext";
 import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
@@ -96,7 +96,7 @@ const ContentForm = ({ handleChange }) => {
       <div className={classesStyle.buttons}>
         <button>
           Add
-          <Loader isLoading={loadingState} color="white" size={3} />
+          {loadingState && <img src={gifLoading}></img>}
         </button>
         <button type="reset" onClick={cleanForm}>
           Clean
