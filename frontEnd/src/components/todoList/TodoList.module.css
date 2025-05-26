@@ -1,8 +1,17 @@
+.rowTodoList {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
 .contentBody {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 1rem;
   padding-bottom: 2rem;
+  margin-left: 6%;
+  width: 96%;
 }
 
 .containTasks {
@@ -13,8 +22,7 @@
   gap: 0rem;
   margin: auto;
   width: 95%;
-  height:99vh;
-  margin-top: 2rem;
+  height: 99vh;
   background-color: white;
   box-shadow: 2px 2px 2px grey;
   border: 1px solid rgb(212, 212, 212);
@@ -80,6 +88,10 @@
   border-radius: 99px;
   box-shadow: 2px 2px 2px gray;
   cursor: pointer;
+}
+
+.containTasks .header button::before {
+  content: "Add task";
 }
 .header button:hover {
   background-color: rgb(16, 168, 16);
@@ -163,131 +175,79 @@
   display: none;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
+  .rowTodoList {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: auto;
+    margin-top: 0;
+  }
+
   .contentBody {
-    flex-direction: column-reverse;
+    margin-top: 7rem;
+    margin-left: 0;
+    width: 96%;
   }
+
   .containTasks {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    margin: auto;
-    width: 22.3rem;
-    height: 31rem;
-    margin-top: 1rem;
+    width: 95%;
+    height: 99vh;
     background-color: white;
-    box-shadow: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    border-radius: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    font-size: 17px;
-    color: rgb(100, 100, 100);
-    background: linear-gradient(#f8f8f8, rgb(221, 221, 221));
-    width: 100%;
-    border-bottom: 1px solid rgb(206, 206, 206);
-    padding-bottom: 1rem;
-  }
-  .header .title img {
-    width: 17px;
-  }
-
-  .containFilterTasks {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
-  }
-
-  .containSelect {
-    width: 12rem;
-    height: 5rem;
-    display: flex;
-    align-items: start;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-left: 2rem;
-    box-shadow: 2px 2px 2px gray;
-    border-radius: 4px;
-    font-size: 13px;
-    border: 1px solid rgb(221, 221, 221);
-  }
-  .containSelect span {
-    background-color: rgb(228, 228, 228);
-    color: rgb(0, 0, 0);
-    padding: 0.4rem;
-    border-bottom: 1px solid rgb(196, 196, 196);
-    width: 94%;
-  }
-
-  .containSelect .rowSelect {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  .containSelect .rowSelect img {
-    width: 18px;
-  }
-
-  .containSelect .rowSelect button {
-    background-color: rgb(0, 119, 255);
-    box-shadow: 1px 1px 1px rgb(185, 185, 185);
-    border-radius: 3px;
     border: none;
-    width: 2rem;
-    padding: 0.2rem;
-    cursor: pointer;
+    box-shadow: none;
   }
 
-  .containSelect .rowSelect button:hover {
-    background-color: rgb(0, 120, 175);
-  }
-
-  .containFilterTasks select {
-    width: 9rem;
-    height: 2rem;
-    padding: 0.4rem;
-    margin-left: 0.3rem;
-    border-radius: 3px;
-    background-color: rgb(255, 252, 252);
-    border: 1px solid rgb(179, 179, 179);
-    color: rgb(0, 0, 0);
-    outline: none;
-  }
-
-  .header .title {
-    display: flex;
+  .containTasks .header {
     gap: 1rem;
-    align-items: center;
+    background: none;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 16px;
+    width: 110%;
   }
 
-  .header .title img {
-    width: 35px;
+  .containTasks .header .rowHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .containTasks .header .title img {
+    width: 32px;
+  }
+
+  .containTasks .header .addTask {
+    width: 94%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    position: absolute;
+  }
+
+  .containTasks .header button {
+    width: 4rem;
+    height: 1.7rem;
+    background-color: rgb(6, 187, 6);
+    font-size: 13px;
+    margin-top: -0.1rem;
+  }
+
+  .containTasks .header button::before {
+    content: "Add";
+  }
+
+  .containTasks .header button img {
+    width: 12px;
+    height: 12px;
   }
 
   .tasks {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
     height: 100%;
-    width: 96%;
-    overflow-y: scroll;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    width: 91%;
   }
 
   .loadingHide {
@@ -295,241 +255,34 @@
   }
 
   .loadingShow {
-    font-size: 17px;
+    font-size: 15px;
     color: rgb(49, 49, 49);
     opacity: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 0.5rem;
-    height: 99%;
+    height: 95%;
   }
   .loadingShow img {
-    width: 45px;
-    height: 45px;
+    width: 72px;
+    height: 72px;
   }
-
   .warningShow {
     opacity: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 1rem;
-    margin-top: 3rem;
-    height: 20rem;
-    font-size: 17px;
+    height: 95%;
+    font-size: 15px;
   }
 
   .warningShow img {
-    width: 78px;
+    width: 100px;
     padding-left: 1.2rem;
-  }
-
-  .warningHide {
-    display: none;
   }
 
   .taskNotFoundShow {
     opacity: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 3rem;
-    height: 20rem;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .taskNotFoundShow img {
-    width: 78px;
-  }
-
-  .taskNotFoundHide {
-    display: none;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .contentBody {
-    flex-direction: column-reverse;
-    flex-direction: column;
-  }
-  .containTasks {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    margin: auto;
-    width: 41rem;
-    height: 31rem;
-    margin-top: 1rem;
-    background-color: white;
-    box-shadow: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    border-radius: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    font-size: 17px;
-    color: rgb(100, 100, 100);
-    width: 100%;
-    border-bottom: 1px solid rgb(206, 206, 206);
-    padding-bottom: 1rem;
-  }
-  .header .title img {
-    width: 37px;
-  }
-
-  .containFilterTasks {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .containSelect {
-    width: 12rem;
-    height: 5rem;
-    display: flex;
-    align-items: start;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-left: 2rem;
-    box-shadow: 2px 2px 2px gray;
-    border-radius: 4px;
-    font-size: 13px;
-    border: 1px solid rgb(221, 221, 221);
-  }
-  .containSelect span {
-    background-color: rgb(228, 228, 228);
-    color: rgb(0, 0, 0);
-    padding: 0.4rem;
-    border-bottom: 1px solid rgb(196, 196, 196);
-    width: 94%;
-  }
-
-  .containSelect .rowSelect {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  .containSelect .rowSelect img {
-    width: 18px;
-  }
-
-  .containSelect .rowSelect button {
-    background-color: rgb(0, 119, 255);
-    box-shadow: 1px 1px 1px rgb(185, 185, 185);
-    border-radius: 3px;
-    border: none;
-    width: 2rem;
-    padding: 0.2rem;
-    cursor: pointer;
-  }
-
-  .containSelect .rowSelect button:hover {
-    background-color: rgb(0, 120, 175);
-  }
-
-  .containFilterTasks select {
-    width: 9rem;
-    height: 2rem;
-    padding: 0.4rem;
-    margin-left: 0.3rem;
-    border-radius: 3px;
-    background-color: rgb(255, 252, 252);
-    border: 1px solid rgb(179, 179, 179);
-    color: rgb(0, 0, 0);
-    outline: none;
-  }
-
-  .header .title {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .header .title img {
-    width: 35px;
-  }
-
-  .tasks {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    height: 100%;
-    width: 96%;
-    overflow-y: scroll;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .loadingHide {
-    display: none;
-  }
-
-  .loadingShow {
-    font-size: 17px;
-    color: rgb(49, 49, 49);
-    opacity: 50%;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 5rem;
-  }
-
-  .warningShow {
-    opacity: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 3rem;
-    height: 20rem;
-    font-size: 17px;
-  }
-
-  .warningShow img {
-    width: 78px;
-    padding-left: 1.2rem;
-  }
-
-  .warningHide {
-    display: none;
-  }
-
-  .taskNotFoundShow {
-    opacity: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 3rem;
-    height: 20rem;
-    font-size: 17px;
-  }
-
-  .taskNotFoundShow img {
-    width: 78px;
-  }
-
-  .taskNotFoundHide {
-    display: none;
+    width: 100px;
   }
 }

@@ -20,7 +20,9 @@ export const FilterOption = ({ setTaskNotFound }) => {
     getTasksFilter,
     getQuantityTasksFilter,
     getTasksThisWeekUser,
-    getTasksThisWeekUserLimit
+    getTasksThisWeekUserLimit,
+    openFilter,
+    setOpenFilter
   } = useFilterOptionTasks();
 
   const months = [
@@ -49,6 +51,10 @@ export const FilterOption = ({ setTaskNotFound }) => {
     }
   };
 
+  const handleFilter = () => {
+    openFilter ? setOpenFilter(false) : setOpenFilter(true);
+  };
+
   const handleSearch = async () => {
     if (refCheckBoxThisWeek.current.checked) {
       getTasksThisWeekUser();
@@ -62,8 +68,11 @@ export const FilterOption = ({ setTaskNotFound }) => {
 
   return (
     <div className={styles.containFilterOption}>
+      <button onClick={handleFilter} className={styles.openFilter}>
+        <img src={iconFilter}></img>
+      </button>
       <SearchTask setTaskNotFound={setTaskNotFound}></SearchTask>
-      <ul>
+      <ul className={openFilter ? styles.showFilter : ""}>
         <img src={iconFilter}></img>
         <li>
           <span>This Week</span>

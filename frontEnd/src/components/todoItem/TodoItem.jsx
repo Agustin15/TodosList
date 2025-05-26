@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import styles from "./TodoItem.module.css";
 import iconDelete from "../../assets/img/delete.png";
 import iconInfo from "../../assets/img/info.png";
-import pendingIcon from "../../assets/img/pendingTask.png";
-import completeIcon from "../../assets/img/completeTask.png";
 import iconEdit from "../../assets/img/editing.png";
 import EditTodoForm from "../editTodoForm/EditTodoForm";
 import DetailsTodo from "../detailsTodo/DetailsTodo";
 import Modal from "../modal/Modal";
+import { BtnChangeState } from "./BtnChangeState";
 import DeleteTask from "../DeleteTask/DeleteTaks";
 import ChangeStatusItem from "../changeStatusTask/ChangeStatusItem";
 
@@ -40,16 +39,10 @@ const TodoItem = ({ task, index }) => {
         className={styles.task}
       >
         <div className={styles.info}>
-          <button
-            className={
-              task.isCompleted
-                ? styles.btnStateComplete
-                : styles.btnStateIncomplete
-            }
-            onClick={() => setOpenModalChangeStatus(true)}
-          >
-            <img src={task.isCompleted ? completeIcon : pendingIcon}></img>
-          </button>
+          <BtnChangeState
+            task={task}
+            setOpenModalChangeStatus={setOpenModalChangeStatus}
+          />
           <div className={styles.icon}>
             <span>{task.icon}</span>
           </div>
@@ -63,28 +56,37 @@ const TodoItem = ({ task, index }) => {
         </div>
 
         <div className={styles.options}>
-          <button
-            className={styles.btnDelete}
-            onClick={() => setOpenModalDelete(true)}
-          >
-            <img src={iconDelete}></img>
-          </button>
-          <button
-            className={styles.btnUpdate}
-            onClick={() => {
-              setOpenModalUpdate(true);
-            }}
-          >
-            <img src={iconEdit}></img>
-          </button>
-          <button
-            className={styles.btnDetails}
-            onClick={() => {
-              setOpenModalInfo(true);
-            }}
-          >
-            <img src={iconInfo}></img>
-          </button>
+          <div className={styles.containState}>
+            <span style={{color:task.isCompleted?"green":"red"}}>{task.isCompleted?"Completed":"Pending"}</span>
+            <BtnChangeState
+              task={task}
+              setOpenModalChangeStatus={setOpenModalChangeStatus}
+            />
+          </div>
+          <div className={styles.buttons}>
+            <button
+              className={styles.btnDelete}
+              onClick={() => setOpenModalDelete(true)}
+            >
+              <img src={iconDelete}></img>
+            </button>
+            <button
+              className={styles.btnUpdate}
+              onClick={() => {
+                setOpenModalUpdate(true);
+              }}
+            >
+              <img src={iconEdit}></img>
+            </button>
+            <button
+              className={styles.btnDetails}
+              onClick={() => {
+                setOpenModalInfo(true);
+              }}
+            >
+              <img src={iconInfo}></img>
+            </button>
+          </div>
         </div>
       </li>
 

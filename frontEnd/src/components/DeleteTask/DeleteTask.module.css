@@ -55,21 +55,12 @@
   width: 40px;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .deleteTask {
-    padding: 1rem;
-    background-color: white;
-    border-radius: 4px;
-    width: 17rem;
-    padding-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    width: 78%;
+    padding-bottom: 2rem;
+    gap: 0.8rem;
     font-size: 16px;
-    font-weight: bold;
-    text-align: center;
   }
 
   .deleteTask img {
@@ -79,36 +70,11 @@
   .deleteTask button {
     width: 6rem;
     font-size: 14px;
+    margin-top: 0.7rem;
   }
 
   .deleteTask .alert {
     font-size: 14px;
-  }
-
-  .deleteTask .alert img {
-    width: 30px;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .deleteTask {
-    width: 18rem;
-    font-size: 15px;
-    margin-top: 4rem;
-    gap: 1.5rem;
-  }
-
-  .deleteTask img {
-    width: 45px;
-  }
-
-  .deleteTask button {
-    width: 6rem;
-    font-size: 13px;
-  }
-
-  .deleteTask .alert {
-    font-size: 13px;
   }
 
   .deleteTask .alert img {

@@ -1,7 +1,15 @@
+.rowCalendar {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-top: 0;
+    height: 99vh;
+}
+
 .containCalendar {
     width: 84%;
-    height: 86vh;
-    margin: auto;
+    height: 91vh;
+    margin-left: 10%;
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 3px;

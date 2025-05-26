@@ -1,6 +1,6 @@
 .containWelcome {
   width: 50%;
-  height: 115vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

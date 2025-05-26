@@ -24,25 +24,23 @@
   display: none;
 }
 
-
 @media only screen and (max-width: 699px) {
   #alertError {
     width: auto;
-    padding: 0.4rem;
-    padding: 0.4rem;
-    background-color: rgb(206, 9, 9);
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
-    font-size: 12px;
+    font-size: 13px;
     border-radius: 3px;
-    color: white;
-    box-shadow: 2px 2px 2px gray;
-    margin-top: -0.8rem;
-    margin-left: 0.5rem;
-    flex-direction: column;
+    color: rgb(218, 9, 9);
+    margin-left: 0rem;
+    justify-content: center;
+    gap: 0.5rem;
     align-items: start;
     text-align: center;
-    position: relative;
+    position: absolute;
+  }
+
+  #alertError img {
+    width: 15px;
+    height: 15px;
   }
 
   .alertErrorShow {
@@ -51,47 +49,5 @@
 
   .alertErrorHide {
     display: none;
-  }
-
-  .triangle {
-    width: 0;
-    height: 0;
-    border-top: 10px solid rgb(206, 9, 9);
-    border-right: 10px solid transparent;
-    transform: rotate(45deg);
-    position: absolute;
-    top: -0.2rem;
-    left: 0.2rem;
-  }
-}
-
-@media only screen and (min-width: 700px) and (max-width: 915px)  {
-  #alertError {
-    font-size: 9px;
-    color: white;
-    box-shadow: 2px 2px 2px gray;
-    margin-top: -0.3rem;
-    margin-left: 0.5rem;
-
-    position: relative;
-  }
-
-  .alertErrorShow {
-    display: flex;
-  }
-
-  .alertErrorHide {
-    display: none;
-  }
-
-  .triangle {
-    width: 0;
-    height: 0;
-    border-top: 10px solid rgb(206, 9, 9);
-    border-right: 10px solid transparent;
-    transform: rotate(45deg);
-    position: absolute;
-    top: -0.2rem;
-    left: 0.2rem;
   }
 }

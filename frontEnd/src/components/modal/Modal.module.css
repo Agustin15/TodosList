@@ -1,15 +1,21 @@
 .modal {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    min-height: 100%;
-    max-height:auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    padding-bottom: 8rem;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-  }
+  position: absolute;
+  z-index: 6;
+  width: 100%;
+  min-height: 100%;
+  max-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  padding-bottom: 8rem;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+@media only screen and (max-width:699px) {
+  .modal {
+  padding-bottom: 10rem;
+}
+  
+}

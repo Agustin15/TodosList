@@ -238,13 +238,13 @@ form button:hover {
 form .editInput {
   position: absolute;
   margin-left: 10.9rem;
-  margin-top: 1.8rem;
+  margin-top: 1.7rem;
   border-bottom-right-radius: 2px;
   border-top-right-radius: 2px;
   border-radius: 0;
   box-shadow: 1px 1px 1px gray;
-  width: 33px;
-  height: 29px;
+  width: 34px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;

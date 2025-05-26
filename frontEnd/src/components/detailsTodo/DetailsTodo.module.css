@@ -245,3 +245,57 @@
   opacity: 65%;
   margin-right: 1rem;
 }
+@media only screen and (max-width: 699px) {
+  .contain {
+    width: 94%;
+    height: auto;
+    min-height: 27rem;
+  }
+
+  .contain .title img {
+    width: 40px;
+  }
+
+  .contain .containDetails h3 {
+    font-size: 16px;
+  }
+
+  .containDescriptionTask p {
+    width: 95%;
+  }
+  .contain .containDetails li .detailsDate {
+    font-size: 12px;
+  }
+
+  .contain .containDetails li .detailsDate img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .contain .containDetails .containFiles .title img {
+    width: 30px;
+    height: 30px;
+  }
+  .contain .containDetails .containFiles ul {
+    margin-top: 0.5rem;
+    height: 10rem;
+  }
+
+  .contain .containDetails .containFiles ul li {
+    font-size: 12px;
+  }
+
+  .contain .containDetails .containFiles ul li .options {
+    margin-top: 0.2rem;
+  }
+
+  .contain .containDetails .containFiles ul li button img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .notFiles img {
+    width: 71px;
+    height: 71px;
+  }
+}

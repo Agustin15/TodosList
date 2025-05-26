@@ -17,8 +17,12 @@ import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
 const TodoList = () => {
   const { tasks, getTaskById, dispatch } = useTasks();
-  const { getTasksThisWeekUser, getTasksThisWeekUserLimit, loadingFilter } =
-    useFilterOptionTasks();
+  const {
+    getTasksThisWeekUser,
+    getTasksThisWeekUserLimit,
+    loadingFilter,
+    openFilter
+  } = useFilterOptionTasks();
 
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -45,7 +49,6 @@ const TodoList = () => {
             </div>
             <div className={styles.addTask}>
               <button onClick={() => setOpenModalAdd(true)}>
-                Add task
                 <img src={iconAddTask}></img>
               </button>
             </div>
@@ -54,7 +57,15 @@ const TodoList = () => {
         {!idTask && <FilterOption setTaskNotFound={setTaskNotFound} />}
 
         {tasks && (
-          <ul id="ulTasks" className={styles.tasks}>
+          <ul
+            id="ulTasks"
+            style={
+              openFilter && tasks.length > 0
+                ? { marginTop: "4rem" }
+                : { marginTop: "0" }
+            }
+            className={styles.tasks}
+          >
             <div
               className={
                 loadingFilter ? styles.loadingShow : styles.loadingHide

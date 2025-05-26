@@ -61,66 +61,34 @@
   width: 40px;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .containChangeStatus {
-    width: 16rem;
-    font-size: 14px;
+    padding: 1rem;
+    width: 15rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    font-size: 15px;
   }
 
   .containChangeStatus img {
-    width: 50px;
+    width: 65px;
+  }
+
+  .containChangeStatus span {
+    padding: 0.3rem;
   }
 
   .containChangeStatus button {
-    width: 6rem;
-    border: none;
+    width: 7rem;
     font-size: 14px;
+    margin-top: 1rem;
   }
 
-  .buttonsColorComplete,
-  .buttonsColorPending {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
   .containChangeStatus .alertError {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .containChangeStatus .alertError img {
-    width: 30px;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .containChangeStatus {
-    width: 16rem;
-    font-size: 14px;
-    gap: 1.5rem;
-    margin-top: 4rem;
-  }
-
-  .containChangeStatus img {
-    width: 49px;
-  }
-
-  .containChangeStatus button {
-    width: 6rem;
-    border: none;
-    font-size: 12px;
-  }
-
-  .buttonsColorComplete,
-  .buttonsColorPending {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
-  .containChangeStatus .alertError {
-    font-size: 13px;
-  }
-
-  .containChangeStatus .alertError img {
-    width: 30px;
+    width: 35px;
   }
 }

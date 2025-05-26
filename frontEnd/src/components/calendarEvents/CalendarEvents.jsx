@@ -6,17 +6,20 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { useState, useEffect } from "react";
 import Modal from "../modal/Modal";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
+import Header from "../header/Header";
 import styled from "styled-components";
 import styles from "./CalendarEvents.module.css";
-import { useTasks } from "../../context/TaskContext";
+import { UserDataProvider } from "../../context/userDataContext";
 import { useParams } from "react-router-dom";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
+import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const CalendarEvents = () => {
   const {
     eventsCalendar,
     eventAdded,
+    formatDate,
     setEventAdded,
     dateSelected,
     setDateSelected,
@@ -81,7 +84,10 @@ export const CalendarEvents = () => {
   };
 
   return (
-    <>
+    <div className={styles.rowCalendar}>
+      <UserDataProvider>
+        <Header />
+      </UserDataProvider>
       <div className={styles.containCalendar}>
         <Wrapper>
           <FullCalendar
@@ -93,7 +99,7 @@ export const CalendarEvents = () => {
             ]}
             initialView="dayGridMonth"
             events={eventsCalendar}
-            height={464}
+            height={544}
             initialDate={initialDate(idTask)}
             dayCellDidMount={(info) => dayView(info, idTask)}
             dayMaxEventRows={1}
@@ -124,9 +130,11 @@ export const CalendarEvents = () => {
       <br></br>
       {modalAdd && (
         <Modal>
-          <AddTodoForm setOpenModalAdd={setModalAdd}></AddTodoForm>
+          <FilterOptionTasksProvider>
+            <AddTodoForm setOpenModalAdd={setModalAdd}></AddTodoForm>
+          </FilterOptionTasksProvider>
         </Modal>
       )}
-    </>
+    </div>
   );
 };

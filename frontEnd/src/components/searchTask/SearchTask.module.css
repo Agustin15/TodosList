@@ -10,7 +10,9 @@
 
 .containSearch button {
   width: 2.5rem;
-  height: 2.3rem;
+  height: 2.4rem;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
   border: none;
   background: linear-gradient(rgb(24, 151, 201), rgb(16, 106, 141));
   position: absolute;
@@ -37,84 +39,33 @@
   border-radius: 4px;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .containSearch {
+    margin-left: 0;
+    width: 0;
+    gap: 1rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+    justify-content: center;
     position: relative;
-    width: 8rem;
-    margin-right: 3rem;
-  }
-
-  .containSearch input {
-    width: 8rem;
-    border: 1px solid grey;
-    outline: none;
-    padding-left: 1rem;
-    padding-right: 3rem;
-    font-size: 15px;
-    height: 2rem;
   }
 
   .containSearch button {
-    background-color: rgb(0, 119, 255);
-    box-shadow: 1px 1px 1px rgb(185, 185, 185);
+    width: 2.3rem;
+    height: 2.4rem;
     border: none;
-    width: 2.5rem;
-    height: 2.1rem;
-    padding: 0.2rem;
-    cursor: pointer;
     position: absolute;
-    left: 9rem;
+    margin-left: 14rem;
+    cursor: pointer;
   }
 
-  .containSearch button:hover {
-    background-color: rgb(6, 99, 206);
-  }
   .containSearch button img {
     width: 17px;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .containSearch {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-    width: 9rem;
-    margin-left: 3rem;
+    height: 17px;
   }
 
   .containSearch input {
-    width: 9rem;
-    border: 1px solid grey;
-    outline: none;
-    padding-left: 1rem;
-    padding-right: 3rem;
-    font-size: 15px;
-    height: 2rem;
-  }
-
-  .containSearch button {
-    background-color: rgb(0, 119, 255);
-    box-shadow: 1px 1px 1px rgb(185, 185, 185);
-    border: none;
-    width: 2.5rem;
-    height: 2.1rem;
-    padding: 0.2rem;
-    cursor: pointer;
-    position: absolute;
-    left: 9rem;
-  }
-
-  .containSearch button:hover {
-    background-color: rgb(6, 99, 206);
-  }
-  .containSearch button img {
-    width: 17px;
+    width: 13rem;
+    height: 2.3rem;
   }
 }

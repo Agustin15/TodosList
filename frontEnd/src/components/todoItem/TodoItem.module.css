@@ -78,12 +78,6 @@
   width: 85%;
 }
 
-.task .options {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
 .descriptionAndDate {
   display: flex;
   flex-direction: column;
@@ -104,6 +98,21 @@
   text-overflow: ellipsis;
 }
 
+.task .options {
+  display: flex;
+  align-items: center;
+}
+
+.task .containState {
+  display: none;
+}
+
+.task .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
 .task .options button {
   width: 3rem;
   height: 2.7rem;
@@ -151,161 +160,105 @@
   gap: 0.5rem;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .task {
     display: flex;
-    justify-content: space-between;
-    width: 19rem;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
     height: auto;
-    background-color: rgb(10, 10, 180);
-    border-radius: 6px;
-    box-shadow: 2px 2px 2px grey;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 1rem;
     gap: 0.5rem;
   }
 
+  .task .info button {
+    display: none;
+  }
+  .task .info button img {
+    height: 16px;
+    width: 16px;
+  }
+
+  .task .btnStateIncomplete {
+    background-color: rgb(214, 5, 5);
+  }
+  .task .btnStateComplete {
+    background-color: rgb(5, 156, 18);
+  }
+
+  .task .btnStateIncomplete:hover {
+    background-color: rgb(184, 8, 8);
+  }
+  .task .btnStateComplete:hover {
+    background-color: rgb(14, 141, 24);
+  }
+
   .task .icon {
-    padding: 0.2rem;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(0, 0, 145);
-    align-items: center;
+    font-size: 15px;
+    width: 2.9rem;
+    height: 2.9rem;
   }
 
   .task .icon span {
     font-size: 23px;
   }
+
   .task .info {
-    display: flex;
-    font-size: 13px;
-    align-items: center;
-    justify-content: start;
-    gap: 0.5rem;
-    border-radius: 5px;
-    width: 16rem;
+    font-size: 15px;
   }
+
   .task .info img {
-    width: 16px;
+    width: 20px;
     cursor: pointer;
   }
-
-  .task .options {
-    display: flex;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    align-items: center;
-  }
-
-  .descriptionAndDate {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .descriptionAndDate span {
-    font-weight: bold;
-  }
-
-  .descriptionAndDate p {
-    width: 6rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: bold;
-  }
-
-  .task .options div {
-    background-color: rgb(0, 0, 133);
-    padding: 0.5rem;
+  .options {
     display: flex;
     align-items: center;
-    justify-content: center;
-    list-style: none;
-    border-radius: 4px;
-  }
-  .task .options img {
-    width: 13px;
-    cursor: pointer;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .task {
-    display: flex;
     justify-content: space-between;
-    width: 37rem;
-    height: auto;
-    background-color: rgb(10, 10, 180);
-    border-radius: 6px;
-    box-shadow: 2px 2px 2px grey;
-    color: white;
-    padding: 1rem;
-    gap: 0.5rem;
+    width: 100%;
   }
-
-  .task .icon {
-    padding: 0.2rem;
-    border-radius: 4px;
+  .task .containState {
     display: flex;
-    flex-direction: column;
-    background-color: rgb(0, 0, 145);
     align-items: center;
-  }
-
-  .task .icon span {
-    font-size: 23px;
-  }
-  .task .info {
-    display: flex;
-    font-size: 13px;
-    align-items: center;
-    justify-content: start;
+    justify-items: center;
     gap: 0.5rem;
-    border-radius: 5px;
-    width: 16rem;
-  }
-  .task .info img {
-    width: 16px;
-    cursor: pointer;
+    width: 75%;
   }
 
-  .task .options {
-    display: flex;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    align-items: center;
-  }
-
-  .descriptionAndName {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .descriptionAndName span {
-    font-weight: bold;
-  }
-
-  .descriptionAndName p {
-    width: 24rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .task .options div {
-    background-color: rgb(0, 0, 133);
-    padding: 0.5rem;
+  .task .options .containState button {
     display: flex;
     align-items: center;
     justify-content: center;
-    list-style: none;
-    border-radius: 4px;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 100px;
   }
+  .task .containState button img {
+    width: 11px;
+    height: 11px;
+  }
+
+  .task .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .task .options {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  .task .options button {
+    width: 2rem;
+    height: 2rem;
+    list-style: none;
+  }
+
   .task .options img {
-    width: 17px;
+    width: 18px;
     cursor: pointer;
   }
 }

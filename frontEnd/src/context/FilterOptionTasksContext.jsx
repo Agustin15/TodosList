@@ -12,6 +12,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const refSelectState = useRef();
   const refCheckBoxThisWeek = useRef();
   const refInputNumberIndex = useRef();
+  const [openFilter, setOpenFilter] = useState(false);
   const [indexSelected, setIndexSelected] = useState(0);
   const [quantityTasks, setQuantityTask] = useState();
   const [loadingFilter, setLoadingFilter] = useState(false);
@@ -210,7 +211,9 @@ export const FilterOptionTasksProvider = ({ children }) => {
         getYearsOfTasks,
         loadingFilter,
         quantityTasks,
-        setQuantityTask
+        setQuantityTask,
+        openFilter,
+        setOpenFilter
       }}
     >
       {children}

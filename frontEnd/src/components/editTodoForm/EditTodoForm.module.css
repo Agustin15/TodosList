@@ -27,7 +27,7 @@
   justify-content: center;
   gap: 1rem;
   width: 99%;
-  margin-top:0.5rem;
+  margin-top: 0.5rem;
 }
 
 .containForm .title img {
@@ -61,7 +61,7 @@
 .containForm form {
   padding: 1rem;
   width: 37rem;
-  height:37rem;
+  height: 37rem;
   padding-bottom: 2rem;
   border-radius: 3px;
   display: flex;
@@ -71,9 +71,13 @@
   padding-top: 4rem;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
-  .containForm form {
-    width: 19rem;
+@media only screen and (max-width: 699px) {
+  .containForm {
+    width: 86%;
+  }
+
+  .containForm .header {
+    width: 108%;
   }
 
   .containForm .title {
@@ -81,49 +85,13 @@
   }
 
   .containForm .title img {
-    width: 36px;
+    width: 40px;
   }
-}
 
-@media (min-width: 667px) and (max-width:915px) {
-  .containForm {
-    margin-top: 10rem;
-  }
 
   .containForm form {
-    width: 23rem;
-  }
-
-  .containForm .title {
-    font-size: 14px;
-  }
-
-  .containForm .title img {
-    width: 36px;
-  }
-
-  .containForm .closeBtn {
+    padding: 1rem;
     width: 100%;
-    display: flex;
-    height: 1.7rem;
-    justify-content: flex-end;
-    align-items: center;
-    background: linear-gradient(rgb(1, 1, 201), rgb(0, 0, 158));
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-
-  .containForm .closeBtn button {
-    background: none;
-    border: none;
-    margin-right: 0.7rem;
-    background-color: rgb(231, 0, 0);
-    height: 1.3rem;
-    width: 1.3rem;
-    font-weight: bold;
-    box-shadow: 1px 1px 1px black;
-    cursor: pointer;
-    color: white;
-    border-radius: 2px;
+    padding-top: 3rem;
   }
 }

@@ -9,7 +9,7 @@ export const Dashboard = () => {
     <>
       <div className={stylesDashboard.containDashboard}>
         <UserDataProvider>
-          <Header></Header>
+          <Header></Header>   
         </UserDataProvider>
         <div className={stylesDashboard.rowDashboard}>
           <Statistics></Statistics>

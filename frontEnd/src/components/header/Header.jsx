@@ -1,9 +1,9 @@
 import classesStyle from "./Header.module.css";
 import logo from "../../assets/img/logo.png";
 import accountIcon from "../../assets/img/profile.png";
+import iconMenuTask from "../../assets/img/tasksIcon.png";
 import panelIcon from "../../assets/img/panel.png";
 import calendarMenu from "../../assets/img/calendarMenu.png";
-import allTasksIcon from "../../assets/img/allTasksIcon.png";
 import emailIcon from "../../assets/img/email.png";
 import logOutIcon from "../../assets/img/logOut.png";
 import { useEffect, useState } from "react";
@@ -11,15 +11,15 @@ import { useDataUser } from "../../context/userDataContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Header = () => {
-  const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
   const { user, getUserData, loadingUser, logoutSession } = useDataUser();
+  const [openDetailsProfile, setOpenDetailsProfile] = useState(false);
 
   useEffect(() => {
     getUserData();
   }, []);
 
   const handleOpenDetailsProfile = () => {
-    if (window.innerWidth <= 699) {
+    if (window.innerWidth >= 699) {
       location.href = urlFront + "profile";
     } else {
       if (openDetailsProfile) {
@@ -37,56 +37,90 @@ const Header = () => {
           <div className={classesStyle.initHeader}>
             <div className={classesStyle.logo}>
               <img src={logo}></img>
+
               <span>TodoList</span>
             </div>
+
             <ul>
-              <li>
-                <img src={panelIcon}></img>
-                <a href="/dashboard">Dashboard</a>
+              <li
+                className={
+                  location.href.indexOf("dashboard") > -1
+                    ? classesStyle.optionCurrent
+                    : ""
+                }
+              >
+                <a href="/dashboard">
+                  <img src={panelIcon}></img>
+                  <span>Dashboard</span>
+                </a>
               </li>
-              <li>
-                <img src={allTasksIcon}></img>
-                <a href="/tasks">Tasks</a>
+              <li
+                className={
+                  location.href.indexOf("tasks") > -1
+                    ? classesStyle.optionCurrent
+                    : ""
+                }
+              >
+                <a href="/tasks">
+                  <img src={iconMenuTask}></img>
+                  <span>Tasks</span>
+                </a>
               </li>
-              <li>
-                <img src={calendarMenu}></img>
-                <a href="/calendar">Calendar</a>
+              <li
+                className={
+                  location.href.indexOf("calendar") > -1
+                    ? classesStyle.optionCurrent
+                    : ""
+                }
+              >
+                <a href="/calendar">
+                  <img src={calendarMenu}></img>
+                  <span>Calendar</span>
+                </a>
               </li>
             </ul>
           </div>
-          <div className={classesStyle.containProfile}>
-            <img onClick={handleOpenDetailsProfile} src={accountIcon}></img>
-            {/* <span>{user.nameUser}</span> */}
-            <div
-              className={
-                openDetailsProfile
-                  ? classesStyle.containDetailsProfileShow
-                  : classesStyle.containDetailsProfileHidden
-              }
-            >
-              <div className={classesStyle.dataProfile}>
-                <div className={classesStyle.rowOne}>
-                  <img src={accountIcon}></img>
-                  <div className={classesStyle.columnOne}>
-                    <span>
-                      {loadingUser
-                        ? "loading..."
-                        : user.nameUser + " " + user.lastname}
-                    </span>
-                    <a href="/profile">View profile</a>
+          <div className={classesStyle.menuFoot}>
+            <div className={classesStyle.containProfile}>
+              <div className={classesStyle.iconProfile}>
+                <img onClick={handleOpenDetailsProfile} src={accountIcon}></img>
+              </div>
+              <span>{loadingUser ? "Loading..." : user.nameUser}</span>
+            </div>
+            <div className={classesStyle.detailsProfile}>
+              <div
+                className={
+                  openDetailsProfile
+                    ? classesStyle.containDetailsProfileShow
+                    : classesStyle.containDetailsProfileHidden
+                }
+              >
+                <div className={classesStyle.triangle}></div>
+                <div className={classesStyle.dataProfile}>
+                  <div className={classesStyle.rowOne}>
+                    <img src={accountIcon}></img>
+                    <div className={classesStyle.columnOne}>
+                      <span>
+                        {loadingUser
+                          ? "loading..."
+                          : user.nameUser + " " + user.lastname}
+                      </span>
+                      <a href="/profile">View profile</a>
+                    </div>
                   </div>
                 </div>
-
-                <div className={classesStyle.email}>
-                  <img src={emailIcon}></img>
-                  <span>{loadingUser ? "loading..." : user.email}</span>
+                <div
+                  onClick={logoutSession}
+                  className={classesStyle.logOutMobile}
+                >
+                  <img src={logOutIcon}></img>
+                  <span>Logout</span>
                 </div>
               </div>
-
-              <div onClick={logoutSession} className={classesStyle.logOut}>
-                <img src={logOutIcon}></img>
-                <span>Logout</span>
-              </div>
+            </div>
+            <div onClick={logoutSession} className={classesStyle.logOut}>
+              <img src={logOutIcon}></img>
+              <span>Logout</span>
             </div>
           </div>
         </nav>

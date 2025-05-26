@@ -36,7 +36,7 @@
 }
 
 .containFilterOption ul button:hover {
-       background: linear-gradient(rgb(21, 135, 180), rgb(16, 106, 141));
+    background: linear-gradient(rgb(21, 135, 180), rgb(16, 106, 141));
 }
 
 .containFilterOption li {
@@ -53,4 +53,93 @@
     border-radius: 3px;
     outline: none;
     border: 1px solid rgb(177, 177, 177);
+}
+.openFilter {
+    display: none;
+}
+
+@media only screen and (max-width: 699px) {
+    .containFilterOption {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 8rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        height: auto;
+        width: 107%;
+    }
+
+    .openFilter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 2.3rem;
+        border: 1px solid rgb(197, 195, 195);
+        border-radius: 4px;
+        box-shadow: 2px 2px 2px gray;
+        background: linear-gradient(rgb(233, 233, 233), rgb(197, 197, 197));
+    }
+
+    .openFilter:hover {
+        background: linear-gradient(rgb(206, 205, 205), rgb(197, 197, 197));
+    }
+
+    .openFilter img {
+        width: 17px;
+        opacity: 75%;
+    }
+
+    .containFilterOption ul {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 1rem;
+        position: absolute;
+        left: -99%;
+        background-color: white;
+        margin-top: 7rem;
+        border: 1px solid rgb(172, 172, 172);
+        border-radius: 3px;
+        box-shadow: 2px 2px 2px gray;
+        padding: 0.7rem 1rem 1rem 1rem;
+        width: 87%;
+        overflow: scroll;
+        height: 2rem;
+        margin-right: 0rem;
+    }
+
+    .containFilterOption ul img {
+        width: 21px;
+        height: 21px;
+        opacity: 47%;
+    }
+
+    .containFilterOption ul button {
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+        height: 1.6rem;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .containFilterOption li {
+        font-size: 13px;
+    }
+
+    .showFilter {
+        animation-name: showFilter;
+        animation-fill-mode: forwards;
+        animation-duration: 1s;
+    }
+
+    @keyframes showFilter {
+        from {
+            left: -99%;
+        }
+        to {
+            left: 0.4rem;
+        }
+    }
 }

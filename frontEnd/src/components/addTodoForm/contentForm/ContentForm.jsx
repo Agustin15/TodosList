@@ -29,7 +29,7 @@ const ContentForm = ({ handleChange }) => {
           <input
             value={values.icon}
             onChange={handleChange}
-            placeholder="Enter task icon"
+            placeholder="Enter icon"
             type="text"
             name="icon"
           ></input>

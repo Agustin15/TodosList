@@ -180,78 +180,41 @@
   background-color: rgb(15, 99, 124);
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
-  .bodyForm input {
-    width: 8rem;
-    height: 2.5rem;
-    border-radius: 4px;
-    border: 1px solid gray;
-    outline: none;
-    padding-left: 1rem;
-    font-size: 14px;
+@media only screen and (max-width: 699px) {
+  .bodyForm {
+    gap: 1.5rem;
+    width: 105%;
   }
 
-  .bodyForm textarea {
-    width: 18.2rem;
-    height: 5rem;
-    outline: none;
-    font-size: 14px;
-    padding-left: 1rem;
-    padding-top: 0.3rem;
-  }
-
-  .buttons {
-    margin-top: 0.2rem;
-  }
-
-  .buttons button {
-    width: 8rem;
-    font-size: 14px;
-  }
-
-  .buttons button:hover {
-    background-color: rgb(4, 12, 121);
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .bodyForm input {
-    width: 8rem;
-    height: 2rem;
-    border-radius: 4px;
-    border: 1px solid gray;
-    outline: none;
-    padding-left: 1rem;
-    font-size: 14px;
-  }
-
-  .bodyForm textarea {
-    width: 18.2rem;
-    height: 3rem;
-    outline: none;
-    font-size: 14px;
-    padding-left: 1rem;
-    padding-top: 0.3rem;
-  }
-
-  .buttons {
-    margin-top: 0.2rem;
-  }
-
-  .buttons button {
-    width: 8rem;
-    font-size: 14px;
-  }
-
-  .buttons button:hover {
-    background-color: rgb(4, 12, 121);
-  }
-  .name,
-  .description,
-  .icon {
+  .bodyForm .rowForm {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .bodyForm input {
+    width: 10rem;
+    height: 2.2rem;
+    font-size: 15px;
+  }
+
+  .bodyForm .icon input {
+    width: 5rem;
+  }
+
+  .containFile {
+    width: 88%;
+    margin-top: 1rem;
+  }
+
+  .bodyForm textarea {
+    width: 18rem;
+    height: 5rem;
+  }
+
+  .buttons button {
+    width: 8rem;
+    font-size: 15px;
   }
 }

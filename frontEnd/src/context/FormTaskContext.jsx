@@ -38,7 +38,7 @@ export const FormTaskProvider = ({ children }) => {
         validInput = value.length > 0 && value.length <= 130;
         break;
       case "icon":
-        msj = "Complete icon field";
+        msj = "Invalid icon";
         validInput = !value.match(validIcon) && value.length !== 0;
         break;
       case "filesUploaded":

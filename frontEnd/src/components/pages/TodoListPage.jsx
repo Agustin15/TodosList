@@ -1,13 +1,14 @@
 import TodoList from "../todoList/TodoList";
+import Header from "../header/Header";
+import styles from "../../components/todoList/TodoList.module.css";
 import { TaskProvider } from "../../context/TaskContext";
 import { FormTaskProvider } from "../../context/FormTaskContext";
 import { UserDataProvider } from "../../context/userDataContext";
 import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
-import Header from "../header/Header";
 
 const TodoListPage = () => {
   return (
-    <>
+    <div className={styles.rowTodoList}>
       <TaskProvider>
         <UserDataProvider>
           <Header></Header>
@@ -18,7 +19,7 @@ const TodoListPage = () => {
           </FilterOptionTasksProvider>
         </FormTaskProvider>
       </TaskProvider>
-    </>
+    </div>
   );
 };
 

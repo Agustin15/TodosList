@@ -122,6 +122,7 @@ export const CalendarEventsProvider = ({ children }) => {
         eventsCalendar,
         setEventAdded,
         eventAdded,
+        formatDate,
         setDateSelected,
         dateSelected,
         getTasksForCalendar,
