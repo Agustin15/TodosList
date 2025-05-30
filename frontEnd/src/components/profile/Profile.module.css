@@ -129,131 +129,47 @@
   opacity: 75%;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
-  * {
-    padding: 0;
-    margin: 0;
+@media only screen and (max-width: 699px) {
+  .header h3 {
+    width: 99%;
+    font-size: 19px;
+    position: absolute;
   }
 
-  .header nav {
-    margin-left: 0.5rem;
+  .header li {
+    gap: 0.4rem;
+    font-size: 12px;
   }
 
-  .header nav {
-    color: white;
-    font-weight: bold;
-  }
-  .header nav img {
-    width: 20px;
-  }
-
-  .initHeader {
-    font-size: 17px;
-    gap: 0.5rem;
-  }
-
-  .header .back img {
-    width: 20px;
-  }
-
-  .header .title {
-    margin-right: 1.5rem;
-    font-size: 11px;
-  }
-
-  .header .title img {
-    width: 28px;
+  .header li img {
+    width: 27px;
+    height: 27px;
   }
 
   .contentBody {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    height: 76vh;
-    background-color: white;
-    box-shadow: 2px 2px 2px gray;
+    height: 91vh;
+    width: 83%;
+    border: 1px solid rgb(202, 202, 202);
+    margin-top: 2rem;
   }
 
   .contentLoading {
-    gap: 0.5rem;
-    font-size: 20px;
-    opacity: 70%;
-    height: 95%;
+    font-size: 21px;
+    height: 75vh;
+    color: gray;
+  }
+  .contentLoading img {
+    width: 31px;
+    height: 31px;
+    opacity: 90%;
   }
 
   .noData {
-    gap: 0.5rem;
-    height: 90%;
-    font-size: 17px;
-    opacity: 70%;
+    height: 75vh;
+    font-size: 19px;
   }
   .noData img {
-    width: 60px;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  * {
-    padding: 0;
-    margin: 0;
-  }
-
-  .header nav {
-    margin-left: 0.5rem;
-  }
-
-  .header nav {
-    color: white;
-    font-weight: bold;
-  }
-  .header nav img {
-    width: 20px;
-  }
-
-  .initHeader {
-    font-size: 18px;
-    gap: 0.5rem;
-  }
-
-  .header .back img {
-    width: 23px;
-  }
-
-  .header .title {
-    margin-right: 1.5rem;
-    font-size: 13px;
-  }
-
-  .header .title img {
-    width: 30px;
-  }
-
-  .contentBody {
-    margin-top: 0rem;
-    width: 19rem;
-    height: 29rem;
-    background-color: white;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    padding-top: 1rem;
-  }
-
-  .contentLoading {
-    gap: 0.5rem;
-    font-size: 20px;
-    opacity: 70%;
-    height: 50%;
-  }
-
-  .noData {
-    gap: 0.5rem;
-    height: 90%;
-    font-size: 17px;
-    opacity: 70%;
-  }
-  .noData img {
-    width: 60px;
+    width: 170px;
+    opacity: 75%;
   }
 }

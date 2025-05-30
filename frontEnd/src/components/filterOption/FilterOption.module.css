@@ -1,8 +1,9 @@
 .containFilterOption {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     gap: 1.2rem;
+    position: relative;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
     height: auto;
@@ -10,22 +11,97 @@
     width: 100%;
 }
 
-.containFilterOption ul {
+.categorys {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin-right: 1rem;
 }
 
-.containFilterOption ul img {
-    width: 23px;
-    height: 23px;
-    opacity: 47%;
-}
-
-.containFilterOption ul button {
+.categorys li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 6rem;
+    height: 1.7rem;
+    font-size: 14px;
+    color: rgb(44, 44, 44);
+    border-radius: 99px;
+    background-color: rgb(209, 209, 209);
+}
+
+.panelFilterHide {
+    display: none;
+}
+.panelFilterShow {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: absolute;
+    z-index: 3;
+    border-radius: 7px;
+    border: 1px solid rgb(197, 197, 197);
+    margin-top: 19rem;
+    margin-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 17rem;
+    gap: 0.5rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 2px 2px 2px gray;
+}
+
+.panelFilterShow .close {
+    width: 98%;
+    margin-top: -0.6rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.panelFilterShow .close img {
+    width: 12px;
+    opacity: 75%;
+    cursor: pointer;
+}
+.titleFilter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    margin-left: 1rem;
+    color: rgb(54, 54, 54);
+}
+
+.titleFilter img {
+    width: 25px;
+    height: 25px;
+}
+.panelFilterShow select {
+    width: 7rem;
+    height: 1.6rem;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid rgb(177, 177, 177);
+}
+.panelFilterShow .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.panelFilterShow ul img {
+    width: 21px;
+    height: 21px;
+}
+
+.panelFilterShow ul button {
+    width: 6rem;
+    box-shadow: 2px 2px 2px gray;
     height: 1.6rem;
     border-radius: 11px;
     background: linear-gradient(rgb(24, 151, 201), rgb(16, 106, 141));
@@ -35,11 +111,11 @@
     cursor: pointer;
 }
 
-.containFilterOption ul button:hover {
+.panelFilterShow ul button:hover {
     background: linear-gradient(rgb(21, 135, 180), rgb(16, 106, 141));
 }
 
-.containFilterOption li {
+.panelFilterShow li {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,99 +123,121 @@
     font-size: 15px;
 }
 
-.containFilterOption select {
+.panelFilterShow .addTask {
+    width: 94%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.panelFilterShow .addTask button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
     width: 7rem;
-    height: 1.6rem;
-    border-radius: 3px;
-    outline: none;
-    border: 1px solid rgb(177, 177, 177);
+    height: 1.7rem;
+    background: linear-gradient(rgb(24, 151, 201), rgb(16, 106, 141));
+    font-size: 12px;
+    font-weight: bold;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    color: white;
+    border-radius: 99px;
+    box-shadow: 2px 2px 2px gray;
+    cursor: pointer;
+}
+
+.panelFilterShow .addTask button::before {
+    content: "Add task";
+}
+.panelFilterShow .addTask button:hover {
+    background: linear-gradient(rgb(29, 119, 155), rgb(16, 106, 141));
+}
+
+.panelFilterShow .addTask button img {
+    width: 12px;
+    height: 12px;
 }
 .openFilter {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    gap: 1rem;
+    height: 2.1rem;
+    gap: 0.4rem;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    margin-left: 1rem;
+    border-radius: 4px;
+    border: none;
+    background: linear-gradient(rgb(24, 151, 201), rgb(16, 106, 141));
+    border-radius: 99px;
+}
+
+.openFilter::before {
+    content: "Options";
+}
+.openFilter:hover {
+    background: linear-gradient(rgb(22, 121, 160), rgb(16, 106, 141));
+    cursor: pointer;
+}
+
+.openFilter img {
+    width: 24px;
 }
 
 @media only screen and (max-width: 699px) {
     .containFilterOption {
-        display: flex;
-        align-items: center;
+        width: 111%;
+        padding-left: 0;
+        gap: 1rem;
         justify-content: start;
-        gap: 8rem;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        height: auto;
-        width: 107%;
+        align-items: center;
     }
 
     .openFilter {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 3rem;
-        height: 2.3rem;
-        border: 1px solid rgb(197, 195, 195);
-        border-radius: 4px;
-        box-shadow: 2px 2px 2px gray;
-        background: linear-gradient(rgb(233, 233, 233), rgb(197, 197, 197));
+        margin-left: 1rem;
+        border-radius: 3px;
     }
-
-    .openFilter:hover {
-        background: linear-gradient(rgb(206, 205, 205), rgb(197, 197, 197));
+    .openFilter::before {
+        content: none;
     }
-
-    .openFilter img {
-        width: 17px;
-        opacity: 75%;
-    }
-
-    .containFilterOption ul {
+    .categorys {
         display: flex;
         align-items: center;
         justify-content: start;
         gap: 1rem;
-        position: absolute;
-        left: -99%;
-        background-color: white;
-        margin-top: 7rem;
-        border: 1px solid rgb(172, 172, 172);
-        border-radius: 3px;
-        box-shadow: 2px 2px 2px gray;
-        padding: 0.7rem 1rem 1rem 1rem;
-        width: 87%;
-        overflow: scroll;
-        height: 2rem;
-        margin-right: 0rem;
+        overflow-x: scroll;
     }
 
-    .containFilterOption ul img {
+    .categorys li {
+        width: auto;
+        padding-right: 0.3rem;
+        padding-left: 0.3rem;
+    }
+    .panelFilterShow {
+        margin-top: 20rem;
+        margin-left: 0.5rem;
+        z-index: 5;
+    }
+
+    .panelFilterShow .filter {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        margin-left: 1rem;
+    }
+
+    .panelFilterShow ul img {
         width: 21px;
         height: 21px;
-        opacity: 47%;
-    }
-
-    .containFilterOption ul button {
-        padding-left: 0.8rem;
-        padding-right: 0.8rem;
-        height: 1.6rem;
-        font-size: 12px;
-        font-weight: bold;
-    }
-
-    .containFilterOption li {
-        font-size: 13px;
-    }
-
-    .showFilter {
-        animation-name: showFilter;
-        animation-fill-mode: forwards;
-        animation-duration: 1s;
-    }
-
-    @keyframes showFilter {
-        from {
-            left: -99%;
-        }
-        to {
-            left: 0.4rem;
-        }
     }
 }

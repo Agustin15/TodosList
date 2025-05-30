@@ -5,10 +5,12 @@ import CanvasJSReact from "@canvasjs/react-charts";
 import { useTasks } from "../../../../context/TaskContext";
 import styles from "../Statistics.module.css";
 import { useState, useEffect } from "react";
+import { useWindowSize } from "../../../../context/WindowSizeContext";
 
 export const BarChart = () => {
   const { loadingState, tasksIncompleteByWeekday, tasksCompleteByWeekday } =
     useTasks();
+  const { windowWidth } = useWindowSize();
   const [datapointsCompleteByWeekday, setDatapointsCompleteByWeekday] =
     useState([]);
   const [datapointsIncompleteByWeekday, setDatapointsIncompleteByWeekday] =
@@ -48,7 +50,7 @@ export const BarChart = () => {
   const optionsBar = {
     animationEnabled: true,
     exportEnabled: true,
-    dataPointWidth: window.innerWidth <= 1024 ? 14 : 31,
+    dataPointWidth: windowWidth <= 1024 ? 14 : 31,
 
     axisY: {
       title: "Tasks",
@@ -60,9 +62,9 @@ export const BarChart = () => {
       horizontalAlign: "right",
       reversed: true,
       cursor: "pointer",
-      fontSize: window.innerWidth <= 1024 ? 10 : 12,
-      horizontalAlign: window.innerWidth <= 1024 ? "left" : "right",
-      verticalAlign: window.innerWidth <= 1024 ? "bottom" : "center"
+      fontSize: windowWidth <= 1024 ? 10 : 12,
+      horizontalAlign: windowWidth <= 1024 ? "left" : "right",
+      verticalAlign: windowWidth <= 1024 ? "bottom" : "center"
     },
     data: [
       {

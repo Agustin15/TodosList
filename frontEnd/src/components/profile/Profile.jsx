@@ -7,7 +7,7 @@ import EditPassword from "./editPassword/EditPassword";
 import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import { useEffect, useState } from "react";
-import { useDataUser } from "../../context/userDataContext";
+import { useDataUser } from "../../context/UserDataContext";
 
 const Profile = () => {
   const [modalEditEmail, setModalEditEmail] = useState(false);
@@ -19,7 +19,7 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    setValues({ nameUser: user.nameUser, lastname: user.lastname });
+    setValues({ name: user.name, lastname: user.lastname });
   }, [user]);
 
   return (
@@ -63,7 +63,10 @@ const Profile = () => {
 
       {modalEditEmail && (
         <Modal>
-          <FormEditEmail email={user.email} setModalEditEmail={setModalEditEmail}></FormEditEmail>
+          <FormEditEmail
+            email={user.email}
+            setModalEditEmail={setModalEditEmail}
+          ></FormEditEmail>
         </Modal>
       )}
       {modalEditPassword && (

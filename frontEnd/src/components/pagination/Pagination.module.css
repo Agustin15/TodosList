@@ -14,7 +14,8 @@
     border-radius: 5px;
 }
 
-.containPaginationShow li,.index input {
+.containPaginationShow li,
+.index input {
     list-style: none;
     padding: 0.3rem;
     width: 2rem;
@@ -30,7 +31,7 @@
     gap: 0.5rem;
 }
 
-.index input{
+.index input {
     outline: none;
     text-align: center;
 }
@@ -58,13 +59,19 @@
     opacity: 41%;
 }
 
+.btnNextDisabled img,
+.btnNextEnabled img{
+    transform: rotate(180deg);
+}
+
 .btnNextDisabled,
 .btnNextEnabled {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.btnPrevDisabled,.btnPrevEnabled {
+.btnPrevDisabled,
+.btnPrevEnabled {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }

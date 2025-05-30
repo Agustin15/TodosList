@@ -1,0 +1,76 @@
+.title {
+    display: none;
+}
+@media only screen and (max-width: 699px) {
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 3;
+        margin: auto;
+        gap: 0.7rem;
+        width: 102vw;
+        color: white;
+        box-shadow: 1px 1px 1px gray;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgb(185, 185, 185);
+        font-size: 17px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-image: radial-gradient(
+                circle at 40% 91%,
+                rgba(50, 34, 141, 0.04) 0%,
+                rgba(50, 34, 141, 0.04) 50%,
+                rgba(68, 21, 203, 0.04) 50%,
+                rgba(68, 21, 203, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 66% 97%,
+                rgba(36, 36, 36, 0.04) 0%,
+                rgba(36, 36, 36, 0.04) 50%,
+                rgba(46, 46, 46, 0.04) 50%,
+                rgba(46, 46, 46, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 86% 7%,
+                rgba(40, 40, 40, 0.04) 0%,
+                rgba(40, 40, 40, 0.04) 50%,
+                rgba(200, 200, 200, 0.04) 50%,
+                rgba(200, 200, 200, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 15% 16%,
+                rgba(99, 99, 99, 0.04) 0%,
+                rgba(99, 99, 99, 0.04) 50%,
+                rgba(45, 45, 45, 0.04) 50%,
+                rgba(45, 45, 45, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 75% 99%,
+                rgba(243, 243, 243, 0.04) 0%,
+                rgba(243, 243, 243, 0.04) 50%,
+                rgba(37, 37, 37, 0.04) 50%,
+                rgba(37, 37, 37, 0.04) 100%
+            ),
+            linear-gradient(188deg, rgb(34, 105, 237), rgb(31, 14, 69));
+    }
+    .title img {
+        width: 34px;
+        height: 34px;
+    }
+
+    .openMenu {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        width: 94%;
+        padding-left: 1rem;
+        position: absolute;
+    }
+
+    .openMenu img {
+        width: 25px;
+        height: 25px;
+    }
+}

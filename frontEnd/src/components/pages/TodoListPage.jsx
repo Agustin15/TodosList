@@ -5,20 +5,23 @@ import { TaskProvider } from "../../context/TaskContext";
 import { FormTaskProvider } from "../../context/FormTaskContext";
 import { UserDataProvider } from "../../context/userDataContext";
 import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
+import { MenuProvider } from "../../context/MenuContext";
 
 const TodoListPage = () => {
   return (
     <div className={styles.rowTodoList}>
-      <TaskProvider>
-        <UserDataProvider>
-          <Header></Header>
-        </UserDataProvider>
-        <FormTaskProvider>
-          <FilterOptionTasksProvider>
-            <TodoList></TodoList>
-          </FilterOptionTasksProvider>
-        </FormTaskProvider>
-      </TaskProvider>
+      <MenuProvider>
+        <TaskProvider>
+          <UserDataProvider>
+            <Header></Header>
+          </UserDataProvider>
+          <FormTaskProvider>
+            <FilterOptionTasksProvider>
+              <TodoList></TodoList>
+            </FilterOptionTasksProvider>
+          </FormTaskProvider>
+        </TaskProvider>
+      </MenuProvider>
     </div>
   );
 };

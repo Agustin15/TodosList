@@ -49,43 +49,19 @@
   font-weight: bold;
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
-  .alertFormCorrect {
-    width: 17rem;
-    color: white;
-    font-size: 15px;
-  }
-
-  .alertFormCorrect img {
-    width: 25px;
-  }
-
+@media only screen and (max-width: 699px) {
+  .alertFormCorrect,
   .alertFormError {
-    width: 18rem;
-    font-size: 15px;
-  }
-}
-
-@media (min-width: 667px) and (max-width: 915px) {
-  .alertFormCorrect {
     width: 15rem;
     color: white;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .alertFormCorrect img {
-    width: 15px;
+    width: 20px;
   }
 
-  .alertFormError {
-    width: 16rem;
-    font-size: 12px;
-    margin-top:-1rem;
-    height: 1.5rem;
-  }
-  
   .alertFormError img {
-    width: 22px;
-    font-size: 14px;
+    width: 25px;
   }
 }

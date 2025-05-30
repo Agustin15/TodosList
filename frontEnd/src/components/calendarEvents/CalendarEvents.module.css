@@ -3,14 +3,21 @@
     justify-content: start;
     align-items: start;
     margin-top: 0;
+    width: 100%;
     height: 99vh;
 }
-
-.containCalendar {
-    width: 84%;
-    height: 91vh;
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-left: 10%;
-    margin-top: 1rem;
+    width: 91%;
+    height: 100vh;
+}
+.containCalendar {
+    width: 94%;
+    height: 91vh;
     padding: 1rem;
     border-radius: 3px;
     background-color: white;
@@ -76,4 +83,58 @@
 
 .containCalendar .found div {
     background: rgb(243, 255, 132);
+}
+
+@media only screen and (max-width: 699px) {
+    .rowCalendar {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: start;
+        width: 100%;
+        height: 96vh;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        margin-left: 0;
+        justify-content:start;
+        padding-bottom: 2rem;
+    }
+    .containCalendar {
+        width: 83vw;
+        height: auto;
+        gap: 1rem;
+        margin-left: 0;
+        margin-top: 6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .containCalendar .titleCalendar h3 {
+        font-size: 16px;
+    }
+
+    .containCalendar .titleCalendar {
+        display: flex;
+        width: 99%;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .containCalendar .titleCalendar img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .containCalendar ul {
+        font-size: 14px;
+        margin-left: 0;
+    }
 }

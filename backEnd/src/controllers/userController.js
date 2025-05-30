@@ -69,7 +69,11 @@ export const getUserDataByToken = async (req, res) => {
     }
 
     let userFound = await findUserByIdUser(validAuth.idUser);
-    res.status(200).json(userFound[0]);
+    userFound = userFound[0];
+    userFound.name = userFound.nameUser;
+    delete userFound.nameUser;
+
+    res.status(200).json(userFound);
   } catch (error) {
     res.status(errorCodeResponse).json({ messageError: error.message });
   }
@@ -179,7 +183,11 @@ export const updateUserById = async (req, res) => {
     }
 
     userFound = await findUserByIdUser(idUser);
-    res.status(200).json(userFound[0]);
+    userFound = userFound[0];
+    userFound.name = userFound.nameUser;
+    delete userFound.nameUser;
+
+    res.status(200).json(userFound);
   } catch (error) {
     res.status(502).json({ messageError: error.message });
   }

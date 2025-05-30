@@ -50,16 +50,31 @@ export const FormUserProvider = ({ children }) => {
     return newValue.join("");
   };
 
+  const verifyValidString = (value) => {
+    let valid = true;
+    for (let f = 0; f < value.length; f++) {
+      if (!value[f].match(/[a-z]/i) || [f] == "") {
+        return false;
+      }
+    }
+
+    return valid;
+  };
+
   const validationMsj = (key, value, option) => {
     let regexMail = /\S+@\S+\.\S+/;
     let validPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
 
     const validationsMsjs = [
-      { key: "name", msj: "Enter a valid name", validation: value.length > 0 },
+      {
+        key: "name",
+        msj: "Enter a valid name",
+        validation: value.length > 0 && verifyValidString(value)
+      },
       {
         key: "lastname",
         msj: "Enter a valid  lastname",
-        validation: value.length > 0
+        validation: value.length > 0 && verifyValidString(value)
       },
       {
         key: "email",

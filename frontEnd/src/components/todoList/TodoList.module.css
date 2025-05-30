@@ -10,7 +10,7 @@
   justify-content: center;
   margin-top: 1rem;
   padding-bottom: 2rem;
-  margin-left: 6%;
+  margin-left: 10%;
   width: 96%;
 }
 
@@ -27,7 +27,7 @@
   box-shadow: 2px 2px 2px grey;
   border: 1px solid rgb(212, 212, 212);
   padding-bottom: 1rem;
-  border-radius: 5px;
+  border-radius: 9px;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -50,56 +50,16 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  position: relative;
 }
 .header .title {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  width: 99%;
 }
 
 .header .title img {
-  width: 45px;
-}
-
-.header .addTask {
-  width: 94%;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  position: absolute;
-}
-
-.header button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  width: 7rem;
-  height: 1.7rem;
-  background-color: rgb(6, 187, 6);
-  font-size: 13px;
-  font-weight: bold;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  color: white;
-  border-radius: 99px;
-  box-shadow: 2px 2px 2px gray;
-  cursor: pointer;
-}
-
-.containTasks .header button::before {
-  content: "Add task";
-}
-.header button:hover {
-  background-color: rgb(16, 168, 16);
-}
-
-.header button img {
-  width: 12px;
-  height: 12px;
+  width: 35px;
 }
 
 .tasks {
@@ -112,8 +72,7 @@
   overflow-y: scroll;
   border-bottom: 2px solid rgb(190, 190, 190);
   overflow-x: hidden;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0.5rem 1rem 0 1rem;
 }
 
 .loadingHide {
@@ -176,78 +135,44 @@
 }
 
 @media only screen and (max-width: 699px) {
+  .header .title {
+    display: none;
+  }
   .rowTodoList {
     display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
     height: auto;
     margin-top: 0;
   }
 
   .contentBody {
-    margin-top: 7rem;
+    flex-direction: column;
+    justify-content: start;
+    margin-top: 0;
     margin-left: 0;
     width: 96%;
   }
 
   .containTasks {
     width: 95%;
-    height: 99vh;
-    background-color: white;
+    height: 82vh;
+    margin-top: 5rem;
     border: none;
+    justify-content: start;
+    background-color: white;
     box-shadow: none;
   }
 
   .containTasks .header {
-    gap: 1rem;
-    background: none;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    font-size: 16px;
-    width: 110%;
-  }
-
-  .containTasks .header .rowHeader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: relative;
-  }
-
-  .containTasks .header .title img {
-    width: 32px;
-  }
-
-  .containTasks .header .addTask {
-    width: 94%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    position: absolute;
-  }
-
-  .containTasks .header button {
-    width: 4rem;
-    height: 1.7rem;
-    background-color: rgb(6, 187, 6);
-    font-size: 13px;
-    margin-top: -0.1rem;
-  }
-
-  .containTasks .header button::before {
-    content: "Add";
-  }
-
-  .containTasks .header button img {
-    width: 12px;
-    height: 12px;
+    display: none;
   }
 
   .tasks {
-    height: 100%;
+    height: 93%;
     width: 91%;
+    padding-top: 0.5rem;
   }
 
   .loadingHide {

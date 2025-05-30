@@ -100,10 +100,7 @@ export const CalendarEventsProvider = ({ children }) => {
 
   const dayView = (info, idTask) => {
     let dateTodayString = formatDateViewCell(Date());
-    if (info.el.dataset.date < dateTodayString) {
-      info.el.classList.add(styles.dayDisabled);
-    }
-
+    
     if (eventsCalendar.length > 0 && idTask) {
       let eventCalendar = eventsCalendar.find(
         (event) => event.extendedProps.idTask == idTask

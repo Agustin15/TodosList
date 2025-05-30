@@ -1,44 +1,20 @@
 import styles from "./FilterOption.module.css";
-import iconFilter from "../../assets/img/filtrer.png";
+import iconFilter from "../../assets/img/filterOne.png";
+import iconFilterTwo from "../../assets/img/filterTwo.png";
+import iconFilterClose from "../../assets/img/closeFilter.png";
+import iconAddTask from "../../assets/img/iconAddTask.png";
 import SearchTask from "../searchTask/SearchTask";
-import { useTasks } from "../../context/TaskContext";
-import { useEffect, useRef } from "react";
+import { Filter } from "./Filter";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
-export const FilterOption = ({ setTaskNotFound }) => {
+export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
+  const { getYearsOfTasks, refCheckBoxThisWeek, openFilter, setOpenFilter } =
+    useFilterOptionTasks();
+
   const [years, setYears] = useState([]);
-  const { dispatch } = useTasks();
-
-  const {
-    refSelectMonth,
-    refSelectState,
-    refSelectYear,
-    refCheckBoxThisWeek,
-    setIndexSelected,
-    getYearsOfTasks,
-    getTasksFilter,
-    getQuantityTasksFilter,
-    getTasksThisWeekUser,
-    getTasksThisWeekUserLimit,
-    openFilter,
-    setOpenFilter
-  } = useFilterOptionTasks();
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
+  const [refs, setRefs] = useState([refCheckBoxThisWeek]);
 
   useEffect(() => {
     setSelectYears();
@@ -55,66 +31,47 @@ export const FilterOption = ({ setTaskNotFound }) => {
     openFilter ? setOpenFilter(false) : setOpenFilter(true);
   };
 
-  const handleSearch = async () => {
-    if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekUser();
-      getTasksThisWeekUserLimit(0, dispatch);
-    } else {
-      getTasksFilter("getTasksLimitByFilterOption", 0, dispatch);
-      getQuantityTasksFilter("getQuantityTasksByFilterOption");
-    }
-    setIndexSelected(0);
-  };
-
   return (
     <div className={styles.containFilterOption}>
       <button onClick={handleFilter} className={styles.openFilter}>
         <img src={iconFilter}></img>
       </button>
-      <SearchTask setTaskNotFound={setTaskNotFound}></SearchTask>
-      <ul className={openFilter ? styles.showFilter : ""}>
-        <img src={iconFilter}></img>
-        <li>
-          <span>This Week</span>
-          <input
-            ref={refCheckBoxThisWeek}
-            type="checkbox"
-            value={"thisWeek"}
-            defaultChecked
-          ></input>
-        </li>
 
-        <li>
-          <span>Year</span>
-          <select ref={refSelectYear} defaultValue={new Date().getFullYear()}>
-            {years.map((year, index) => (
-              <option key={index} value={Object.values(year)}>
-                {Object.values(year)}
-              </option>
-            ))}
-          </select>
-        </li>
-
-        <li>
-          <span>Month</span>
-          <select ref={refSelectMonth} defaultValue={new Date().getMonth() + 1}>
-            {months.map((month, index) => (
-              <option key={index} value={index + 1}>
-                {month}
-              </option>
-            ))}
-          </select>
-        </li>
-
-        <li>
-          <span>State</span>
-          <select ref={refSelectState} defaultValue={0}>
-            <option value={1}>Completed</option>
-            <option value={0}>Pending</option>
-          </select>
-        </li>
-        <button onClick={handleSearch}>Buscar</button>
+      <ul className={styles.categorys}>
+        <span>Category:</span>
+        {refs.map(
+          (ref, index) =>
+            ref.current && (
+              <li key={index}>
+                {ref.current.value == "thisWeek"
+                  ? "this week"
+                  : ref.current.selectedOptions[0].innerText}
+              </li>
+            )
+        )}
       </ul>
+
+      <div
+        className={openFilter ? styles.panelFilterShow : styles.panelFilterHide}
+      >
+        <div className={styles.close}>
+          <img onClick={() => setOpenFilter(false)} src={iconFilterClose}></img>
+        </div>
+
+        <div className={styles.titleFilter}>
+          <h3>Options</h3>
+          <img src={iconFilterTwo}></img>
+        </div>
+
+        <div className={styles.addTask}>
+          <button onClick={() => setOpenModalAdd(true)}>
+            <img src={iconAddTask}></img>
+          </button>
+        </div>
+
+        <SearchTask setTaskNotFound={setTaskNotFound}></SearchTask>
+        <Filter setRefs={setRefs} years={years}></Filter>
+      </div>
     </div>
   );
 };

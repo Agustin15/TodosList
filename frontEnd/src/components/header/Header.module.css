@@ -4,7 +4,7 @@
 }
 .header {
   height: 100%;
-  width: 6%;
+  width: 10%;
   background-image: radial-gradient(
       circle at 40% 91%,
       rgba(50, 34, 141, 0.04) 0%,
@@ -47,7 +47,6 @@
   position: fixed;
   z-index: 5;
   font-family: Arial, Helvetica, sans-serif;
-  box-shadow: 2px 2px 2px rgb(73, 73, 73);
 }
 
 .header nav {
@@ -63,12 +62,18 @@
 
 .header .logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 15px;
   justify-content: center;
   color: white;
   font-weight: bold;
+}
+
+.header .logo img {
+  width: 40px;
 }
 
 .header nav img {
@@ -88,7 +93,7 @@
   width: 100%;
   justify-content: start;
   flex-direction: column;
-  gap: 0;
+  gap: 1rem;
   margin-top: 1rem;
   font-weight: 100;
 }
@@ -96,38 +101,39 @@
 .header li {
   cursor: pointer;
   list-style: none;
-  height: 4rem;
-  width: 100%;
+  height: 3rem;
+  width: 99%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   gap: 0.5rem;
-  border-bottom: 1px solid rgb(13, 13, 150);
-  font-size: 15px;
+  font-size: 14px;
 }
 .header li img {
-  width: 26px;
+  width: 25px;
 }
 .optionCurrent {
-  background-color: rgb(15, 65, 131);
+  background-color: rgb(21, 72, 138);
+  border-bottom: 2px solid white;
   width: 6.7rem;
 }
 .header li:hover {
+  background-color: rgb(29, 88, 165);
   border-bottom: 2px solid white;
 }
 .header li a {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 0.4rem;
+  margin-left: 0.7rem;
   text-decoration: none;
   color: #ffffff;
   font-weight: 100;
 }
 .header li span {
   display: flex;
-  font-size: 13px;
 }
 
 .header li button {
@@ -164,36 +170,32 @@
   align-items: center;
 }
 
-.triangle {
-  display: none;
-}
 .header .containProfile,
 .logOut {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: start;
   align-items: center;
-  background-color: rgb(39, 39, 39);
-  width: 100%;
+  width: 91%;
+  padding-left: 0.6rem;
   height: 4.4rem;
-  gap: 0.1rem;
+  gap: 0.6rem;
   cursor: pointer;
 }
 
 .containProfile span {
   color: white;
-  font-size: 14px;
+  font-size: 15px;
 }
-.containProfile:hover {
-  background-color: rgb(29, 29, 29);
-}
+
 .header .containProfile img {
   width: 35px;
 }
 
 .logOut {
-  flex-direction: column;
+  flex-direction: row;
   border-top: 1px solid white;
+  background-color: rgb(39, 39, 39);
   font-size: 13px;
   height: 3rem;
   gap: 0.3rem;
@@ -204,291 +206,89 @@
   background-color: rgb(29, 29, 29);
 }
 .logOut span {
+  display: flex;
   color: white;
 }
 .header .menuFoot .logOut img {
-  width: 21px;
-  height: 21px;
+  width: 28px;
+  height: 28px;
+}
+
+.closeMenu {
+  display: none;
 }
 
 @media only screen and (max-width: 699px) {
   .header {
-    position: relative;
-    width: 100%;
-    height: 6rem;
+    height: 100%;
+    width: 38%;
+    left: -100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
     position: fixed;
     z-index: 5;
     font-family: Arial, Helvetica, sans-serif;
-    box-shadow: 2px 2px 2px rgb(73, 73, 73);
   }
 
-  .header nav {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content: space-between;
-    width: 99%;
-    gap: 1rem;
+  .headerShow {
+    animation-name: showMenu;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
   }
 
-  .header .logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0.3rem;
-    font-size: 15px;
+  @keyframes showMenu {
+    from {
+      left: -100%;
+    }
+    to {
+      left: 0%;
+    }
   }
 
-  .header .logo img {
-    display: flex;
-    width: 31px;
+  .headerHide {
+    animation-name: hideMenu;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
   }
 
-  .initHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 0.4rem;
+  @keyframes hideMenu {
+    from {
+      left: 0%;
+    }
+    to {
+      left: -100%;
+    }
   }
 
-  .header ul {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-top: 0;
-    font-weight: 100;
-  }
-
-  .header li {
-    cursor: pointer;
-    list-style: none;
-    height: auto;
-    padding-bottom: 0.3rem;
-    width: 5.5rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    border-bottom: none;
-    align-items: center;
-    gap: 0.2rem;
-    font-size: 15px;
+  .header li a {
+    font-size: 14px;
+    width: 23px;
   }
   .header li img {
-    width: 22px;
-  }
-  .header .optionCurrent {
-    background: none;
-    border-bottom: 2px solid white;
-  }
-  .header li:hover {
-    border-bottom: 2px solid white;
-  }
-  .header li a {
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 100;
-    font-weight: bold;
-  }
-
-  .header li button {
-    width: auto;
-    padding: 0.6rem;
-    background: white;
-    border-radius: 15px;
-    border: none;
-    color: black;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .header li button:hover {
-    background: rgb(230, 230, 230);
-  }
-
-  .header li button img {
-    width: 20px;
-  }
-  .header li span {
-    display: flex;
-    color: white;
-  }
-
-  .menuFoot {
-    display: flex;
-    position: absolute;
-    left: 0;
-    top: -0.3rem;
-    display: flex;
-    align-items: end;
-    flex-direction: column;
-    width: 100%;
+    width: 23px;
   }
 
   .logOut {
-    display: none;
+    font-size: 16px;
   }
-  .header .containProfile {
-    background: none;
-    width: auto;
-    height: 4.4rem;
-    margin-right: 0.5rem;
-    gap: 0;
-    cursor: pointer;
+  .header .menuFoot .logOut img {
+    width: 25px;
+    height: 25px;
   }
 
-  .containProfile span {
-    color: white;
-    font-size: 13px;
+  .header .logo {
+    margin-top: 0.1rem;
   }
-  .header .containProfile img {
-    width: 27px;
-  }
-
-  .detailsProfile {
+  .closeMenu {
     display: flex;
+    width: 96%;
     justify-content: end;
-    align-items: start;
-    width: 100%;
-    position: relative;
-  }
-  .containDetailsProfileShow {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
     align-items: center;
-    padding-top: 0;
-    border: 1px solid rgb(189, 189, 189);
-    background-color: white;
-    color: rgb(24, 24, 24);
-    position: relative;
-    z-index: 2;
-    right: 1rem;
-    width: 6.5rem;
-    height: 8rem;
-    box-shadow: none;
-  }
-  .triangle {
-    display: flex;
-    width: 0;
-    height: 0;
-    border-top: 10px solid rgb(255, 255, 255);
-    border-right: 10px solid transparent;
-    transform: rotate(45deg);
-    position: absolute;
-    top: -0.3rem;
-    left: 5.5rem;
-  }
-  .containDetailsProfileShow span {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    color: rgb(0, 0, 0);
-    font-weight: 100;
   }
 
-  .header .dataProfile {
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding-top: 0.3rem;
-    width: 99%;
-    padding-bottom: 0.5rem;
-  }
-  .containDetailsProfileShow .rowOne {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    width: 83%;
-    align-items: center;
-    gap: 0.5rem;
-    padding-bottom: 0.3rem;
-    padding-top: 0.5rem;
-    border-bottom: 1px solid rgb(192, 192, 192);
-  }
-  .containDetailsProfileShow .rowOne img {
-    width: 28px;
-  }
-  .containDetailsProfileShow .columnOne {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 0.2rem;
-    font-size: 11px;
-    font-weight: 100;
-    color: blue;
-  }
-
-  .containDetailsProfileShow .columnOne a {
-    cursor: pointer;
-    text-decoration: none;
-    color: blue;
-  }
-
-  .containDetailsProfileShow .columnOne a:hover {
-    text-decoration: underline;
-  }
-
-  .logOutMobile {
-    font-size: 13px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 0.3rem;
-    height: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    width: 100%;
-    cursor: pointer;
-    background-image: radial-gradient(
-        circle at 40% 91%,
-        rgba(50, 34, 141, 0.04) 0%,
-        rgba(50, 34, 141, 0.04) 50%,
-        rgba(68, 21, 203, 0.04) 50%,
-        rgba(68, 21, 203, 0.04) 100%
-      ),
-      radial-gradient(
-        circle at 66% 97%,
-        rgba(36, 36, 36, 0.04) 0%,
-        rgba(36, 36, 36, 0.04) 50%,
-        rgba(46, 46, 46, 0.04) 50%,
-        rgba(46, 46, 46, 0.04) 100%
-      ),
-      radial-gradient(
-        circle at 86% 7%,
-        rgba(40, 40, 40, 0.04) 0%,
-        rgba(40, 40, 40, 0.04) 50%,
-        rgba(200, 200, 200, 0.04) 50%,
-        rgba(200, 200, 200, 0.04) 100%
-      ),
-      radial-gradient(
-        circle at 15% 16%,
-        rgba(99, 99, 99, 0.04) 0%,
-        rgba(99, 99, 99, 0.04) 50%,
-        rgba(45, 45, 45, 0.04) 50%,
-        rgba(45, 45, 45, 0.04) 100%
-      ),
-      radial-gradient(
-        circle at 75% 99%,
-        rgba(243, 243, 243, 0.04) 0%,
-        rgba(243, 243, 243, 0.04) 50%,
-        rgba(37, 37, 37, 0.04) 50%,
-        rgba(37, 37, 37, 0.04) 100%
-      ),
-      linear-gradient(188deg, rgb(34, 105, 237), rgb(31, 14, 69));
-  }
-  .logOutMobile span {
-    color: white;
-  }
-  .header .logOutMobile img {
-    width: 17px;
-    height: 17px;
-    margin-left: 0.5rem;
+  .closeMenu img {
+    width: 27px;
+    height: 27px;
   }
 }

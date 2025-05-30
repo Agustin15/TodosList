@@ -22,10 +22,23 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
     loaderForm
   } = useDataUser();
 
+  const verfiyErrors = () => {
+    let valid = true;
+    let arrayValuesErrors = Object.values(errors);
+
+    for (let f = 0; f < arrayValuesErrors.length; f++) {
+      if (arrayValuesErrors[f].length > 0) {
+        return false;
+      }
+    }
+
+    return valid;
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (errors.nameUser.length > 0 || errors.lastname.length > 0) {
+    verfiyErrors();
+    
+    if (!verfiyErrors()) {
       setResultForm({
         icon: iconError,
         msj: "Complete correctly form",
@@ -54,7 +67,7 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
         <div className={styles.avatar}>
           <img src={iconUser}></img>
           <span>
-            {user.nameUser} {user.lastname}
+            {user.name} {user.lastname}
           </span>
         </div>
         <div className={styles.email}>
@@ -69,13 +82,13 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
             <label>Nombre</label>
             <input
               onChange={(event) => handleChange(event)}
-              defaultValue={values.nameUser}
+              defaultValue={values.name}
               placeholder="Enter name"
               type="text"
-              name="nameUser"
+              name="name"
             ></input>
-            {errors.nameUser.length > 0 && (
-              <AlertInput msj={errors.nameUser}></AlertInput>
+            {errors.name.length > 0 && (
+              <AlertInput msj={errors.name}></AlertInput>
             )}
           </div>
           <div className={styles.columnInput}>

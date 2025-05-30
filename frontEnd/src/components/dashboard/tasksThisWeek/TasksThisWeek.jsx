@@ -3,6 +3,7 @@ import iconTask from "../../../assets/img/logo.png";
 import notPendingTask from "../../../assets/img/notTasksPending.jpg";
 import gifLoading from "../../../assets/img/loading.gif";
 import { useTasks } from "../../../context/TaskContext";
+import { Task } from "./Task";
 
 export const TasksThisWeek = () => {
   const { tasksThisWeek, loadingState } = useTasks();
@@ -21,42 +22,11 @@ export const TasksThisWeek = () => {
             <span>loading tasks...</span>
           </div>
         ) : tasksThisWeek.length > 0 ? (
-          tasksThisWeek.slice(0, 6).map((taskThisWeek, index) => (
-            <li
-              key={index}
-              className={
-                index % 2 == 0
-                  ? stylesTasksThisWeek.liGray
-                  : stylesTasksThisWeek.liWhite
-              }
-            >
-              <div className={stylesTasksThisWeek.rowOne}>
-                <div className={stylesTasksThisWeek.iconTask}>
-                  <span>{taskThisWeek.icon}</span>
-                </div>
-                <div className={stylesTasksThisWeek.columnOne}>
-                  <span>{taskThisWeek.date}</span>
-                  <span className={stylesTasksThisWeek.description}>
-                    {taskThisWeek.description}
-                  </span>
-                </div>
-              </div>
-              <div className={stylesTasksThisWeek.columnTwo}>
-                <div
-                  className={
-                    taskThisWeek.isCompleted
-                      ? stylesTasksThisWeek.stateTaskCompleted
-                      : stylesTasksThisWeek.stateTaskIncompleted
-                  }
-                >
-                  <span>
-                    {taskThisWeek.isCompleted ? "Completed" : "Incomplete"}
-                  </span>
-                </div>
-                <span>Files Attachment:{taskThisWeek.files.length}</span>
-              </div>
-            </li>
-          ))
+          tasksThisWeek
+            .slice(0, 6)
+            .map((taskThisWeek, index) => (
+              <Task key={index} taskThisWeek={taskThisWeek} index={index} />
+            ))
         ) : tasksThisWeek.length == 0 ? (
           <div className={stylesTasksThisWeek.containNotTasks}>
             <img src={notPendingTask}></img>

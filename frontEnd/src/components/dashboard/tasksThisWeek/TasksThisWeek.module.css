@@ -213,8 +213,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 29rem;
-        width: 99%;
+        height: auto;
+        width: 88%;
     }
     .containTasksWeek button {
         font-size: 12px;
@@ -227,12 +227,9 @@
         width: 28px;
     }
     .containTasksWeek .list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         border-bottom: 1px solid rgb(192, 190, 190);
         width: 96%;
-        height: 84%;
+        height: 23rem;
     }
 
     .containLoading {
@@ -251,10 +248,11 @@
 
     .containTasksWeek .list li {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: start;
         align-items: center;
         width: 99%;
-        height: 3rem;
+        height: auto;
         padding: 0.4rem;
         border-radius: 3px;
         font-size: 11px;
@@ -262,7 +260,7 @@
     }
 
     .containTasksWeek .list li .description {
-        width: 7rem;
+        width: 95%;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
@@ -275,22 +273,17 @@
     }
 
     .containTasksWeek .list li .rowOne {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         gap: 1rem;
         padding: 0.5rem;
+        width: 95%;
+        justify-content: start;
     }
 
     .containTasksWeek .list li .rowOne .iconTask {
         font-size: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         width: 2.4rem;
         height: 2.4rem;
         border-radius: 99px;
-        background: linear-gradient(rgb(61, 169, 212), rgb(15, 77, 158));
     }
 
     .containTasksWeek .list li .columnOne {
@@ -304,34 +297,15 @@
 
     .containTasksWeek .list li .columnTwo {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        width: 96%;
+        flex-direction: row;
         align-items: center;
         gap: 0.4rem;
     }
     .containTasksWeek .list li .columnTwo img {
         width: 14px;
         height: 14px;
-    }
-
-    .containTasksWeek .list li .columnTwo .stateTaskCompleted {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.3rem;
-        border-radius: 55px;
-        background-color: rgb(1, 185, 47);
-        color: white;
-        font-weight: bold;
-    }
-    .containTasksWeek .list li .columnTwo .stateTaskIncompleted {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.3rem;
-        border-radius: 45px;
-        background-color: rgb(207, 18, 49);
-        color: white;
-        font-weight: bold;
     }
 
     .containNotTasks {

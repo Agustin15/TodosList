@@ -149,63 +149,63 @@
   background-color: rgb(201, 3, 3);
 }
 
-@media (min-width: 375px) and (max-width: 478px) {
+@media only screen and (max-width: 699px) {
   .form {
-    gap: 1rem;
-    margin-top: 2rem;
-    width: 20rem;
-    height: auto;
-    max-height: 33rem;
+    width: 84%;
   }
 
   .form .title {
-    font-size: 20px;
+    font-size: 17px;
+    gap: 1rem;
   }
 
   .form .title img {
-    width: 45px;
+    width: 35px;
   }
 
-  .form .containInputs {
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
   .form label {
     font-size: 15px;
   }
 
   .form input {
-    font-size: 15px;
+    width: 14.5rem;
+    height: 2.2rem;
+    font-size: 14px;
+    background-position-x: 0.4rem;
+    background-position-y: 0.5rem;
+  }
+ 
+
+  .form .inputEmail {
+    background-position-y: 0.5rem;
   }
 
-  .form .containEmail,
-  .containNewEmail,
-  .containPassword {
-    gap: 0.5rem;
-  }
 
-  .containPassword img {
-    width: 20px;
+  .containPassword .viewPassword {
+    width: 17px;
     position: absolute;
-    top: 2rem;
-    left: 14rem;
+    margin-top: 2.2rem;
+    margin-left: 15rem;
     cursor: pointer;
+  }
+
+
+  .alertErrorInput {
+    margin-top:4.2rem;
+    margin-left: 0.2rem;
+  }
+
+  .alertErrorInput img {
+    width: 15px;
+    height: 15px;
   }
   .form button {
-    font-size: 17px;
-    font-weight: bold;
-    width: 12rem;
+    font-size: 15px;
+    width: 10rem;
     height: 2rem;
-    border-radius: 4px;
     color: white;
-    margin-top: 1rem;
+    margin-top: 1.4rem;
     background-color: blue;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
   }
 
   .form button:hover {
@@ -214,11 +214,11 @@
 
   .form .error {
     color: red;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .form .navBar {
-    width: 109.5%;
+    width: 110%;
   }
 
   .navBar button {
@@ -230,100 +230,8 @@
     border-radius: 0;
     cursor: pointer;
   }
-}
 
-@media (min-width: 667px) and (max-width: 915px) {
-  .form {
-    gap: 1rem;
-    margin-top: 9rem;
-    width: 20rem;
-    height: 33rem;
-  }
-
-  .form .title {
-    font-size: 17px;
-  }
-
-  .form .title img {
-    width: 35px;
-  }
-
-  .form .containInputs {
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
-  .form label {
-    font-size: 13px;
-  }
-
-  .form input {
-    font-size: 13px;
-    background-size: 17px;
-    background-position-y: 0.5rem;
-  }
-
-  .form .containEmail,
-  .containNewEmail,
-  .containPassword {
-    gap: 0.5rem;
-  }
-
-  .form .inputNewEmail {
-    background-size: 19px;
-  }
-
-  .containPassword img {
-    width: 19px;
-    position: absolute;
-    top: 2rem;
-    left: 14rem;
-    cursor: pointer;
-  }
-  .form .containButton {
-    padding-bottom: 1rem;
-  }
-
-  .form button {
-    font-size: 14px;
-    font-weight: bold;
-    width: 9rem;
-    height: 1.7rem;
-    border-radius: 4px;
-    color: white;
-    margin-top: 1rem;
-    background-color: blue;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .form button:hover {
-    background-color: rgb(6, 6, 153);
-  }
-
-  .form .error {
-    color: red;
-    font-size: 13px;
-  }
-
-  .form .navBar {
-    width: 110%;
-  }
-
-  .navBar button {
-    height: 1.6rem;
-    width: 1.6rem;
-    background-color: rgb(223, 0, 0);
-    color: white;
-    margin-top: -1rem;
-    border-radius: 0;
-    cursor: pointer;
-  }
-
-  .form .alertFormError {
-    margin-top: 1rem;
+  .navBar button:hover {
+    background-color: rgb(201, 3, 3);
   }
 }

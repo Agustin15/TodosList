@@ -2,10 +2,10 @@ import styles from "./TodoList.module.css";
 import noTaskIcon from "../../assets/img/sinTareas.png";
 import iconNoFound from "../../assets/img/noFound.png";
 import iconAllTasks from "../../assets/img/allTasksIcon.png";
-import iconAddTask from "../../assets/img/iconAddTask.png";
 import gifLoadingTasks from "../../assets/img/loadingTasks.gif";
 import TodoItem from "../todoItem/TodoItem";
 import Modal from "../modal/Modal";
+import { Title } from "../title/Title";
 import { Pagination } from "../pagination/Pagination";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
 import { useTasks } from "../../context/TaskContext";
@@ -14,15 +14,12 @@ import { useParams } from "react-router-dom";
 import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
 import { FilterOption } from "../filterOption/FilterOption";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
+import { WindowSizeProvider } from "../../context/WindowSizeContext";
 
 const TodoList = () => {
   const { tasks, getTaskById, dispatch } = useTasks();
-  const {
-    getTasksThisWeekUser,
-    getTasksThisWeekUserLimit,
-    loadingFilter,
-    openFilter
-  } = useFilterOptionTasks();
+  const { getTasksThisWeekUser, getTasksThisWeekUserLimit, loadingFilter } =
+    useFilterOptionTasks();
 
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -40,6 +37,7 @@ const TodoList = () => {
 
   return (
     <div className={styles.contentBody}>
+      <Title title={"Tasks"} icon={iconAllTasks}></Title>
       <div className={styles.containTasks}>
         <div className={styles.header}>
           <div className={styles.rowHeader}>
@@ -47,25 +45,19 @@ const TodoList = () => {
               <h3>List tasks</h3>
               <img src={iconAllTasks}></img>
             </div>
-            <div className={styles.addTask}>
-              <button onClick={() => setOpenModalAdd(true)}>
-                <img src={iconAddTask}></img>
-              </button>
-            </div>
           </div>
         </div>
-        {!idTask && <FilterOption setTaskNotFound={setTaskNotFound} />}
+        {!idTask && (
+          <WindowSizeProvider>
+            <FilterOption
+              setOpenModalAdd={setOpenModalAdd}
+              setTaskNotFound={setTaskNotFound}
+            />
+          </WindowSizeProvider>
+        )}
 
         {tasks && (
-          <ul
-            id="ulTasks"
-            style={
-              openFilter && tasks.length > 0
-                ? { marginTop: "4rem" }
-                : { marginTop: "0" }
-            }
-            className={styles.tasks}
-          >
+          <ul id="ulTasks" className={styles.tasks}>
             <div
               className={
                 loadingFilter ? styles.loadingShow : styles.loadingHide

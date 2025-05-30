@@ -265,3 +265,24 @@ form .inputEmail {
   width: 11rem;
   padding-right: 1rem;
 }
+@media only screen and (max-width: 699px) {
+  .detailsUser {
+    width: 90%;
+    height: 23%;
+    gap: 1rem;
+  }
+
+  .detailsUser img {
+    width: 74px;
+    height: 74px;
+  }
+
+  form label {
+    font-size: 15px;
+  }
+
+  form .rowForm {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -8,19 +8,44 @@ export const UserDataProvider = ({ children }) => {
   const [loadingUser, setLoadingUser] = useState(false);
   const [loadingForm, setLoadingForm] = useState(false);
   const [values, setValues] = useState({
-    nameUser: "",
+    name: "",
     lastname: ""
   });
 
-  const [errors, setErrors] = useState({ nameUser: "", lastname: "" });
+  const [errors, setErrors] = useState({ name: "", lastname: "" });
   const [resultForm, setResultForm] = useState();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
 
-    if (value.length == 0) setErrors({ ...errors, [name]: "Complete " + name });
-    else setErrors({ ...errors, [name]: "" });
+    if (value.length == 0 || !verifyValidString(value)) {
+      setErrors({ ...errors, [name]: "Invalid " + name });
+    } else {
+      setErrors({ ...errors, [name]: "" });
+    }
+  };
+
+  const firstLetterToUpper = (value) => {
+    return [...value]
+      .map((letter, index) => {
+        if (index == 0) {
+          return letter.toUpperCase();
+        }
+        return letter;
+      })
+      .join("");
+  };
+
+  const verifyValidString = (value) => {
+    let valid = true;
+    for (let f = 0; f < value.length; f++) {
+      if (!value[f].match(/[a-z]/i) || [f] == "") {
+        return false;
+      }
+    }
+
+    return valid;
   };
 
   const getUserData = async () => {
@@ -40,6 +65,7 @@ export const UserDataProvider = ({ children }) => {
         location.href = urlFront + "/login";
       }
       if (result) {
+
         setUser(result);
       }
     } catch (error) {
@@ -52,15 +78,15 @@ export const UserDataProvider = ({ children }) => {
   const updateUser = async () => {
     setLoadingForm(true);
     try {
-      const response = await fetch("/api/userData/"+user.idUser, {
+      const response = await fetch("/api/userData/" + user.idUser, {
         method: "PUT",
         credentials: "include",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: values.nameUser,
-          lastname: values.lastname
+          name: firstLetterToUpper(values.name),
+          lastname: firstLetterToUpper(values.lastname)
         })
       });
 
