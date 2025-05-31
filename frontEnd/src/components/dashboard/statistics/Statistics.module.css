@@ -222,3 +222,15 @@
     width: 27px;
   }
 }
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .containStatistics {
+    display: flex;
+    justify-content: start;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.6rem;
+    width: 91%;
+    height: auto;
+    margin-top: 5rem;
+  }
+}

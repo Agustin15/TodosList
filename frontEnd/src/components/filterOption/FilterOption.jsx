@@ -38,7 +38,7 @@ export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
       </button>
 
       <ul className={styles.categorys}>
-        <span>Category:</span>
+        <span>Search:</span>
         {refs.map(
           (ref, index) =>
             ref.current && (

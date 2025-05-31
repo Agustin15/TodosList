@@ -211,3 +211,70 @@
     width: 100px;
   }
 }
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .header .title {
+    display: none;
+  }
+  .rowTodoList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    height: auto;
+    margin-top: 0;
+  }
+
+  .contentBody {
+    flex-direction: column;
+    justify-content: start;
+    margin-top: 0;
+    margin-left: 0;
+    width: 96%;
+  }
+
+  .containTasks {
+    width: 95%;
+    height: auto;
+    min-height: 82vh;
+    max-height: 122vh;
+    margin-top: 5rem;
+    border: none;
+    justify-content: start;
+    background-color: white;
+    box-shadow: none;
+  }
+
+  .containTasks .header {
+    display: none;
+  }
+
+  .loadingHide {
+    display: none;
+  }
+
+  .loadingShow {
+    font-size: 15px;
+    color: rgb(49, 49, 49);
+    opacity: 80%;
+    gap: 0.5rem;
+    height: 95%;
+  }
+  .loadingShow img {
+    width: 72px;
+    height: 72px;
+  }
+ 
+  .warningShow img {
+    width: 80px;
+    padding-left: 1.2rem;
+  }
+
+  .taskNotFoundShow {
+    opacity: 70%;
+    font-size: 15px;
+  }
+
+  .taskNotFoundShow img {
+    width: 100px;
+  }
+}

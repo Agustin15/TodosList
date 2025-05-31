@@ -19,8 +19,10 @@ export const Dashboard = () => {
             </UserDataProvider>
             <div className={stylesDashboard.rowDashboard}>
               <Title title={"Dashboard"} icon={iconDashboard}></Title>
+              <div className={stylesDashboard.statisticsAndTasks}>
               <Statistics></Statistics>
               <TasksThisWeek></TasksThisWeek>
+              </div>
             </div>
           </WindowSizeProvider>
         </MenuProvider>

@@ -102,7 +102,7 @@
         width: 100%;
         height: 100%;
         margin-left: 0;
-        justify-content:start;
+        justify-content: start;
         padding-bottom: 2rem;
     }
     .containCalendar {
@@ -137,4 +137,38 @@
         font-size: 14px;
         margin-left: 0;
     }
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .rowCalendar {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: start;
+        width: 100%;
+        height: 96vh;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        margin-left: 0;
+        justify-content: start;
+        padding-bottom: 2rem;
+    }
+    .containCalendar {
+        width: 87vw;
+        height: auto;
+        gap: 1rem;
+        margin-left: 0;
+        margin-top: 6rem;
+    }
+
+    .containCalendar .titleCalendar h3 {
+        font-size: 16px;
+    }
+
+  
 }

@@ -12,40 +12,54 @@
 }
 
 .containSearch input {
-  width:11rem;
+  width: 11rem;
   outline: none;
   padding-left: 1rem;
   padding-right: 3rem;
   font-size: 14px;
   height: 2.2rem;
   border: 1px solid rgb(172, 172, 172);
-  box-shadow:0px 1px 6px 2px skyblue;
+  box-shadow: 0px 1px 6px 2px skyblue;
   border-radius: 4px;
 }
 
 @media only screen and (max-width: 699px) {
- .containSearch {
-  font-family: Arial, Helvetica, sans-serif;
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 0.4rem;
-  padding-top: 0.4rem;
-  width: 100%;
-  border-bottom: 1px solid rgb(219, 215, 215);
-  border-top: 1px solid rgb(219, 215, 215);
+  .containSearch {
+    font-family: Arial, Helvetica, sans-serif;
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0.4rem;
+    padding-top: 0.4rem;
+    width: 100%;
+    border-bottom: 1px solid rgb(219, 215, 215);
+    border-top: 1px solid rgb(219, 215, 215);
+  }
+
+  .containSearch input {
+    width: 11rem;
+    outline: none;
+    padding-left: 1rem;
+    padding-right: 3rem;
+    font-size: 13px;
+    height: 2rem;
+    border: 1px solid rgb(172, 172, 172);
+    box-shadow: 0px 1px 6px 2px skyblue;
+    border-radius: 4px;
+  }
 }
 
-.containSearch input {
-  width:11rem;
-  outline: none;
-  padding-left: 1rem;
-  padding-right: 3rem;
-  font-size: 13px;
-  height: 2rem;
-  border: 1px solid rgb(172, 172, 172);
-  box-shadow:0px 1px 6px 2px skyblue;
-  border-radius: 4px;
-}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .containSearch {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+  }
+
+  .containSearch input {
+    width: 80%;
+    margin-left: 1rem;
+  }
 }

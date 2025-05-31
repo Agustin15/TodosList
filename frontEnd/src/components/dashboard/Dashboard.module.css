@@ -8,13 +8,18 @@
 }
 
 .rowDashboard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
     margin-left: 10%;
     width: 100%;
     height: 99vh;
+}
+.statisticsAndTasks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    height: 100%;
+    width: 100%;
 }
 
 @media only screen and (max-width: 699px) {
@@ -29,15 +34,48 @@
     }
 
     .rowDashboard {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: start;
         gap: 1rem;
         width: 97%;
         height: auto;
         padding-bottom: 2rem;
         margin-left: 0;
         margin-top: 0rem;
+    }
+    .statisticsAndTasks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        gap: 1rem;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+     .containDashboard {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        padding-bottom: 3rem;
+        background-color: rgb(243, 243, 243);
+        height: auto;
+        margin-top: 0;
+    }
+
+    .rowDashboard {
+        gap: 1rem;
+        width: 97%;
+        height: auto;
+        padding-bottom: 2rem;
+        margin-left: 0;
+        margin-top: 0rem;
+    }
+    .statisticsAndTasks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        gap: 1.5rem;
+        width: 100%;
     }
 }
