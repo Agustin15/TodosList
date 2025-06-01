@@ -99,4 +99,4 @@
     npm run start
 
 
-  ![Login](https://i.postimg.cc/S24NfHzR/login.png)
+ <img src="https://i.postimg.cc/S24NfHzR/login.png" width="566px">
