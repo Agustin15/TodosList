@@ -98,5 +98,22 @@
 
     npm run start
 
+### Login
+![Login](capturesApp/login.PNG)
+
+### Dashboard
+![Dashboard](capturesApp/dashboard.PNG)
+
+### List tasks filtered
+
+![List tasks filtered](capturesApp/list%20tasks.PNG)
+
+### Calendar 
+
+![Calendar](capturesApp/calendar.PNG)
+
+### Details task 
+
+![Details task](capturesApp/detailsTask.PNG)
 
 
