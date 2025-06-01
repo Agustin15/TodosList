@@ -5,8 +5,9 @@
   align-items: center;
   gap: 1rem;
   width: 30rem;
-  height: 32rem;
+  height: auto;
   padding: 1rem;
+  padding-bottom: 2rem;
   background-color: white;
   border-radius: 4px;
 }
@@ -174,12 +175,10 @@
     background-position-x: 0.4rem;
     background-position-y: 0.5rem;
   }
- 
 
   .form .inputEmail {
     background-position-y: 0.5rem;
   }
-
 
   .containPassword .viewPassword {
     width: 17px;
@@ -189,9 +188,8 @@
     cursor: pointer;
   }
 
-
   .alertErrorInput {
-    margin-top:4.2rem;
+    margin-top: 4.2rem;
     margin-left: 0.2rem;
   }
 
@@ -233,5 +231,10 @@
 
   .navBar button:hover {
     background-color: rgb(201, 3, 3);
+  }
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .form {
+    margin-top: 5rem;
   }
 }

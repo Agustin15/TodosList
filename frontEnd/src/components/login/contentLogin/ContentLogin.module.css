@@ -396,9 +396,9 @@
 
   .form input {
     padding-left: 2rem;
-    width: 14rem;
-    height: 2rem;
-    font-size: 14px;
+    width: 19rem;
+    height: 2.2rem;
+    font-size: 16px;
     border-radius: 75px;
     border: 2px solid rgb(204, 204, 204);
     outline: none;
@@ -406,7 +406,7 @@
 
   .form form input::placeholder {
     color: rgb(87, 87, 87);
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .form form input:hover {
@@ -426,16 +426,16 @@
   }
   .containPassword img {
     position: absolute;
-    width: 16px;
-    margin-top: 2.1rem;
+    width: 18px;
+    margin-top: 2.3rem;
     cursor: pointer;
-    margin-left: 14.6rem;
+    margin-left: 19.4rem;
   }
 
   .form form .containPassword input {
     padding-left: 1.8rem;
     padding-right: 2rem;
-    width: 12.2rem;
+    width: 17.2rem;
   }
   .form input {
     background-position-y: 0.5rem;
@@ -478,13 +478,21 @@
     background-color: rgb(16, 16, 207);
   }
 
-  .inputAlert {
-    border: 2px solid rgb(238, 0, 0);
-    padding-left: 2.5rem;
-    width: 13rem;
-    height: 2.5rem;
+  .form .haveAccountResponsive {
     font-size: 16px;
-    border-radius: 4px;
-    outline: none;
+    display: flex;
+    margin-top: -0.5rem;
+  }
+  .form .haveAccountResponsive a {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+  }
+  .form .haveAccountResponsive a:hover {
+    text-decoration: underline;
+  }
+  .form .forgotPassword {
+    font-size: 16px;
+    margin-top: 1rem;
   }
 }

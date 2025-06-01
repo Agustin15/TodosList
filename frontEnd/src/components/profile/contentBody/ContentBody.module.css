@@ -286,3 +286,8 @@ form .inputEmail {
     flex-direction: column;
   }
 }
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .detailsUser {
+    height: 56%;
+  }
+}

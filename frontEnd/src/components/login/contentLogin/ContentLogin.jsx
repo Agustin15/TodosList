@@ -4,10 +4,9 @@ import gifLoading from "../../../assets/img/loadingForm.gif";
 import hiddenEye from "../../../assets/img/hidden.png";
 import logo from "../../../assets/img/logo.png";
 import WelcomeFormSignUp from "../../signUp/welcomeSignUp/WelcomeFormSignUp.jsx";
-import AlertForm from "../../addTodoForm/alertForm/AlertForm.jsx";
+import AlertForm from "../../signUp/alertForm/AlertForm.jsx";
 import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
-import { useForm } from "../../../context/FormTaskContext.jsx";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
@@ -19,10 +18,10 @@ const ContentLogin = () => {
     passwordInput,
     handlePassword,
     handleSubmitSignIn,
-    errorsInputsSignIn
+    errorsInputsSignIn,
+    resultForm
   } = useFormUser();
 
-  const { resultForm } = useForm();
   const { fetchLogin, loading } = useLogin();
 
   useEffect(() => {

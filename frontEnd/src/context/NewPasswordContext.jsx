@@ -87,7 +87,7 @@ export const NewPasswordProvider = ({ children }) => {
     const validationsMsjs = [
       {
         key: "newPassword",
-        msj: "Weak password (min 8 chars and should has letters, numbers)",
+        msj: "Weak password (min 8 chars and must has mayuscules and minuscules letters and some number)",
         validation: validPassword.test(value)
       },
       {

@@ -45,12 +45,12 @@ export const FormEditPasswordProvider = ({ children }) => {
     setErrors(errorsInputs);
     setResultForm();
 
-    let validPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+    let validPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
     formData.forEach((value, key) => {
       if (!validPassword.test(value)) {
         error = true;
         errorsInputs[key] =
-          "Weak password (min 8 chars and should has letters, numbers)";
+          "Weak password (min 8 chars and must has mayus and minus letters and some number)";
       } else {
         data[key] = value;
       }

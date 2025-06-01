@@ -80,12 +80,12 @@ const Header = () => {
             </ul>
           </div>
           <div className={classesStyle.menuFoot}>
-            <div className={classesStyle.containProfile}>
+            <div
+              onClick={() => (location.href = urlFront + "profile")}
+              className={classesStyle.containProfile}
+            >
               <div className={classesStyle.iconProfile}>
-                <img
-                  onClick={() => (location.href = urlFront + "profile")}
-                  src={accountIcon}
-                ></img>
+                <img src={accountIcon}></img>
               </div>
               <span>{loadingUser ? "Loading..." : user.name}</span>
             </div>

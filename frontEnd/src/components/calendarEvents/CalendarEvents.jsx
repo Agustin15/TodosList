@@ -22,7 +22,6 @@ export const CalendarEvents = () => {
     eventsCalendar,
     eventAdded,
     formatDate,
-    setEventAdded,
     dateSelected,
     setDateSelected,
     getTasksForCalendar,
@@ -111,6 +110,14 @@ export const CalendarEvents = () => {
 
       tbody td {
         overflow: hidden;
+      }
+    }
+    @media only screen and (min-width: 700px) and (max-width: 1024px) {
+      tbody td .fc-event {
+        overflow: hidden;
+        width: 5rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   `;

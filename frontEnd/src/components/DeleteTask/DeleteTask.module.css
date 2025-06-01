@@ -81,3 +81,29 @@
     width: 30px;
   }
 }
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .deleteTask {
+    width: 16rem;
+    padding-bottom: 2rem;
+    gap: 0.8rem;
+    font-size: 16px;
+  }
+
+  .deleteTask img {
+    width: 50px;
+  }
+
+  .deleteTask button {
+    width: 6rem;
+    font-size: 14px;
+    margin-top: 0.7rem;
+  }
+
+  .deleteTask .alert {
+    font-size: 14px;
+  }
+
+  .deleteTask .alert img {
+    width: 30px;
+  }
+}

@@ -1,16 +1,13 @@
 import { createContext, useContext, useRef, useState } from "react";
 import hiddenEye from "../assets/img/hidden.png";
-import errorIcon from "../assets/img/errorIcon.png";
 import eye from "../assets/img/eye.png";
-import { useForm } from "./FormTaskContext";
-
 const FormUserContext = createContext();
 
 export const FormUserProvider = ({ children }) => {
   const [user, setUser] = useState();
   const passwordIcon = useRef();
   const passwordInput = useRef();
-  const { setResultForm, resultForm } = useForm();
+  const [resultForm, setResultForm] = useState();
   const [errorsInputsSignUp, setErrorsInputsSignUp] = useState({
     name: "",
     lastname: "",
@@ -63,7 +60,7 @@ export const FormUserProvider = ({ children }) => {
 
   const validationMsj = (key, value, option) => {
     let regexMail = /\S+@\S+\.\S+/;
-    let validPassword = /^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+    let validPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
 
     const validationsMsjs = [
       {
@@ -86,7 +83,7 @@ export const FormUserProvider = ({ children }) => {
         msj:
           option == "signIn"
             ? "Enter a valid password"
-            : "Weak password (min 8 chars and should has letters, numbers)",
+            : "Weak password (min 8 chars and must has mayus and minus letters and some number)",
         validation:
           option == "signIn" ? value.length > 0 : validPassword.test(value)
       }
@@ -141,14 +138,9 @@ export const FormUserProvider = ({ children }) => {
       userSignUp,
       "signUp"
     );
-    setErrorsInputsSignUp(inputsError);
 
     if (errorForm) {
-      setResultForm({
-        icon: errorIcon,
-        result: "error",
-        msj: "Please, complete correctly the fields"
-      });
+      setErrorsInputsSignUp(inputsError);
     } else {
       setUser(userSignUp);
     }
@@ -178,14 +170,6 @@ export const FormUserProvider = ({ children }) => {
     );
     if (errorForm) {
       setErrorsInputsSignIn(inputsError);
-    }
-
-    if (errorForm) {
-      setResultForm({
-        icon: errorIcon,
-        result: "error",
-        msj: "Please, complete correctly the fields"
-      });
     } else {
       setUser(userSignIn);
     }
@@ -203,7 +187,9 @@ export const FormUserProvider = ({ children }) => {
         handleSubmitSignUp,
         errorsInputsSignIn,
         handleSubmitSignIn,
-        cleanForm
+        cleanForm,
+        setResultForm,
+        resultForm
       }}
     >
       {children}

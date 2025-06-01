@@ -15,10 +15,11 @@
 
 .form {
   width: 50%;
-  height: 115vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   color: rgb(0, 0, 0);
   background: white;
   border: 1px solid rgb(233, 233, 233);
@@ -136,7 +137,7 @@
   color: white;
   font-weight: bold;
   font-size: 18px;
-  border-radius: 3px;
+  border-radius:55px;
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -190,6 +191,7 @@
 
   .form form {
     width: 89%;
+    padding-bottom: 2rem;
   }
   .form label {
     font-size: 16px;
@@ -248,7 +250,7 @@
   .form input {
     padding-left: 2.6rem;
     width: 16rem;
-    height: 2.7rem;
+    height: 3rem;
     border-radius: 55px;
     font-size: 16px;
     border: 2px solid rgb(204, 204, 204);
@@ -299,10 +301,14 @@
     font-size: 16px;
   }
   .form input {
-    background-position-y: 0.7rem;
+    background-position-y: 0.8rem;
     background-position-x: 0.8rem;
     background-size: 20px;
     background-repeat: no-repeat;
+  }
+  .form .containUsername input {
+    background-position-y: 0.7rem;
+    background-size: 24px;
   }
 
   .containSignUp {
@@ -426,6 +432,7 @@
     flex-direction: column;
     gap: 1.5rem;
     padding: 0.4rem;
+    padding-bottom: 2rem;
     font-size: 13px;
   }
 
@@ -491,30 +498,30 @@
   }
 
   .containUsername input {
-    background-image: url("../../../assets/img/username.png");
-    background-size: 16px;
-    background-position-y: 0.5rem;
+    background-image: url("../../../assets/img/email.png");
+    background-size: 22px;
+    background-position-y: 0.4rem;
   }
 
   .containSignUp {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
 
   .containSignUp button {
-    width: 9rem;
+    width: 12rem;
     border-radius: 75px;
     font-size: 14px;
-    margin-top: 0.5rem;
-    height: 1.9rem;
+    margin-top: 0;
+    height: 2rem;
   }
 
   .containSignUp button:hover {
     background-color: rgb(0, 0, 180);
   }
-  
+
   .form .haveAccountResponsive {
     font-size: 16px;
     display: flex;

@@ -89,7 +89,8 @@
   align-items: center;
   margin: auto;
   font-family: Arial, Helvetica, sans-serif;
-  height: 91vh;
+  height: auto;
+  padding-bottom: 4rem;
   width: 35rem;
   border: 1px solid rgb(202, 202, 202);
   border-radius: 4px;
@@ -147,13 +148,45 @@
   }
 
   .contentBody {
-    height: 91vh;
+    height: auto;
+    padding-bottom: 3rem;
     width: 83%;
     border: 1px solid rgb(202, 202, 202);
     margin-top: 2rem;
   }
 
   .contentLoading {
+    font-size: 21px;
+    height: 75vh;
+    color: gray;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .contentLoading img {
+    width: 31px;
+    height: 31px;
+    opacity: 90%;
+  }
+
+  .noData {
+    height: 75vh;
+    font-size: 19px;
+  }
+  .noData img {
+    width: 170px;
+    opacity: 75%;
+  }
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .contentBody {
+    height: auto;
+    padding-bottom: 3rem;
+    width: 83%;
+    border: 1px solid rgb(202, 202, 202);
+    margin-top: 2rem;
+  }
+
+  .contentLoading {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 21px;
     height: 75vh;
     color: gray;

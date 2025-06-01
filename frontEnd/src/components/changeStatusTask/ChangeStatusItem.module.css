@@ -92,3 +92,34 @@
     width: 35px;
   }
 }
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .containChangeStatus {
+    padding: 1rem;
+    width: 23rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    font-size: 15px;
+  }
+
+  .containChangeStatus img {
+    width: 65px;
+  }
+
+  .containChangeStatus span {
+    padding: 0.3rem;
+  }
+
+  .containChangeStatus button {
+    width: 7rem;
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+
+  .containChangeStatus .alertError {
+    font-size: 15px;
+  }
+
+  .containChangeStatus .alertError img {
+    width: 35px;
+  }
+}
