@@ -273,6 +273,7 @@
   .header li a {
     font-size: 14px;
     width: 23px;
+    font-weight: bold;
   }
   .header li img {
     width: 23px;
@@ -362,6 +363,7 @@
   .header li a {
     font-size: 14px;
     width: 23px;
+    font-weight: bold;
   }
   .header li img {
     width: 23px;
