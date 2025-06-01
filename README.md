@@ -99,4 +99,4 @@
     npm run start
 
 
- <img src="https://i.postimg.cc/S24NfHzR/login.png" width="566px">
+ <img src="https://i.postimg.cc/S24NfHzR/login.png" width="566px" height="350px">
