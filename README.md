@@ -33,6 +33,8 @@
 - fullcalendar/react
 - fullcalendar/core
 - fullcalendar/daygrid
+- fullcalendar/timegrid
+- fullcalendar/interaction
 - fullcalendar/multimonth
 - styled-components
   
@@ -95,3 +97,6 @@
 **_Para iniciar localhost pero sin watch live con node_**
 
     npm run start
+
+
+  ![Login](https://i.postimg.cc/S24NfHzR/login.png)
