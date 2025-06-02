@@ -1,4 +1,4 @@
-# TODOLIST <img src="https://i.postimg.cc/Gmm9k3Vv/logo.png" width="40px">
+# TODOLIST <img src="https://i.postimg.cc/Gmm9k3Vv/logo.png" width="43px">
 
 > ## Instalacion frontend ⚙
 
