@@ -41,7 +41,7 @@ export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
         <span>Search:</span>
         {refs.map(
           (ref, index) =>
-            ref.current && (
+            ref.current && (  
               <li key={index}>
                 {ref.current.value == "thisWeek"
                   ? "this week"
