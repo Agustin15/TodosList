@@ -25,7 +25,7 @@
 **_Dependencias:_**
 
 - react
-- [react-dom]("https://www.npmjs.com/package/react-dom")
+[react-dom]("https://www.npmjs.com/package/react-dom")
 - react-spinners
 - react-router
 - canvasjs/react-charts 
