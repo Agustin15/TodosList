@@ -25,10 +25,10 @@
 **_Dependencias:_**
 
 - react
-- react-dom
+- [react-dom] ("https://www.npmjs.com/package/react-dom")
 - react-spinners
 - react-router
-- canvasjs/react-charts
+- canvasjs/react-charts 
 - react-doc-viewer
 - fullcalendar/react
 - fullcalendar/core
@@ -37,6 +37,7 @@
 - fullcalendar/interaction
 - fullcalendar/multimonth
 - styled-components
+- sweetalert2
   
 
 **_Configuracion del proxy, archivo vite.config:_**
