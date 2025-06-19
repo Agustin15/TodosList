@@ -15,6 +15,7 @@ import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
 import { FilterOption } from "../filterOption/FilterOption";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { WindowSizeProvider } from "../../context/WindowSizeContext";
+import { SubscriptionProvider } from "../../context/SubscriptionContext";
 
 const TodoList = () => {
   const { tasks, getTaskById, dispatch } = useTasks();
@@ -31,7 +32,7 @@ const TodoList = () => {
       getTaskById({ id: idTask });
     } else {
       getTasksThisWeekUser();
-      getTasksThisWeekUserLimit(0, dispatch);
+      getTasksThisWeekUserLimit(1, dispatch);
     }
   }, []);
 
@@ -104,7 +105,11 @@ const TodoList = () => {
       {openModalAdd && (
         <Modal>
           <CalendarEventsProvider>
-            <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
+            <SubscriptionProvider>
+              <WindowSizeProvider>
+                <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
+              </WindowSizeProvider>
+            </SubscriptionProvider>
           </CalendarEventsProvider>
         </Modal>
       )}

@@ -1,22 +1,28 @@
 import styles from "./EditTodoForm.module.css";
 import ContentFormEdit from "./contentFormEdit/ContentFormEdit";
 import editIcon from "../../assets/img/editIcon.png";
-import iconError from "../../assets/img/errorIcon.png";
-import iconCorrect from "../../assets/img/correctIcon.png";
-import { useForm } from "../../context/FormTaskContext";
+import { useForm } from "../../context/formTaskContext/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
+import { useEffect } from "react";
+import { AlertSwal } from "../sweetAlert/sweetAlert.js";
+import {ValidationFormError} from "../../ValidationForm.js";
 
 const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const [values, setValues] = useState({ ...task });
   const {
     validationInput,
+    validationForm,
     setResultForm,
+    stateCheckbox,
+    verifiyChangedValues,
+    setUpdateEnabled,
     cleanForm,
     filesSizeExceeded,
     filesUploadedUpdateForm,
     setFilesUploadedUpdateForm
   } = useForm();
+
   const { updateTask } = useTasks();
 
   const handleChange = (event) => {
@@ -44,41 +50,49 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
     );
   };
 
+  useEffect(() => {
+    if (values) {
+      let changedValue = verifiyChangedValues(task, values);
+      setUpdateEnabled(changedValue);
+    }
+  }, [values]);
+
   const handleSubmit = async (event) => {
-    let msj, result, icon;
+    let title, msj, icon, validation;
 
     event.preventDefault();
 
-    let validIcon = /\w/;
+    const formData = new FormData(event.target);
+
+    for (const array of formData.entries()) {
+      validation = validationForm(array[0], array[1]);
+      if (!validation) break;
+    }
+
+    let valuesForm = values;
+    valuesForm.datetimeNotification = stateCheckbox
+      ? valuesForm.datetimeNotification
+      : "";
+
     try {
-      if (
-        (filesSizeExceeded,
-        values.datetimeTask.length == 0 ||
-          values.descriptionTask.length == 0 ||
-          values.icon.length == 0 ||
-          values.icon.match(validIcon))
-      ) {
-        throw "Complete correctly the fields please";
+      if (filesSizeExceeded || !validation) {
+        throw new ValidationFormError("Complete correctly the fields please");
       } else {
-        let taskUpdated = await updateTask(values, filesUploadedUpdateForm);
+        let taskUpdated = await updateTask(valuesForm, filesUploadedUpdateForm);
         if (taskUpdated) {
+          title = "Succesfully!";
           msj = "Task updated succesfully!";
-          result = "correct";
-          icon = iconCorrect;
+          icon = "success";
         } else {
-          throw "Oops,failed to update task";
+          throw new Error("Failed to update task");
         }
       }
     } catch (error) {
-      icon = iconError;
+      icon = error instanceof ValidationFormError ? "warning" : "error";
+      title = error instanceof ValidationFormError ? "Warning" : "Oops";
       msj = error;
-      result = "error";
     } finally {
-      setResultForm({
-        result: result,
-        msj: msj,
-        icon: icon
-      });
+      AlertSwal(msj, title, icon);
     }
   };
 

@@ -3,7 +3,6 @@ import iconEditPassword from "../../../assets/img/editPassword.png";
 import iconPasswordHide from "../../../assets/img/hidden.png";
 import iconWarningInput from "../../../assets/img/warningInput.png";
 import loadingForm from "../../../assets/img/loadingForm.gif";
-import AlertForm from "../contentBody/alertForm/AlertForm";
 import { useFormEditPassword } from "../../../context/FormEditPasswordContext";
 
 const EditPassword = ({ setModalEditPassword }) => {
@@ -12,13 +11,10 @@ const EditPassword = ({ setModalEditPassword }) => {
     handlePassword,
     errors,
     loading,
-    resultForm,
-    setResultForm,
     setErrors,
   } = useFormEditPassword();
 
   const handleClose = () => {
-    setResultForm();
     setErrors({ currentPassword: "", newPassword: "", repeatPassword: "" });
     setModalEditPassword(false);
   };
@@ -107,8 +103,6 @@ const EditPassword = ({ setModalEditPassword }) => {
           {loading && <img src={loadingForm}></img>}
         </button>
       </div>
-
-      {resultForm && <AlertForm result={resultForm} />}
     </form>
   );
 };

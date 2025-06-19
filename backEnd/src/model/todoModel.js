@@ -1,65 +1,52 @@
 import connection from "../config/database.js";
-
-export const TaskModel = {
-  addTask: async function (
-    idUser,
-    icon,
-    descriptionTask,
-    dateTask,
-    isCompleted
-  ) {
+export class Task {
+  async addTask(idUser, icon, descriptionTask, dateTask, isCompleted) {
     try {
       const [result] = await connection.execute(
         "INSERT INTO tasks (idUser,icon,descriptionTask,datetimeTask,isCompleted) VALUES (?,?,?,?,?)",
         [idUser, icon, descriptionTask, dateTask, isCompleted]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  updateTask: async function (
-    icon,
-    descriptionTask,
-    dateTask,
-    isCompleted,
-    idTask
-  ) {
+  }
+  async updateTask(icon, descriptionTask, dateTask, isCompleted, idTask) {
     try {
       const [result] = await connection.execute(
         "Update tasks set icon=?,descriptionTask=?,datetimeTask=?,isCompleted=? where idTask=?",
         [icon, descriptionTask, dateTask, isCompleted, idTask]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  updateStateTask: async function (newState, idTask) {
+  async updateStateTask(newState, idTask) {
     try {
       const [result] = await connection.execute(
         "Update tasks set isCompleted=? where idTask=?",
         [newState, idTask]
       );
 
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  deleteTask: async function (idTask) {
+  }
+  async deleteTask(idTask) {
     try {
       const [result] = await connection.execute(
         "delete from tasks where idTask=?",
         [idTask]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getTasksThisWeekUser: async function (idUser, firstSunday, nextSaturday) {
+  }
+  async getTasksThisWeekUser(idUser, firstSunday, nextSaturday) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc",
@@ -68,15 +55,10 @@ export const TaskModel = {
 
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getTasksThisWeekUserLimit: async function (
-    idUser,
-    firstSunday,
-    nextSaturday,
-    index
-  ) {
+  }
+  async getTasksThisWeekUserLimit(idUser, firstSunday, nextSaturday, index) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc LIMIT 10 OFFSET ${index}  `,
@@ -85,16 +67,11 @@ export const TaskModel = {
 
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  getTasksByWeekday: async function (
-    idUser,
-    firstSunday,
-    nextSaturday,
-    weekday
-  ) {
+  async getTasksByWeekday(idUser, firstSunday, nextSaturday, weekday) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && weekday(datetimeTask)=?",
@@ -102,11 +79,11 @@ export const TaskModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  getTasksStateByWeekday: async function (
+  async getTasksStateByWeekday(
     idUser,
     firstSunday,
     nextSaturday,
@@ -120,16 +97,10 @@ export const TaskModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getTasksLimitByFilterOption: async function (
-    idUser,
-    year,
-    month,
-    state,
-    index
-  ) {
+  }
+  async getTasksLimitByFilterOption(idUser, year, month, state, index) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=? LIMIT 10 OFFSET ${index} `,
@@ -138,11 +109,11 @@ export const TaskModel = {
 
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  getQuantityTasksByFilterOption: async function (idUser, year, month, state) {
+  async getQuantityTasksByFilterOption(idUser, year, month, state) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=?`,
@@ -151,22 +122,23 @@ export const TaskModel = {
 
       return results.length;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  getTaskById: async function (idUser,idTask) {
+  async getTaskById(idUser, idTask) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && idTask=?",
-        [idUser,idTask]
+        [idUser, idTask]
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getTaskRecentlyAdded: async function (idUser, descriptionTask, datetimeTask) {
+  }
+
+  async getTaskRecentlyAdded(idUser, descriptionTask, datetimeTask) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && descriptionTask=? && datetimeTask=?",
@@ -174,10 +146,10 @@ export const TaskModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getYearsTask: async function (idUser) {
+  }
+  async getYearsTask(idUser) {
     try {
       const [results] = await connection.execute(
         "select DISTINCT YEAR(datetimeTask) from tasks where idUser=?",
@@ -185,10 +157,10 @@ export const TaskModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getAllTasksByUser: async function (idUser) {
+  }
+  async getAllTasksByUser(idUser) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=?",
@@ -196,7 +168,7 @@ export const TaskModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
   }
-};
+}

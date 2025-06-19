@@ -2,19 +2,17 @@ import styles from "./FormEditEmail.module.css";
 import iconEditMail from "../../../assets/img/editMail.png";
 import iconPasswordHide from "../../../assets/img/hidden.png";
 import iconWarningInput from "../../../assets/img/warningInput.png";
-import correctIcon from "../../../assets/img/correctIcon.png";
 import loadingForm from "../../../assets/img/loadingForm.gif";
-import AlertForm from "../contentBody/alertForm/AlertForm";
 import { useFormEditEmail } from "../../../context/FormEditEmailContext";
 import { useFormEditPassword } from "../../../context/FormEditPasswordContext";
 import { useDataUser } from "../../../context/userDataContext";
 import { useEffect } from "react";
+import { AlertSwal } from "../../sweetAlert/sweetAlert.js";
+import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
 
 const FormEditEmail = ({ email, setModalEditEmail }) => {
   const {
     loading,
-    setResultForm,
-    resultForm,
     values,
     setValues,
     setErrors,
@@ -25,10 +23,10 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
 
   const { setUser } = useDataUser();
   const { handlePassword } = useFormEditPassword();
+  const { windowWidth } = useWindowSize();
 
   const handleClose = () => {
     setModalEditEmail(false);
-    setResultForm();
     setErrors({
       newEmail: "",
       password: ""
@@ -40,14 +38,13 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
     if (values) {
       const updateEmail = async () => {
         let userUpdated = await fetchUpdateEmail();
-
         if (userUpdated) {
-          setResultForm({
-            icon: correctIcon,
-            state: "Correct",
-            msj: "Email updated sucesfully!"
-          });
-
+          AlertSwal(
+            "Email updated sucesfully!",
+            "Success",
+            "success",
+            windowWidth
+          );
           setUser(userUpdated);
         }
       };
@@ -120,8 +117,6 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
           {loading && <img src={loadingForm}></img>}
         </button>
       </div>
-
-      {resultForm && <AlertForm result={resultForm} />}
     </form>
   );
 };

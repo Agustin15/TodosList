@@ -1,12 +1,12 @@
 .contain {
   margin: auto;
-  margin-top: 7rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
-  padding-bottom: 2rem;
-  width: 34rem;
+  width: 53rem;
+  padding-bottom: 3rem;
   height: auto;
   border-radius: 5px;
   background-color: white;
@@ -63,7 +63,7 @@
   align-items: start;
   gap: 1rem;
   width: 93%;
-  height: 21rem;
+  height: auto;
   margin-top: 2rem;
 }
 
@@ -113,15 +113,38 @@
   height: 21px;
 }
 
-.contain .containDetails .containFiles {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
+.containTable {
+  width: 100%;
+  height: 20rem;
+  overflow-y: scroll;
+}
+.contain .containDetails .tableFiles {
   width: 99%;
-  height: 14rem;
+  height: auto;
   border: 1px solid rgb(172, 172, 172);
   border-radius: 5px;
+}
+
+.tableFiles thead {
+  box-shadow: 2px 2px 2px gray;
+  border: 1px solid rgb(218, 218, 218);
+  background: linear-gradient(white, gray);
+}
+
+.tableFiles .rowGray {
+  background: rgb(235, 235, 235);
+}
+.tableFiles .rowWhite {
+  background: white;
+}
+.tableFiles thead tr th {
+  width: auto;
+  padding: 0.4rem;
+}
+
+.tableFiles tbody tr td {
+  padding: 0.4rem;
+  text-align: center;
 }
 
 .stateCompleted {
@@ -134,75 +157,17 @@
   font-weight: bold;
 }
 
-.contain .containDetails .containFiles .title {
+.contain .containDetails table .options {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.3rem;
+  gap: 1rem;
+  width: 8rem;
 }
 
-.contain .containDetails .containFiles .title img {
+.contain .containDetails table .options button {
   width: 33px;
   height: 33px;
-}
-
-.contain .containDetails .containFiles ul {
-  margin-top: 0.5rem;
-  gap: 0.5rem;
-  display: flex;
-  width: 100%;
-  overflow-y: scroll;
-  height: 99%;
-  flex-direction: column;
-  align-items: center;
-}
-
-.contain .containDetails .containFiles ul li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 0.5rem;
-  font-size: 14px;
-  width: 97%;
-  height: 1.8rem;
-  background: linear-gradient(rgb(245, 245, 245), rgb(189, 189, 189));
-  border: 1px solid rgb(180, 180, 180);
-  box-shadow: 2px 2px 2px gray;
-}
-
-.contain .containDetails .containFiles ul li img {
-  width: 18px;
-  height: 18px;
-  margin-top: 0.3rem;
-  cursor: pointer;
-}
-
-.contain .containDetails .containFiles ul li p {
-  width: 82%;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.contain .containDetails .containFiles ul li .rowOneFile {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 0.4rem;
-  width: 82%;
-}
-
-.contain .containDetails .containFiles ul li .options {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 0.2rem;
-  gap: 0.5rem;
-}
-
-.contain .containDetails .containFiles ul li button {
-  width: 1.5rem;
-  height: 1.5rem;
   border-radius: 100px;
   display: flex;
   align-items: center;
@@ -212,32 +177,35 @@
   cursor: pointer;
 }
 
-.contain .containDetails .containFiles ul li button img {
-  width: 14px;
-  height: 14px;
+.contain .containDetails table .options button img {
+  width: 16px;
+  height: 16px;
   margin-top: 0;
 }
 
-.contain .containDetails .containFiles ul li .openFile {
+.contain .containDetails table .options .openFile {
   background: none;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.contain .containDetails .containFiles ul li .openFile .imgOpenDocument {
-  width: 23px;
-  height: 23px;
+.contain .containDetails table .options .imgOpenDocument {
+  width: 33px;
+  height: 33px;
 }
 
 .notFiles {
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   color: gray;
-  height: 99%;
+  height: auto;
 }
 .notFiles img {
   width: 81px;
@@ -249,7 +217,7 @@
   .contain {
     width: 94%;
     height: auto;
-    min-height: 27rem;
+    margin-top: 5rem;
   }
 
   .contain .title img {
@@ -297,5 +265,115 @@
   .notFiles img {
     width: 71px;
     height: 71px;
+  }
+
+  .containTable {
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .contain .containDetails .tableFiles {
+    width: auto;
+    height: auto;
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 5px;
+  }
+
+  .tableFiles thead {
+    font-size: 14px;
+  }
+  .tableFiles tbody {
+    font-size: 14px;
+  }
+
+  .tableFiles .cellName,
+  .tableFiles .cellTypeFile,
+  .tableFiles .cellDate {
+    width: 8rem;
+  }
+
+  .tableFiles .cellName {
+    width: 14rem;
+  }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .contain {
+    width: 94%;
+    height: auto;
+    margin-top: 5rem;
+  }
+
+  .contain .title img {
+    width: 40px;
+  }
+
+  .contain .containDetails h3 {
+    font-size: 16px;
+  }
+
+  .containDescriptionTask p {
+    width: 95%;
+  }
+  .contain .containDetails li .detailsDate {
+    font-size: 12px;
+  }
+
+  .contain .containDetails li .detailsDate img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .contain .containDetails .containFiles .title img {
+    width: 30px;
+    height: 30px;
+  }
+  .contain .containDetails .containFiles ul {
+    margin-top: 0.5rem;
+    height: 10rem;
+  }
+
+  .contain .containDetails .containFiles ul li {
+    font-size: 12px;
+  }
+
+  .contain .containDetails .containFiles ul li .options {
+    margin-top: 0.2rem;
+  }
+
+  .contain .containDetails .containFiles ul li button img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .notFiles img {
+    width: 71px;
+    height: 71px;
+  }
+
+  .containTable {
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .contain .containDetails .tableFiles {
+    width: auto;
+    height: auto;
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 5px;
+  }
+
+  .tableFiles thead {
+    font-size: 14px;
+  }
+  .tableFiles tbody {
+    font-size: 14px;
+  }
+  .tableFiles .cellName,
+  .tableFiles .cellTypeFile,
+  .tableFiles .cellDate {
+    width: 8rem;
+  }
+
+  .tableFiles .cellName {
+    width: 14rem;
   }
 }

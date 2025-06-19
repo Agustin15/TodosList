@@ -13,7 +13,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const refCheckBoxThisWeek = useRef();
   const refInputNumberIndex = useRef();
   const [openFilter, setOpenFilter] = useState(false);
-  const [indexSelected, setIndexSelected] = useState(0);
+  const [indexSelected, setIndexSelected] = useState(1);
   const [quantityTasks, setQuantityTask] = useState();
   const [loadingFilter, setLoadingFilter] = useState(false);
 
@@ -23,7 +23,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
 
   useEffect(() => {
     if (refInputNumberIndex.current) {
-      refInputNumberIndex.current.value = indexSelected / 10 + 1;
+      refInputNumberIndex.current.value = indexSelected;
     }
   }, [indexSelected]);
 
@@ -62,7 +62,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const getTasksThisWeekUserLimit = async (offset, dispatch) => {
     const optionGetTasks = {
       option: "getTasksThisWeekUserLimit",
-      offset: offset
+      offset: (offset - 1) * 10
     };
 
     setLoadingFilter(true);
@@ -99,7 +99,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
       year: refSelectYear.current.value,
       month: refSelectMonth.current.value,
       state: refSelectState.current.value,
-      offset: offset
+      offset: (offset - 1) * 10
     };
 
     try {

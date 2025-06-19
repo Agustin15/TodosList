@@ -1,0 +1,97 @@
+.trGray {
+    background-color: rgb(224, 224, 224);
+}
+
+.trWhite {
+    background-color: rgb(255, 255, 255);
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.options img {
+    width: 19px;
+    height: 19px;
+}
+
+.options button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 100px;
+    border: none;
+    background-color: rgb(28, 187, 153);
+    cursor: pointer;
+}
+
+.options .openFile {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+@media only screen and (max-width: 699px) {
+    .options {
+        width: 8rem;
+    }
+
+    .options img {
+        width: 17px;
+        height: 17px;
+    }
+
+    .options button {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .options .openFile {
+        width: 31px;
+        height: 31px;
+        cursor: pointer;
+    }
+
+    .contentCellTypeFile,
+    .contentCellDate {
+        width: 9rem;
+    }
+
+    .contentCellDescription {
+        width: 13rem;
+    }
+}
+
+@media only screen and (min-width:700px) and (max-width:1024px)  {
+    .options {
+        width: 8rem;
+    }
+
+    .options img {
+        width: 17px;
+        height: 17px;
+    }
+
+    .options button {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .options .openFile {
+        width: 31px;
+        height: 31px;
+        cursor: pointer;
+    }
+
+    .contentCellTypeFile,
+    .contentCellDate {
+        width: 9rem;
+    }
+
+    .contentCellDescription {
+        width: 13rem;
+    }
+}

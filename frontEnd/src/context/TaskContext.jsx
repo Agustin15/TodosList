@@ -119,9 +119,10 @@ export const TaskProvider = ({ children }) => {
     values.filesUploaded.forEach((file, index) => {
       formData.append("filesUpload" + index, file);
     });
-
     formData.append("datetimeTask", values.datetimeTask);
+    formData.append("datetimeNotification", values.datetimeNotification);
     formData.append("state", values.isCompleted);
+
     try {
       const response = await fetch("/api/todos/", {
         method: "POST",
@@ -179,6 +180,7 @@ export const TaskProvider = ({ children }) => {
     });
 
     formData.append("datetimeTask", formatDate(task.datetimeTask));
+    formData.append("datetimeNotification", task.datetimeNotification);
     formData.append("state", task.isCompleted);
 
     setLoadingState(true);
@@ -246,6 +248,7 @@ export const TaskProvider = ({ children }) => {
 
   const deleteTask = async (id) => {
     let data;
+
     try {
       const response = await fetch("/api/todos/" + id, {
         method: "DELETE",

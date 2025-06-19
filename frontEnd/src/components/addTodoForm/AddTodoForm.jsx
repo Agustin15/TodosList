@@ -1,12 +1,14 @@
 import classesStyle from "./AddTodoForm.module.css";
 import ContentForm from "./contentForm/ContentForm";
-import iconCorrect from "../../assets/img/correctIcon.png";
-import iconError from "../../assets/img/errorIcon.png";
 import iconAdd from "../../assets/img/addTask.png";
-import { useForm } from "../../context/FormTaskContext";
+import { useForm } from "../../context/formTaskContext/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
+import { useState } from "react";
+import { AlertSwal } from "../sweetAlert/sweetAlert.js";
+import { ValidationFormError } from "../../ValidationForm.js";
+import { useWindowSize } from "../../context/WindowSizeContext.jsx";
 
 const AddTodoForm = ({ setOpenModalAdd }) => {
   const {
@@ -14,12 +16,15 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
     setValues,
     filesSizeExceeded,
     validationInput,
-    setResultForm,
+    validationForm,
     cleanForm,
     cleanValues
   } = useForm();
   const { setEventAdded, dateSelected } = useCalendarEvents();
   const { addTask, dispatch } = useTasks();
+  const { windowWidth } = useWindowSize();
+  const [stateCheckbox, setStateCheckbox] = useState();
+
   const {
     getQuantityTasksFilter,
     getTasksFilter,
@@ -52,25 +57,27 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
   };
 
   const handleSubmit = async (event) => {
-    let msj, result, icon;
+    let msj, title, icon;
+    let validation;
     event.preventDefault();
 
-    let validIcon = /\w/;
+    const formData = new FormData(event.target);
+
+    for (const array of formData.entries()) {
+      validation = validationForm(array[0], array[1]);
+      if (!validation) break;
+    }
+
     try {
-      if (
-        filesSizeExceeded ||
-        values.descriptionTask.length == 0 ||
-        values.icon.length == 0 ||
-        values.icon.match(validIcon) ||
-        values.datetimeTask.length == 0
-      ) {
-        throw "Complete correctly the fields please";
+      if (filesSizeExceeded || !validation) {
+        throw new ValidationFormError("Complete correctly the fields please");
       } else {
         let taskAdded = await addTask(values);
         if (taskAdded) {
+          title = "Succesfully";
           msj = "Task added succesfully!";
-          result = "correct";
-          icon = iconCorrect;
+          icon = "success";
+
           if (dateSelected) {
             setEventAdded(true);
           } else {
@@ -78,19 +85,15 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
           }
           cleanValues();
         } else {
-          throw "Oops,failed to add task";
+          throw new Error("Failed to add task");
         }
       }
     } catch (error) {
+      icon = error instanceof ValidationFormError ? "warning" : "error";
+      title = error instanceof ValidationFormError ? "Warning" : "Oops";
       msj = error;
-      result = "error";
-      icon = iconError;
     } finally {
-      setResultForm({
-        result: result,
-        msj: msj,
-        icon: icon
-      });
+      AlertSwal(msj, title, icon, windowWidth);
     }
   };
 
@@ -111,13 +114,16 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
           <h3>Complete task details</h3>
           <img src={iconAdd}></img>
         </div>
-
         <div className={classesStyle.btnClose}>
           <button onClick={handleClose}>X</button>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <ContentForm handleChange={handleChange} />
+        <ContentForm
+          handleChange={handleChange}
+          stateCheckbox={stateCheckbox}
+          setStateCheckbox={setStateCheckbox}
+        />
       </form>
     </div>
   );

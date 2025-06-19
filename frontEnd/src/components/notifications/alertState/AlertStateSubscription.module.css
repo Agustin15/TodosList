@@ -1,0 +1,64 @@
+.containAlertHability {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+.alertHability {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 18rem;
+    gap: 1rem;
+    height: 1rem;
+    margin-top: -50%;
+    padding: 1rem;
+    background-color: white;
+    color: white;
+    box-shadow: 2px 2px 2px gray;
+    position: absolute;
+    background: rgb(15, 197, 15);
+    border-radius: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.alertHability img {
+    width: 31px;
+    height: 31px;
+}
+.alertHability p {
+    width: auto;
+    font-weight: bold;
+}
+
+.alertHabilityShow {
+    animation-name: showAlert;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+.alertHabilityHide {
+    animation-name: hideAlert;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes showAlert {
+    from {
+        margin-top: -100%;
+    }
+
+    to {
+        margin-top: 4%;
+    }
+}
+
+@keyframes HideAlert {
+    from {
+        margin-top: 4%;
+    }
+
+    to {
+        margin-top: -100%;
+    }
+}

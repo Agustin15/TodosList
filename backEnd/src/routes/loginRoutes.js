@@ -6,11 +6,15 @@ import { findUserByEmail } from "../controllers/userController.js";
 export const loginRoutes = express.Router();
 
 loginRoutes.post("/", async (req, res) => {
-  const { email, password } = req.body;
-  const secretKey = process.env.JWT_SECRET_KEY;
-  const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
-
   try {
+    if (!req.body) {
+      throw new Error("Body request null");
+    }
+
+    const { email, password } = req.body;
+    const secretKey = process.env.JWT_SECRET_KEY;
+    const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
+
     let userFound = await findUserByEmail(email);
 
     if (userFound.length == 0) {

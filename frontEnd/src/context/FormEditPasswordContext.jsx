@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import iconPasswordShow from "../assets/img/eye.png";
 import iconPasswordHide from "../assets/img/hidden.png";
-import errorIcon from "../assets/img/errorIcon.png";
-import correctIcon from "../assets/img/correctIcon.png";
-
+import { AlertSwal } from "../components/sweetAlert/sweetAlert";
+import { useWindowSize } from "./WindowSizeContext";
 const FormEditPasswordContext = createContext();
 
 export const FormEditPasswordProvider = ({ children }) => {
@@ -15,7 +14,7 @@ export const FormEditPasswordProvider = ({ children }) => {
     repeatPassword: ""
   });
 
-  const [resultForm, setResultForm] = useState();
+  const { windowWidth } = useWindowSize();
 
   const [loading, setLoading] = useState(false);
 
@@ -43,8 +42,7 @@ export const FormEditPasswordProvider = ({ children }) => {
     };
     const data = {};
     setErrors(errorsInputs);
-    setResultForm();
-
+ 
     let validPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
     formData.forEach((value, key) => {
       if (!validPassword.test(value)) {
@@ -57,18 +55,14 @@ export const FormEditPasswordProvider = ({ children }) => {
     });
 
     if (error) {
-      setResultForm({
-        icon: errorIcon,
-        state: "Error",
-        msj: "Please, complete correctly the fields"
-      });
       setErrors(errorsInputs);
     } else if (data.newPassword != data.repeatPassword) {
-      setResultForm({
-        icon: errorIcon,
-        state: "Error",
-        msj: "New password and repeat password not match"
-      });
+      AlertSwal(
+        "New password and repeat password not match",
+        "Warning",
+        "warning",
+        windowWidth
+      );
     } else {
       setValues(data);
     }
@@ -79,11 +73,12 @@ export const FormEditPasswordProvider = ({ children }) => {
       const updatePassword = async () => {
         let passwordUpdated = await fetchUpdatePassword();
         if (passwordUpdated) {
-          setResultForm({
-            icon: correctIcon,
-            state: "Correct",
-            msj: "Password updated sucesfully!"
-          });
+          AlertSwal(
+            "Password updated sucesfully!",
+            "Success",
+            "success",
+            windowWidth
+          );
         }
       };
 
@@ -96,8 +91,7 @@ export const FormEditPasswordProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "api/userData/" +
-          JSON.stringify({ option: "updatePasswordUserById" }),
+        "api/userData/" + JSON.stringify({ option: "updatePasswordUserById" }),
         {
           method: "PATCH",
           credentials: "include",
@@ -122,12 +116,13 @@ export const FormEditPasswordProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      setResultForm({
-        icon: errorIcon,
-        state: "Error",
-        msj:
-          error == "Invalid current password" ? error : "Password not updated"
-      });
+      AlertSwal(
+        error == "Invalid current password" ? error : "Password not updated",
+        "Oops",
+        "error",
+        windowWidth
+      );
+
     } finally {
       setLoading(false);
       return data;
@@ -140,8 +135,6 @@ export const FormEditPasswordProvider = ({ children }) => {
         values,
         setErrors,
         errors,
-        setResultForm,
-        resultForm,
         handleSubmit,
         handlePassword,
         loading,

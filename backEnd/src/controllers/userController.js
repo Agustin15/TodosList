@@ -1,9 +1,15 @@
 import bcrypt from "bcrypt";
-import { UserModel } from "../model/userModel.js";
+import { User } from "../model/userModel.js";
 import { authRequest, authRequestResetPassword } from "../auth/auth.js";
+
+const userModel = new User();
 
 export const createUser = async (req, res) => {
   try {
+    if (Object.values(req.body).length == 0) {
+      throw new Error("Body request null");
+    }
+
     const userToAdd = req.body;
     const userFoundByEmail = await findUserByEmail(userToAdd.email);
 
@@ -18,55 +24,61 @@ export const createUser = async (req, res) => {
       }
 
       userToAdd.password = hash;
-      const userCreated = await UserModel.addUser(
+      const userCreated = await userModel.addUser(
         userToAdd.name,
         userToAdd.lastname,
         userToAdd.email,
         userToAdd.password
       );
+
+      if (userCreated == 0) {
+        throw new Error("Error to add user");
+      }
       res.status(201).json(userCreated);
     });
   } catch (error) {
-    res.status(500).json({ messageError: error.message });
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 502;
+    res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
 
 export const getUserByEmail = async (req, res) => {
   try {
+    if (!req.params.email) {
+      throw new Error("email undefined");
+    }
+
     const email = req.params.email;
-    const userFound = await UserModel.getUserByEmail(email);
+    const userFound = await userModel.getUserByEmail(email);
     res.status(200).json(userFound);
   } catch (error) {
-    res.status(502).json({ messageError: error.message });
+    res.status(502).json({ messageError: error });
   }
 };
 
 export const findUserByEmail = async (email) => {
   try {
-    const userFound = await UserModel.getUserByEmail(email);
+    const userFound = await userModel.getUserByEmail(email);
     return userFound;
   } catch (error) {
-    throw new Error(error.message);
+    throw error;
   }
 };
 
 export const findUserByIdUser = async (idUser) => {
   try {
-    const userFound = await UserModel.getUserById(idUser);
+    const userFound = await userModel.getUserById(idUser);
     return userFound;
   } catch (error) {
-    throw new Error(error.message);
+    throw error;
   }
 };
 
 export const getUserDataByToken = async (req, res) => {
-  let errorCodeResponse = 404;
   try {
     const validAuth = await authRequest(req, res);
-    if (!validAuth) {
-      errorCodeResponse = 401;
-      throw new Error("Invalid Authentication");
-    }
 
     let userFound = await findUserByIdUser(validAuth.idUser);
     userFound = userFound[0];
@@ -75,19 +87,22 @@ export const getUserDataByToken = async (req, res) => {
 
     res.status(200).json(userFound);
   } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
     res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
 
 export const updatePasswordUserById = async (req, res) => {
   try {
+    if (Object.values(req.body).length == 0) {
+      throw new Error("Body request null");
+    }
+
     const newPassword = req.body.password;
 
     const decodeTokenAuth = await authRequest(req, res);
-
-    if (!decodeTokenAuth) {
-      throw new Error("Invalid Authenticacion");
-    }
 
     if (req.body.currentPassword) {
       const currentPassword = req.body.currentPassword;
@@ -112,44 +127,53 @@ export const updatePasswordUserById = async (req, res) => {
         throw new Error({ messageError: "Internal server error" });
       }
 
-      const userUpdated = await UserModel.updatePasswordUserById(
+      const userUpdated = await userModel.updatePasswordUserById(
         hash,
         decodeTokenAuth.idUser
       );
 
+      if (userUpdated == 0) {
+        throw new Error("Error to update user");
+      }
       res.status(200).json(userUpdated);
     });
   } catch (error) {
-    res.status(502).json({ messageError: error.message });
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 502;
+    res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
 
 export const updatePasswordByEmail = async (req, res) => {
-  let errorCodeResponse = 502;
   try {
+    if (Object.values(req.body).length == 0) {
+      throw new Error("Body request null");
+    }
+
     const newPassword = req.body.newPassword;
 
     const decodeToken = await authRequestResetPassword(req, res);
 
-    if (!decodeToken) {
-      errorCodeResponse = 401;
-      throw new Error("Invalid Authenticacion");
-    }
-
-    console.log(decodeToken);
     bcrypt.hash(newPassword, 10, async (err, hash) => {
       if (err) {
         throw new Error({ messageError: "Internal server error" });
       }
 
-      const passwordUpdated = await UserModel.updatePasswordUserByEmail(
+      const passwordUpdated = await userModel.updatePasswordUserByEmail(
         hash,
         decodeToken.mail
       );
 
+      if (passwordUpdated == 0) {
+        throw new Error("Error to update password user");
+      }
       res.status(200).json(passwordUpdated);
     });
   } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 502;
     res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
@@ -157,6 +181,13 @@ export const updatePasswordByEmail = async (req, res) => {
 export const updateUserById = async (req, res) => {
   try {
     let userFound;
+
+    if (Object.values(req.body).length == 0) {
+      throw new Error("Body request null");
+    }
+    if (!req.params.id) {
+      throw new Error("id undefined");
+    }
     const idUser = req.params.id;
     const { name, lastname } = req.body;
 
@@ -164,13 +195,9 @@ export const updateUserById = async (req, res) => {
     if (!userFound.length > 0) {
       throw new Error("User not found");
     }
-    const validAuth = await authRequest(req, res);
+    await authRequest(req, res);
 
-    if (!validAuth) {
-      throw new Error("Invalid Authentication");
-    }
-
-    const userUpdated = await UserModel.updateUser(
+    const userUpdated = await userModel.updateUser(
       name,
       lastname,
       userFound[0].email,
@@ -178,7 +205,7 @@ export const updateUserById = async (req, res) => {
       userFound[0].idUser
     );
 
-    if (!userUpdated) {
+    if (userUpdated == 0) {
       throw new Error("User not updated");
     }
 
@@ -189,26 +216,32 @@ export const updateUserById = async (req, res) => {
 
     res.status(200).json(userFound);
   } catch (error) {
-    res.status(502).json({ messageError: error.message });
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 502;
+    res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
 
 export const updateEmailUser = async (req, res) => {
-  const newEmail = req.body.newEmail;
-  const password = req.body.password;
-
   let userFound;
   try {
-    const validAuth = await authRequest(req, res);
-
-    if (!validAuth) {
-      throw new Error("Invalid Authentication");
+    if (!req.body.newEmail) {
+      throw new Error("new email undefined");
     }
+    if (!req.body.password) {
+      throw new Error("password undefined");
+    }
+
+    const newEmail = req.body.newEmail;
+    const password = req.body.password;
+
+    const validAuth = await authRequest(req, res);
 
     const userEmailUsed = await findUserByEmail(newEmail);
 
     if (userEmailUsed.length > 0) {
-      throw new Error("Updated failed, email in use");
+      throw new Error("Failed to update, email in use");
     }
 
     userFound = await findUserByIdUser(validAuth.idUser);
@@ -222,22 +255,25 @@ export const updateEmailUser = async (req, res) => {
     );
 
     if (!passwordVerify) {
-      throw new Error("Updated failed, invalid password");
+      throw new Error("Failed to update, invalid password");
     }
-    let resultUpdated = await UserModel.updateEmailUserById(
+    let resultUpdated = await userModel.updateEmailUserById(
       newEmail,
       validAuth.idUser
     );
 
-    if (resultUpdated) {
-      userFound = await findUserByIdUser(validAuth.idUser);
+    if (resultUpdated == 0) throw new Error("Failed to update email user");
 
-      if (!userFound.length > 0) {
-        throw new Error("User not found");
-      }
-      res.status(200).json(userFound[0]);
+    userFound = await findUserByIdUser(validAuth.idUser);
+
+    if (!userFound.length > 0) {
+      throw new Error("User not found");
     }
+    res.status(200).json(userFound[0]);
   } catch (error) {
-    res.status(502).json({ messageError: error.message });
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 502;
+    res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };

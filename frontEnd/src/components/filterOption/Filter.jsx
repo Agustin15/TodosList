@@ -1,7 +1,6 @@
 import styles from "./FilterOption.module.css";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { useTasks } from "../../context/TaskContext";
-import { useState } from "react";
 
 export const Filter = ({ setRefs, years }) => {
   const { dispatch } = useTasks();
@@ -34,9 +33,9 @@ export const Filter = ({ setRefs, years }) => {
   const handleSearch = async () => {
     if (refCheckBoxThisWeek.current.checked) {
       getTasksThisWeekUser();
-      getTasksThisWeekUserLimit(0, dispatch);
+      getTasksThisWeekUserLimit(1, dispatch);
     } else {
-      getTasksFilter("getTasksLimitByFilterOption", 0, dispatch);
+      getTasksFilter("getTasksLimitByFilterOption", 1, dispatch);
       getQuantityTasksFilter("getQuantityTasksByFilterOption");
     }
     setRefs(
@@ -44,7 +43,7 @@ export const Filter = ({ setRefs, years }) => {
         ? [refCheckBoxThisWeek]
         : [refSelectMonth, refSelectState, refSelectYear]
     );
-    setIndexSelected(0);
+    setIndexSelected(1);
   };
 
   return (
@@ -62,11 +61,17 @@ export const Filter = ({ setRefs, years }) => {
       <li>
         <span>Year</span>
         <select ref={refSelectYear} defaultValue={new Date().getFullYear()}>
-          {years.map((year, index) => (
-            <option key={index} value={Object.values(year)}>
-              {Object.values(year)}
+          {years.length > 0 ? (
+            years.map((year, index) => (
+              <option key={index} value={Object.values(year)}>
+                {Object.values(year)}
+              </option>
+            ))
+          ) : (
+            <option value={new Date().getFullYear()}>
+              {new Date().getFullYear()}
             </option>
-          ))}
+          )}
         </select>
       </li>
 

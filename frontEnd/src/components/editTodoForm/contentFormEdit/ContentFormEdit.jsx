@@ -1,25 +1,14 @@
 import styles from "./ContentFormEdit.module.css";
-import iconFileNotUploaded from "../../../assets/img/cloudError.png";
-import iconFile from "../../../assets/img/file.png";
-import iconFileUploaded from "../../../assets/img/cloudOk.png";
 import gifLoading from "../../../assets/img/loadingForm.gif";
-import iconDelete from "../../../assets/img/delete.png";
-import AlertErrorInput from "../../addTodoForm/alertErrorInput/AlertErrorInput";
-import AlertForm from "../../addTodoForm/alertForm/AlertForm";
-import { useForm } from "../../../context/FormTaskContext";
+import { useForm } from "../../../context/formTaskContext/FormTaskContext";
 import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
+import { UploadFiles } from "./UploadFiles";
+import { ColumnOne } from "./ColumnOne";
 
 const ContentFormEdit = ({ values, handleChange }) => {
-  const {
-    errors,
-    resultForm,
-    filesUploadedUpdateForm,
-    setFilesUploadedUpdateForm,
-    cleanForm,
-    deleteFileOption
-  } = useForm();
-  const { loadingState, formatDate } = useTasks();
+  const { setFilesUploadedUpdateForm, cleanForm, updateEnabled } = useForm();
+  const { loadingState } = useTasks();
 
   useEffect(() => {
     setFilesUploadedUpdateForm(createFiles());
@@ -59,87 +48,20 @@ const ContentFormEdit = ({ values, handleChange }) => {
   };
 
   return (
-    <div className={styles.bodyForm}>
-      <div className={styles.rowForm}>
-        <div className={styles.icon}>
-          <label>Task icon:</label>
-          <input
-            defaultValue={values.icon}
-            onChange={handleChange}
-            placeholder="Enter task icon"
-            type="text"
-            name="icon"
-          ></input>
-          <AlertErrorInput error={errors.icon} />
+    <div className={styles.contentForm}>
+      <div className={styles.bodyForm}>
+        <ColumnOne values={values} handleChange={handleChange} />
+        <div className={styles.columnTwo}>
+          <UploadFiles handleChange={handleChange} values={values} />
         </div>
-
-        <div className={styles.name}>
-          <label>Task date:</label>
-          <div className={styles.dateTime}>
-            <input
-              name="datetimeTask"
-              defaultValue={formatDate(values.datetimeTask)}
-              onChange={handleChange}
-              type="datetime-local"
-            ></input>
-          </div>
-          <AlertErrorInput error={errors.datetimeTask} />
-        </div>
-      </div>
-
-      <div className={styles.description}>
-        <label>Description:</label>
-        <textarea
-          defaultValue={values.descriptionTask}
-          onChange={handleChange}
-          placeholder="Description..."
-          name="descriptionTask"
-          maxLength={130}
-        ></textarea>
-        <AlertErrorInput input={"description"} error={errors.descriptionTask} />
-      </div>
-
-      <div className={styles.containFile}>
-        <img
-          src={
-            filesUploadedUpdateForm > 0 ? iconFileUploaded : iconFileNotUploaded
-          }
-        ></img>
-        <label htmlFor="inputFile">Upload file(limit:10MB)</label>
-        <input
-          id="inputFile"
-          multiple
-          name="filesUploaded"
-          onChange={handleChange}
-          type="file"
-        ></input>
-        <AlertErrorInput input={"filesUploaded"} error={errors.filesUploaded} />
-
-        <span>Archivos subidos:{filesUploadedUpdateForm.length}</span>
-        <ul>
-          {filesUploadedUpdateForm.length > 0
-            ? filesUploadedUpdateForm.map((file, index) => (
-                <li key={index}>
-                  <div className={styles.rowFile}>
-                    <img src={iconFile}></img>
-                    <span>{file.name}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      deleteFileOption(file.lastModified, file.name)
-                    }
-                  >
-                    <img src={iconDelete}></img>
-                  </button>
-                </li>
-              ))
-            : ""}
-        </ul>
       </div>
 
       <div className={styles.buttons}>
-        <button type="submit">
+        <button
+          className={!updateEnabled ? styles.btnDisabled : ""}
+          disabled={!updateEnabled}
+          type="submit"
+        >
           Update
           {loadingState && <img src={gifLoading}></img>}
         </button>
@@ -147,8 +69,6 @@ const ContentFormEdit = ({ values, handleChange }) => {
           Clean
         </button>
       </div>
-
-      {resultForm && <AlertForm />}
     </div>
   );
 };

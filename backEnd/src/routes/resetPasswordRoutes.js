@@ -14,10 +14,17 @@ resetPasswordRoutes.get("/", async function (req, res) {
   const decodeToken = await authRequestResetPassword(req, res);
   res.status(200).json(decodeToken);
 });
+
 resetPasswordRoutes.patch("/", updatePasswordByEmail);
+
+
 resetPasswordRoutes.post("/", async (req, res) => {
   let errorCodeResponse = 500;
   try {
+     if (!req.body) {
+      throw new Error("Body request null");
+    }
+    
     const mail = req.body.mail;
     const secretKey = process.env.JWT_SECRET_KEY;
 

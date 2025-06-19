@@ -54,6 +54,7 @@
 **_Configuracion del archivo .env_**
 
     VITE_LOCALHOST_FRONT=http://localhost:PORT/
+    VITE_APPLICATION_SERVER=<MyVapidPublicKeyGenerate https://vapidkeys.com/>
     
 > ## Instalacion backend ⚙
 
@@ -75,18 +76,24 @@
 - multer
 - dotenv
 - mysql2
+- webpush
+- bullmq
 
 **_Configuracion del archivo .env_**
 
-    PORT=3000
-    DATABASE_HOST=###
-    DATABASE_NAME=###
-    DATABASE_USER=###
-    DATABASE_PASSWORD=###
-    JWT_SECRET_KEY=###
-    JWT_SECRET_KEY_REFRESH=###
-    USER_MAIL=###
-    PASSWORD_APP_MAIL=###
+    PORT=<My Port of Backend>
+    DATABASE_HOST=<My Localhost Database>
+    DATABASE_NAME=<My Database Name>
+    DATABASE_USER=<My Database User>
+    DATABASE_PASSWORD=<My Password Database>
+    JWT_SECRET_KEY=<My JWT Secret Key>
+    JWT_SECRET_KEY_REFRESH=<My JWT Secret Key>
+    USER_MAIL=<My Mail From Send Email With Nodemail>
+    PASSWORD_APP_MAIL=<My Password App Mail>
+    PORT_REDIS=<My Port of Redis server>
+    VAPID_PRIVATE_KEY=<My Vapid Private Key Generate in https://vapidkeys.com/>
+    VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
+    MAILTO_EMAIL_NOTFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
 
 > ## Iniciar ▶
 

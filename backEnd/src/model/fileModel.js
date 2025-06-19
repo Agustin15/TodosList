@@ -1,29 +1,31 @@
 import connection from "../config/database.js";
 
-export const FileModel = {
-  addFile: async function (idTask, nameFile, typeFile, file) {
+export class File {
+  async addFile(idTask, nameFile, typeFile, file) {
     try {
       const [result] = await connection.execute(
         "Insert into files (idTask,nameFile,typeFile,datetimeUpload,fileTask) values(?,?,?,CURRENT_TIME(),?)",
         [idTask, nameFile, typeFile, file]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  deleteFile: async function (idFile) {
+  }
+
+  async deleteFile(idFile) {
     try {
       const [result] = await connection.execute(
         "delete from files where idFile=?",
         [idFile]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
       throw new Error(error.message);
     }
-  },
-  getFilesByIdTask: async function (idTask) {
+  }
+
+  async getFilesByIdTask(idTask) {
     try {
       const [result] = await connection.execute(
         "select * from files where idTask=?",
@@ -31,7 +33,32 @@ export const FileModel = {
       );
       return result;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
   }
-};
+
+  async getQuantityFilesByUser(idUser) {
+    try {
+      const [results] = await connection.execute(
+        "select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=?",
+        [idUser]
+      );
+      return results.length;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getFilesByUserLimit(idUser, offset) {
+    try {
+      const [results] = await connection.execute(
+        `select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=? LIMIT 10 OFFSET ${offset}`,
+        [idUser]
+      );
+
+      return results;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+}

@@ -1,9 +1,25 @@
-.bodyForm {
+.contentForm {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.bodyForm {
+  display: flex;
+  flex-direction: row;
   gap: 2rem;
   justify-content: center;
+  align-items: start;
+}
+
+.columnOne,
+.columnTwo {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .bodyForm .rowForm {
@@ -34,18 +50,57 @@
   gap: 0.5rem;
 }
 
+.name,
+.description,
+.icon,
+.contentDatetimeNotification {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.datetimeNotification {
+  width: 95%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.datetimeNotification a {
+  font-size: 13px;
+  color: gray;
+}
+.datetimeNotification input {
+  width: 14rem;
+  height: 2.2rem;
+}
+.containLabelDatetimeNotification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+input[type="checkbox"] {
+  border-radius: 50px;
+  width: 1rem;
+  height: 1rem;
+}
+
 .containFile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: start;
+  gap: 0.5rem;
   padding: 0.5rem;
+  padding-left: 0%;
+  padding-top: 2rem;
   width: 31rem;
   position: relative;
-  min-height: 12rem;
-  height: auto;
-  max-height: 13rem;
+  height: 16rem;
   border-radius: 6px;
   border: 1px solid gray;
   font-size: 13px;
@@ -62,6 +117,7 @@
   color: gray;
   font-size: 15px;
 }
+
 .containFile label:hover {
   cursor: pointer;
   color: black;
@@ -98,13 +154,21 @@
 .containFile ul {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   width: 99%;
   gap: 0.4rem;
-  margin-top: 1rem;
-  height: auto;
-  max-height: 4rem;
+  margin-top: 1.5rem;
+  height: 9rem;
   overflow-y: scroll;
+}
+.containFile .notFilesUploaded {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  font-size: 15px;
+  color: gray;
 }
 
 .containFile li {
@@ -121,10 +185,11 @@
   gap: 0.5rem;
 }
 
-.containFile li img {
+.containFile ul li img {
   width: 25px;
   height: 25px;
   margin-left: 1rem;
+  margin-top: 0;
 }
 
 .bodyForm textarea {
@@ -139,16 +204,6 @@
 
 .bodyForm textarea:hover {
   border: 2px solid rgb(15, 99, 124);
-}
-
-.name,
-.description,
-.icon {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  position: relative;
 }
 
 .buttons {
@@ -184,6 +239,9 @@
   .bodyForm {
     gap: 1.5rem;
     width: 105%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .bodyForm .rowForm {
@@ -203,9 +261,46 @@
     width: 5rem;
   }
 
+  .datetimeNotification input {
+    width: 14rem;
+    height: 2.2rem;
+  }
+
+  .containLabelDatetimeNotification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  input[type="checkbox"] {
+    border-radius: 50px;
+    width: 1rem;
+    height: 1rem;
+  }
+  .columnTwo {
+    width: 99%;
+  }
   .containFile {
     width: 88%;
+    height: 13rem;
     margin-top: 1rem;
+    font-size: 14px;
+  }
+  .containFile img {
+    width: 48px;
+    height: 48px;
+  }
+  .containFile span {
+    font-size: 13px;
+  }
+  .containFile ul {
+    height: 100%;
+  }
+
+  .containFile .notFilesUploaded img {
+    width: 37px;
+    height: 37px;
   }
 
   .bodyForm textarea {
@@ -216,5 +311,83 @@
   .buttons button {
     width: 8rem;
     font-size: 15px;
+  }
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+  .contentForm {
+    width: auto;
+  }
+  .bodyForm {
+    gap: 2rem;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bodyForm .rowForm {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .bodyForm .icon input {
+    width: 5rem;
+  }
+  .bodyForm input {
+    width: 11rem;
+    height: 2.2rem;
+    font-size: 15px;
+  }
+
+  .datetimeNotification input {
+    width: 14rem;
+    height: 2.2rem;
+  }
+
+  .containLabelDatetimeNotification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  input[type="checkbox"] {
+    border-radius: 50px;
+    width: 1rem;
+    height: 1rem;
+  }
+  .columnTwo {
+    width: 99%;
+  }
+  .containFile {
+    width: 19rem;
+    height: 17rem;
+    margin-top: 1rem;
+  }
+
+  .containFile ul {
+    height: 100%;
+  }
+
+  .containFile ul img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .bodyForm textarea {
+    width: 17rem;
+    height: 5rem;
+  }
+
+  .buttons button {
+    width: 8rem;
+    font-size: 15px;
+  }
+  .containFile .notFilesUploaded img {
+    width: 45px;
+    height: 45px;
   }
 }

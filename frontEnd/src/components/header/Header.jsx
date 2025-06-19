@@ -6,6 +6,7 @@ import accountIcon from "../../assets/img/profile.png";
 import iconMenuTask from "../../assets/img/tasksIcon.png";
 import panelIcon from "../../assets/img/panel.png";
 import calendarMenu from "../../assets/img/calendarMenu.png";
+import iconFilesSaved from "../../assets/img/filesSave.png";
 import logOutIcon from "../../assets/img/logOut.png";
 import { useEffect } from "react";
 import { useDataUser } from "../../context/userDataContext";
@@ -71,10 +72,21 @@ const Header = () => {
                   <span>Calendar</span>
                 </a>
               </li>
+
               <li>
-                <a>
+                <a href="/files">
+                  <img
+                    className={classesStyle.iconFilesSaved}
+                    src={iconFilesSaved}
+                  ></img>
+                  <span>Files</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="/activity">
                   <img src={notificationIcon}></img>
-                  <span>Notifications</span>
+                  <span>Activity</span>
                 </a>
               </li>
             </ul>

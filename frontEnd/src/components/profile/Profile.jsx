@@ -9,6 +9,7 @@ import ContentBody from "./contentBody/ContentBody";
 import { useEffect, useState } from "react";
 import { useDataUser } from "../../context/UserDataContext";
 
+
 const Profile = () => {
   const [modalEditEmail, setModalEditEmail] = useState(false);
   const [modalEditPassword, setModalEditPassword] = useState(false);

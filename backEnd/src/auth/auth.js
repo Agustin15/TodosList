@@ -8,7 +8,6 @@ export const authRequest = async (req, res) => {
 
     if (!token) {
       let newToken = await newAccessToken(req, res);
-      if (!newToken) return;
       token = newToken;
     }
 
@@ -24,7 +23,7 @@ export const authRequest = async (req, res) => {
       }
     }
   } catch (error) {
-    throw new Error(error.message);
+    throw error;
   }
 };
 
@@ -52,7 +51,7 @@ export const authRequestResetPassword = async (req, res) => {
 
     return decodeToken;
   } catch (error) {
-    res.status(401).json({ messageError: error.message });
+    throw error;
   }
 };
 
@@ -84,7 +83,7 @@ const newAccessToken = async (req, res) => {
     });
 
     return newToken;
-  } catch {
-    return false;
+  } catch (error) {
+    throw error;
   }
 };

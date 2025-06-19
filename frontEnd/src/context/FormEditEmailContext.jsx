@@ -1,15 +1,16 @@
 import { createContext, useContext, useState } from "react";
-import errorIcon from "../assets/img/errorIcon.png";
-
+import { AlertSwal } from "../components/sweetAlert/sweetAlert.js";
+import { useWindowSize } from "./WindowSizeContext.jsx";
 const FormEditEmailContext = createContext();
 
 export const FormEditEmailProvider = ({ children }) => {
-  const [resultForm, setResultForm] = useState();
   const [values, setValues] = useState();
   const [errors, setErrors] = useState({
     newEmail: "",
     password: ""
   });
+
+  const { windowWidth } = useWindowSize();
 
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +26,6 @@ export const FormEditEmailProvider = ({ children }) => {
     let regexMail = /\S+@\S+\.\S+/;
 
     setErrors(errorsInputs);
-    setResultForm();
 
     formData.forEach((value, key) => {
       if (key == "password" && !value.length > 0) {
@@ -41,11 +41,6 @@ export const FormEditEmailProvider = ({ children }) => {
     });
 
     if (error) {
-      setResultForm({
-        icon: errorIcon,
-        state: "Error",
-        msj: "Please, complete correctly the fields"
-      });
       setErrors(errorsInputs);
     } else {
       setValues(data);
@@ -81,15 +76,12 @@ export const FormEditEmailProvider = ({ children }) => {
         data = result;
       }
     } catch (error) {
-      console.log(error);
-      setResultForm({
-        icon: errorIcon,
-        state: "Error",
-        msj:
-          error.indexOf("email") > -1 || error.indexOf("password") > -1
-            ? error
-            : "Email not updated"
-      });
+      let errorUpdated =
+        error.indexOf("email") > -1 || error.indexOf("password") > -1
+          ? error
+          : "Email not updated";
+
+      AlertSwal(errorUpdated, "Oops", "error", windowWidth);
     } finally {
       setLoading(false);
       return data;
@@ -100,8 +92,6 @@ export const FormEditEmailProvider = ({ children }) => {
     <FormEditEmailContext.Provider
       value={{
         handleSubmit,
-        resultForm,
-        setResultForm,
         errors,
         setErrors,
         loading,

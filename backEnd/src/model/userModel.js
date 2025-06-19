@@ -1,64 +1,66 @@
 import connection from "../config/database.js";
 
-export const UserModel = {
-  addUser: async function (name, lastname, email, password) {
+export class User {
+  async addUser(name, lastname, email, password) {
     try {
       const [result] = await connection.execute(
         "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)",
         [name, lastname, email, password]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  updatePasswordUserById: async function (password, idUser) {
+  }
+
+  async updatePasswordUserById(password, idUser) {
     try {
       const [result] = await connection.execute(
         "Update users set passwordUser=? where idUser=?",
         [password, idUser]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  updatePasswordUserByEmail: async function (password, email) {
+  async updatePasswordUserByEmail(password, email) {
     try {
       const [result] = await connection.execute(
         "Update users set passwordUser=? where email=?",
         [password, email]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  updateEmailUserById: async function (email, idUser) {
+  }
+  async updateEmailUserById(email, idUser) {
     try {
       const [result] = await connection.execute(
         "Update users set email=? where idUser=?",
         [email, idUser]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  updateUser: async function (name, lastname, email, password, idUser) {
+  }
+
+  async updateUser(name, lastname, email, password, idUser) {
     try {
       const [result] = await connection.execute(
         "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?",
         [name, lastname, email, password, idUser]
       );
-      return result;
+      return result.affectedRows;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
+  }
 
-  getUserByEmail: async function (email) {
+  async getUserByEmail(email) {
     try {
       const [results] = await connection.execute(
         "select * from users where email=?",
@@ -66,10 +68,11 @@ export const UserModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
-  },
-  getUserById: async function (idUser) {
+  }
+
+  async getUserById(idUser) {
     try {
       const [results] = await connection.execute(
         "select * from users where idUser=?",
@@ -77,7 +80,7 @@ export const UserModel = {
       );
       return results;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
   }
-};
+}

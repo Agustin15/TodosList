@@ -124,6 +124,15 @@
 .task .options .btnUpdate {
   background-color: rgb(8, 176, 182);
 }
+.task .options .btnUpdateDisabled {
+  background-color: rgb(5, 107, 110);
+  cursor: auto;
+}
+
+.task .options .btnUpdateDisabled img {
+  opacity: 70%;
+  cursor: auto;
+}
 
 .task .options .btnDetails {
   background-color: rgb(8, 141, 182);

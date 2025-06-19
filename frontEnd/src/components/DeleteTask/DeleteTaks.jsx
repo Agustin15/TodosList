@@ -4,9 +4,9 @@ import styles from "./DeleteTask.module.css";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
-
 const DeleteTask = ({ task, setOpenModalDelete }) => {
   const { deleteTask, dispatch, tasks } = useTasks();
+
   const [alert, setAlert] = useState(false);
   const {
     getQuantityTasksFilter,
@@ -31,22 +31,25 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
   const eventDeleted = () => {
     if (refCheckBoxThisWeek.current.checked) {
       getTasksThisWeekUser();
-
       getTasksThisWeekUserLimit(
-        tasks.length == 1 ? indexSelected - 10 : indexSelected,
+        tasks.length == 1 && indexSelected > 1
+          ? indexSelected
+          : indexSelected + 1,
         dispatch
       );
     } else {
       getQuantityTasksFilter("getQuantityTasksByFilterOption");
       getTasksFilter(
         "getTasksLimitByFilterOption",
-        tasks.length == 1 ? indexSelected - 10 : indexSelected,
+        tasks.length == 1 && indexSelected > 1
+          ? indexSelected
+          : indexSelected + 1,
         dispatch
       );
     }
 
-    if (tasks.length == 1) {
-      setIndexSelected(indexSelected - 10);
+    if (tasks.length == 1 && indexSelected > 1) {
+      setIndexSelected(indexSelected - 1);
     }
   };
 

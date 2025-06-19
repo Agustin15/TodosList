@@ -1,18 +1,21 @@
 import { CalendarEvents } from "../calendarEvents/CalendarEvents";
 import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
-import { FormTaskProvider } from "../../context/FormTaskContext";
+import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext";
 import { TaskProvider } from "../../context/TaskContext";
+import { SubscriptionProvider } from "../../context/SubscriptionContext";
 import { MenuProvider } from "../../context/MenuContext";
 export const CalendarPage = () => {
   return (
-    <FormTaskProvider>
-      <MenuProvider>
-        <TaskProvider>
-          <CalendarEventsProvider>
-            <CalendarEvents />
-          </CalendarEventsProvider>
-        </TaskProvider>
-      </MenuProvider>
-    </FormTaskProvider>
+    <TaskProvider>
+      <FormTaskProvider>
+        <SubscriptionProvider>
+          <MenuProvider>
+            <CalendarEventsProvider>
+              <CalendarEvents />
+            </CalendarEventsProvider>
+          </MenuProvider>
+        </SubscriptionProvider>
+      </FormTaskProvider>
+    </TaskProvider>
   );
 };

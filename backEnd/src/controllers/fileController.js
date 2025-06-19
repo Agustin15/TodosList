@@ -1,62 +1,53 @@
-import { FileModel } from "../model/fileModel.js";
+import { authRequest } from "../auth/auth.js";
+import { File } from "../model/fileModel.js";
+
+const fileModel = new File();
 export const addFile = async (idTask, files) => {
   let errorAdded = false;
-
-  try {
-    for (const file of files) {
-      let fileAdded = await FileModel.addFile(
-        idTask,
-        file.originalname,
-        file.mimetype,
-        file.buffer
-      );
-      if (!fileAdded) {
-        errorAdded = true;
-      }
+  for (const file of files) {
+    let fileAdded = await fileModel.addFile(
+      idTask,
+      file.originalname,
+      file.mimetype,
+      file.buffer
+    );
+    if (fileAdded == 0) {
+      errorAdded = true;
     }
-
-    if (errorAdded) {
-      throw new Error("Error al agregar archivo");
-    }
-
-    return { result: true };
-  } catch (error) {
-    throw new Error(error.message);
   }
+
+  if (errorAdded) {
+    throw new Error("Error to add file");
+  }
+
+  return { result: true };
 };
 
 export const deleteFile = async (files) => {
   let errorDeleted = false;
 
-  try {
-    for (const file of files) {
-      let fileDeleted = await FileModel.deleteFile(file.idFile);
-      if (!fileDeleted) {
-        errorDeleted = true;
-      }
+  for (const file of files) {
+    let fileDeleted = await fileModel.deleteFile(file.idFile);
+    if (fileDeleted == 0) {
+      errorDeleted = true;
     }
-
-    if (errorDeleted) {
-      throw new Error("Error al eliminar archivo");
-    }
-
-    return { result: true };
-  } catch (error) {
-    throw new Error(error.message);
   }
+
+  if (errorDeleted) {
+    throw new Error("Error to delete file");
+  }
+
+  return { result: true };
 };
 
 export const findFilesByIdTask = async (idTask) => {
-  try {
-    let filesTask = await FileModel.getFilesByIdTask(idTask);
-    filesTask = filesTask.map((file) => {
-      file.fileTask = file.fileTask.toString("base64");
-      return file;
-    });
-    return filesTask;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  let filesTask = await fileModel.getFilesByIdTask(idTask);
+
+  filesTask = filesTask.map((file) => {
+    file.fileTask = file.fileTask.toString("base64");
+    return file;
+  });
+  return filesTask;
 };
 
 export const findFilesChanged = async (idTask, filesUpdated) => {
@@ -67,7 +58,7 @@ export const findFilesChanged = async (idTask, filesUpdated) => {
 
     return { filesForAdd: filesForAdd, filesForDelete: filesForDelete };
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error);
   }
 };
 
@@ -96,4 +87,58 @@ const searchFilesForDelete = (idTask, filesUpdated, filesTask) => {
     }
   });
   return filesForDelete;
+};
+
+export const findQuantityFilesByIdUser = async (req, res) => {
+  try {
+    let validAuth = await authRequest(req, res);
+
+    if (!validAuth.idUser) {
+      throw new Error("idUser undefined");
+    }
+
+    const quantityFiles = await fileModel.getQuantityFilesByUser(
+      validAuth.idUser
+    );
+
+    res.status(200).json({ quantityFiles: quantityFiles });
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
+};
+
+export const findLimitFilesByIdUser = async (req, res) => {
+  try {
+    const { offset } = JSON.parse(req.params.getFilesParams);
+
+    if (offset == null) {
+      throw new Error("offset undefined");
+    }
+
+    let validAuth = await authRequest(req, res);
+
+    if (!validAuth.idUser) {
+      throw new Error("idUser undefined");
+    }
+
+    const filesFound = await fileModel.getFilesByUserLimit(
+      validAuth.idUser,
+      offset
+    );
+
+    let files = filesFound.map((file) => {
+      file.fileTask = file.fileTask.toString("base64");
+      return file;
+    });
+
+    res.status(200).json(files);
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
 };

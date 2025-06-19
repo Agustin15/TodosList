@@ -28,7 +28,7 @@ export const Pagination = () => {
 
   const handleChangeInput = (event) => {
     if (event.target.value > 0 && event.target.value <= pages) {
-      let newIndexSelected = (event.target.value - 1) * 10;
+      let newIndexSelected = event.target.value;
       changePage(newIndexSelected);
     }
   };
@@ -55,26 +55,26 @@ export const Pagination = () => {
           max={pages}
           defaultValue={1}
         ></input>
-        de {pages}
+        of {pages}
       </div>
       <div className={styles.nextPrev}>
         <button
-          disabled={indexSelected == 0 ? true : false}
+          disabled={indexSelected == 1 ? true : false}
           className={
-            indexSelected == 0 ? styles.btnPrevDisabled : styles.btnPrevEnabled
+            indexSelected == 1 ? styles.btnPrevDisabled : styles.btnPrevEnabled
           }
-          onClick={() => changePage(indexSelected - 10)}
+          onClick={() => changePage(indexSelected)}
         >
           <img src={iconArrow}></img>
         </button>
         <button
-          disabled={indexSelected / 10 + 1 < pages ? false : true}
+          disabled={indexSelected < pages ? false : true}
           className={
-            indexSelected / 10 + 1 < pages
+            indexSelected < pages
               ? styles.btnNextEnabled
               : styles.btnNextDisabled
           }
-          onClick={() => changePage(indexSelected + 10)}
+          onClick={() => changePage(indexSelected)}
         >
           <img src={iconArrow}></img>
         </button>

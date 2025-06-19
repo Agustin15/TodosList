@@ -1,5 +1,7 @@
 import classesStyle from "./DetailsTodo.module.css";
 import iconInfoTitle from "../../assets/img/infoTitle.png";
+import { FilesProvider } from "../../context/FilesContext";
+import iconNotFiles from "../../assets/img/notFiles.png";
 import iconCalendar from "../../assets/img/calendar.png";
 import { FilesTask } from "./FilesTask";
 
@@ -61,7 +63,16 @@ const DetailsTodo = ({ task, setOpenModalInfo }) => {
           <p>{task.descriptionTask}</p>
         </li>
 
-        <FilesTask task={task} />
+        {task.filesUploaded.length > 0 ? (
+          <FilesProvider>
+            <FilesTask task={task} />
+          </FilesProvider>
+        ) : (
+          <div className={classesStyle.notFiles}>
+            <img src={iconNotFiles}></img>
+            <h3>Not files uploaded</h3>
+          </div>
+        )}
       </div>
     </div>
   );

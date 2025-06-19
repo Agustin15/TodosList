@@ -8,6 +8,8 @@ import ProfilePage from "./components/pages/ProfilePage";
 import { CalendarPage } from "./components/pages/CalendarPage";
 import { DashboardPage } from "./components/pages/DashboardPage";
 import { FileViewerPage } from "./components/pages/FileViewerPage";
+import { NotificationsPage } from "./components/pages/NotificationsPage";
+import { FilesPage } from "./components/pages/FilesPage";
 
 const App = () => {
   return (
@@ -20,10 +22,12 @@ const App = () => {
         <Route path="/tasks" element={<TodoListPage />}></Route>
         <Route path="/tasks/:idTask" element={<TodoListPage />}></Route>
         <Route path="/calendar" element={<CalendarPage />}></Route>
-         <Route path="/calendar/:idTask" element={<CalendarPage />}></Route>
+        <Route path="/calendar/:idTask" element={<CalendarPage />}></Route>
         <Route path="/fileViewer" element={<FileViewerPage />}></Route>
         <Route path="/resetPassword" element={<ResetPasswordPage />}></Route>
         <Route path="/newPassword" element={<NewPasswordPage />}></Route>
+        <Route path="/activity" element={<NotificationsPage />}></Route>
+        <Route path="/files" element={<FilesPage />}></Route>
         <Route path="/profile" element={<ProfilePage />}></Route>
       </Routes>
     </>

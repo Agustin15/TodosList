@@ -1,11 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { validationsCases } from "./validationsCases";
+import { useRef } from "react";
+import { useTasks } from "../TaskContext";
 const FormTaskContext = createContext();
 
 export const FormTaskProvider = ({ children }) => {
   const [values, setValues] = useState({
     icon: "",
     datetimeTask: "",
+    datetimeNotification: "",
     descriptionTask: "",
     filesUploaded: [],
     isCompleted: false
@@ -13,57 +16,73 @@ export const FormTaskProvider = ({ children }) => {
   const [errors, setErrors] = useState({
     icon: "",
     datetimeTask: "",
+    datetimeNotification: "",
     descriptionTask: "",
     filesUploaded: ""
   });
 
+  const refDatetimeTask = useRef();
+
+  const [updateEnabled, setUpdateEnabled] = useState(false);
   const [filesSizeExceeded, setFilesSizeExceeded] = useState(false);
   const [filesUploadedUpdateForm, setFilesUploadedUpdateForm] = useState([]);
-  const [resultForm, setResultForm] = useState();
+  const [stateCheckbox, setStateCheckbox] = useState();
+
+  const { formatDate } = useTasks();
 
   useEffect(() => {
     validationInput("filesUploaded", filesUploadedUpdateForm);
   }, [filesUploadedUpdateForm]);
 
   const validationInput = (nameInput, value) => {
-    let validIcon = /\w/;
-    let validInput = value.length !== 0;
-    let msj;
-    switch (nameInput) {
-      case "datetimeTask":
-        msj = "Complete date field";
-        break;
-      case "descriptionTask":
-        msj = "Complete correctly description field";
-        validInput = value.length > 0 && value.length <= 130;
-        break;
-      case "icon":
-        msj = "Invalid icon";
-        validInput = !value.match(validIcon) && value.length !== 0;
-        break;
-      case "filesUploaded":
-        msj = "Limit size exceeded";
-        let totalSizes = Array.from(value).reduce((ac, file) => {
-          return (ac += file.size);
-        }, 0);
-        //1000*10000=>10millions of bytes=>10MB
-        validInput = totalSizes <= 1000 * 10000;
-        if (!validInput) setFilesSizeExceeded(true);
-        else setFilesSizeExceeded(false);
-
-        break;
-    }
+    let validationInput = validationsCases(
+      nameInput,
+      value,
+      refDatetimeTask.current && refDatetimeTask.current.value,
+      setFilesSizeExceeded
+    );
 
     setErrors({
       ...errors,
-      [nameInput]: validInput ? "" : msj
+      [nameInput]: validationInput.validInput ? "" : validationInput.msj
     });
   };
 
+  const validationForm = (nameInput, value) => {
+    let validation = validationsCases(
+      nameInput,
+      value,
+      refDatetimeTask.current && refDatetimeTask.current.value,
+      setFilesSizeExceeded
+    );
+    return validation.validInput;
+  };
+
+  const verifiyChangedValues = (task, values) => {
+    let changedValue = false;
+
+    for (const key of Object.keys(values)) {
+      let valueTask = task[key],
+        value = values[key];
+
+      if (key == "datetimeTask" || key == "datetimeNotification") {
+        valueTask = formatDate(task[key]);
+        value = formatDate(values[key]);
+      }
+
+      if (valueTask != value) {
+        changedValue = true;
+        break;
+      }
+    }
+
+    return changedValue;
+  };
   const cleanValues = () => {
     setValues({
       icon: "",
       datetimeTask: "",
+      datetimeNotification: "",
       descriptionTask: "",
       filesUploaded: [],
       isCompleted: false
@@ -75,14 +94,14 @@ export const FormTaskProvider = ({ children }) => {
       icon: "",
       descriptionTask: "",
       datetimeTask: "",
+      datetimeNotification: "",
       filesUploaded: ""
     });
   };
-  
+
   const cleanForm = () => {
     setFilesSizeExceeded(false);
     setFilesUploadedUpdateForm([]);
-    setResultForm();
     cleanErrors();
     cleanValues();
   };
@@ -100,15 +119,20 @@ export const FormTaskProvider = ({ children }) => {
       value={{
         values,
         setValues,
+        setStateCheckbox,
+        stateCheckbox,
+        updateEnabled,
+        setUpdateEnabled,
+        verifiyChangedValues,
         errors,
         setErrors,
         filesSizeExceeded,
         setFilesSizeExceeded,
-        resultForm,
-        setResultForm,
         validationInput,
+        validationForm,
         cleanValues,
         cleanForm,
+        refDatetimeTask,
         filesUploadedUpdateForm,
         setFilesUploadedUpdateForm,
         deleteFileOption

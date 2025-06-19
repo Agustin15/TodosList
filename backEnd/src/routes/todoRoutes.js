@@ -4,15 +4,19 @@ import {
   updateStateTask,
   updateTask,
   deleteTask,
-  getTasksThisWeekUser,
-  getTasksByWeekday,
   getTasksLimitByFilterOption,
   getQuantityTasksByFilterOption,
   getYearsOfTasks,
-  getTasksThisWeekUserLimit,
-  getTasksForCalendarByUser,
   getTaskById
-} from "../controllers/todoController.js";
+} from "../controllers/todoController/todoController.js";
+
+import { getTasksForCalendarByUser } from "../controllers/todoController/calendarTasks.js";
+import {
+  getTasksByWeekday,
+  getTasksThisWeekUserLimit,
+  getTasksThisWeekUser
+} from "../controllers/todoController/dashboardTasks.js";
+
 import multer from "multer";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });

@@ -1,0 +1,34 @@
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    color: rgb(85, 85, 85);
+    margin-top: 1rem;
+}
+.pagination input {
+    width: 2rem;
+    text-align: center;
+    color: rgb(80, 80, 80);
+    border: 1px solid rgb(177, 177, 177);
+    height: 1.4rem;
+    outline: none;
+    font-size: 15px;
+}
+
+.pagination button {
+    width: 5rem;
+    height: 1.6rem;
+    border: 1px solid rgb(214, 214, 214);
+    box-shadow: 2px 2px 2px gray;
+    background: linear-gradient(white, rgb(199, 199, 199));
+    border-radius: 22px;
+}
+.pagination .disabled {
+    cursor: auto;
+}
+.pagination .enabled {
+    cursor: pointer;
+}

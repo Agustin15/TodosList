@@ -1,0 +1,267 @@
+.containFiles {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    height: 100vh;
+}
+
+.containTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 8%;
+    width: 95%;
+    height: 100%;
+    padding-top: 1rem;
+}
+
+.contentTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 87%;
+    width: 97%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 1px solid rgb(211, 211, 211);
+    box-shadow: 2px 2px 2px gray;
+    border-radius: 5px;
+}
+.containTable .header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 99%;
+}
+
+.containTable .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding-bottom: 1rem;
+}
+
+.containTable .title img {
+    width: 36px;
+    height: 36px;
+}
+
+.containTable .containSearch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.containSearch input {
+    height: 2.3rem;
+    width: 43%;
+    border-radius: 22px;
+    border: 1px solid rgb(172, 172, 172);
+    padding-left: 3rem;
+    font-size: 15px;
+    outline: none;
+    background-image: url("../../assets/img//searchFile.png");
+    background-repeat: no-repeat;
+    background-size: 22px;
+    background-position-y: 0.5rem;
+    background-position-x: 1rem;
+}
+.containSearch input:hover {
+    border: 1px solid rgb(87, 179, 255);
+    box-shadow: 0px 0px 2px 2px rgb(154, 194, 255);
+}
+.scroll {
+    width: 100%;
+    height: 95%;
+    overflow-y: scroll;
+}
+.containTable table {
+    width: 100%;
+    margin-top: 0.3rem;
+    border-bottom: 1px solid rgb(173, 173, 173);
+}
+
+.containTable thead {
+    background: rgb(78, 136, 243);
+    color: white;
+}
+.containTable table th {
+    padding: 0.6rem;
+    border-top: 1px solid rgb(218, 218, 218);
+}
+
+.containTable table td p {
+    width: 98%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.containTable table td {
+    text-align: center;
+    padding: 0.4rem;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 21rem;
+    gap: 0.5rem;
+    font-size: 20px;
+    color: rgb(109, 109, 109);
+}
+
+.loading img {
+    width: 58px;
+    height: 58px;
+    opacity: 80%;
+}
+
+.notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 20px;
+    height: 21rem;
+    color: gray;
+    font-weight: bold;
+}
+
+.notFound img {
+    width: 105px;
+    height: 105px;
+}
+
+@media only screen and (max-width: 699px) {
+    .containFiles {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: 100vh;
+    }
+
+    .containTable {
+        margin-left: 0;
+        margin-top: 5rem;
+        width: 97%;
+        height: 91%;
+    }
+    .containSearch input {
+        width: 95%;
+    }
+    .contentTable {
+        width: 95%;
+    }
+    .containTable .header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 92%;
+    }
+
+    .containTable .title {
+        display: none;
+    }
+
+    .containTable table th,
+    .containTable table td {
+        font-size: 14px;
+    }
+
+    .loading {
+        font-size: 17px;
+    }
+
+    .loading img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .notFound {
+        font-size: 17px;
+    }
+
+    .notFound img {
+        width: 75px;
+        height: 75px;
+    }
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containFiles {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: 100vh;
+    }
+
+    .containTable {
+        margin-left: 0;
+        width: 97%;
+        height: 91%;
+        margin-top: 5rem;
+    }
+
+    .contentTable {
+        width: 95%;
+    }
+    .containTable .header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 92%;
+    }
+    .containSearch input {
+        width: 95%;
+    }
+    .containTable .title {
+        display: none;
+    }
+
+    .containTable table th,
+    .containTable table td {
+        font-size: 14px;
+    }
+
+    .containTable table {
+        width: 55rem;
+    }
+
+    .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 11rem;
+        gap: 0.5rem;
+        font-size: 20px;
+        color: rgb(109, 109, 109);
+    }
+
+    .loading img {
+        width: 58px;
+        height: 58px;
+        opacity: 80%;
+    }
+
+    .notFound {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        font-size: 20px;
+        height: 21rem;
+        color: gray;
+        font-weight: bold;
+    }
+
+    .notFound img {
+        width: 85px;
+        height: 85px;
+    }
+}

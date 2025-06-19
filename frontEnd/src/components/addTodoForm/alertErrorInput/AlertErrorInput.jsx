@@ -8,7 +8,7 @@ const AlertErrorInput = ({ input, error }) => {
         input == "description"
           ? { top: "8rem" }
           : input == "filesUploaded"
-          ? { top: "9rem" }
+          ? { top: "10rem" }
           : { top: "4.7rem" }
       }
       id={classesStyle.alertError}

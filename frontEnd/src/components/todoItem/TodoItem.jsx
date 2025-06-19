@@ -9,6 +9,7 @@ import Modal from "../modal/Modal";
 import { BtnChangeState } from "./BtnChangeState";
 import DeleteTask from "../DeleteTask/DeleteTaks";
 import ChangeStatusItem from "../changeStatusTask/ChangeStatusItem";
+import { SubscriptionProvider } from "../../context/SubscriptionContext";
 
 const TodoItem = ({ task, index }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
@@ -57,7 +58,9 @@ const TodoItem = ({ task, index }) => {
 
         <div className={styles.options}>
           <div className={styles.containState}>
-            <span style={{color:task.isCompleted?"green":"red"}}>{task.isCompleted?"Completed":"Pending"}</span>
+            <span style={{ color: task.isCompleted ? "green" : "red" }}>
+              {task.isCompleted ? "Completed" : "Pending"}
+            </span>
             <BtnChangeState
               task={task}
               setOpenModalChangeStatus={setOpenModalChangeStatus}
@@ -71,7 +74,16 @@ const TodoItem = ({ task, index }) => {
               <img src={iconDelete}></img>
             </button>
             <button
-              className={styles.btnUpdate}
+              disabled={
+                Date.now() > new Date(task.datetimeTask).getTime()
+                  ? true
+                  : false
+              }
+              className={
+                Date.now() > new Date(task.datetimeTask).getTime()
+                  ? styles.btnUpdateDisabled
+                  : styles.btnUpdate
+              }
               onClick={() => {
                 setOpenModalUpdate(true);
               }}
@@ -92,7 +104,9 @@ const TodoItem = ({ task, index }) => {
 
       {openModalUpdate && (
         <Modal>
-          <EditTodoForm task={task} setOpenModalUpdate={setOpenModalUpdate} />
+          <SubscriptionProvider>
+            <EditTodoForm task={task} setOpenModalUpdate={setOpenModalUpdate} />
+          </SubscriptionProvider>
         </Modal>
       )}
 

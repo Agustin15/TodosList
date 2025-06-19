@@ -7,7 +7,6 @@ import iconCorrect from "../../../assets/img/correctIcon.png";
 import iconEdit from "../../../assets/img/edit.png";
 import { AlertInput } from "./alertInput/AlertInput";
 import { useDataUser } from "../../../context/userDataContext";
-import AlertForm from "./alertForm/AlertForm";
 
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   const {
