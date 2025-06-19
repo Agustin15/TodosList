@@ -25,19 +25,18 @@
 **_Dependencias:_**
 
 - react
-[react-dom]("https://www.npmjs.com/package/react-dom")
-- react-spinners
-- react-router
-- canvasjs/react-charts 
-- react-doc-viewer
-- fullcalendar/react
-- fullcalendar/core
-- fullcalendar/daygrid
-- fullcalendar/timegrid
-- fullcalendar/interaction
-- fullcalendar/multimonth
-- styled-components
-- sweetalert2
+- [react-dom](https://github-com.translate.goog/facebook/react?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc)
+- [react-router](https://github.com/remix-run/react-router)
+- [canvasjs/react-charts](https://canvasjs.com/react-charts/)
+- [react-doc-viewer](https://github.com/cyntler/react-doc-viewer)
+- [fullcalendar/react](https://fullcalendar.io/docs/react)
+- [fullcalendar/core](https://fullcalendar.io/docs/react)
+- [fullcalendar/daygrid](https://fullcalendar.io/docs/react)
+- [fullcalendar/timegrid](https://fullcalendar.io/docs/react)
+- [fullcalendar/interaction](https://fullcalendar.io/docs/react)
+- [fullcalendar/multimonth](https://fullcalendar.io/docs/react)
+- [styled-components](https://github.com/styled-components/styled-components)
+- [sweetalert2](https://sweetalert2.github.io/)
   
 
 **_Configuracion del proxy, archivo vite.config:_**
@@ -69,16 +68,16 @@
 
 **_Dependencias:_**
 
-- express
-- nodemon
-- nodemail
-- cookie-parser
-- bcrypt
-- multer
-- dotenv
-- mysql2
-- webpush
-- bullmq
+- [express](https://github.com/expressjs/express)
+- [nodemon](https://github.com/remy/nodemon)
+- [nodemail](https://github.com/nomospace/nodemail)
+- [cookie-parser](https://github.com/expressjs/cookie-parser)
+- [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+- [multer](https://github.com/expressjs/multer)
+- [dotenv](https://github.com/motdotla/dotenv)
+- [mysql2](https://sidorares.github.io/node-mysql2/docs)
+- [webpush](https://github-com.translate.goog/web-push-libs/web-push?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc#readme)
+- [bullmq](https://docs.bullmq.io/)
 
 **_Configuracion del archivo .env_**
 
