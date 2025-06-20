@@ -95,6 +95,20 @@
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
 
+> ### Instalar servidor redis usando docker_**
+   
+**_Buscar imagen redis_**
+ 
+    docker search redis
+   
+**_Descargar la primera imagen_**
+    
+    docker pull redis
+
+**_Iniciar contenedor con imagen_**
+
+    docker run -d -p <port>:<port> redis:latest redis-server --requirepass <password>  
+
 > ## Iniciar ▶
 
 **_Iniciar localhost watch live con nodemon_**
@@ -104,6 +118,7 @@
 **_Para iniciar localhost pero sin watch live con node_**
 
     npm run start
+
 
 ### Login
 ![Login](capturesApp/login.PNG)

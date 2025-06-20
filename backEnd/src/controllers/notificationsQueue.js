@@ -1,18 +1,22 @@
 import { Worker, Queue } from "bullmq";
 import webpush from "web-push";
 import { getSubscriptionsByIdUser } from "./subscriptionPushController.js";
-import {
-  updateStateNotification
-} from "./notificationsController.js";
+import { updateStateNotification } from "./notificationsController.js";
 import { getJobByIdNotification } from "./scheduledJobController.js";
 
 let notificationQueue;
 
-const connection = { host: "localhost", port: process.env.PORT_REDIS_SERVER };
+const connection = {
+  host: process.env.HOST_REDIS,
+  port: process.env.PORT_REDIS,
+  password: process.env.PASSWORD_REDIS
+};
 
 export const createNotificationQueue = () => {
   try {
-    if (!connection.port) throw new Error("Port redis server not declared");
+    if (!connection.port) throw new Error("Redis port not declared");
+    if (!connection.host) throw new Error("Redis host not declared");
+    if (!connection.password) throw new Error("Redis password not declared");
 
     notificationQueue = new Queue("notifications", {
       connection: connection
