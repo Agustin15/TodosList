@@ -95,7 +95,7 @@
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
 
-> ### Instalar servidor redis usando docker
+> ### Instalar servidor Redis usando docker
    
 **_Buscar imagen redis_**
  
@@ -107,7 +107,7 @@
 
 **_Iniciar contenedor con imagen_**
 
-    docker run -d -p <port>:<port> redis:latest redis-server --requirepass <password>  
+    docker run --name myRedis -d -p <port>:<port> redis:latest redis-server --requirepass <password>  
 
 > ## Iniciar ▶
 
