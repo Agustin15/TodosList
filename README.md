@@ -95,7 +95,7 @@
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
 
-> ### Instalar servidor redis usando docker_**
+> ### Instalar servidor redis usando docker
    
 **_Buscar imagen redis_**
  
