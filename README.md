@@ -93,7 +93,7 @@
     PORT_REDIS=<My Port of Redis server>
     VAPID_PRIVATE_KEY=<My Vapid Private Key Generate in https://vapidkeys.com/>
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
-    MAILTO_EMAIL_NOTFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
+    MAILTO_EMAIL_NOTIFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
 
 > ### Instalar servidor Redis usando docker
    
@@ -136,6 +136,6 @@
 
 ### Details task 
 
-![Details task](capturesApp/detailsTask.PNG)
+![Files Uploaded](capturesApp/files.PNG)
 
 
