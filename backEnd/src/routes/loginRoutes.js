@@ -1,7 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { findUserByEmail } from "../controllers/userController.js";
+import { UserService } from "../services/userService.js";
 
 export const loginRoutes = express.Router();
 
@@ -11,17 +11,22 @@ loginRoutes.post("/", async (req, res) => {
       throw new Error("Body request null");
     }
 
+    if (!req.body.email) throw new Error("Email undefined");
+    if (!req.body.password) throw new Error("password undefined");
+
+    if (!process.env.JWT_SECRET_KEY) throw new Error("JWT secret key");
+    if (!process.env.JWT_SECRET_KEY_REFRESH) throw new Error("JWT secret refresh key");
+
     const { email, password } = req.body;
+
     const secretKey = process.env.JWT_SECRET_KEY;
     const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
 
-    let userFound = await findUserByEmail(email);
+    let userFound = await UserService.findUserByEmail(email);
 
-    if (userFound.length == 0) {
+    if (!userFound) {
       throw new Error("Authentication failed,invalid user entered");
     }
-
-    userFound = userFound[0];
 
     let verifyPassword = await bcrypt.compare(password, userFound.passwordUser);
     if (!verifyPassword) {

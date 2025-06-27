@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export const authRequest = async (req, res) => {
+  if (!process.env.JWT_SECRET_KEY)
+    throw new Error("JWT secret key not declared");
+
   const secretKey = process.env.JWT_SECRET_KEY;
   let token;
   try {
@@ -28,6 +31,9 @@ export const authRequest = async (req, res) => {
 };
 
 export const authRequestResetPassword = async (req, res) => {
+  if (!process.env.JWT_SECRET_KEY)
+    throw new Error("JWT Secret key not declared");
+
   const secretKey = process.env.JWT_SECRET_KEY;
   const token = JSON.parse(req.header("Authorization").split(" ")[1]);
 
@@ -56,6 +62,11 @@ export const authRequestResetPassword = async (req, res) => {
 };
 
 const newAccessToken = async (req, res) => {
+  if (!process.env.JWT_SECRET_KEY)
+    throw new Error("JWT secret key not declared");
+  if (!process.env.JWT_SECRET_KEY_REFRESH)
+    throw new Error("JWT secret refresh key not declared");
+
   const refreshKey = process.env.JWT_SECRET_KEY_REFRESH;
   const secretKey = process.env.JWT_SECRET_KEY;
   const refreshToken = req.cookies.refreshToken;

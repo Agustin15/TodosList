@@ -2,6 +2,25 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { createContext } from "react";
+import iconBmp from "../assets/img/bmp.png";
+import iconCsv from "../assets/img/csv.png";
+import iconTxt from "../assets/img/txt.png";
+import iconWord from "../assets/img/word.png";
+import iconXml from "../assets/img/xml.png";
+import iconGif from "../assets/img/gif.png";
+import iconHtm from "../assets/img/htm.png";
+import iconHtml from "../assets/img/html.png";
+import iconJpg from "../assets/img/jpg.png";
+import iconPng from "../assets/img/png.png";
+import iconJpeg from "../assets/img/jpeg.png";
+import iconPpt from "../assets/img/ppt.png";
+import iconMp4 from "../assets/img/mp4.png";
+import iconWebp from "../assets/img/webp.png";
+import iconSheet from "../assets/img/sheet.png";
+import iconXls from "../assets/img/xls.png";
+import iconPdf from "../assets/img/pdf.png";
+import iconTiff from "../assets/img/tiff.png";
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const FilesContext = createContext();
@@ -13,26 +32,35 @@ export const FilesProvider = ({ children }) => {
   const [quantityFiles, setQuantityFiles] = useState(0);
   const [index, setIndex] = useState(1);
   const mimeAccept = [
-    "image/bmp",
-    "text/csv",
-    "application/vnd.oasis.opendocument.text",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "image/gif",
-    "text/htm",
-    "text/html",
-    "image/jpg",
-    "image/jpeg",
-    "application/pdf",
-    "image/png",
-    "application/vnd.ms-powerpoint",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    "image/tiff",
-    "text/plain",
-    "application/vnd.ms-excel",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "video/mp4",
-    "image/webp"
+    { type: "image/bmp", icon: iconBmp },
+    { type: "text/csv", icon: iconCsv },
+    { type: "application/vnd.oasis.opendocument.text", icon: iconTxt },
+    { type: "application/msword", icon: iconWord },
+    {
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      icon: iconXml
+    },
+    { type: "image/gif", icon: iconGif },
+    { type: "text/htm", icon: iconHtm },
+    { type: "text/html", icon: iconHtml },
+    { type: "image/jpg", icon: iconJpg },
+    { type: "image/jpeg", icon: iconJpeg },
+    { type: "application/pdf", icon: iconPdf },
+    { type: "image/png", icon: iconPng },
+    { type: "application/vnd.ms-powerpoint", icon: iconPpt },
+    {
+      type: "application/vnd.openxmlformats-officedocument.pr esentationml.presentation",
+      icon: iconXml
+    },
+    { type: "image/tiff", icon: iconTiff },
+    { type: "text/plain", icon: iconTxt },
+    { type: "application/vnd.ms-excel", icon: iconXls },
+    {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      icon: iconSheet
+    },
+    { type: "video/mp4", icon: iconMp4 },
+    { type: "image/webp", icon: iconWebp }
   ];
 
   useEffect(() => {
@@ -105,6 +133,12 @@ export const FilesProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const getMime = (file) => {
+    let mimeFound = mimeAccept.find(
+      (mime) => mime.type.indexOf(file.typeFile) > -1
+    );
+    return mimeFound;
+  };
 
   const handleDownload = (event, file) => {
     let button = event.target;
@@ -118,7 +152,6 @@ export const FilesProvider = ({ children }) => {
   };
 
   const generateLink = (file) => {
-  
     let blob = base64ToBlob(file.fileTask, file.typeFile);
     let dataParams = JSON.stringify({
       url: URL.createObjectURL(blob),
@@ -152,7 +185,7 @@ export const FilesProvider = ({ children }) => {
         fetchGetFiles,
         handleDownload,
         generateLink,
-        mimeAccept,
+        getMime
       }}
     >
       {children}

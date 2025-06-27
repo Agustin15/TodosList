@@ -3,14 +3,19 @@ import iconOpenFile from "../../../assets/img/openDocument.png";
 import iconDownload from "../../../assets/img/download.png";
 import { useFiles } from "../../../context/FilesContext";
 import { useTasks } from "../../../context/TaskContext";
+import  iconFile from "../../../assets/img/file.png";
 
-export const RowFile = ({ file, index }) => {
-  const { handleDownload, generateLink, mimeAccept } = useFiles();
+export const RowFile = ({ file }) => {
+  const { handleDownload, generateLink,  getMime } = useFiles();
   const { formatDate } = useTasks();
+
   return (
-    <tr className={index % 2 == 0 ? styles.trGray : styles.trWhite}>
+    <tr>
       <td>
-        <p>{file.nameFile}</p>
+        <div className={styles.contentCellName}>
+          <img src={getMime(file) ? getMime(file).icon : iconFile}></img>
+          <p>{file.nameFile}</p>
+        </div>
       </td>
       <td>
         <div className={styles.contentCellTypeFile}>{file.typeFile}</div>
@@ -21,11 +26,13 @@ export const RowFile = ({ file, index }) => {
         </div>
       </td>
       <td>
-        <div className={styles.contentCellDescription}>{file.descriptionTask}</div>
+        <div className={styles.contentCellDescription}>
+          {file.descriptionTask}
+        </div>
       </td>
       <td>
         <div className={styles.options}>
-          {mimeAccept.indexOf(file.typeFile) > -1 && (
+          {getMime(file) && (
             <a target="_blank" href={generateLink(file)} title="Open file">
               <img className={styles.openFile} src={iconOpenFile}></img>
             </a>

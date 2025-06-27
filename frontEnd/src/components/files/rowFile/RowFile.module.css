@@ -1,11 +1,3 @@
-.trGray {
-    background-color: rgb(224, 224, 224);
-}
-
-.trWhite {
-    background-color: rgb(255, 255, 255);
-}
-
 .options {
     display: flex;
     align-items: center;
@@ -15,6 +7,17 @@
 .options img {
     width: 19px;
     height: 19px;
+}
+
+.contentCellName {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-weight: bold;
+    gap: 0.9rem;
+}
+.contentCellName img {
+    width: 22px;
 }
 
 .options button {
@@ -49,6 +52,9 @@
         height: 2rem;
     }
 
+    .contentCellName {
+        width: 12rem;
+    }
     .options .openFile {
         width: 31px;
         height: 31px;
@@ -65,7 +71,7 @@
     }
 }
 
-@media only screen and (min-width:700px) and (max-width:1024px)  {
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
     .options {
         width: 8rem;
     }
@@ -86,6 +92,9 @@
         cursor: pointer;
     }
 
+    .contentCellName {
+        width: 12rem;
+    }
     .contentCellTypeFile,
     .contentCellDate {
         width: 9rem;

@@ -1,34 +1,13 @@
-import connection from "../../config/database.js";
-import { Task } from "../../model/todoModel.js";
 import { authRequest } from "../../auth/auth.js";
-import {
-  addFile,
-  findFilesByIdTask,
-  findFilesChanged,
-  deleteFile
-} from "../fileController.js";
-
-import {
-  deleteNotificationFromQueue,
-  updateNotificationQueue
-} from "../notificationsQueue.js";
-import {
-  addNotification,
-  deleteNotification,
-  findNotificationByIdTask,
-  updateNotification
-} from "../notificationsController.js";
-
-import { getJobByIdNotification } from "../scheduledJobController.js";
-import { getSubscriptionsByIdUser } from "../subscriptionPushController.js";
-
-const taskModel = new Task();
+import { TaskService } from "../../services/todoService/taskService.js";
 
 export const getYearsOfTasks = async (req, res) => {
   try {
     const validAuthRequest = await authRequest(req, res);
 
-    const yearsTasks = await taskModel.getYearsTask(validAuthRequest.idUser);
+    const yearsTasks = await TaskService.getYearsOfTasks(
+      validAuthRequest.idUser
+    );
 
     res.status(200).json(yearsTasks);
   } catch (error) {
@@ -42,29 +21,35 @@ export const getYearsOfTasks = async (req, res) => {
 export const getTasksLimitByFilterOption = async (req, res) => {
   let tasks;
   try {
+    const validAuthRequest = await authRequest(req, res);
+
     if (Object.values(req.params.optionGetTasks).length == 0) {
       throw new Error("optionGetTasks undefined");
     }
 
     const params = JSON.parse(req.params.optionGetTasks);
-    const validAuthRequest = await authRequest(req, res);
 
-    tasks = await taskModel.getTasksLimitByFilterOption(
-      validAuthRequest.idUser,
-      params.year,
-      params.month,
-      params.state,
-      params.offset
-    );
-
-    for (const task of tasks) {
-      let filesTask = await findFilesByIdTask(task.idTask);
-      let notificationFound = await findNotificationByIdTask(task.idTask);
-      task.filesUploaded = filesTask;
-      notificationFound.length > 0
-        ? (task.datetimeNotification = notificationFound[0].datetimeSend)
-        : (task.datetimeNotification = "");
+    if (typeof params.offset === "undefined") {
+      throw new Error("Offset undefined");
     }
+
+    if (typeof params.year === "undefined") {
+      throw new Error("Year undefined");
+    }
+    if (typeof params.month === "undefined") {
+      throw new Error("Month undefined");
+    }
+    if (typeof params.state === "undefined") {
+      throw new Error("State undefined");
+    }
+
+    tasks = await TaskService.getTasksLimitByFilterOption(
+      validAuthRequest.idUser,
+      Number(params.year),
+      Number(params.month),
+      Number(params.state),
+      Number(params.offset)
+    );
 
     res.status(200).json(tasks);
   } catch (error) {
@@ -78,18 +63,25 @@ export const getTasksLimitByFilterOption = async (req, res) => {
 export const getQuantityTasksByFilterOption = async (req, res) => {
   let tasks;
   try {
+    const validAuthRequest = await authRequest(req, res);
+
     if (Object.values(req.params.optionGetTasks).length == 0) {
       throw new Error("optionGetTasks undefined");
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
-    const validAuthRequest = await authRequest(req, res);
+    if (typeof params.year === "undefined") {
+      throw new Error("year undefined");
+    }
+    if (typeof params.month === "undefined") {
+      throw new Error("month undefined");
+    }
 
-    tasks = await taskModel.getQuantityTasksByFilterOption(
+    tasks = await TaskService.getQuantityTasksByFilterOption(
       validAuthRequest.idUser,
-      params.year,
-      params.month,
-      params.state
+      Number(params.year),
+      Number(params.month),
+      Number(params.state)
     );
 
     res.status(200).json(tasks);
@@ -103,24 +95,21 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
 
 export const getTaskById = async (req, res) => {
   try {
+    const validAuthRequest = await authRequest(req, res);
     if (Object.values(req.params.optionGetTasks).length == 0) {
       throw new Error("optionGetTasks undefined");
     }
 
     const { id } = JSON.parse(req.params.optionGetTasks);
-    const validAuthRequest = await authRequest(req);
 
-    const taskFoundById = await taskModel.getTaskById(
-      validAuthRequest.idUser,
-      id
-    );
-
-    if (!taskFoundById || taskFoundById.length == 0) {
-      throw new Error("Task not found");
+    if (!id) {
+      throw new Error("idTask undefined");
     }
 
-    let filesTask = await findFilesByIdTask(id);
-    taskFoundById[0].filesUploaded = filesTask;
+    const taskFoundById = await TaskService.getTaskById(
+      validAuthRequest.idUser,
+      Number(id)
+    );
 
     res.status(200).json(taskFoundById);
   } catch (error) {
@@ -131,29 +120,10 @@ export const getTaskById = async (req, res) => {
   }
 };
 
-export const findTasksByIdTask = async (idTask, idUser) => {
-  const taskFound = await taskModel.getTaskById(idUser, idTask);
-  return taskFound;
-};
-
-export const findTaskRecentlyAdded = async (idUser, description, datetime) => {
-  try {
-    const taskFound = await taskModel.getTaskRecentlyAdded(
-      idUser,
-      description,
-      datetime
-    );
-
-    if (taskFound.length == 0) throw new Error("Error,task not found");
-
-    return taskFound[0];
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
 export const createTask = async (req, res) => {
   try {
+    const validAuthRequest = await authRequest(req, res);
+
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null");
     }
@@ -161,56 +131,39 @@ export const createTask = async (req, res) => {
     const task = req.body;
     const files = req.files;
 
-    const validAuthRequest = await authRequest(req);
+    if (typeof task.icon != "string" || task.icon.length == 0)
+      throw new Error("Invalid icon, it must be a string");
 
-    await connection.beginTransaction();
+    if (typeof task.descriptionTask != "string" || task.icon.length == 0)
+      throw new Error("Invalid description, it must be a string");
 
-    const taskCreated = await taskModel.addTask(
+    if (new Date(task.datetimeTask) == "Invalid Date")
+      throw new Error("Invalid datetime task");
+
+    if (
+      task.datetimeNotification.length > 0 &&
+      new Date(task.datetimeNotification) == "Invalid Date"
+    )
+      throw new Error("Invalid datetime notification");
+
+    if (new Date(task.datetimeTask).getTime() <= new Date().getTime())
+      throw new Error("Datetime task must be higher than datetime now");
+
+    if (
+      task.datetimeNotification.length > 0 &&
+      new Date(task.datetimeTask).getTime() <=
+        new Date(task.datetimeNotification).getTime()
+    )
+      throw new Error("Datetime notification must be less than datetime task");
+
+    const taskCreated = await TaskService.createTask(
+      task,
       validAuthRequest.idUser,
-      task.icon,
-      task.descriptionTask,
-      task.datetimeTask,
-      0
+      files
     );
 
-    if (taskCreated == 0) {
-      throw new Error("Error to add task");
-    }
-
-    let taskAddedFound = await findTaskRecentlyAdded(
-      validAuthRequest.idUser,
-      task.descriptionTask,
-      task.datetimeTask
-    );
-
-    if (files.length > 0) {
-      let fileAdded = await addFile(taskAddedFound.idTask, files);
-
-      if (!fileAdded.result) {
-        errorAddFile = true;
-      }
-    }
-
-    let filesTask = await findFilesByIdTask(taskAddedFound.idTask);
-    taskAddedFound.filesUploaded = filesTask;
-    taskAddedFound.datetimeNotification = task.datetimeNotification;
-
-    let userSubscriptions = await getSubscriptionsByIdUser(
-      validAuthRequest.idUser
-    );
-
-    if (userSubscriptions.length > 0 && task.datetimeNotification.length > 0) {
-      await addNotification(
-        userSubscriptions,
-        taskAddedFound,
-        validAuthRequest.idUser
-      );
-    }
-
-    await connection.commit();
-    res.status(201).json(taskAddedFound);
+    res.status(201).json(taskCreated);
   } catch (error) {
-    await connection.rollback();
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
       : 502;
@@ -220,82 +173,53 @@ export const createTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
   try {
+    const validAuthRequest = await authRequest(req, res);
+
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null");
     }
 
-    if (!req.params.id) {
-      throw new Error("id undefined");
-    }
+    if (!req.params.id) throw new Error("idTask undefined");
 
     let task = req.body;
     let files = req.files;
 
-    const validAuthRequest = await authRequest(req);
+    if (typeof task.icon != "string" || task.icon.length == 0)
+      throw new Error("Invalid icon, it must be a string");
 
-    await connection.beginTransaction();
+    if (typeof task.descriptionTask != "string" || task.icon.length == 0)
+      throw new Error("Invalid description, it must be a string");
 
-    const taskUpdated = await taskModel.updateTask(
-      task.icon,
-      task.descriptionTask,
-      task.datetimeTask,
-      task.state,
-      req.params.id
-    );
+    if (new Date(task.datetimeTask) == "Invalid Date")
+      throw new Error("Invalid datetime task");
 
-    if (taskUpdated == 0) {
-      throw new Error("Failed to update task");
-    }
+    if (
+      task.datetimeNotification.length > 0 &&
+      new Date(task.datetimeNotification) == "Invalid Date"
+    )
+      throw new Error("Invalid datetime notification");
 
-    let taskUpdatedFound = await findTasksByIdTask(
-      req.params.id,
+    if (typeof task.state === "undefined") throw new Error("state undefined");
+
+    if (new Date(task.datetimeTask).getTime() <= new Date().getTime())
+      throw new Error("Datetime task must be higher than datetime now");
+
+    if (
+      task.datetimeNotification.length > 0 &&
+      new Date(task.datetimeTask).getTime() <=
+        new Date(task.datetimeNotification).getTime()
+    )
+      throw new Error("Datetime notification must be less than datetime task");
+
+    const taskUpdated = await TaskService.updateTask(
+      task,
+      files,
+      Number(req.params.id),
       validAuthRequest.idUser
     );
 
-    taskUpdatedFound = taskUpdatedFound[0];
-
-    let filesChanged = await findFilesChanged(req.params.id, files);
-    if (filesChanged.filesForAdd.length > 0) {
-      await addFile(req.params.id, filesChanged.filesForAdd);
-    }
-    if (filesChanged.filesForDelete.length > 0) {
-      await deleteFile(filesChanged.filesForDelete);
-    }
-
-    let notification = await findNotificationByIdTask(req.params.id);
-    task.idTask = req.params.id;
-
-    if (notification.length > 0) {
-      if (task.datetimeNotification.length == 0) {
-        await deleteNotification(notification[0].idNotification);
-      } else {
-        await updateNotification(
-          notification[0].idNotification,
-          task.datetimeNotification
-        );
-
-        await updateNotificationQueue(
-          notification[0].idNotification,
-          task,
-          validAuthRequest.idUser
-        );
-      }
-    } else if (task.datetimeNotification.length > 0) {
-      let subscriptions = await getSubscriptionsByIdUser(
-        validAuthRequest.idUser
-      );
-      await addNotification(subscriptions, task, validAuthRequest.idUser);
-    }
-
-    await connection.commit();
-
-    let filesTask = await findFilesByIdTask(req.params.id);
-    taskUpdatedFound.filesUploaded = filesTask;
-    taskUpdatedFound.datetimeNotification = task.datetimeNotification;
-
-    res.status(200).json(taskUpdatedFound);
+    res.status(200).json(taskUpdated);
   } catch (error) {
-    await connection.rollback();
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
       : 502;
@@ -305,64 +229,44 @@ export const updateTask = async (req, res) => {
 
 export const updateStateTask = async (req, res) => {
   try {
-    if (!req.body.newState) {
+    const validAuthRequest = await authRequest(req, res);
+    if (req.body.newState == null) {
       throw new Error("Body request null");
     }
     if (!req.params.id) {
-      throw new Error("id undefined");
+      throw new Error("idTask undefined");
     }
 
-    const validAuthRequest = await authRequest(req, res);
+    if (typeof req.body.newState != "number") {
+      throw new Error("Invalid format new state, must be a number 0 or 1");
+    }
 
-    const taskStateUpdated = await taskModel.updateStateTask(
+    const taskStateUpdated = await TaskService.updateStateTask(
       req.body.newState,
-      req.params.id
+      Number(req.params.id),
+      validAuthRequest.idUser
     );
 
-    if (taskStateUpdated == 0) throw new Error("Failed to update state task");
-
-    let task = await findTasksByIdTask(req.params.id, validAuthRequest.idUser);
-    let filesTask = await findFilesByIdTask(req.params.id);
-    task[0].filesUploaded = filesTask;
-    res.status(200).json(task[0]);
+    res.status(200).json(taskStateUpdated);
   } catch (error) {
-    let errorCodeResponse = error.includes("Authentication") ? 401 : 502;
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 502;
     res.status(errorCodeResponse).json({ messageError: error.message });
   }
 };
 
 export const deleteTask = async (req, res) => {
   try {
-    let jobId;
-
-    if (!req.params.id) {
-      throw new Error("id task undefined");
-    }
-
     await authRequest(req, res);
-
-    await connection.beginTransaction();
-
-    let notificationFound = findNotificationByIdTask(req.params.id);
-
-    if (notificationFound.length > 0) {
-      let jobNotificationFound = getJobByIdNotification(
-        notificationFound[0].idNotification
-      );
-
-      jobId = `'${jobNotificationFound.idJob}'`;
+    if (!req.params.id) {
+      throw new Error("idTask undefined");
     }
 
-    let deletedTask = await taskModel.deleteTask(req.params.id);
+    let deletedTask = await TaskService.deleteTask(req.params.id);
 
-    if (deletedTask == 0) throw new Error("Failed to delete task");
-
-    if (jobId) await deleteNotificationFromQueue(jobId);
-
-    await connection.commit();
     res.status(201).json(deletedTask);
   } catch (error) {
-    await connection.rollback();
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
       : 404;

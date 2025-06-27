@@ -8,11 +8,7 @@ import { userDataRoutes } from "./routes/userDataRoutes.js";
 import { logoutRoutes } from "./routes/logoutRoutes.js";
 import { filesRoutes } from "./routes/filesRoutes.js";
 import { subscriptionRoutes } from "./routes/subscriptionPushRoutes.js";
-import {
-  createNotificationQueue,
-  workerNotificationQueue
-} from "./controllers/notificationsQueue.js";
-
+import { NotificationToQueue } from "./services/notificationsQueue.js";
 export const app = express();
 
 app.use(express.json());
@@ -27,8 +23,8 @@ app.use("/userData", userDataRoutes);
 app.use("/subscription", subscriptionRoutes);
 app.use("/logout", logoutRoutes);
 
-createNotificationQueue();
-workerNotificationQueue();
+NotificationToQueue.createNotificationQueue();
+NotificationToQueue.workerNotificationQueue();
 
 app.use((error, req, res, next) => {
   console.log("Error", error);

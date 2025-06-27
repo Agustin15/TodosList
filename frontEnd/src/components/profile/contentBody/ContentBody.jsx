@@ -1,22 +1,22 @@
 import styles from "./ContentBody.module.css";
 import iconUser from "../../../assets/img/userAvatar.png";
 import iconEmail from "../../../assets/img/emailProfile.png";
-import iconError from "../../../assets/img/errorIcon.png";
 import gifLoadingForm from "../../../assets/img/loadingForm.gif";
-import iconCorrect from "../../../assets/img/correctIcon.png";
+import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
 import iconEdit from "../../../assets/img/edit.png";
 import { AlertInput } from "./alertInput/AlertInput";
 import { useDataUser } from "../../../context/userDataContext";
+import { AlertSwal } from "../../sweetAlert/sweetAlert.js";
 
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
+  const { windowWidth } = useWindowSize();
   const {
     user,
     setUser,
     handleChange,
     values,
     errors,
-    resultForm,
-    setResultForm,
+    btnDisabled,
     updateUser,
     loaderForm
   } = useDataUser();
@@ -35,27 +35,18 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    verfiyErrors();
-    
-    if (!verfiyErrors()) {
-      setResultForm({
-        icon: iconError,
-        msj: "Complete correctly form",
-        state: "Error"
-      });
-    } else {
+
+    if (verfiyErrors()) {
       let userUpdated = await updateUser();
       if (userUpdated) {
-        setResultForm({
-          icon: iconCorrect,
-          msj: "User updated succesfully",
-          state: "Correct"
-        });
+        AlertSwal(
+          "User updated succesfully!",
+          "Success",
+          "success",
+          windowWidth
+        );
 
         setUser(userUpdated);
-        setTimeout(() => {
-          setResultForm();
-        }, 3000);
       }
     }
   };
@@ -138,12 +129,14 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
           </div>
         </div>
 
-        <button type="submit">
+        <button
+          className={btnDisabled ? styles.btnDisabled : styles.btnEnabled}
+          disabled={btnDisabled}
+          type="submit"
+        >
           Save
           {loaderForm && <img src={gifLoadingForm}></img>}
         </button>
-
-        {resultForm && <AlertForm result={resultForm}></AlertForm>}
       </form>
     </>
   );

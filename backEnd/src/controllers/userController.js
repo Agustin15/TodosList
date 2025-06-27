@@ -1,41 +1,41 @@
-import bcrypt from "bcrypt";
-import { User } from "../model/userModel.js";
+import { UserService } from "../services/userService.js";
 import { authRequest, authRequestResetPassword } from "../auth/auth.js";
-
-const userModel = new User();
 
 export const createUser = async (req, res) => {
   try {
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null");
     }
-
     const userToAdd = req.body;
-    const userFoundByEmail = await findUserByEmail(userToAdd.email);
 
-    if (userFoundByEmail.length > 0) {
-      throw new Error("Email is already taken");
-    }
+    let regexEmail = /\S+@\S+\.\S+/;
+    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
 
-    const saltRounds = 10;
-    bcrypt.hash(userToAdd.password, saltRounds, async (err, hash) => {
-      if (err) {
-        throw new Error({ messageError: "Internal server error" });
-      }
+    if (
+      !userToAdd.name ||
+      userToAdd.name.length == 0 ||
+      !UserService.verifyValidString(userToAdd.name)
+    )
+      throw new Error("Invalid name");
 
-      userToAdd.password = hash;
-      const userCreated = await userModel.addUser(
-        userToAdd.name,
-        userToAdd.lastname,
-        userToAdd.email,
-        userToAdd.password
+    if (
+      !userToAdd.lastname ||
+      userToAdd.lastname.length == 0 ||
+      !UserService.verifyValidString(userToAdd.lastname)
+    )
+      throw new Error("Invalid lastname");
+
+    if (!userToAdd.email || !regexEmail.test(userToAdd.email))
+      throw new Error("Invalid format email");
+
+    if (!userToAdd.password || !regexPassword.test(userToAdd.password))
+      throw new Error(
+        "Invalid format password,it must be minime eight characters and must has mayus and minus letters and some number"
       );
 
-      if (userCreated == 0) {
-        throw new Error("Error to add user");
-      }
-      res.status(201).json(userCreated);
-    });
+    const userCreated = await UserService.createUser(userToAdd);
+
+    res.status(201).json(userCreated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
@@ -51,28 +51,15 @@ export const getUserByEmail = async (req, res) => {
     }
 
     const email = req.params.email;
-    const userFound = await userModel.getUserByEmail(email);
+
+    let regexEmail = /\S+@\S+\.\S+/;
+
+    if (!regexEmail.test(email)) throw new Error("Invalid format email");
+
+    const userFound = await UserService.getUserByEmail(email);
     res.status(200).json(userFound);
   } catch (error) {
     res.status(502).json({ messageError: error });
-  }
-};
-
-export const findUserByEmail = async (email) => {
-  try {
-    const userFound = await userModel.getUserByEmail(email);
-    return userFound;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const findUserByIdUser = async (idUser) => {
-  try {
-    const userFound = await userModel.getUserById(idUser);
-    return userFound;
-  } catch (error) {
-    throw error;
   }
 };
 
@@ -80,8 +67,7 @@ export const getUserDataByToken = async (req, res) => {
   try {
     const validAuth = await authRequest(req, res);
 
-    let userFound = await findUserByIdUser(validAuth.idUser);
-    userFound = userFound[0];
+    let userFound = await UserService.findUserByIdUser(validAuth.idUser);
     userFound.name = userFound.nameUser;
     delete userFound.nameUser;
 
@@ -96,47 +82,33 @@ export const getUserDataByToken = async (req, res) => {
 
 export const updatePasswordUserById = async (req, res) => {
   try {
+    const decodeTokenAuth = await authRequest(req, res);
+
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null");
     }
 
+    if (!req.body.password) throw new Error("Password undefined");
+    if (!req.body.currentPassword)
+      throw new Error("Current password undefined");
+
     const newPassword = req.body.password;
+    const currentPassword = req.body.currentPassword;
+    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
 
-    const decodeTokenAuth = await authRequest(req, res);
-
-    if (req.body.currentPassword) {
-      const currentPassword = req.body.currentPassword;
-
-      const userFound = await findUserByIdUser(decodeTokenAuth.idUser);
-      if (!userFound.length > 0) {
-        throw new Error("User not found");
-      }
-
-      const passwordVerify = await bcrypt.compare(
-        currentPassword,
-        userFound[0].passwordUser
+    if (!regexPassword.test(newPassword))
+      throw new Error(
+        "Invalid format password,it must be minime eight characters and must has mayus and minus letters and some number"
       );
 
-      if (!passwordVerify) {
-        throw new Error("Invalid current password");
-      }
-    }
+    const userUpdated = await UserService.updatePasswordUserById(
+      decodeTokenAuth.idUser,
+      newPassword,
+      currentPassword
+    );
 
-    bcrypt.hash(newPassword, 10, async (err, hash) => {
-      if (err) {
-        throw new Error({ messageError: "Internal server error" });
-      }
-
-      const userUpdated = await userModel.updatePasswordUserById(
-        hash,
-        decodeTokenAuth.idUser
-      );
-
-      if (userUpdated == 0) {
-        throw new Error("Error to update user");
-      }
-      res.status(200).json(userUpdated);
-    });
+    console.log(userUpdated);
+    res.status(200).json(userUpdated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
@@ -147,29 +119,28 @@ export const updatePasswordUserById = async (req, res) => {
 
 export const updatePasswordByEmail = async (req, res) => {
   try {
+    const decodeToken = await authRequestResetPassword(req, res);
+
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null");
     }
 
+    if (!req.body.newPassword) throw new Error("New password undefined");
     const newPassword = req.body.newPassword;
 
-    const decodeToken = await authRequestResetPassword(req, res);
+    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
 
-    bcrypt.hash(newPassword, 10, async (err, hash) => {
-      if (err) {
-        throw new Error({ messageError: "Internal server error" });
-      }
-
-      const passwordUpdated = await userModel.updatePasswordUserByEmail(
-        hash,
-        decodeToken.mail
+    if (!regexPassword.test(newPassword))
+      throw new Error(
+        "Invalid format password,it must be minime eight characters and must has mayus and minus letters and some number"
       );
 
-      if (passwordUpdated == 0) {
-        throw new Error("Error to update password user");
-      }
-      res.status(200).json(passwordUpdated);
-    });
+    const passwordUpdated = await UserService.updatePasswordByEmail(
+      decodeToken.mail,
+      newPassword
+    );
+
+    res.status(200).json(passwordUpdated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
@@ -180,41 +151,30 @@ export const updatePasswordByEmail = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
   try {
-    let userFound;
+    await authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null");
     }
-    if (!req.params.id) {
-      throw new Error("id undefined");
-    }
+    if (!req.params.id) throw new Error("idUser undefined");
+
+    if (!req.body.name) throw new Error("Name undefined");
+    if (!req.body.lastname) throw new Error("Lastname undefined");
+
     const idUser = req.params.id;
     const { name, lastname } = req.body;
 
-    userFound = await findUserByIdUser(idUser);
-    if (!userFound.length > 0) {
-      throw new Error("User not found");
-    }
-    await authRequest(req, res);
+    if (!UserService.verifyValidString(name)) throw new Error("Invalid name");
+    if (!UserService.verifyValidString(lastname))
+      throw new Error("Invalid lastname");
 
-    const userUpdated = await userModel.updateUser(
+    const userUpdated = await UserService.updateUserById(
       name,
       lastname,
-      userFound[0].email,
-      userFound[0].passwordUser,
-      userFound[0].idUser
+      idUser
     );
 
-    if (userUpdated == 0) {
-      throw new Error("User not updated");
-    }
-
-    userFound = await findUserByIdUser(idUser);
-    userFound = userFound[0];
-    userFound.name = userFound.nameUser;
-    delete userFound.nameUser;
-
-    res.status(200).json(userFound);
+    res.status(200).json(userUpdated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
@@ -224,52 +184,27 @@ export const updateUserById = async (req, res) => {
 };
 
 export const updateEmailUser = async (req, res) => {
-  let userFound;
   try {
+    const validAuth = await authRequest(req, res);
     if (!req.body.newEmail) {
-      throw new Error("new email undefined");
+      throw new Error("New email undefined");
     }
     if (!req.body.password) {
-      throw new Error("password undefined");
+      throw new Error("Password undefined");
     }
 
     const newEmail = req.body.newEmail;
     const password = req.body.password;
+    let regexEmail = /\S+@\S+\.\S+/;
 
-    const validAuth = await authRequest(req, res);
+    if (!regexEmail.test(newEmail)) throw new Error("Invalid format email");
 
-    const userEmailUsed = await findUserByEmail(newEmail);
-
-    if (userEmailUsed.length > 0) {
-      throw new Error("Failed to update, email in use");
-    }
-
-    userFound = await findUserByIdUser(validAuth.idUser);
-
-    if (!userFound.length > 0) {
-      throw new Error("User not found");
-    }
-    const passwordVerify = await bcrypt.compare(
-      password,
-      userFound[0].passwordUser
-    );
-
-    if (!passwordVerify) {
-      throw new Error("Failed to update, invalid password");
-    }
-    let resultUpdated = await userModel.updateEmailUserById(
+    let userUpdated = await UserService.updateEmailUser(
       newEmail,
+      password,
       validAuth.idUser
     );
-
-    if (resultUpdated == 0) throw new Error("Failed to update email user");
-
-    userFound = await findUserByIdUser(validAuth.idUser);
-
-    if (!userFound.length > 0) {
-      throw new Error("User not found");
-    }
-    res.status(200).json(userFound[0]);
+    res.status(200).json(userUpdated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401

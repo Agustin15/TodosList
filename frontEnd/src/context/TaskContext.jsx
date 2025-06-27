@@ -223,7 +223,7 @@ export const TaskProvider = ({ children }) => {
           "Content-Type": "application/json"
         },
 
-        body: JSON.stringify({ newState: newState })
+        body: JSON.stringify({ newState: newState ? 1 : 0 })
       });
       const result = await response.json();
 

@@ -51,7 +51,7 @@ export const Files = () => {
         <div className={styles.contentTable}>
           <div className={styles.header}>
             <div className={styles.title}>
-              <h3>Files uploaded</h3>
+              <h3>Unit Files</h3>
               <img src={iconFilesSaved}></img>
             </div>
             <div className={styles.containSearch}>
@@ -98,7 +98,7 @@ export const Files = () => {
                 {quantityFiles == 0 && !loading && <NotFiles />}
                 {files.length > 0 && !loading
                   ? files.map((file, index) => (
-                      <RowFile file={file} index={index} />
+                      <RowFile file={file} key={index} />
                     ))
                   : ""}
               </tbody>

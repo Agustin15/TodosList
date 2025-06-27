@@ -7,18 +7,21 @@ export const UserDataProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [loadingUser, setLoadingUser] = useState(false);
   const [loadingForm, setLoadingForm] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(true);
   const [values, setValues] = useState({
     name: "",
     lastname: ""
   });
 
   const [errors, setErrors] = useState({ name: "", lastname: "" });
-  const [resultForm, setResultForm] = useState();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setValues({ ...values, [name]: value });
 
+    if (user[name] != value) setBtnDisabled(false);
+    else setBtnDisabled(true);
+
+    setValues({ ...values, [name]: value });
     if (value.length == 0 || !verifyValidString(value)) {
       setErrors({ ...errors, [name]: "Invalid " + name });
     } else {
@@ -65,7 +68,6 @@ export const UserDataProvider = ({ children }) => {
         location.href = urlFront + "/login";
       }
       if (result) {
-
         setUser(result);
       }
     } catch (error) {
@@ -129,11 +131,10 @@ export const UserDataProvider = ({ children }) => {
         getUserData,
         handleChange,
         values,
+        btnDisabled,
         errors,
         setErrors,
         setValues,
-        resultForm,
-        setResultForm,
         user,
         setUser,
         loadingUser,

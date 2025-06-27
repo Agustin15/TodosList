@@ -2,11 +2,8 @@ import express from "express";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import { authRequestResetPassword } from "../auth/auth.js";
-
-import {
-  findUserByEmail,
-  updatePasswordByEmail
-} from "../controllers/userController.js";
+import { UserService } from "../services/userService.js";
+import { updatePasswordByEmail } from "../controllers/userController.js";
 
 export const resetPasswordRoutes = express.Router();
 
@@ -17,22 +14,29 @@ resetPasswordRoutes.get("/", async function (req, res) {
 
 resetPasswordRoutes.patch("/", updatePasswordByEmail);
 
-
 resetPasswordRoutes.post("/", async (req, res) => {
-  let errorCodeResponse = 500;
   try {
-     if (!req.body) {
+    if (!req.body) {
       throw new Error("Body request null");
     }
-    
+
+    if (!req.body.mail) throw new Error("Email undefined");
+    if (!process.env.JWT_SECRET_KEY)
+      throw new Error("JWT secret key not declared");
+    if (!process.env.APP_MAIL)
+      throw new Error("App mail not declared");
+     if (!process.env.PASSWORD_APP_MAIL)
+      throw new Error("App password mail not declared");
+
+
     const mail = req.body.mail;
     const secretKey = process.env.JWT_SECRET_KEY;
 
-    const userFound = await findUserByEmail(mail);
-    if (!userFound || !userFound.length > 0) {
-      errorCodeResponse = 404;
+    const userFound = await UserService.findUserByEmail(mail);
+    if (!userFound) {
       throw new Error("Email not recognized");
     }
+
     const tokenResetPassword = jwt.sign({ mail: mail }, secretKey, {
       algorithm: "HS256",
       expiresIn: "15m"
@@ -43,14 +47,14 @@ resetPasswordRoutes.post("/", async (req, res) => {
       port: 587,
       secure: false,
       auth: {
-        user: process.env.USER_MAIL,
+        user: process.env.APP_MAIL,
         pass: process.env.PASSWORD_APP_MAIL
       }
     });
 
     async function main() {
       const info = await transporter.sendMail({
-        from: process.env.USER_MAIL,
+        from: process.env.APP_MAIL,
         to: mail,
         subject: "Reset password",
         html: `<!DOCTYPE html>
@@ -90,6 +94,6 @@ resetPasswordRoutes.post("/", async (req, res) => {
       res.status(200).json(idMessage);
     }
   } catch (error) {
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res.status(500).json({ messageError: error.message });
   }
 });

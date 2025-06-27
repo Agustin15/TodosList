@@ -218,7 +218,6 @@ form button {
   width: 9rem;
   height: 1.7rem;
   gap: 0.5rem;
-  background-color: rgb(48, 48, 209);
   color: white;
   font-weight: bold;
   border: none;
@@ -231,9 +230,19 @@ form button img {
   height: 18px;
 }
 
-form button:hover {
+
+form .btnDisabled {
+  background-color: rgb(28, 28, 136);
+}
+
+form .btnEnabled {
+  background-color: rgb(48, 48, 209);
+}
+
+form .btnEnabled :hover {
   background-color: rgb(32, 32, 161);
 }
+
 
 form .editInput {
   position: absolute;
