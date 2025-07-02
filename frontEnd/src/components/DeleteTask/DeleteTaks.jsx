@@ -13,8 +13,8 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
     getTasksFilter,
     indexSelected,
     setIndexSelected,
-    getTasksThisWeekUserLimit,
-    getTasksThisWeekUser,
+    getTasksThisWeekByStateAndUser,
+    getTasksThisWeekByStateAndUserLimit,
     refCheckBoxThisWeek
   } = useFilterOptionTasks();
 
@@ -30,8 +30,8 @@ const DeleteTask = ({ task, setOpenModalDelete }) => {
 
   const eventDeleted = () => {
     if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekUser();
-      getTasksThisWeekUserLimit(
+      getTasksThisWeekByStateAndUser();
+      getTasksThisWeekByStateAndUserLimit(
         tasks.length == 1 && indexSelected > 1
           ? indexSelected
           : indexSelected + 1,

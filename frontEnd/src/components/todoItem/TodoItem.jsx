@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import styles from "./TodoItem.module.css";
 import iconDelete from "../../assets/img/delete.png";
 import iconInfo from "../../assets/img/info.png";
@@ -36,7 +36,7 @@ const TodoItem = ({ task, index }) => {
     <>
       <li
         key={task.id}
-        style={{ background: index % 2 == 0 ? "rgb(240, 238, 238)" : "white" }}
+        style={{ background: index % 2 == 0 ? "rgb(221, 221, 221)" : "rgb(241, 241, 241)" }}
         className={styles.task}
       >
         <div className={styles.info}>

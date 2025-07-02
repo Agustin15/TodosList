@@ -1,7 +1,7 @@
 import connection from "../config/database.js";
 
 export class File {
-  async addFile(idTask, nameFile, typeFile, file) {
+  async post(idTask, nameFile, typeFile, file) {
     try {
       const [result] = await connection.execute(
         "Insert into files (idTask,nameFile,typeFile,datetimeUpload,fileTask) values(?,?,?,CURRENT_TIME(),?)",
@@ -13,7 +13,7 @@ export class File {
     }
   }
 
-  async deleteFile(idFile) {
+  async delete(idFile) {
     try {
       const [result] = await connection.execute(
         "delete from files where idFile=?",

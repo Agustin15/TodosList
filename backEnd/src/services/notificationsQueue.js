@@ -1,6 +1,6 @@
 import { Worker, Queue } from "bullmq";
 import webpush from "web-push";
-
+import { io } from "../app.js";
 import { SubscriptionPushService } from "./subscriptionPushService.js";
 import { NotificationService } from "./notificationService.js";
 import { ScheduledJobService } from "./scheduledJobService.js";
@@ -115,11 +115,19 @@ export const NotificationToQueue = {
               sent = true;
             }
           }
-          if (sent)
+          if (sent) {
             await NotificationService.updateStateNotification(
               task.idTask,
-              "sent"
+              "sent",
+              "notificationSent"
             );
+
+            io.on("connection", async (socket) => {
+              let notifications =
+                await NotificationService.findNotificationsSentTasksUser(idUser);
+              socket.emit("newNotifications", notifications);
+            });
+          }
         },
         {
           connection: connection

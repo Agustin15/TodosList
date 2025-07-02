@@ -5,7 +5,7 @@ const scheduledJobModel = new ScheduledJob();
 export const ScheduledJobService = {
   addJob: async (idNotification) => {
     try {
-      let resultAdded = await scheduledJobModel.addJob(idNotification);
+      let resultAdded = await scheduledJobModel.post(idNotification);
       if (resultAdded == 0) throw new Error("Failed to add scheduled job");
 
       return resultAdded;

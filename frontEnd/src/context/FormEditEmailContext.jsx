@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { AlertSwal } from "../components/sweetAlert/sweetAlert.js";
+import { AlertFormSwal } from "../components/sweetAlert/sweetAlert.js";
 import { useWindowSize } from "./WindowSizeContext.jsx";
 const FormEditEmailContext = createContext();
 
@@ -81,7 +81,7 @@ export const FormEditEmailProvider = ({ children }) => {
           ? error
           : "Email not updated";
 
-      AlertSwal(errorUpdated, "Oops", "error", windowWidth);
+      AlertFormSwal(errorUpdated, "Oops", "error", windowWidth);
     } finally {
       setLoading(false);
       return data;

@@ -27,9 +27,10 @@ export const FilterOptionTasksProvider = ({ children }) => {
     }
   }, [indexSelected]);
 
-  const getTasksThisWeekUser = async () => {
+  const getTasksThisWeekByStateAndUser = async () => {
     const optionGetTasks = {
-      option: "getTasksThisWeekUser"
+      option: "getTasksThisWeekByStateAndUser",
+      state: refSelectState.current.value
     };
 
     setLoadingFilter(true);
@@ -59,10 +60,11 @@ export const FilterOptionTasksProvider = ({ children }) => {
     }
   };
 
-  const getTasksThisWeekUserLimit = async (offset, dispatch) => {
+  const getTasksThisWeekByStateAndUserLimit = async (offset, dispatch) => {
     const optionGetTasks = {
-      option: "getTasksThisWeekUserLimit",
-      offset: (offset - 1) * 10
+      option: "getTasksThisWeekByStateAndUserLimit",
+      offset: (offset - 1) * 10,
+      state: refSelectState.current.value
     };
 
     setLoadingFilter(true);
@@ -206,8 +208,8 @@ export const FilterOptionTasksProvider = ({ children }) => {
         refInputNumberIndex,
         getTasksFilter,
         getQuantityTasksFilter,
-        getTasksThisWeekUser,
-        getTasksThisWeekUserLimit,
+        getTasksThisWeekByStateAndUser,
+        getTasksThisWeekByStateAndUserLimit,
         getYearsOfTasks,
         loadingFilter,
         quantityTasks,

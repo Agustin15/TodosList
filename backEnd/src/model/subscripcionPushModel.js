@@ -1,7 +1,7 @@
 import connection from "../config/database.js";
 
 export class SubscriptionPush {
-  async addSubscriptionUser(idUser, endpointURL, p256dh, auth) {
+  async post(idUser, endpointURL, p256dh, auth) {
     try {
       const [result] = await connection.execute(
         "INSERT INTO subscription (idUser,endpointURL,p256dh,auth) values (?,?,?,?)",
@@ -15,7 +15,7 @@ export class SubscriptionPush {
     }
   }
 
-  async deleteSubscription(endpointURL) {
+  async delete(endpointURL) {
     try {
       const [result] = await connection.execute(
         "delete from subscription where endpointURL=?",
@@ -38,17 +38,7 @@ export class SubscriptionPush {
       throw new Error(error);
     }
   }
-  async getSubscriptionsDistinctByIdNotification(idNotification, endpointURL) {
-    try {
-      const [results] = await connection.execute(
-        "select * from notifications_subscription where idNotification=? and endpointURL!=?",
-        [idNotification, endpointURL]
-      );
-      return results;
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
+  
 
   async getSubscriptionByEndpoint(endpointURL) {
     try {

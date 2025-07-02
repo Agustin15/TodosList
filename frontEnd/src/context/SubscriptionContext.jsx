@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import stylesAlert from "../components/notifications/alertState/AlertStateSubscription.module.css";
 import { useContext } from "react";
+import { useWindowSize } from "./WindowSizeContext.jsx";
+import { AlertUnsubscribeSwal } from "../components/sweetAlert/sweetAlert.js";
 const applicationServerKey = import.meta.env.VITE_APPLICATION_SERVER;
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
@@ -12,6 +14,7 @@ export const SubscriptionProvider = ({ children }) => {
   const [styleAlert, setStyleAlert] = useState(stylesAlert.alertHability);
   const [subscribed, setSubscribed] = useState();
   const [msjErrorSubscription, setMsjErrorSubscription] = useState();
+  const { windowWidth } = useWindowSize();
 
   useEffect(() => {
     stateSubscribe();
@@ -78,9 +81,7 @@ export const SubscriptionProvider = ({ children }) => {
           applicationServerKey: applicationServerKey
         });
 
-        let result = await fetchSaveSubscription(
-          subscriptionCreated
-        );
+        let result = await fetchSaveSubscription(subscriptionCreated);
         if (result) {
           setSubscribed(subscriptionCreated);
           showAlert();
@@ -97,29 +98,35 @@ export const SubscriptionProvider = ({ children }) => {
   };
 
   const unsubscribe = async () => {
-    let deleteSubs = await fetchDeleteSubscriptions();
-    if (!deleteSubs) {
-      setMsjErrorSubscription("Error to unsubscribe");
-    } else {
-      let unsubscribe = await subscribed.unsubscribe();
-      if (unsubscribe) {
-        setMsjErrorSubscription("");
-        setSubscribed();
-        showAlert();
+    let confirmUnsubscription = await AlertUnsubscribeSwal(windowWidth);
+    if (confirmUnsubscription) {
+      let deleteSubs = await fetchDeleteSubscriptions();
+      if (!deleteSubs) {
+        setMsjErrorSubscription("Error to unsubscribe");
+      } else {
+        let unsubscribe = await subscribed.unsubscribe();
+        if (unsubscribe) {
+          setMsjErrorSubscription("");
+          setSubscribed();
+          showAlert();
+        }
       }
     }
   };
 
   const fetchDeleteSubscriptions = async () => {
     let data;
-    let param = { endpoint: encodeURIComponent(subscribed.endpoint)};
+    let param = { endpoint: encodeURIComponent(subscribed.endpoint) };
     try {
-      const response = await fetch("/api/subscription/" + JSON.stringify(param), {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
+      const response = await fetch(
+        "/api/subscription/" + JSON.stringify(param),
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
-      });
+      );
       const result = await response.json();
       if (!response.ok) {
         if (response.status == 404) {

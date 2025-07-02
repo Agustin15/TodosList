@@ -4,7 +4,7 @@
     align-items: start;
     margin-top: 0;
     padding-bottom: 3rem;
-    background-color: rgba(236, 236, 236, 0.685);
+    background: rgb(247, 247, 247);
 }
 
 .rowDashboard {
@@ -28,7 +28,7 @@
         justify-content: start;
         align-items: start;
         padding-bottom: 3rem;
-        background-color: rgb(243, 243, 243);
+        background: rgb(247, 247, 247);
         height: auto;
         margin-top: 0;
     }
@@ -52,12 +52,12 @@
 }
 
 @media only screen and (min-width: 700px) and (max-width: 1024px) {
-     .containDashboard {
+    .containDashboard {
         display: flex;
         justify-content: start;
         align-items: start;
         padding-bottom: 3rem;
-        background-color: rgb(243, 243, 243);
+        background: rgb(241, 241, 241);
         height: auto;
         margin-top: 0;
     }

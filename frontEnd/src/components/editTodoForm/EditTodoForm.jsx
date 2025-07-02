@@ -5,15 +5,14 @@ import { useForm } from "../../context/formTaskContext/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 import { useEffect } from "react";
-import { AlertSwal } from "../sweetAlert/sweetAlert.js";
-import {ValidationFormError} from "../../ValidationForm.js";
+import { AlertFormSwal } from "../sweetAlert/sweetAlert.js";
+import { ValidationFormError } from "../../ValidationForm.js";
 
 const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const [values, setValues] = useState({ ...task });
   const {
     validationInput,
     validationForm,
-    setResultForm,
     stateCheckbox,
     verifiyChangedValues,
     setUpdateEnabled,
@@ -92,7 +91,7 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
       title = error instanceof ValidationFormError ? "Warning" : "Oops";
       msj = error;
     } finally {
-      AlertSwal(msj, title, icon);
+      AlertFormSwal(msj, title, icon);
     }
   };
 

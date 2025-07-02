@@ -1,6 +1,6 @@
 import connection from "../config/database.js";
 export class Task {
-  async addTask(idUser, icon, descriptionTask, dateTask, isCompleted) {
+  async post(idUser, icon, descriptionTask, dateTask, isCompleted) {
     try {
       const [result] = await connection.execute(
         "INSERT INTO tasks (idUser,icon,descriptionTask,datetimeTask,isCompleted) VALUES (?,?,?,?,?)",
@@ -11,7 +11,7 @@ export class Task {
       throw new Error(error);
     }
   }
-  async updateTask(icon, descriptionTask, dateTask, isCompleted, idTask) {
+  async put(icon, descriptionTask, dateTask, isCompleted, idTask) {
     try {
       const [result] = await connection.execute(
         "Update tasks set icon=?,descriptionTask=?,datetimeTask=?,isCompleted=? where idTask=?",
@@ -23,7 +23,7 @@ export class Task {
     }
   }
 
-  async updateStateTask(newState, idTask) {
+  async patchStateTask(newState, idTask) {
     try {
       const [result] = await connection.execute(
         "Update tasks set isCompleted=? where idTask=?",
@@ -35,7 +35,7 @@ export class Task {
       throw new Error(error);
     }
   }
-  async deleteTask(idTask) {
+  async delete(idTask) {
     try {
       const [result] = await connection.execute(
         "delete from tasks where idTask=?",
@@ -46,10 +46,33 @@ export class Task {
       throw new Error(error);
     }
   }
-  async getTasksThisWeekUser(idUser, firstSunday, nextSaturday) {
+  async getTasksThisWeekByStateAndUser(
+    idUser,
+    firstSunday,
+    nextSaturday,
+    state
+  ) {
     try {
       const [results] = await connection.execute(
-        "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc",
+        `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=?
+         ORDER BY datetimeTask desc`,
+        [idUser, firstSunday, nextSaturday, state]
+      );
+
+      return results;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getTasksThisWeekUser(
+    idUser,
+    firstSunday,
+    nextSaturday,
+  ) {
+    try {
+      const [results] = await connection.execute(
+        `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc`,
         [idUser, firstSunday, nextSaturday]
       );
 
@@ -58,11 +81,18 @@ export class Task {
       throw new Error(error);
     }
   }
-  async getTasksThisWeekUserLimit(idUser, firstSunday, nextSaturday, index) {
+  async getTasksThisWeekByStateAndUserLimit(
+    idUser,
+    firstSunday,
+    nextSaturday,
+    index,
+    state
+  ) {
     try {
       const [results] = await connection.execute(
-        `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc LIMIT 10 OFFSET ${index}  `,
-        [idUser, firstSunday, nextSaturday]
+        `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=? ORDER 
+        BY datetimeTask desc LIMIT 10 OFFSET ${index} `,
+        [idUser, firstSunday, nextSaturday, state]
       );
 
       return results;

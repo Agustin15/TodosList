@@ -1,8 +1,7 @@
 import Swal from "sweetalert2";
 import styles from "./sweetAlertCustom.module.css";
 
-export const AlertSwal = (msj, title, icon,windowWidth) => {
-
+export const AlertFormSwal = (msj, title, icon, windowWidth) => {
   Swal.fire({
     title: title,
     html: `
@@ -23,4 +22,24 @@ export const AlertSwal = (msj, title, icon,windowWidth) => {
           : styles.customBtnConfirmSuccess
     }
   });
+};
+
+export const AlertUnsubscribeSwal = async (windowWidth) => {
+  let confirm = await Swal.fire({
+    icon: "question",
+    title: "Do you want unsubscribe?",
+    html: `<p class=${styles.customMsj}>you will not receive notifications in this browser</p>`,
+    showCancelButton: true,
+    width: windowWidth <= 699 ? 400 : 490,
+    confirmButtonText: "Confirm",
+    customClass: {
+      icon:styles.customIcon,
+      title: styles.customTitle,
+      confirmButton: styles.customBtnConfirmError,
+      cancelButton:styles.customCancel
+    }
+  }).then((result) => {
+    return result.isConfirmed;
+  });
+  return confirm;
 };

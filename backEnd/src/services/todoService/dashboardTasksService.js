@@ -1,6 +1,5 @@
 import { Task } from "../../model/todoModel.js";
 import { FileService } from "../fileService.js";
-import { NotificationService } from "../notificationService.js";
 const taskModel = new Task();
 
 export const DashboardTasksService = {
@@ -61,39 +60,6 @@ export const DashboardTasksService = {
     }
   },
 
-  getTasksThisWeekUserLimit: async (offset, idUser) => {
-    try {
-      let firstSunday = DashboardTasksService.getFirstSunday();
-      let nextSaturday = DashboardTasksService.getNextSaturday();
-
-      let tasksThisWeekUser = await taskModel.getTasksThisWeekUserLimit(
-        idUser,
-        firstSunday,
-        nextSaturday,
-        offset
-      );
-
-      tasksThisWeekUser = await Promise.all(
-        tasksThisWeekUser.map(async (task) => {
-          let filesTask = await FileService.findFilesByIdTask(task.idTask);
-          let notificationFound =
-            await NotificationService.findNotificationByIdTask(task.idTask);
-          notificationFound.length > 0
-            ? (task.datetimeNotification = notificationFound[0].datetimeSend)
-            : (task.datetimeNotification = "");
-
-          task.filesUploaded = filesTask;
-
-          return task;
-        })
-      );
-
-      return tasksThisWeekUser;
-    } catch (error) {
-      throw error;
-    }
-  },
-
   getTasksThisWeekUser: async (idUser) => {
     try {
       let firstSunday = DashboardTasksService.getFirstSunday();
@@ -104,7 +70,6 @@ export const DashboardTasksService = {
         firstSunday,
         nextSaturday
       );
-
       tasksThisWeekUser = await Promise.all(
         tasksThisWeekUser.map(async (task) => {
           let dateTask = new Date(task.datetimeTask);

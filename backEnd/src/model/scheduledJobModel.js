@@ -1,7 +1,7 @@
 import connection from "../config/database.js";
 
 export class ScheduledJob {
-  async addJob(idNotification) {
+  async post(idNotification) {
     try {
       const [result] = await connection.execute(
         "INSERT INTO scheduledJob (idNotification) values (?)",

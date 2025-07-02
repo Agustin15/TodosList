@@ -7,7 +7,7 @@ import { useFormEditEmail } from "../../../context/FormEditEmailContext";
 import { useFormEditPassword } from "../../../context/FormEditPasswordContext";
 import { useDataUser } from "../../../context/userDataContext";
 import { useEffect } from "react";
-import { AlertSwal } from "../../sweetAlert/sweetAlert.js";
+import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
 import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
 
 const FormEditEmail = ({ email, setModalEditEmail }) => {
@@ -39,7 +39,7 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
       const updateEmail = async () => {
         let userUpdated = await fetchUpdateEmail();
         if (userUpdated) {
-          AlertSwal(
+          AlertFormSwal(
             "Email updated sucesfully!",
             "Success",
             "success",

@@ -5,13 +5,13 @@
 .containPaginationShow {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
     gap: 0.5rem;
-    width: auto;
+    width: 100%;
+    background-color: white;
     color: rgb(112, 112, 112);
-    height: auto;
-    margin-top: 1rem;
-    border-radius: 5px;
+    height: 3rem;
+    margin-top: 0;
 }
 
 .containPaginationShow li,
@@ -60,7 +60,7 @@
 }
 
 .btnNextDisabled img,
-.btnNextEnabled img{
+.btnNextEnabled img {
     transform: rotate(180deg);
 }
 

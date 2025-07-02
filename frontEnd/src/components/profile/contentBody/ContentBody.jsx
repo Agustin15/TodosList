@@ -6,7 +6,7 @@ import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
 import iconEdit from "../../../assets/img/edit.png";
 import { AlertInput } from "./alertInput/AlertInput";
 import { useDataUser } from "../../../context/userDataContext";
-import { AlertSwal } from "../../sweetAlert/sweetAlert.js";
+import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
 
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   const { windowWidth } = useWindowSize();
@@ -39,7 +39,7 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
     if (verfiyErrors()) {
       let userUpdated = await updateUser();
       if (userUpdated) {
-        AlertSwal(
+        AlertFormSwal(
           "User updated succesfully!",
           "Success",
           "success",

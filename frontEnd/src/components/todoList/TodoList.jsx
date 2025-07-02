@@ -19,8 +19,11 @@ import { SubscriptionProvider } from "../../context/SubscriptionContext";
 
 const TodoList = () => {
   const { tasks, getTaskById, dispatch } = useTasks();
-  const { getTasksThisWeekUser, getTasksThisWeekUserLimit, loadingFilter } =
-    useFilterOptionTasks();
+  const {
+    getTasksThisWeekByStateAndUser,
+    getTasksThisWeekByStateAndUserLimit,
+    loadingFilter
+  } = useFilterOptionTasks();
 
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -31,8 +34,8 @@ const TodoList = () => {
     if (idTask) {
       getTaskById({ id: idTask });
     } else {
-      getTasksThisWeekUser();
-      getTasksThisWeekUserLimit(1, dispatch);
+      getTasksThisWeekByStateAndUser();
+      getTasksThisWeekByStateAndUserLimit(1, dispatch);
     }
   }, []);
 

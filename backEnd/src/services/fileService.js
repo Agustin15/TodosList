@@ -5,7 +5,7 @@ export const FileService = {
   addFile: async (idTask, files) => {
     let errorAdded = false;
     for (const file of files) {
-      let fileAdded = await fileModel.addFile(
+      let fileAdded = await fileModel.post(
         idTask,
         file.originalname,
         file.mimetype,
@@ -27,7 +27,7 @@ export const FileService = {
     let errorDeleted = false;
 
     for (const file of files) {
-      let fileDeleted = await fileModel.deleteFile(file.idFile);
+      let fileDeleted = await fileModel.delete(file.idFile);
       if (fileDeleted == 0) {
         errorDeleted = true;
       }

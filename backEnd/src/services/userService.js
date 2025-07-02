@@ -16,7 +16,7 @@ export const UserService = {
 
       const hash = await bcrypt.hash(userToAdd.password, 10);
 
-      const userCreated = await userModel.addUser(
+      const userCreated = await userModel.post(
         userToAdd.name,
         userToAdd.lastname,
         userToAdd.email,
@@ -89,7 +89,7 @@ export const UserService = {
 
       const hash = await bcrypt.hash(newPassword, 10);
 
-      let userUpdated = await userModel.updatePasswordUserById(hash, idUser);
+      let userUpdated = await userModel.patchPasswordUserById(hash, idUser);
 
       if (userUpdated == 0) {
         throw new Error("Error to update user");
@@ -105,7 +105,7 @@ export const UserService = {
     try {
       const hash = await bcrypt.hash(newPassword, 10);
 
-      const passwordUpdated = await userModel.updatePasswordUserByEmail(
+      const passwordUpdated = await userModel.patchPasswordUserByEmail(
         hash,
         email
       );
@@ -127,7 +127,7 @@ export const UserService = {
         throw new Error("User not found");
       }
 
-      const userUpdated = await userModel.updateUser(
+      const userUpdated = await userModel.put(
         name,
         lastname,
         userFound.email,
@@ -172,7 +172,7 @@ export const UserService = {
       if (!passwordVerify) {
         throw new Error("Failed to update, invalid password");
       }
-      let resultUpdated = await userModel.updateEmailUserById(newEmail, idUser);
+      let resultUpdated = await userModel.patchEmailUserById(newEmail, idUser);
 
       if (resultUpdated == 0) throw new Error("Failed to update email user");
 

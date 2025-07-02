@@ -8,10 +8,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
-  padding-bottom: 2rem;
   margin-left: 7%;
+  height: 99vh;
   width: 96%;
+  background: rgb(241, 241, 241);
 }
 
 .containTasks {
@@ -21,12 +21,8 @@
   align-items: center;
   gap: 0rem;
   margin: auto;
-  width: 95%;
-  height: 99vh;
-  background-color: white;
-  box-shadow: 2px 2px 2px grey;
-  border: 1px solid rgb(212, 212, 212);
-  padding-bottom: 1rem;
+  width: 100%;
+  height: 100vh;
   border-radius: 9px;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -39,8 +35,8 @@
   gap: 1rem;
   padding-top: 0.5rem;
   font-size: 19px;
-  background: linear-gradient(#f8f8f8, rgb(221, 221, 221));
   width: 100%;
+  background-color: white;
   border-bottom: 1px solid rgb(206, 206, 206);
   padding-bottom: 1rem;
 }
@@ -50,6 +46,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  background-color: white;
 }
 .header .title {
   display: flex;
@@ -67,7 +64,7 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 96%;
+  width: 97%;
   margin-top: 1rem;
   overflow-y: scroll;
   border-bottom: 2px solid rgb(190, 190, 190);
@@ -152,16 +149,15 @@
     justify-content: start;
     margin-top: 0;
     margin-left: 0;
-    width: 96%;
+    width: 100%;
   }
 
   .containTasks {
-    width: 95%;
-    height: 82vh;
-    margin-top: 5rem;
+    width: 99%;
+    height: 92vh;
+    margin-top: 4rem;
     border: none;
     justify-content: start;
-    background-color: white;
     box-shadow: none;
   }
 
@@ -172,7 +168,8 @@
   .tasks {
     height: 93%;
     width: 91%;
-    padding-top: 0.5rem;
+    padding-top: 0;
+    padding-bottom: 1rem;
   }
 
   .loadingHide {
@@ -224,23 +221,24 @@
     margin-top: 0;
   }
 
+  .tasks{
+    width: 95%;
+  }
   .contentBody {
     flex-direction: column;
     justify-content: start;
     margin-top: 0;
     margin-left: 0;
-    width: 96%;
+    width: 100%;
   }
 
   .containTasks {
-    width: 95%;
+    width: 100%;
     height: auto;
     min-height: 82vh;
     max-height: 122vh;
-    margin-top: 5rem;
-    border: none;
+    margin-top: 4.5rem;
     justify-content: start;
-    background-color: white;
     box-shadow: none;
   }
 
@@ -263,7 +261,7 @@
     width: 72px;
     height: 72px;
   }
- 
+
   .warningShow img {
     width: 80px;
     padding-left: 1.2rem;

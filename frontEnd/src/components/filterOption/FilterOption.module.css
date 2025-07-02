@@ -1,14 +1,43 @@
 .containFilterOption {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: space-between;
     gap: 1.2rem;
     position: relative;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
-    height: auto;
+    background-color: white;
+    height: 3.5rem;
     border-bottom: 2px solid rgb(204, 204, 204);
     width: 100%;
+}
+.containFilterOption .filterByState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin-left: 1rem;
+    gap: 1rem;
+}
+
+.filterByState li {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    width: 8rem;
+    height: 3rem;
+}
+.filterByState li img {
+    width: 14px;
+    height: 14px;
+}
+
+.filterByState .statePending {
+    border-bottom: 3px solid rgb(243, 66, 66);
+}
+
+.filterByState .stateCompleted {
+    border-bottom: 3px solid rgb(0, 218, 127);
 }
 
 .categorys {
@@ -160,6 +189,9 @@
     width: 12px;
     height: 12px;
 }
+.openFilterMobile {
+    display: none;
+}
 .openFilter {
     display: flex;
     align-items: center;
@@ -192,33 +224,40 @@
 
 @media only screen and (max-width: 699px) {
     .containFilterOption {
-        width: 108%;
+        width: 97%;
         padding-left: 0;
+        padding: 0.4rem;
         gap: 1rem;
         justify-content: start;
         align-items: center;
     }
 
     .openFilter {
-        width: 3rem;
-        margin-left: 1rem;
-        border-radius: 3px;
+        display: none;
     }
-    .openFilter::before {
-        content: none;
+
+    .openFilterMobile {
+        display: flex;
+        width: 33px;
+        height: 33px;
+        margin-left: 0.5rem;
+        opacity: 70%;
     }
     .categorys {
         display: flex;
         align-items: center;
         justify-content: start;
-        width: 75%;
-        gap: 1rem;
+        width: 100%;
+        gap: 0.4rem;
         overflow-x: scroll;
+        font-size: 14px;
     }
 
     .categorys li {
         padding-left: 1.3rem;
         padding-right: 1.3rem;
+        width: 4rem;
+        font-size: 13px;
     }
     .panelFilterShow {
         margin-top: 20rem;
@@ -242,9 +281,17 @@
     }
 }
 @media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containFilterOption {
+        width: 98%;
+        padding-left: 0;
+        padding: 0.4rem;
+        gap: 1rem;
+        justify-content: start;
+        align-items: center;
+    }
+
     .panelFilterShow {
         margin-top: 13rem;
-        margin-left: -1rem;
         padding-top: 1rem;
         padding-bottom: 1rem;
         width: 29rem;
@@ -262,5 +309,4 @@
         margin-top: 0.5rem;
         margin-left: 1rem;
     }
-
 }

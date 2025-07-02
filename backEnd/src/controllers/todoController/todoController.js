@@ -18,6 +18,63 @@ export const getYearsOfTasks = async (req, res) => {
   }
 };
 
+export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
+  try {
+    const validAuthRequest = await authRequest(req, res);
+
+    if (!req.params) {
+      throw new Error("Params request null");
+    }
+    const params = JSON.parse(req.params.optionGetTasks);
+
+    if (typeof params.offset === "undefined") {
+      throw new Error("Offset undefined");
+    }
+    if (typeof params.state === "undefined") {
+      throw new Error("State undefined");
+    }
+
+    let tasks = await TaskService.getTasksThisWeekByStateAndUserLimit(
+      Number(params.offset),
+      validAuthRequest.idUser,
+      Number(params.state)
+    );
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
+};
+
+export const getTasksThisWeekByStateAndUser = async (req, res) => {
+  try {
+    const validAuthRequest = await authRequest(req, res);
+
+    if (!req.params) {
+      throw new Error("Params request null");
+    }
+    const params = JSON.parse(req.params.optionGetTasks);
+
+    if (typeof params.state === "undefined") {
+      throw new Error("State undefined");
+    }
+
+    let tasks = await TaskService.getTasksThisWeekByStateAndUser(
+      validAuthRequest.idUser,
+      Number(params.state)
+    );
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
+};
 export const getTasksLimitByFilterOption = async (req, res) => {
   let tasks;
   try {
@@ -29,16 +86,13 @@ export const getTasksLimitByFilterOption = async (req, res) => {
 
     const params = JSON.parse(req.params.optionGetTasks);
 
-    if (typeof params.offset === "undefined") {
+    if (typeof params.offset === "undefined")
       throw new Error("Offset undefined");
-    }
 
-    if (typeof params.year === "undefined") {
-      throw new Error("Year undefined");
-    }
-    if (typeof params.month === "undefined") {
-      throw new Error("Month undefined");
-    }
+    if (!params.year) throw new Error("Year undefined");
+
+    if (typeof !params.month == "undefined") throw new Error("Month undefined");
+
     if (typeof params.state === "undefined") {
       throw new Error("State undefined");
     }
@@ -70,11 +124,15 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
-    if (typeof params.year === "undefined") {
-      throw new Error("year undefined");
+    if (!params.year) {
+      throw new Error("Year undefined");
     }
-    if (typeof params.month === "undefined") {
-      throw new Error("month undefined");
+    if (!params.month) {
+      throw new Error("Month undefined");
+    }
+
+    if (typeof params.state === "undefined") {
+      throw new Error("State undefined");
     }
 
     tasks = await TaskService.getQuantityTasksByFilterOption(

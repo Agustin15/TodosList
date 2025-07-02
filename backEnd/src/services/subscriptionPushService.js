@@ -8,7 +8,7 @@ const subscriptionPushModel = new SubscriptionPush();
 export const SubscriptionPushService = {
   addSubscriptionUser: async (subscription, idUser) => {
     try {
-      const subscriptionAdded = await subscriptionPushModel.addSubscriptionUser(
+      const subscriptionAdded = await subscriptionPushModel.post(
         idUser,
         subscription.endpoint,
         subscription.keys.p256dh,
@@ -58,7 +58,7 @@ export const SubscriptionPushService = {
       }
 
       const deletedSubscription =
-        await subscriptionPushModel.deleteSubscription(endpoint);
+        await subscriptionPushModel.delete(endpoint);
 
       if (deletedSubscription == 0)
         throw new Error("Failed to delete subscription");

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import iconPasswordShow from "../assets/img/eye.png";
 import iconPasswordHide from "../assets/img/hidden.png";
-import { AlertSwal } from "../components/sweetAlert/sweetAlert";
+import { AlertFormSwal } from "../components/sweetAlert/sweetAlert";
 import { useWindowSize } from "./WindowSizeContext";
 const FormEditPasswordContext = createContext();
 
@@ -57,7 +57,7 @@ export const FormEditPasswordProvider = ({ children }) => {
     if (error) {
       setErrors(errorsInputs);
     } else if (data.newPassword != data.repeatPassword) {
-      AlertSwal(
+      AlertFormSwal(
         "New password and repeat password not match",
         "Warning",
         "warning",
@@ -116,7 +116,7 @@ export const FormEditPasswordProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      AlertSwal(
+      AlertFormSwal(
         error == "Invalid current password" ? error : "Password not updated",
         "Oops",
         "error",

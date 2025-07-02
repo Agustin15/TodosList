@@ -1,6 +1,7 @@
 import connection from "../../config/database.js";
 import { Task } from "../../model/todoModel.js";
 import { FileService } from "../fileService.js";
+import { DashboardTasksService } from "./dashboardTasksService.js";
 import { NotificationService } from "../notificationService.js";
 import { SubscriptionPushService } from "../subscriptionPushService.js";
 import { NotificationToQueue } from "../notificationsQueue.js";
@@ -17,6 +18,85 @@ export const TaskService = {
     }
   },
 
+  getTasksThisWeekByStateAndUserLimit: async (offset, idUser, state) => {
+    try {
+      let firstSunday = DashboardTasksService.getFirstSunday();
+      let nextSaturday = DashboardTasksService.getNextSaturday();
+
+      let tasksThisWeekUser =
+        await taskModel.getTasksThisWeekByStateAndUserLimit(
+          idUser,
+          firstSunday,
+          nextSaturday,
+          offset,
+          state
+        );
+
+      tasksThisWeekUser = await Promise.all(
+        tasksThisWeekUser.map(async (task) => {
+          let filesTask = await FileService.findFilesByIdTask(task.idTask);
+          let notificationFound =
+            await NotificationService.findNotificationByIdTask(task.idTask);
+          notificationFound.length > 0
+            ? (task.datetimeNotification = notificationFound[0].datetimeSend)
+            : (task.datetimeNotification = "");
+
+          task.filesUploaded = filesTask;
+
+          return task;
+        })
+      );
+
+      return tasksThisWeekUser;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getTasksThisWeekByStateAndUser: async (idUser, state) => {
+    try {
+      let firstSunday = DashboardTasksService.getFirstSunday();
+      let nextSaturday = DashboardTasksService.getNextSaturday();
+
+      let tasksThisWeekUser = await taskModel.getTasksThisWeekByStateAndUser(
+        idUser,
+        firstSunday,
+        nextSaturday,
+        state
+      );
+
+      tasksThisWeekUser = await Promise.all(
+        tasksThisWeekUser.map(async (task) => {
+          let dateTask = new Date(task.datetimeTask);
+
+          let datetimeString = new Intl.DateTimeFormat("en-UY", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric"
+          }).format(dateTask);
+
+          let filesTask = await FileService.findFilesByIdTask(task.idTask);
+
+          return {
+            id: task.idTask,
+            icon: task.icon,
+            description: task.descriptionTask,
+            idUser: task.idUser,
+            date: datetimeString,
+            isCompleted: task.isCompleted,
+            files: filesTask
+          };
+        })
+      );
+
+      return tasksThisWeekUser;
+    } catch (error) {
+      throw error;
+    }
+  },
   getTasksLimitByFilterOption: async (idUser, year, month, state, offset) => {
     let tasks;
     try {
@@ -60,7 +140,7 @@ export const TaskService = {
     }
   },
 
-  getTaskById: async (idUser,idTask) => {
+  getTaskById: async (idUser, idTask) => {
     try {
       const taskFoundById = await taskModel.getTaskById(idUser, idTask);
 
@@ -98,11 +178,11 @@ export const TaskService = {
     }
   },
 
-  createTask: async (task, idUser,files) => {
+  createTask: async (task, idUser, files) => {
     try {
       await connection.beginTransaction();
 
-      const taskCreated = await taskModel.addTask(
+      const taskCreated = await taskModel.post(
         idUser,
         task.icon,
         task.descriptionTask,
@@ -156,11 +236,11 @@ export const TaskService = {
     }
   },
 
-  updateTask: async (task,files, idTask, idUser) => {
+  updateTask: async (task, files, idTask, idUser) => {
     try {
       await connection.beginTransaction();
 
-      const taskUpdated = await taskModel.updateTask(
+      const taskUpdated = await taskModel.put(
         task.icon,
         task.descriptionTask,
         task.datetimeTask,
@@ -228,12 +308,9 @@ export const TaskService = {
     }
   },
 
-  updateStateTask: async (newState, idTask,idUser) => {
+  updateStateTask: async (newState, idTask, idUser) => {
     try {
-      const taskStateUpdated = await taskModel.updateStateTask(
-        newState,
-        idTask
-      );
+      const taskStateUpdated = await taskModel.patchStateTask(newState, idTask);
 
       if (taskStateUpdated == 0) throw new Error("Failed to update state task");
 
@@ -264,7 +341,7 @@ export const TaskService = {
         jobId = `'${jobNotificationFound.idJob}'`;
       }
 
-      let deletedTask = await taskModel.deleteTask(idTask);
+      let deletedTask = await taskModel.delete(idTask);
 
       if (deletedTask == 0) throw new Error("Failed to delete task");
 

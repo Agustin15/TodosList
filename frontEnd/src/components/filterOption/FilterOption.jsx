@@ -10,11 +10,16 @@ import { useState } from "react";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 
 export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
-  const { getYearsOfTasks, refCheckBoxThisWeek, openFilter, setOpenFilter } =
-    useFilterOptionTasks();
+  const {
+    getYearsOfTasks,
+    refCheckBoxThisWeek,
+    refSelectState,
+    openFilter,
+    setOpenFilter
+  } = useFilterOptionTasks();
 
   const [years, setYears] = useState([]);
-  const [refs, setRefs] = useState([refCheckBoxThisWeek]);
+  const [refs, setRefs] = useState([refCheckBoxThisWeek, refSelectState]);
 
   useEffect(() => {
     setSelectYears();
@@ -33,15 +38,19 @@ export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
 
   return (
     <div className={styles.containFilterOption}>
-      <button onClick={handleFilter} className={styles.openFilter}>
-        <img src={iconFilter}></img>
-      </button>
-
       <ul className={styles.categorys}>
+        <img
+          onClick={handleFilter}
+          className={styles.openFilterMobile}
+          src={iconFilterTwo}
+        ></img>
+        <button onClick={handleFilter} className={styles.openFilter}>
+          <img src={iconFilter}></img>
+        </button>
         <span>Search:</span>
         {refs.map(
           (ref, index) =>
-            ref.current && (  
+            ref.current && (
               <li key={index}>
                 {ref.current.value == "thisWeek"
                   ? "this week"

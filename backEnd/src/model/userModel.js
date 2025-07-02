@@ -1,7 +1,7 @@
 import connection from "../config/database.js";
 
 export class User {
-  async addUser(name, lastname, email, password) {
+  async post(name, lastname, email, password) {
     try {
       const [result] = await connection.execute(
         "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)",
@@ -13,7 +13,7 @@ export class User {
     }
   }
 
-  async updatePasswordUserById(password, idUser) {
+  async patchPasswordUserById(password, idUser) {
     try {
       const [result] = await connection.execute(
         "Update users set passwordUser=? where idUser=?",
@@ -25,7 +25,7 @@ export class User {
     }
   }
 
-  async updatePasswordUserByEmail(password, email) {
+  async patchPasswordUserByEmail(password, email) {
     try {
       const [result] = await connection.execute(
         "Update users set passwordUser=? where email=?",
@@ -36,7 +36,7 @@ export class User {
       throw new Error(error);
     }
   }
-  async updateEmailUserById(email, idUser) {
+  async patchEmailUserById(email, idUser) {
     try {
       const [result] = await connection.execute(
         "Update users set email=? where idUser=?",
@@ -48,7 +48,7 @@ export class User {
     }
   }
 
-  async updateUser(name, lastname, email, password, idUser) {
+  async put(name, lastname, email, password, idUser) {
     try {
       const [result] = await connection.execute(
         "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?",

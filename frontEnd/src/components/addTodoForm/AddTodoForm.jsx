@@ -6,7 +6,7 @@ import { useTasks } from "../../context/TaskContext";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { useState } from "react";
-import { AlertSwal } from "../sweetAlert/sweetAlert.js";
+import { AlertFormSwal } from "../sweetAlert/sweetAlert.js";
 import { ValidationFormError } from "../../ValidationForm.js";
 import { useWindowSize } from "../../context/WindowSizeContext.jsx";
 
@@ -29,8 +29,8 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
     getQuantityTasksFilter,
     getTasksFilter,
     indexSelected,
-    getTasksThisWeekUserLimit,
-    getTasksThisWeekUser,
+    getTasksThisWeekByStateAndUser,
+    getTasksThisWeekByStateAndUserLimit,
     refCheckBoxThisWeek
   } = useFilterOptionTasks();
 
@@ -93,14 +93,14 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
       title = error instanceof ValidationFormError ? "Warning" : "Oops";
       msj = error;
     } finally {
-      AlertSwal(msj, title, icon, windowWidth);
+      AlertFormSwal(msj, title, icon, windowWidth);
     }
   };
 
   const eventAdded = () => {
     if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekUser();
-      getTasksThisWeekUserLimit(indexSelected, dispatch);
+      getTasksThisWeekByStateAndUser();
+      getTasksThisWeekByStateAndUserLimit(indexSelected, dispatch);
     } else {
       getQuantityTasksFilter("getQuantityTasksByFilterOption");
       getTasksFilter("getTasksLimitByFilterOption", indexSelected, dispatch);

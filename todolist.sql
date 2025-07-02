@@ -60,6 +60,7 @@ constraint fk_endpointUrl foreign key(endpointURL) references subscription(endpo
 primary key(idNotification,endpointURL)
 );
 
+
 /*alter table notifications_subscription drop constraint fk_endpointUrl;
 alter table notifications_subscription add constraint fk_endpointUrl foreign key(endpointURL) 
 references subscription(endpointURL) on delete cascade;

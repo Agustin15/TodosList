@@ -18,33 +18,6 @@ export const getTasksByWeekday = async (req, res) => {
   }
 };
 
-export const getTasksThisWeekUserLimit = async (req, res) => {
-  try {
-    const validAuthRequest = await authRequest(req, res);
-
-    if (!req.params) {
-      throw new Error("Params request null");
-    }
-    const params = JSON.parse(req.params.optionGetTasks);
-
-    if (typeof params.offset == "undefined") {
-      throw new Error("Offset undefined");
-    }
-
-    let tasksThisWeekUser =
-      await DashboardTasksService.getTasksThisWeekUserLimit(
-        Number(params.offset),
-        validAuthRequest.idUser
-      );
-
-    res.status(200).json(tasksThisWeekUser);
-  } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
-  }
-};
 
 export const getTasksThisWeekUser = async (req, res) => {
   try {

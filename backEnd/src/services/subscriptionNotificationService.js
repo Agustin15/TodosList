@@ -1,16 +1,49 @@
-import { SubscriptionPush } from "../model/subscripcionPushModel.js";
-import { Notification } from "../model/notificationModel.js";
-const subscriptionPushModel = new SubscriptionPush();
-const notificationModel = new Notification();
+import { SubscriptionNotification } from "../model/subscriptionNotificationModel.js";
+const subscriptionNotificationModel = new SubscriptionNotification();
 
 export const SubscriptionNotificationService = {
+  addNotificationsSubscriptions: async (idNotification, subscriptions) => {
+    let errorAdd = false;
+    try {
+      for (const subscription of subscriptions) {
+        let notificationSubscriptionAdded =
+          await subscriptionNotificationModel.post(
+            idNotification,
+            subscription.endpointURL
+          );
+
+        if (notificationSubscriptionAdded == 0) {
+          errorAdd = true;
+          break;
+        }
+      }
+
+      if (errorAdd)
+        throw new Error("Failed to add notification of subscription");
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getNotificationSubscriptionByIdNotification: async (idNotification) => {
+    try {
+      let notification =
+        await subscriptionNotificationModel.getNotificationSubscriptionByIdNotifi(
+          idNotification
+        );
+
+      return notification;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
   findSubscriptionsDistinctByIdNotification: async (
     idNotification,
     endpointURL
   ) => {
     try {
       const subscriptions =
-        await subscriptionPushModel.getSubscriptionsDistinctByIdNotification(
+        await subscriptionNotificationModel.getSubscriptionsDistinctByIdNotification(
           idNotification,
           endpointURL
         );
@@ -23,7 +56,7 @@ export const SubscriptionNotificationService = {
   findPendingNotificationsByEndpoint: async (endpoint, state) => {
     try {
       let pendingNotifications =
-        await notificationModel.getPendingNotificationsByEndpoint(
+        await subscriptionNotificationModel.getPendingNotificationsByEndpoint(
           endpoint,
           state
         );

@@ -6,6 +6,8 @@ import {
   deleteTask,
   getTasksLimitByFilterOption,
   getQuantityTasksByFilterOption,
+  getTasksThisWeekByStateAndUser,
+  getTasksThisWeekByStateAndUserLimit,
   getYearsOfTasks,
   getTaskById
 } from "../controllers/todoController/todoController.js";
@@ -13,8 +15,7 @@ import {
 import { getTasksForCalendarByUser } from "../controllers/todoController/calendarTasks.js";
 import {
   getTasksByWeekday,
-  getTasksThisWeekUserLimit,
-  getTasksThisWeekUser
+  getTasksThisWeekUser,
 } from "../controllers/todoController/dashboardTasks.js";
 
 import multer from "multer";
@@ -33,8 +34,11 @@ tasksRouter.get("/:optionGetTasks", (req, res) => {
     case "getTasksThisWeekUser":
       return getTasksThisWeekUser(req, res);
 
-    case "getTasksThisWeekUserLimit":
-      return getTasksThisWeekUserLimit(req, res);
+    case "getTasksThisWeekByStateAndUser":
+      return getTasksThisWeekByStateAndUser(req, res);
+
+    case "getTasksThisWeekByStateAndUserLimit":
+      return getTasksThisWeekByStateAndUserLimit(req, res);
 
     case "getTasksLimitByFilterOption":
       return getTasksLimitByFilterOption(req, res);

@@ -2,6 +2,7 @@
     display: flex;
     align-items: start;
     justify-content: start;
+    background: rgb(247, 247, 247);
     height: 100vh;
 }
 
@@ -25,6 +26,7 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     border: 1px solid rgb(211, 211, 211);
+    background-color: white;
     box-shadow: 2px 2px 2px gray;
     border-radius: 5px;
 }
@@ -94,7 +96,7 @@
 .containTable table td {
     text-align: center;
     padding: 0.4rem;
-    border-top:1px solid rgb(160, 160, 160);
+    border-top: 1px solid rgb(160, 160, 160);
 }
 
 .loading {
@@ -141,9 +143,9 @@
 
     .containTable {
         margin-left: 0;
-        margin-top: 5rem;
-        width: 97%;
-        height: 91%;
+        margin-top: 4rem;
+        width: 100%;
+        height: 99%;
     }
     .containSearch input {
         width: 95%;
@@ -191,18 +193,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: start;
-        height: 100vh;
+        height: auto;
+        padding-bottom: 2rem;
     }
 
     .containTable {
         margin-left: 0;
-        width: 97%;
+        width: 99%;
         height: 91%;
         margin-top: 5rem;
     }
 
     .contentTable {
-        width: 95%;
+        width: 99%;
     }
     .containTable .header {
         display: flex;

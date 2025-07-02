@@ -1,4 +1,5 @@
 import { Notification } from "../model/notificationModel.js";
+import { SubscriptionNotificationService } from "./subscriptionNotificationService.js";
 import { NotificationToQueue } from "./notificationsQueue.js";
 import { ScheduledJobService } from "./scheduledJobService.js";
 
@@ -7,7 +8,7 @@ const notificationModel = new Notification();
 export const NotificationService = {
   addNotification: async (subscriptions, task, idUser) => {
     try {
-      let notificationAdded = await notificationModel.addNotification(
+      let notificationAdded = await notificationModel.post(
         task.idTask,
         task.datetimeNotification,
         "pending"
@@ -30,7 +31,7 @@ export const NotificationService = {
 
       let idJob = `'${jobNotificationFound.idJob}'`;
 
-      await NotificationService.addNotificationsSubscriptions(
+      await SubscriptionNotificationService.addNotificationsSubscriptions(
         notificationFound[0].idNotification,
         subscriptions
       );
@@ -44,42 +45,6 @@ export const NotificationService = {
       throw error;
     }
   },
-
-  addNotificationsSubscriptions: async (idNotification, subscriptions) => {
-    let errorAdd = false;
-    try {
-      for (const subscription of subscriptions) {
-        let notificationSubscriptionAdded =
-          await notificationModel.addNotificationSubscription(
-            idNotification,
-            subscription.endpointURL
-          );
-
-        if (notificationSubscriptionAdded == 0) {
-          errorAdd = true;
-          break;
-        }
-      }
-
-      if (errorAdd)
-        throw new Error("Failed to add notification of subscription");
-    } catch (error) {
-      throw error;
-    }
-  },
-  getNotificationSubscriptionByIdNotification: async (idNotification) => {
-    try {
-      let notification =
-        await notificationModel.getNotificationSubscriptionByIdNotifi(
-          idNotification
-        );
-
-      return notification;
-    } catch (error) {
-      throw new Error(error);
-    }
-  },
-
   findNotificationByIdTask: async (idTask) => {
     try {
       let notification = await notificationModel.getNotificationByIdTask(
@@ -91,10 +56,22 @@ export const NotificationService = {
     }
   },
 
+  findNotificationsSentTasksUser: async (idUser) => {
+    try {
+      let notifications = await notificationModel.getNotificationsSentTasksUser(
+        idUser,
+        "pending"
+      );
+
+      return notifications;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
   updateNotification: async (idNotification, newDatetime) => {
     try {
       let notificationUpdated =
-        await notificationModel.updateDatetimeNotification(
+        await notificationModel.patchDatetimeNotification(
           idNotification,
           newDatetime
         );
@@ -108,13 +85,20 @@ export const NotificationService = {
     }
   },
 
-  updateStateNotification: async (idTask, newState) => {
+  updateStateNotification: async (id, newState, option) => {
+    let idNotification;
     try {
-      let notification = await NotificationService.findNotificationByIdTask(
-        idTask
-      );
-      let notificationUpdated = await notificationModel.updateStateNotification(
-        notification[0].idNotification,
+      if (option == "notificationSent") {
+        let notification = await NotificationService.findNotificationByIdTask(
+          id
+        );
+        idNotification = notification[0].idNotification;
+      } else {
+        idNotification = id;
+      }
+
+      let notificationUpdated = await notificationModel.patchStateNotification(
+        idNotification,
         newState
       );
 
@@ -130,7 +114,7 @@ export const NotificationService = {
     try {
       let jobNotificationFound =
         await ScheduledJobService.getJobByIdNotification(idNotification);
-      let deleted = await notificationModel.deleteNotification(idNotification);
+      let deleted = await notificationModel.delete(idNotification);
       await NotificationToQueue.deleteNotificationFromQueue(
         `'${jobNotificationFound.idJob}'`
       );

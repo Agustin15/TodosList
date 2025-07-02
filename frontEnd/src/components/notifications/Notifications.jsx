@@ -2,14 +2,20 @@ import styles from "./Notification.module.css";
 import iconNotification from "../../assets/img/notificationTitle.png";
 import iconWarningInput from "../../assets/img/warningInput.png";
 import iconSubscribed from "../../assets/img/subscribed.png";
+import iconListNotifications from "../../assets/img/listNotificationsLogo.png";
 import { Title } from "../title/Title";
 import Header from "../header/Header";
+import { ItemsNotifications } from "./itemsNotifications/itemsNotifications";
 import { AlertStateSubscription } from "./alertState/AlertStateSubscription";
 import { useSubscription } from "../../context/SubscriptionContext";
+import { useNotification } from "../../context/NotificationContext";
 
 export const Notifications = () => {
   const { subscribed, styleAlert, notifyMeAlert, msjErrorSubscription } =
     useSubscription();
+
+  const { notifications } = useNotification();
+
   return (
     <div className={styles.rowNotifications}>
       <Header />
@@ -40,6 +46,15 @@ export const Notifications = () => {
             <h3>Activity</h3>
           </div>
         </div>
+
+        {notifications.length > 0 ? (
+          <ItemsNotifications notifications={notifications} />
+        ) : (
+          <div className={styles.containAlert}>
+            <img src={iconListNotifications}></img>
+            <h3>Here you will can be see your notifications</h3>
+          </div>
+        )}
       </div>
     </div>
   );

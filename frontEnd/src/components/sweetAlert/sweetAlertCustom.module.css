@@ -55,7 +55,8 @@ body {
 
     .customBtnConfirmError,
     .customBtnConfirmWarning,
-    .customBtnConfirmSuccess {
+    .customBtnConfirmSuccess,
+    .customCancel {
         width: 5rem;
         font-size: 14px;
     }
