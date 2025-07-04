@@ -66,14 +66,11 @@
   height: 100%;
   width: 97%;
   margin-top: 1rem;
+  gap: 1rem;
   overflow-y: scroll;
   border-bottom: 2px solid rgb(190, 190, 190);
   overflow-x: hidden;
-  padding: 0.5rem 1rem 0 1rem;
-}
-
-.loadingHide {
-  display: none;
+  padding: 0.5rem 1rem 1rem 1rem;
 }
 
 .loadingShow {
@@ -84,12 +81,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: 100;
   gap: 0.5rem;
   height: 95%;
 }
 .loadingShow img {
-  width: 82px;
-  height: 82px;
+  width: 62px;
+  height: 62px;
 }
 .warningShow {
   opacity: 70%;
@@ -105,10 +103,6 @@
 .warningShow img {
   width: 111px;
   padding-left: 1.2rem;
-}
-
-.warningHide {
-  display: none;
 }
 
 .taskNotFoundShow {
@@ -172,10 +166,6 @@
     padding-bottom: 1rem;
   }
 
-  .loadingHide {
-    display: none;
-  }
-
   .loadingShow {
     font-size: 15px;
     color: rgb(49, 49, 49);
@@ -184,8 +174,8 @@
     height: 95%;
   }
   .loadingShow img {
-    width: 72px;
-    height: 72px;
+    width: 62px;
+    height: 62px;
   }
   .warningShow {
     opacity: 70%;
@@ -221,7 +211,7 @@
     margin-top: 0;
   }
 
-  .tasks{
+  .tasks {
     width: 95%;
   }
   .contentBody {

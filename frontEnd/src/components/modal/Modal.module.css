@@ -9,13 +9,13 @@
   justify-content: center;
   align-items: center;
   top: 0;
-  padding-bottom: 8rem;
+  padding-bottom: 1rem;
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
 }
-@media only screen and (max-width:699px) {
+@media only screen and (max-width: 699px) {
   .modal {
-  padding-bottom: 10rem;
-}
-  
+    padding-bottom: 5rem;
+    width: 100%;
+  }
 }

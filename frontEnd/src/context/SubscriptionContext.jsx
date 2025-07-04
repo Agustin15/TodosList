@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import stylesAlert from "../components/notifications/alertState/AlertStateSubscription.module.css";
 import { useContext } from "react";
 import { useWindowSize } from "./WindowSizeContext.jsx";
-import { AlertUnsubscribeSwal } from "../components/sweetAlert/sweetAlert.js";
+import {
+  AlertQuestionSwal,
+  AlertFormSwal
+} from "../components/sweetAlert/sweetAlert.js";
 const applicationServerKey = import.meta.env.VITE_APPLICATION_SERVER;
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
@@ -13,7 +16,7 @@ const SubscriptionContext = createContext();
 export const SubscriptionProvider = ({ children }) => {
   const [styleAlert, setStyleAlert] = useState(stylesAlert.alertHability);
   const [subscribed, setSubscribed] = useState();
-  const [msjErrorSubscription, setMsjErrorSubscription] = useState();
+  const [loader, setLoader] = useState(true);
   const { windowWidth } = useWindowSize();
 
   useEffect(() => {
@@ -27,6 +30,8 @@ export const SubscriptionProvider = ({ children }) => {
       setSubscribed(subscription);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -87,7 +92,12 @@ export const SubscriptionProvider = ({ children }) => {
           showAlert();
         } else {
           subscriptionCreated.unsubscribe();
-          setMsjErrorSubscription("Error to generate subscription");
+          AlertFormSwal(
+            "Error to generate subscription",
+            "Oops",
+            "error",
+            windowWidth
+          );
         }
       } else {
         unsubscribe();
@@ -98,7 +108,12 @@ export const SubscriptionProvider = ({ children }) => {
   };
 
   const unsubscribe = async () => {
-    let confirmUnsubscription = await AlertUnsubscribeSwal(windowWidth);
+    let confirmUnsubscription = await AlertQuestionSwal(
+      windowWidth,
+      "Do you want unsubscribe?",
+      "unsubscribe",
+      "red"
+    );
     if (confirmUnsubscription) {
       let deleteSubs = await fetchDeleteSubscriptions();
       if (!deleteSubs) {
@@ -106,7 +121,6 @@ export const SubscriptionProvider = ({ children }) => {
       } else {
         let unsubscribe = await subscribed.unsubscribe();
         if (unsubscribe) {
-          setMsjErrorSubscription("");
           setSubscribed();
           showAlert();
         }
@@ -169,7 +183,12 @@ export const SubscriptionProvider = ({ children }) => {
   };
   return (
     <SubscriptionContext.Provider
-      value={{ styleAlert, notifyMeAlert, subscribed, msjErrorSubscription }}
+      value={{
+        styleAlert,
+        notifyMeAlert,
+        subscribed,
+        loader
+      }}
     >
       {children}
     </SubscriptionContext.Provider>

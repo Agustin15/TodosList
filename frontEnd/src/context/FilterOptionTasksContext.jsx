@@ -15,7 +15,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const [openFilter, setOpenFilter] = useState(false);
   const [indexSelected, setIndexSelected] = useState(1);
   const [quantityTasks, setQuantityTask] = useState();
-  const [loadingFilter, setLoadingFilter] = useState(false);
+  const [loadingFilter, setLoadingFilter] = useState(true);
 
   const logout = () => {
     location.href = `${urlFront}login`;

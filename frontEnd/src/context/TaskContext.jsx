@@ -44,11 +44,12 @@ export const TaskProvider = ({ children }) => {
   };
 
   const getTasksThisWeekUser = async () => {
+    setLoadingState(true);
+
     const optionGetTasks = {
       option: "getTasksThisWeekUser"
     };
 
-    setLoadingState(true);
     try {
       const response = await fetch(
         `/api/todos/` + JSON.stringify(optionGetTasks),
@@ -76,11 +77,12 @@ export const TaskProvider = ({ children }) => {
   };
 
   const getTasksByWeekday = async () => {
+    setLoadingState(true);
+
     const optionGetTasks = {
       option: "getTasksByWeekday"
     };
 
-    setLoadingState(true);
     try {
       const response = await fetch(
         `/api/todos/` + JSON.stringify(optionGetTasks),

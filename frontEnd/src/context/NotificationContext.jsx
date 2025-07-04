@@ -6,6 +6,7 @@ const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
+  const [loaderNotifications, setLoaderNotifications] = useState(true);
 
   useEffect(() => {
     getNotificationRealTime();
@@ -93,7 +94,7 @@ export const NotificationProvider = ({ children }) => {
   };
 
   const fetchPatchStateNotification = async (notification) => {
-    console.log(notification);
+   
     try {
       const response = await fetch(
         "/api/notification/" + notification.idNotification,
@@ -135,6 +136,7 @@ export const NotificationProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     } finally {
+      setLoaderNotifications(false);
       setNotifications(data ? data : notifications);
     }
   };
@@ -145,7 +147,8 @@ export const NotificationProvider = ({ children }) => {
         fetchPatchStateNotification,
         formatToStringDate,
         datetimeNotification,
-        notifications
+        notifications,
+        loaderNotifications
       }}
     >
       {children}

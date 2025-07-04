@@ -16,27 +16,38 @@ export const AlertFormSwal = (msj, title, icon, windowWidth) => {
       icon: styles.customIcon,
       confirmButton:
         icon == "error"
-          ? styles.customBtnConfirmError
+          ? styles.customBtnConfirmRed
           : icon == "warning"
           ? styles.customBtnConfirmWarning
-          : styles.customBtnConfirmSuccess
+          : styles.customBtnConfirmGreen
     }
   });
 };
 
-export const AlertUnsubscribeSwal = async (windowWidth) => {
+export const AlertQuestionSwal = async (
+  windowWidth,
+  question,
+  option,
+  colorConfirm
+) => {
   let confirm = await Swal.fire({
     icon: "question",
-    title: "Do you want unsubscribe?",
-    html: `<p class=${styles.customMsj}>you will not receive notifications in this browser</p>`,
+    title: question,
+    html:
+      option == "unsubscribe"
+        ? `<p class=${styles.customMsj}>you will not receive notifications in this browser</p>`
+        : "",
     showCancelButton: true,
     width: windowWidth <= 699 ? 400 : 490,
     confirmButtonText: "Confirm",
     customClass: {
-      icon:styles.customIcon,
+      icon: styles.customIcon,
       title: styles.customTitle,
-      confirmButton: styles.customBtnConfirmError,
-      cancelButton:styles.customCancel
+      confirmButton:
+        colorConfirm == "red"
+          ? styles.customBtnConfirmRed
+          : styles.customBtnConfirmGreen,
+      cancelButton: styles.customCancel
     }
   }).then((result) => {
     return result.isConfirmed;

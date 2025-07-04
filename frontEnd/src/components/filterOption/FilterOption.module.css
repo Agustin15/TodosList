@@ -261,7 +261,7 @@
     }
     .panelFilterShow {
         margin-top: 20rem;
-        margin-left: 0.5rem;
+        margin-left: 0;
         z-index: 5;
     }
 

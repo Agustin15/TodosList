@@ -6,7 +6,7 @@ import { useFiles } from "../../context/FilesContext";
 
 export const FilesTask = ({ task }) => {
   const { formatDate } = useTasks();
-  const { handleDownload, generateLink, mimeAccept } = useFiles();
+  const { handleDownload, generateLink, getMime } = useFiles();
 
   return (
     <div className={classesStyle.containTable}>
@@ -30,7 +30,7 @@ export const FilesTask = ({ task }) => {
             >
               <td>
                 <div className={classesStyle.cellName}>
-                <p>{file.nameFile}</p>
+                  <p>{file.nameFile}</p>
                 </div>
               </td>
               <td>
@@ -43,7 +43,7 @@ export const FilesTask = ({ task }) => {
               </td>
               <td>
                 <div className={classesStyle.options}>
-                  {mimeAccept.indexOf(file.typeFile) > -1 && (
+                  {getMime(file) && (
                     <a
                       target="_blank"
                       href={generateLink(file)}

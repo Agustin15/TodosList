@@ -1,21 +1,52 @@
-import {useState } from "react";
+import { useState } from "react";
 import styles from "./TodoItem.module.css";
-import iconDelete from "../../assets/img/delete.png";
-import iconInfo from "../../assets/img/info.png";
-import iconEdit from "../../assets/img/editing.png";
+import iconMenuTask from "../../assets/img/menuTask.png";
 import EditTodoForm from "../editTodoForm/EditTodoForm";
 import DetailsTodo from "../detailsTodo/DetailsTodo";
 import Modal from "../modal/Modal";
-import { BtnChangeState } from "./BtnChangeState";
-import DeleteTask from "../DeleteTask/DeleteTaks";
-import ChangeStatusItem from "../changeStatusTask/ChangeStatusItem";
 import { SubscriptionProvider } from "../../context/SubscriptionContext";
+import { MenuOption } from "./menuOptions/MenuOptions";
+import { useWindowSize } from "../../context/WindowSizeContext";
+import { AlertQuestionSwal, AlertFormSwal } from "../sweetAlert/sweetAlert.js";
+import { useTasks } from "../../context/TaskContext.jsx";
 
 const TodoItem = ({ task, index }) => {
+  const [openMenuTask, setOpenMenuTask] = useState(false);
+  const { patchStateTask } = useTasks();
+  const { windowWidth } = useWindowSize();
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [openModalInfo, setOpenModalInfo] = useState(false);
-  const [openModalChangeStatus, setOpenModalChangeStatus] = useState(false);
+
+  const changeState = async (task) => {
+    let question = `Do you want mark this task like ${
+      task.isCompleted ? "pending?" : "completed?"
+    }`;
+
+    let confirm = await AlertQuestionSwal(
+      windowWidth,
+      question,
+      "",
+      task.isCompleted ? "green" : "red"
+    );
+
+    if (confirm) {
+      const result = await patchStateTask(
+        task.isCompleted ? 0 : 1,
+        task.idTask
+      );
+
+      if (!result) {
+        AlertFormSwal(
+          "Couldn't change the task state",
+          "Oops",
+          "error",
+          windowWidth
+        );
+      } else {
+        AlertFormSwal("Task state changed!", "Success", "success", windowWidth);
+      }
+    }
+  };
 
   const formatToStringDate = (date) => {
     let dateTask = new Date(date);
@@ -32,76 +63,56 @@ const TodoItem = ({ task, index }) => {
     return datetimeString;
   };
 
+  const openMenu = () => {
+    if (!openMenuTask) setOpenMenuTask(true);
+    else setOpenMenuTask(false);
+  };
   return (
     <>
       <li
         key={task.id}
-        style={{ background: index % 2 == 0 ? "rgb(221, 221, 221)" : "rgb(241, 241, 241)" }}
+        style={{
+          background:
+            index % 2 == 0 ? "rgb(221, 221, 221)" : "rgb(241, 241, 241)"
+        }}
         className={styles.task}
       >
         <div className={styles.info}>
-          <BtnChangeState
-            task={task}
-            setOpenModalChangeStatus={setOpenModalChangeStatus}
-          />
-          <div className={styles.icon}>
+          <div
+            className={
+              task.isCompleted ? styles.iconCompleted : styles.iconPending
+            }
+            onClick={() => changeState(task)}
+          >
             <span>{task.icon}</span>
           </div>
           <div className={styles.descriptionAndDate}>
             <span>{formatToStringDate(task.datetimeTask)}</span>
             <p>{task.descriptionTask}</p>
+
             <span className={styles.files}>
               Files attachment:{task.filesUploaded.length}
             </span>
-          </div>
-        </div>
-
-        <div className={styles.options}>
-          <div className={styles.containState}>
-            <span style={{ color: task.isCompleted ? "green" : "red" }}>
-              {task.isCompleted ? "Completed" : "Pending"}
-            </span>
-            <BtnChangeState
-              task={task}
-              setOpenModalChangeStatus={setOpenModalChangeStatus}
-            />
-          </div>
-          <div className={styles.buttons}>
-            <button
-              className={styles.btnDelete}
-              onClick={() => setOpenModalDelete(true)}
-            >
-              <img src={iconDelete}></img>
-            </button>
-            <button
-              disabled={
-                Date.now() > new Date(task.datetimeTask).getTime()
-                  ? true
-                  : false
-              }
+            <div
               className={
-                Date.now() > new Date(task.datetimeTask).getTime()
-                  ? styles.btnUpdateDisabled
-                  : styles.btnUpdate
+                openMenuTask && windowWidth <= 699
+                  ? styles.openMenuDisplay
+                  : styles.openMenu
               }
-              onClick={() => {
-                setOpenModalUpdate(true);
-              }}
             >
-              <img src={iconEdit}></img>
-            </button>
-            <button
-              className={styles.btnDetails}
-              onClick={() => {
-                setOpenModalInfo(true);
-              }}
-            >
-              <img src={iconInfo}></img>
-            </button>
+              <img onClick={openMenu} src={iconMenuTask}></img>
+            </div>
           </div>
         </div>
-      </li>
 
+        {(openMenuTask || windowWidth >= 699) && (
+          <MenuOption
+            setOpenModalInfo={setOpenModalInfo}
+            setOpenModalUpdate={setOpenModalUpdate}
+            task={task}
+          />
+        )}
+      </li>
       {openModalUpdate && (
         <Modal>
           <SubscriptionProvider>
@@ -110,19 +121,6 @@ const TodoItem = ({ task, index }) => {
         </Modal>
       )}
 
-      {openModalDelete && (
-        <Modal>
-          <DeleteTask task={task} setOpenModalDelete={setOpenModalDelete} />
-        </Modal>
-      )}
-      {openModalChangeStatus && (
-        <Modal>
-          <ChangeStatusItem
-            task={task}
-            setOpenModalChangeStatus={setOpenModalChangeStatus}
-          />
-        </Modal>
-      )}
       {openModalInfo && (
         <Modal>
           <DetailsTodo task={task} setOpenModalInfo={setOpenModalInfo} />

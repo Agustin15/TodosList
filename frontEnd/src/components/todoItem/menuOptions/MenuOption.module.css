@@ -1,0 +1,111 @@
+.options {
+    display: flex;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.options button {
+    width: 2.7rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 2px 2px 2px gray;
+    cursor: pointer;
+}
+
+.options .btnDelete {
+    background-color: rgb(214, 5, 5);
+}
+.options .btnUpdate {
+    background-color: rgb(8, 176, 182);
+}
+.options .btnUpdateDisabled {
+    background-color: rgb(5, 107, 110);
+    cursor: auto;
+}
+
+.options .btnUpdateDisabled img {
+    opacity: 70%;
+    cursor: auto;
+}
+
+.options .btnDetails {
+    background-color: rgb(8, 141, 182);
+}
+
+.options img {
+    width: 19px;
+    cursor: pointer;
+}
+
+.options .btnDelete:hover {
+    background-color: rgb(185, 10, 10);
+}
+.options .btnUpdate:hover {
+    background-color: rgb(15, 148, 153);
+}
+.options .btnDetails:hover {
+    background-color: rgb(20, 114, 143);
+}
+
+@media only screen and (max-width: 699px) {
+    .options {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: start;
+        width: 86%;
+        margin-left: 2.8rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: 0.3rem;
+        width: auto;
+        animation-name: showButtons;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes showButtons {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(0.9);
+        }
+    }
+
+    .buttons button {
+        width: 1.7rem;
+        height: 1.6rem;
+        list-style: none;
+    }
+
+    .buttons img {
+        width: 15px;
+        cursor: pointer;
+    }
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .buttons button {
+        width: 2.5rem;
+        height: 2.3rem;
+        list-style: none;
+    }
+    .buttons button img {
+        width: 17px;
+        height: 17px;
+    }
+}

@@ -2,7 +2,7 @@ import styles from "./TodoList.module.css";
 import noTaskIcon from "../../assets/img/sinTareas.png";
 import iconNoFound from "../../assets/img/noFound.png";
 import iconAllTasks from "../../assets/img/allTasksIcon.png";
-import gifLoadingTasks from "../../assets/img/loadingTasks.gif";
+import gifLoadingTasks from "../../assets/img/loader.gif";
 import TodoItem from "../todoItem/TodoItem";
 import Modal from "../modal/Modal";
 import { Title } from "../title/Title";
@@ -60,47 +60,36 @@ const TodoList = () => {
           </WindowSizeProvider>
         )}
 
-        {tasks && (
-          <ul id="ulTasks" className={styles.tasks}>
-            <div
-              className={
-                loadingFilter ? styles.loadingShow : styles.loadingHide
-              }
-            >
+        <ul id="ulTasks" className={styles.tasks}>
+          {loadingFilter == false ? (
+            tasks.length == 0 ? (
+              <div className={styles.warningShow}>
+                <img src={noTaskIcon}></img>
+                <h3>Not Tasks </h3>
+              </div>
+            ) : (
+              tasks.map((task, index) => (
+                <WindowSizeProvider>
+                  <TodoItem index={index} task={task}></TodoItem>
+                </WindowSizeProvider>
+              ))
+            )
+          ) : (
+            <div className={styles.loadingShow}>
               <img src={gifLoadingTasks}></img>
               <h3>loading tasks</h3>
             </div>
+          )}
 
-            <div
-              className={
-                tasks.length == 0 && !loadingFilter
-                  ? styles.warningShow
-                  : styles.warningHide
-              }
-            >
-              <img src={noTaskIcon}></img>
-              <h3>Not Tasks </h3>
-            </div>
-
-            <div
-              className={
-                taskNotFound ? styles.taskNotFoundShow : styles.taskNotFoundHide
-              }
-            >
-              <img src={iconNoFound}></img>
-              <h3>Task not found</h3>
-            </div>
-            {!loadingFilter
-              ? tasks.map((task, index) => (
-                  <TodoItem
-                    index={index}
-                    key={task.idTask}
-                    task={task}
-                  ></TodoItem>
-                ))
-              : ""}
-          </ul>
-        )}
+          <div
+            className={
+              taskNotFound ? styles.taskNotFoundShow : styles.taskNotFoundHide
+            }
+          >
+            <img src={iconNoFound}></img>
+            <h3>Task not found</h3>
+          </div>
+        </ul>
 
         {!idTask && <Pagination />}
       </div>
@@ -108,11 +97,11 @@ const TodoList = () => {
       {openModalAdd && (
         <Modal>
           <CalendarEventsProvider>
-            <SubscriptionProvider>
-              <WindowSizeProvider>
+            <WindowSizeProvider>
+              <SubscriptionProvider>
                 <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
-              </WindowSizeProvider>
-            </SubscriptionProvider>
+              </SubscriptionProvider>
+            </WindowSizeProvider>
           </CalendarEventsProvider>
         </Modal>
       )}
