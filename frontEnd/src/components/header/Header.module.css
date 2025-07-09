@@ -5,48 +5,68 @@
 .header {
   height: 100%;
   width: 7%;
-  background-image: radial-gradient(
-      circle at 40% 91%,
-      rgba(50, 34, 141, 0.04) 0%,
-      rgba(50, 34, 141, 0.04) 50%,
-      rgba(68, 21, 203, 0.04) 50%,
-      rgba(68, 21, 203, 0.04) 100%
-    ),
-    radial-gradient(
-      circle at 66% 97%,
-      rgba(36, 36, 36, 0.04) 0%,
-      rgba(36, 36, 36, 0.04) 50%,
-      rgba(46, 46, 46, 0.04) 50%,
-      rgba(46, 46, 46, 0.04) 100%
-    ),
-    radial-gradient(
-      circle at 86% 7%,
-      rgba(40, 40, 40, 0.04) 0%,
-      rgba(40, 40, 40, 0.04) 50%,
-      rgba(200, 200, 200, 0.04) 50%,
-      rgba(200, 200, 200, 0.04) 100%
-    ),
-    radial-gradient(
-      circle at 15% 16%,
-      rgba(99, 99, 99, 0.04) 0%,
-      rgba(99, 99, 99, 0.04) 50%,
-      rgba(45, 45, 45, 0.04) 50%,
-      rgba(45, 45, 45, 0.04) 100%
-    ),
-    radial-gradient(
-      circle at 75% 99%,
-      rgba(243, 243, 243, 0.04) 0%,
-      rgba(243, 243, 243, 0.04) 50%,
-      rgba(37, 37, 37, 0.04) 50%,
-      rgba(37, 37, 37, 0.04) 100%
-    ),
-    linear-gradient(188deg, rgb(34, 105, 237), rgb(31, 14, 69));
   display: flex;
   flex-direction: column;
   justify-content: start;
   position: fixed;
   z-index: 5;
   font-family: Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(
+      328deg,
+      rgba(29, 29, 29, 0.05) 0%,
+      rgba(29, 29, 29, 0.05) 25%,
+      rgba(226, 226, 226, 0.05) 25%,
+      rgba(226, 226, 226, 0.05) 50%,
+      rgba(21, 21, 21, 0.05) 50%,
+      rgba(21, 21, 21, 0.05) 75%,
+      rgba(216, 216, 216, 0.05) 75%,
+      rgba(216, 216, 216, 0.05) 100%
+    ),
+    linear-gradient(
+      172deg,
+      rgba(0, 0, 0, 0.05) 0%,
+      rgba(0, 0, 0, 0.05) 25%,
+      rgba(108, 108, 108, 0.05) 25%,
+      rgba(108, 108, 108, 0.05) 50%,
+      rgba(21, 21, 21, 0.05) 50%,
+      rgba(21, 21, 21, 0.05) 75%,
+      rgba(236, 236, 236, 0.05) 75%,
+      rgba(236, 236, 236, 0.05) 100%
+    ),
+    linear-gradient(
+      207deg,
+      rgba(153, 153, 153, 0.05) 0%,
+      rgba(153, 153, 153, 0.05) 25%,
+      rgba(83, 83, 83, 0.05) 25%,
+      rgba(83, 83, 83, 0.05) 50%,
+      rgba(5, 5, 5, 0.05) 50%,
+      rgba(5, 5, 5, 0.05) 75%,
+      rgba(82, 82, 82, 0.05) 75%,
+      rgba(82, 82, 82, 0.05) 100%
+    ),
+    linear-gradient(
+      297deg,
+      rgba(26, 26, 26, 0.05) 0%,
+      rgba(26, 26, 26, 0.05) 25%,
+      rgba(223, 223, 223, 0.05) 25%,
+      rgba(223, 223, 223, 0.05) 50%,
+      rgba(232, 232, 232, 0.05) 50%,
+      rgba(232, 232, 232, 0.05) 75%,
+      rgba(153, 153, 153, 0.05) 75%,
+      rgba(153, 153, 153, 0.05) 100%
+    ),
+    linear-gradient(
+      204deg,
+      rgba(120, 120, 120, 0.05) 0%,
+      rgba(120, 120, 120, 0.05) 25%,
+      rgba(191, 191, 191, 0.05) 25%,
+      rgba(191, 191, 191, 0.05) 50%,
+      rgba(246, 246, 246, 0.05) 50%,
+      rgba(246, 246, 246, 0.05) 75%,
+      rgba(123, 123, 123, 0.05) 75%,
+      rgba(123, 123, 123, 0.05) 100%
+    ),
+    linear-gradient(90deg, rgb(90, 164, 212), rgb(37, 116, 255));
 }
 
 .header nav {
@@ -55,6 +75,7 @@
   align-items: center;
   height: 99%;
   width: 100%;
+  position: relative;
   justify-content: space-between;
   gap: 1rem;
   margin-top: 0.5rem;
@@ -118,7 +139,7 @@
   width: 25px;
 }
 .optionCurrent {
-  background-color: rgb(21, 72, 138);
+  background-color: #4e97c2;
   border-left: 1px solid white;
 }
 .header li:hover {
@@ -133,6 +154,7 @@
   text-decoration: none;
   color: #ffffff;
   font-weight: 100;
+  position: relative;
 }
 .header li span {
   display: flex;
@@ -188,7 +210,7 @@
 }
 
 .header .containProfile:hover {
-  background-color: #272660;
+  background-color: #3673ce;
 }
 .containProfile span {
   color: white;
@@ -283,7 +305,7 @@
   .logOut {
     font-size: 16px;
   }
-  .logOut span{
+  .logOut span {
     display: none;
   }
   .header .menuFoot .logOut img {

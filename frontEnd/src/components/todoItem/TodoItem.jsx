@@ -8,6 +8,7 @@ import { SubscriptionProvider } from "../../context/SubscriptionContext";
 import { MenuOption } from "./menuOptions/MenuOptions";
 import { useWindowSize } from "../../context/WindowSizeContext";
 import { AlertQuestionSwal, AlertFormSwal } from "../sweetAlert/sweetAlert.js";
+import { GlassEffect } from "../glassEffect/GlassEffect.jsx";
 import { useTasks } from "../../context/TaskContext.jsx";
 
 const TodoItem = ({ task, index }) => {
@@ -85,6 +86,7 @@ const TodoItem = ({ task, index }) => {
             onClick={() => changeState(task)}
           >
             <span>{task.icon}</span>
+            <GlassEffect />
           </div>
           <div className={styles.descriptionAndDate}>
             <span>{formatToStringDate(task.datetimeTask)}</span>

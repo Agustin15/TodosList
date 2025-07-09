@@ -15,10 +15,13 @@
 .containForm .header {
   width: 100%;
   display: flex;
-  height: 2rem;
+  height: 2.6rem;
   justify-content: center;
   align-items: start;
   position: relative;
+  background: linear-gradient(rgba(37, 112, 173), rgb(80, 170, 206));
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .containForm .title {
@@ -27,16 +30,17 @@
   justify-content: center;
   gap: 1rem;
   width: 99%;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
+  color: white;
 }
 
 .containForm .title img {
-  width: 50px;
+  width: 34px;
 }
 
 .containForm .header .btnClose {
   position: absolute;
-  width: 100%;
+  width: 97%;
   display: flex;
   align-items: center;
   justify-content: end;
@@ -45,16 +49,16 @@
 .containForm .header button {
   background: none;
   border: none;
-  background-color: rgb(231, 0, 0);
-  width: 1.7rem;
-  height: 1.7rem;
+  background: linear-gradient(rgb(185, 16, 16), red);
+  width: 3rem;
+  height: 1.5rem;
   font-weight: bold;
   cursor: pointer;
   color: white;
 }
 
 .containForm .header button:hover {
-  background-color: rgb(184, 0, 0);
+  background: linear-gradient(rgb(165, 17, 17), red);
 }
 
 .containForm form {
@@ -78,7 +82,7 @@
 
   .containForm .header {
     display: flex;
-    height: 2rem;
+    height: 2.5rem;
   }
 
   .containForm .title {
@@ -89,9 +93,12 @@
   }
 
   .containForm .title img {
-    width: 45px;
+    width: 27px;
   }
-
+  .containForm .header button {
+    width: 2.7rem;
+    height: 1.5rem;
+  }
   .containForm form {
     padding: 1rem;
     width: 100%;
@@ -109,18 +116,18 @@
 
   .containForm .header {
     display: flex;
-    height: 2rem;
+    height: 2.5rem;
   }
 
   .containForm .title {
     gap: 1rem;
     width: 99%;
     font-size: 15px;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
   }
 
   .containForm .title img {
-    width: 45px;
+    width: 32px;
   }
   .containForm form {
     padding: 1rem;

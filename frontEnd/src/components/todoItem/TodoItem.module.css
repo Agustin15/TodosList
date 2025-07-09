@@ -38,6 +38,7 @@
   cursor: pointer;
   font-size: 21px;
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   width: 3.7rem;
@@ -62,6 +63,7 @@
 .task .iconPending:hover {
   background: linear-gradient(rgb(218, 74, 74), rgb(221, 79, 79));
 }
+
 
 .task .info {
   display: flex;
@@ -92,6 +94,8 @@
   align-items: start;
   gap: 0.5rem;
   width: 85%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .descriptionAndDate span {
@@ -175,7 +179,7 @@
 
   .openMenuDisplay {
     animation-name: displayMenu;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-fill-mode: forwards;
   }
   @keyframes displayMenu {

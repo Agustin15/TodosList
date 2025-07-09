@@ -10,6 +10,7 @@ import { NotFiles } from "./notFiles/NotFiles";
 import { Pagination } from "./pagination/Pagination";
 import { RowFile } from "./rowFile/RowFile";
 import { Title } from "../title/Title";
+import { GlassEffect } from "../glassEffect/GlassEffect";
 import { useState } from "react";
 
 export const Files = () => {
@@ -51,6 +52,7 @@ export const Files = () => {
         <div className={styles.contentTable}>
           <div className={styles.header}>
             <div className={styles.title}>
+              <GlassEffect />
               <h3>Unit Files</h3>
               <img src={iconFilesSaved}></img>
             </div>

@@ -21,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   color: rgb(0, 0, 0);
-  background: white;
+  background: rgb(255, 255, 255);
 }
 
 .form form {
@@ -54,7 +54,7 @@
 }
 
 .form form input:hover {
-  border: 2px solid blue;
+  border: 3px solid rgb(39, 152, 172);
 }
 
 .containUsername,
@@ -69,7 +69,7 @@
 .containPassword {
   position: relative;
 }
-.containPassword img {
+.containPassword .showPassword {
   position: absolute;
   width: 19px;
   margin-top: 2.5rem;
@@ -122,20 +122,20 @@
   color: white;
   font-weight: bold;
   font-size: 18px;
-  border-radius: 78px;
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: center;
+  position: relative;
   cursor: pointer;
   border: none;
-  background-color: rgb(24, 24, 168);
+  background: linear-gradient(rgb(5, 77, 105), rgb(58, 187, 204));
+  box-shadow: 2px 2px 2px gray;
 }
 
 .containSignIn button:hover {
-  background-color: rgb(0, 0, 180);
+  background: linear-gradient(rgb(5, 77, 105), rgb(32, 118, 129));
 }
-
 .containSignIn button img {
   width: 22px;
   height: 22px;
@@ -174,6 +174,13 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 1rem;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    width: 100%;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    margin-top: 0;
     background-image: radial-gradient(
         circle at 40% 91%,
         rgba(50, 34, 141, 0.04) 0%,
@@ -209,14 +216,7 @@
         rgba(37, 37, 37, 0.04) 50%,
         rgba(37, 37, 37, 0.04) 100%
       ),
-      linear-gradient(188deg, rgb(34, 105, 237), rgb(31, 14, 69));
-    color: white;
-    font-weight: bold;
-    position: absolute;
-    width: 100%;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
-    margin-top: 0;
+      linear-gradient(188deg, rgb(34, 105, 237), rgb(35, 143, 175));
   }
 
   .form .title img {
@@ -278,7 +278,6 @@
     justify-content: center;
     cursor: pointer;
     border: none;
-    background-color: rgb(17, 17, 192);
   }
 
   .form .haveAccountResponsive {
@@ -308,6 +307,13 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 1rem;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    width: 100%;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    margin-top: 0;
     background-image: radial-gradient(
         circle at 40% 91%,
         rgba(50, 34, 141, 0.04) 0%,
@@ -343,14 +349,7 @@
         rgba(37, 37, 37, 0.04) 50%,
         rgba(37, 37, 37, 0.04) 100%
       ),
-      linear-gradient(188deg, rgb(34, 105, 237), rgb(31, 14, 69));
-    color: white;
-    font-weight: bold;
-    position: absolute;
-    width: 100%;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
-    margin-top: 0;
+      linear-gradient(188deg, rgb(34, 105, 237), rgb(35, 143, 175));
   }
 
   .form .titleResponsive img {

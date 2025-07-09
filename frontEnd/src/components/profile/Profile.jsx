@@ -1,5 +1,6 @@
 import styles from "./Profile.module.css";
 import iconNoDataUser from "../../assets/img/iconNotUser.jpg";
+import iconUserAvatar from "../../assets/img/userAvatar.png";
 import iconHome from "../../assets/img/home.png";
 import gifLoading from "../../assets/img/gifLoading.gif";
 import FormEditEmail from "./editEmail/FormEditEmail";
@@ -8,7 +9,6 @@ import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import { useEffect, useState } from "react";
 import { useDataUser } from "../../context/UserDataContext";
-
 
 const Profile = () => {
   const [modalEditEmail, setModalEditEmail] = useState(false);
@@ -26,13 +26,19 @@ const Profile = () => {
   return (
     <>
       <div className={styles.header}>
-        <a href="/dashboard">
-          <li>
-            <img src={iconHome}></img>
-            <span>Home</span>
-          </li>
-        </a>
-        <h3>Edit Profile</h3>
+        <li>
+          <a href="/dashboard">
+            <div>
+              <img src={iconHome}></img>
+              <span>Home</span>
+            </div>
+          </a>
+        </li>
+
+        <h3>
+          Edit Profile
+          <img src={iconUserAvatar}></img>
+        </h3>
       </div>
 
       {!loadingUser && !user && (

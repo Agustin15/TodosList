@@ -15,7 +15,8 @@ loginRoutes.post("/", async (req, res) => {
     if (!req.body.password) throw new Error("password undefined");
 
     if (!process.env.JWT_SECRET_KEY) throw new Error("JWT secret key");
-    if (!process.env.JWT_SECRET_KEY_REFRESH) throw new Error("JWT secret refresh key");
+    if (!process.env.JWT_SECRET_KEY_REFRESH)
+      throw new Error("JWT secret refresh key");
 
     const { email, password } = req.body;
 

@@ -2,15 +2,16 @@ import { SubscriptionNotification } from "../model/subscriptionNotificationModel
 const subscriptionNotificationModel = new SubscriptionNotification();
 
 export const SubscriptionNotificationService = {
-  addNotificationsSubscriptions: async (idNotification, subscriptions) => {
+  addNotificationsSubscriptions: async (notification, subscriptions) => {
     let errorAdd = false;
     try {
       for (const subscription of subscriptions) {
+        subscriptionNotificationModel.propNotification = notification;
+        subscriptionNotificationModel.propEndpointURL =
+          subscription.endpointURL;
+
         let notificationSubscriptionAdded =
-          await subscriptionNotificationModel.post(
-            idNotification,
-            subscription.endpointURL
-          );
+          await subscriptionNotificationModel.post();
 
         if (notificationSubscriptionAdded == 0) {
           errorAdd = true;
@@ -25,41 +26,38 @@ export const SubscriptionNotificationService = {
     }
   },
 
-  getNotificationSubscriptionByIdNotification: async (idNotification) => {
+  getNotificationSubscriptionByIdNotification: async (notification) => {
     try {
-      let notification =
-        await subscriptionNotificationModel.getNotificationSubscriptionByIdNotifi(
-          idNotification
-        );
+      subscriptionNotificationModel.propNotification = notification;
+      let notificationOfSubscription =
+        await subscriptionNotificationModel.getNotificationSubscriptionByIdNotifi();
 
-      return notification;
+      return notificationOfSubscription;
     } catch (error) {
       throw new Error(error);
     }
   },
   findSubscriptionsDistinctByIdNotification: async (
-    idNotification,
+    notification,
     endpointURL
   ) => {
     try {
+      subscriptionNotificationModel.propNotification = notification;
+      subscriptionNotificationModel.propEndpointURL = endpointURL;
       const subscriptions =
-        await subscriptionNotificationModel.getSubscriptionsDistinctByIdNotification(
-          idNotification,
-          endpointURL
-        );
+        await subscriptionNotificationModel.getSubscriptionsDistinctByIdNotification();
       return subscriptions;
     } catch (error) {
       throw new Error(error);
     }
   },
 
-  findPendingNotificationsByEndpoint: async (endpoint, state) => {
+  findPendingNotificationsByEndpoint: async (endpoint, notification) => {
     try {
+      subscriptionNotificationModel.propNotification = notification;
+      subscriptionNotificationModel.propEndpointURL = endpoint;
       let pendingNotifications =
-        await subscriptionNotificationModel.getPendingNotificationsByEndpoint(
-          endpoint,
-          state
-        );
+        await subscriptionNotificationModel.getPendingNotificationsByEndpoint();
 
       return pendingNotifications;
     } catch (error) {

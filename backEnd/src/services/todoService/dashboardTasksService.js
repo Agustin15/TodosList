@@ -8,6 +8,9 @@ export const DashboardTasksService = {
       let firstSunday = DashboardTasksService.getFirstSunday();
       let nextSaturday = DashboardTasksService.getNextSaturday();
 
+      taskModel.propIdUser = idUser;
+      taskModel.propIsCompleted = 0;
+
       const days = [
         "Sunday",
         "Monday",
@@ -21,11 +24,9 @@ export const DashboardTasksService = {
       let tasksIncompleteByWeekday = await Promise.all(
         days.map(async (day, index) => {
           let tasksWeekday = await taskModel.getTasksStateByWeekday(
-            idUser,
             firstSunday,
             nextSaturday,
-            index,
-            0
+            index
           );
           return {
             weekday: day,
@@ -34,14 +35,13 @@ export const DashboardTasksService = {
         })
       );
 
+      taskModel.propIsCompleted = 1;
       let tasksCompleteByWeekday = await Promise.all(
         days.map(async (day, index) => {
           let tasksCompleteWeekday = await taskModel.getTasksStateByWeekday(
-            idUser,
             firstSunday,
             nextSaturday,
-            index,
-            1
+            index
           );
 
           return {
@@ -65,8 +65,9 @@ export const DashboardTasksService = {
       let firstSunday = DashboardTasksService.getFirstSunday();
       let nextSaturday = DashboardTasksService.getNextSaturday();
 
+      taskModel.propIdUser = idUser;
+
       let tasksThisWeekUser = await taskModel.getTasksThisWeekUser(
-        idUser,
         firstSunday,
         nextSaturday
       );
@@ -83,7 +84,7 @@ export const DashboardTasksService = {
             minute: "numeric"
           }).format(dateTask);
 
-          let filesTask = await FileService.findFilesByIdTask(task.idTask);
+          let filesTask = await FileService.findFilesByIdTask(task);
 
           return {
             id: task.idTask,

@@ -70,7 +70,7 @@
     z-index: 3;
     border-radius: 7px;
     border: 1px solid rgb(197, 197, 197);
-    margin-top: 19rem;
+    margin-top: 21rem;
     margin-left: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -133,12 +133,14 @@
     box-shadow: 2px 2px 2px gray;
     height: 1.6rem;
     border-radius: 11px;
-    background: linear-gradient(rgb(24, 151, 201), rgb(16, 106, 141));
+    background: linear-gradient(rgb(36, 166, 218), rgb(16, 106, 141));
     font-weight: bold;
+    position: relative;
     color: white;
     border: none;
     cursor: pointer;
 }
+
 
 .panelFilterShow ul button:hover {
     background: linear-gradient(rgb(21, 135, 180), rgb(16, 106, 141));
@@ -196,6 +198,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     width: 8rem;
     gap: 1rem;
     height: 2.1rem;

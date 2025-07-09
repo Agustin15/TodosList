@@ -1,11 +1,59 @@
 import connection from "../config/database.js";
 
 export class SubscriptionPush {
-  async post(idUser, endpointURL, p256dh, auth) {
+  #idUser;
+  #endpointURL;
+  #p256dh;
+  #auth;
+
+  get propIdUser() {
+    return this.#idUser;
+  }
+
+  set propIdUser(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idUser,it must be a number");
+    this.#idUser = value;
+  }
+  get propEndpointURL() {
+    return this.#endpointURL;
+  }
+
+  set propEndpointURL(value) {
+    if (!value || value.length == 0)
+      throw new Error("Enter subscription endpoint");
+    this.#endpointURL = value;
+  }
+
+  get propKeyp256dh() {
+    return this.#p256dh;
+  }
+
+  set propKeyp256dh(value) {
+    if (!value || value.length == 0)
+      throw new Error("Enter subscription public client key");
+    this.#p256dh = value;
+  }
+  get propAuth() {
+    return this.#auth;
+  }
+
+  set propAuth(value) {
+    if (!value || value.length == 0)
+      throw new Error("Enter subscription auth key");
+    this.#auth = value;
+  }
+
+  async post() {
     try {
       const [result] = await connection.execute(
         "INSERT INTO subscription (idUser,endpointURL,p256dh,auth) values (?,?,?,?)",
-        [idUser, endpointURL, p256dh, auth]
+        [
+          this.propIdUser,
+          this.propEndpointURL,
+          this.propKeyp256dh,
+          this.propAuth
+        ]
       );
 
       return result.affectedRows;
@@ -15,11 +63,11 @@ export class SubscriptionPush {
     }
   }
 
-  async delete(endpointURL) {
+  async delete() {
     try {
       const [result] = await connection.execute(
         "delete from subscription where endpointURL=?",
-        [endpointURL]
+        [this.propEndpointURL]
       );
 
       return result.affectedRows;
@@ -27,24 +75,23 @@ export class SubscriptionPush {
       throw new Error(error);
     }
   }
-  async getSubscriptionsByIdUser(idUser) {
+  async getSubscriptionsByIdUser() {
     try {
       const [results] = await connection.execute(
         "select * from subscription where idUser=?",
-        [idUser]
+        [this.propIdUser]
       );
       return results;
     } catch (error) {
       throw new Error(error);
     }
   }
-  
 
-  async getSubscriptionByEndpoint(endpointURL) {
+  async getSubscriptionByEndpoint() {
     try {
       const [results] = await connection.execute(
         "select * from subscription where endpointURL=?",
-        [endpointURL]
+        [this.propEndpointURL]
       );
       return results;
     } catch (error) {

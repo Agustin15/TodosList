@@ -1,14 +1,13 @@
 .listNotifications {
     display: flex;
     flex-direction: column;
+    justify-content: start;
     align-items: center;
     width: 100%;
     list-style: none;
     gap: 1rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
     margin-top: 1rem;
-    height: 100%;
+    padding-bottom: 1rem;
     overflow-y: scroll;
 }
 
@@ -19,7 +18,7 @@
     cursor: pointer;
     width: 99%;
     gap: 0.5rem;
-    height: 6rem;
+    height: auto;
     border: 1px solid rgb(209, 209, 209);
     border-radius: 11px;
     position: relative;
@@ -38,141 +37,21 @@
     height: 35px;
 }
 .listNotifications .icon {
-    border-radius: 11px;
-    border-bottom-right-radius: 0%;
-    border-top-right-radius: 0%;
-    font-size: 33px;
-    width: 5rem;
-    height: 100%;
+    border-radius: 100px;
+    font-size: 29px;
+    width: 3.6rem;
+    height: 3.5rem;
     border: 1px solid rgb(206, 206, 206);
-    background-image: linear-gradient(
-            170deg,
-            rgba(2, 2, 2, 0.02) 0%,
-            rgba(2, 2, 2, 0.02) 51%,
-            transparent 51%,
-            transparent 100%
-        ),
-        linear-gradient(
-            212deg,
-            rgba(82, 82, 82, 0.01) 0%,
-            rgba(82, 82, 82, 0.01) 39%,
-            transparent 39%,
-            transparent 100%
-        ),
-        linear-gradient(95deg, rgba(73, 73, 73, 0.01) 0%, rgba(73, 73, 73, 0.01) 66%, transparent 66%, transparent 100%),
-        linear-gradient(
-            119deg,
-            rgba(174, 174, 174, 0.01) 0%,
-            rgba(174, 174, 174, 0.01) 67%,
-            transparent 67%,
-            transparent 100%
-        ),
-        linear-gradient(
-            43deg,
-            rgba(237, 237, 237, 0.03) 0%,
-            rgba(237, 237, 237, 0.03) 13%,
-            transparent 13%,
-            transparent 100%
-        ),
-        linear-gradient(148deg, rgba(11, 11, 11, 0.01) 0%, rgba(11, 11, 11, 0.01) 9%, transparent 9%, transparent 100%),
-        linear-gradient(
-            17deg,
-            rgba(233, 233, 233, 0.02) 0%,
-            rgba(233, 233, 233, 0.02) 13%,
-            transparent 13%,
-            transparent 100%
-        ),
-        linear-gradient(
-            198deg,
-            rgba(248, 248, 248, 0.02) 0%,
-            rgba(248, 248, 248, 0.02) 43%,
-            transparent 43%,
-            transparent 100%
-        ),
-        linear-gradient(
-            199deg,
-            rgba(125, 125, 125, 0.01) 0%,
-            rgba(125, 125, 125, 0.01) 39%,
-            transparent 39%,
-            transparent 100%
-        ),
-        linear-gradient(12deg, rgba(2, 2, 2, 0.02) 0%, rgba(2, 2, 2, 0.02) 46%, transparent 46%, transparent 100%),
-        linear-gradient(
-            341deg,
-            rgba(227, 227, 227, 0.02) 0%,
-            rgba(227, 227, 227, 0.02) 13%,
-            transparent 13%,
-            transparent 100%
-        ),
-        linear-gradient(
-            215deg,
-            rgba(201, 201, 201, 0.03) 0%,
-            rgba(201, 201, 201, 0.03) 56%,
-            transparent 56%,
-            transparent 100%
-        ),
-        linear-gradient(
-            199deg,
-            rgba(189, 189, 189, 0.02) 0%,
-            rgba(189, 189, 189, 0.02) 2%,
-            transparent 2%,
-            transparent 100%
-        ),
-        linear-gradient(
-            34deg,
-            rgba(116, 116, 116, 0.03) 0%,
-            rgba(116, 116, 116, 0.03) 63%,
-            transparent 63%,
-            transparent 100%
-        ),
-        linear-gradient(
-            50deg,
-            rgba(230, 230, 230, 0.01) 0%,
-            rgba(230, 230, 230, 0.01) 30%,
-            transparent 30%,
-            transparent 100%
-        ),
-        linear-gradient(
-            162deg,
-            rgba(10, 10, 10, 0.02) 0%,
-            rgba(10, 10, 10, 0.02) 58%,
-            transparent 58%,
-            transparent 100%
-        ),
-        linear-gradient(
-            327deg,
-            rgba(35, 35, 35, 0.01) 0%,
-            rgba(35, 35, 35, 0.01) 15%,
-            transparent 15%,
-            transparent 100%
-        ),
-        linear-gradient(
-            255deg,
-            rgba(191, 191, 191, 0.03) 0%,
-            rgba(191, 191, 191, 0.03) 74%,
-            transparent 74%,
-            transparent 100%
-        ),
-        linear-gradient(
-            311deg,
-            rgba(210, 210, 210, 0.03) 0%,
-            rgba(210, 210, 210, 0.03) 46%,
-            transparent 46%,
-            transparent 100%
-        ),
-        linear-gradient(
-            272deg,
-            rgba(212, 212, 212, 0.01) 0%,
-            rgba(212, 212, 212, 0.01) 19%,
-            transparent 19%,
-            transparent 100%
-        ),
-        linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 255, 255));
+    background: linear-gradient(rgb(139, 191, 233), rgb(27, 90, 161));
+    background-size: 29rem;
+    margin-left: 1rem;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 
 .listNotifications .stateNotification {
     position: absolute;
@@ -192,6 +71,8 @@
     flex-direction: column;
     align-items: start;
     gap: 0.4rem;
+    padding-top: 1rem;
+    padding-bottom: 1.3rem;
     margin-left: 0.5rem;
     width: 98%;
 }
@@ -241,6 +122,7 @@
 .listNotifications .datetimeNotification {
     width: 91%;
     height: 4.3rem;
+    margin-top: -0.4rem;
     display: flex;
     align-items: end;
     justify-content: end;
@@ -267,7 +149,9 @@
     .listNotifications .icon {
         font-size: 24px;
         width: 3.3rem;
-        height: 100%;
+        height: 3rem;
+        border-radius: 100%;
+        margin-left: 0.5rem;
     }
 
     .listNotifications .stateNotification {
@@ -327,7 +211,6 @@
     .listNotifications .icon {
         font-size: 24px;
         width: 3.3rem;
-        height: 100%;
     }
 
     .listNotifications .stateNotification {
@@ -351,7 +234,7 @@
     }
 
     .listNotifications .datetimeNotification {
-        width: 89%;
+        width: 85%;
         font-size: 13px;
         height: 99%;
         position: absolute;

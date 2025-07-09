@@ -12,7 +12,7 @@ export const ItemsNotifications = ({ notifications }) => {
     datetimeNotification
   } = useNotification();
 
-  const  {windowWidth } = useWindowSize();
+  const { windowWidth } = useWindowSize();
 
   const redirectToTask = (notification) => {
     if (notification.state == "seen")
@@ -43,7 +43,7 @@ export const ItemsNotifications = ({ notifications }) => {
             <div className={styles.datetimeTask}>
               <img src={calendarNotification}></img>
               <p>
-                {windowWidth<=699?"":"Task will expire the "}
+                {windowWidth <= 699 ? "" : "Task will expire the "}
                 {formatToStringDate(notification.datetimeTask)}
               </p>
             </div>

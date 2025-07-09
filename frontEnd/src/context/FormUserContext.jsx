@@ -139,9 +139,8 @@ export const FormUserProvider = ({ children }) => {
       "signUp"
     );
 
-    if (errorForm) {
-      setErrorsInputsSignUp(inputsError);
-    } else {
+    setErrorsInputsSignUp(inputsError);
+    if (!errorForm) {
       setUser(userSignUp);
     }
   };

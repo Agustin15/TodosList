@@ -2,6 +2,7 @@ import stylesTasksThisWeek from "./TasksThisWeek.module.css";
 import iconTask from "../../../assets/img/logo.png";
 import notPendingTask from "../../../assets/img/notTasksPending.jpg";
 import gifLoading from "../../../assets/img/loading.gif";
+import { GlassEffect } from "../../glassEffect/GlassEffect";
 import { useTasks } from "../../../context/TaskContext";
 import { Task } from "./Task";
 
@@ -13,6 +14,7 @@ export const TasksThisWeek = () => {
       <div className={stylesTasksThisWeek.header}>
         <h3>Task this week</h3>
         <img src={iconTask}></img>
+        <GlassEffect />
       </div>
 
       <ul className={stylesTasksThisWeek.list}>

@@ -6,12 +6,14 @@ import { NotificationService } from "../notificationService.js";
 import { SubscriptionPushService } from "../subscriptionPushService.js";
 import { NotificationToQueue } from "../notificationsQueue.js";
 import { ScheduledJobService } from "../scheduledJobService.js";
-const taskModel = new Task();
 
+const taskModel = new Task();
 export const TaskService = {
   getYearsOfTasks: async (idUser) => {
     try {
-      const yearsTasks = await taskModel.getYearsTask(idUser);
+      taskModel.propIdUser = idUser;
+
+      const yearsTasks = await taskModel.getYearsTask();
       return yearsTasks;
     } catch (error) {
       throw error;
@@ -23,20 +25,21 @@ export const TaskService = {
       let firstSunday = DashboardTasksService.getFirstSunday();
       let nextSaturday = DashboardTasksService.getNextSaturday();
 
+      taskModel.propIdUser = idUser;
+      taskModel.propIsCompleted = state;
+
       let tasksThisWeekUser =
         await taskModel.getTasksThisWeekByStateAndUserLimit(
-          idUser,
           firstSunday,
           nextSaturday,
-          offset,
-          state
+          offset
         );
 
       tasksThisWeekUser = await Promise.all(
         tasksThisWeekUser.map(async (task) => {
-          let filesTask = await FileService.findFilesByIdTask(task.idTask);
+          let filesTask = await FileService.findFilesByIdTask(task);
           let notificationFound =
-            await NotificationService.findNotificationByIdTask(task.idTask);
+            await NotificationService.findNotificationByIdTask(task);
           notificationFound.length > 0
             ? (task.datetimeNotification = notificationFound[0].datetimeSend)
             : (task.datetimeNotification = "");
@@ -58,11 +61,12 @@ export const TaskService = {
       let firstSunday = DashboardTasksService.getFirstSunday();
       let nextSaturday = DashboardTasksService.getNextSaturday();
 
+      taskModel.propIdUser = idUser;
+      taskModel.propIsCompleted = state;
+
       let tasksThisWeekUser = await taskModel.getTasksThisWeekByStateAndUser(
-        idUser,
         firstSunday,
-        nextSaturday,
-        state
+        nextSaturday
       );
 
       tasksThisWeekUser = await Promise.all(
@@ -78,7 +82,7 @@ export const TaskService = {
             minute: "numeric"
           }).format(dateTask);
 
-          let filesTask = await FileService.findFilesByIdTask(task.idTask);
+          let filesTask = await FileService.findFilesByIdTask(task);
 
           return {
             id: task.idTask,
@@ -100,18 +104,15 @@ export const TaskService = {
   getTasksLimitByFilterOption: async (idUser, year, month, state, offset) => {
     let tasks;
     try {
-      tasks = await taskModel.getTasksLimitByFilterOption(
-        idUser,
-        year,
-        month,
-        state,
-        offset
-      );
+      taskModel.propIdUser = idUser;
+      taskModel.propIsCompleted = state;
+
+      tasks = await taskModel.getTasksLimitByFilterOption(year, month, offset);
 
       for (const task of tasks) {
-        let filesTask = await FileService.findFilesByIdTask(task.idTask);
+        let filesTask = await FileService.findFilesByIdTask(task);
         let notificationFound =
-          await NotificationService.findNotificationByIdTask(task.idTask);
+          await NotificationService.findNotificationByIdTask(task);
         task.filesUploaded = filesTask;
         notificationFound.length > 0
           ? (task.datetimeNotification = notificationFound[0].datetimeSend)
@@ -127,12 +128,10 @@ export const TaskService = {
   getQuantityTasksByFilterOption: async (idUser, year, month, state) => {
     let tasks;
     try {
-      tasks = await taskModel.getQuantityTasksByFilterOption(
-        idUser,
-        year,
-        month,
-        state
-      );
+      taskModel.propIdUser = idUser;
+      taskModel.propIsCompleted = state;
+
+      tasks = await taskModel.getQuantityTasksByFilterOption(year, month);
 
       return tasks;
     } catch (error) {
@@ -142,13 +141,16 @@ export const TaskService = {
 
   getTaskById: async (idUser, idTask) => {
     try {
-      const taskFoundById = await taskModel.getTaskById(idUser, idTask);
+      taskModel.propIdTask = idTask;
+      taskModel.propIdUser = idUser;
+
+      const taskFoundById = await taskModel.getTaskById();
 
       if (!taskFoundById || taskFoundById.length == 0) {
         throw new Error("Task not found");
       }
 
-      let filesTask = await FileService.findFilesByIdTask(idTask);
+      let filesTask = await FileService.findFilesByIdTask(taskModel);
       taskFoundById[0].filesUploaded = filesTask;
 
       return taskFoundById;
@@ -158,17 +160,24 @@ export const TaskService = {
   },
 
   findTasksByIdTask: async (idTask, idUser) => {
-    const taskFound = await taskModel.getTaskById(idUser, idTask);
-    return taskFound;
+    try {
+      taskModel.propIdTask = idTask;
+      taskModel.propIdUser = idUser;
+
+      const taskFound = await taskModel.getTaskById();
+      return taskFound;
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   findTaskRecentlyAdded: async (idUser, description, datetime) => {
     try {
-      const taskFound = await taskModel.getTaskRecentlyAdded(
-        idUser,
-        description,
-        datetime
-      );
+      taskModel.propIdUser = idUser;
+      taskModel.propDescription = description;
+      taskModel.propDatetime = datetime;
+
+      const taskFound = await taskModel.getTaskRecentlyAdded();
 
       if (taskFound.length == 0) throw new Error("Error,task not found");
 
@@ -182,13 +191,13 @@ export const TaskService = {
     try {
       await connection.beginTransaction();
 
-      const taskCreated = await taskModel.post(
-        idUser,
-        task.icon,
-        task.descriptionTask,
-        task.datetimeTask,
-        0
-      );
+      taskModel.propIdUser = idUser;
+      taskModel.propIcon = task.icon;
+      taskModel.propDescription = task.descriptionTask;
+      taskModel.propDatetime = task.datetimeTask;
+      taskModel.propIsCompleted = 0;
+
+      const taskCreated = await taskModel.post();
 
       if (taskCreated == 0) {
         throw new Error("Error to add task");
@@ -201,16 +210,14 @@ export const TaskService = {
       );
 
       if (files.length > 0) {
-        let fileAdded = await FileService.addFile(taskAddedFound.idTask, files);
+        let fileAdded = await FileService.addFile(taskAddedFound, files);
 
         if (!fileAdded.result) {
           errorAddFile = true;
         }
       }
 
-      let filesTask = await FileService.findFilesByIdTask(
-        taskAddedFound.idTask
-      );
+      let filesTask = await FileService.findFilesByIdTask(taskAddedFound);
       taskAddedFound.filesUploaded = filesTask;
       taskAddedFound.datetimeNotification = task.datetimeNotification;
 
@@ -240,13 +247,13 @@ export const TaskService = {
     try {
       await connection.beginTransaction();
 
-      const taskUpdated = await taskModel.put(
-        task.icon,
-        task.descriptionTask,
-        task.datetimeTask,
-        task.state,
-        idTask
-      );
+      taskModel.propIcon = task.icon;
+      taskModel.propDescription = task.descriptionTask;
+      taskModel.propDatetime = task.datetimeTask;
+      taskModel.propIsCompleted =parseInt(task.state);
+      taskModel.propIdTask = idTask;
+
+      const taskUpdated = await taskModel.put();
 
       if (taskUpdated == 0) {
         throw new Error("Failed to update task");
@@ -259,16 +266,19 @@ export const TaskService = {
 
       taskUpdatedFound = taskUpdatedFound[0];
 
-      let filesChanged = await FileService.findFilesChanged(idTask, files);
+      let filesChanged = await FileService.findFilesChanged(
+        taskUpdatedFound,
+        files
+      );
       if (filesChanged.filesForAdd.length > 0) {
-        await FileService.addFile(idTask, filesChanged.filesForAdd);
+        await FileService.addFile(taskUpdatedFound, filesChanged.filesForAdd);
       }
       if (filesChanged.filesForDelete.length > 0) {
         await FileService.deleteFile(filesChanged.filesForDelete);
       }
 
       let notification = await NotificationService.findNotificationByIdTask(
-        idTask
+        taskUpdatedFound
       );
       task.idTask = idTask;
 
@@ -297,7 +307,7 @@ export const TaskService = {
 
       await connection.commit();
 
-      let filesTask = await FileService.findFilesByIdTask(idTask);
+      let filesTask = await FileService.findFilesByIdTask(task);
       taskUpdatedFound.filesUploaded = filesTask;
       taskUpdatedFound.datetimeNotification = task.datetimeNotification;
 
@@ -310,12 +320,15 @@ export const TaskService = {
 
   updateStateTask: async (newState, idTask, idUser) => {
     try {
-      const taskStateUpdated = await taskModel.patchStateTask(newState, idTask);
+      taskModel.propIsCompleted = newState;
+      taskModel.propIdTask = idTask;
+
+      const taskStateUpdated = await taskModel.patchStateTask();
 
       if (taskStateUpdated == 0) throw new Error("Failed to update state task");
 
       let task = await TaskService.findTasksByIdTask(idTask, idUser);
-      let filesTask = await FileService.findFilesByIdTask(idTask);
+      let filesTask = await FileService.findFilesByIdTask(task[0]);
 
       task[0].filesUploaded = filesTask;
       return task[0];
@@ -324,14 +337,17 @@ export const TaskService = {
     }
   },
 
-  deleteTask: async (idTask) => {
+  deleteTask: async (idTask, idUser) => {
     try {
       let jobId;
 
       await connection.beginTransaction();
 
-      let notificationFound =
-        NotificationService.findNotificationByIdTask(idTask);
+      let task = await TaskService.findTasksByIdTask(idTask, idUser);
+
+      let notificationFound = NotificationService.findNotificationByIdTask(
+        task[0]
+      );
 
       if (notificationFound.length > 0) {
         let jobNotificationFound = ScheduledJobService.getJobByIdNotification(
@@ -341,7 +357,7 @@ export const TaskService = {
         jobId = `'${jobNotificationFound.idJob}'`;
       }
 
-      let deletedTask = await taskModel.delete(idTask);
+      let deletedTask = await taskModel.delete();
 
       if (deletedTask == 0) throw new Error("Failed to delete task");
 

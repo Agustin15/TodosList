@@ -1,5 +1,5 @@
 import styles from "./ContentBody.module.css";
-import iconUser from "../../../assets/img/userAvatar.png";
+import iconUserInfo from "../../../assets/img/userInfo.png";
 import iconEmail from "../../../assets/img/emailProfile.png";
 import gifLoadingForm from "../../../assets/img/loadingForm.gif";
 import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
@@ -7,6 +7,7 @@ import iconEdit from "../../../assets/img/edit.png";
 import { AlertInput } from "./alertInput/AlertInput";
 import { useDataUser } from "../../../context/userDataContext";
 import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
+import { GlassEffect } from "../../glassEffect/GlassEffect.jsx";
 
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   const { windowWidth } = useWindowSize();
@@ -55,7 +56,7 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
     <>
       <div className={styles.detailsUser}>
         <div className={styles.avatar}>
-          <img src={iconUser}></img>
+          <img src={iconUserInfo}></img>
           <span>
             {user.name} {user.lastname}
           </span>
@@ -136,6 +137,7 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
         >
           Save
           {loaderForm && <img src={gifLoadingForm}></img>}
+          <GlassEffect />
         </button>
       </form>
     </>

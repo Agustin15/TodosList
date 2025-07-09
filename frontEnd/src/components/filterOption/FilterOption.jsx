@@ -4,6 +4,7 @@ import iconFilterTwo from "../../assets/img/filterTwo.png";
 import iconFilterClose from "../../assets/img/closeFilter.png";
 import iconAddTask from "../../assets/img/iconAddTask.png";
 import SearchTask from "../searchTask/SearchTask";
+import { GlassEffect } from "../glassEffect/GlassEffect";
 import { Filter } from "./Filter";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -46,6 +47,7 @@ export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
         ></img>
         <button onClick={handleFilter} className={styles.openFilter}>
           <img src={iconFilter}></img>
+          <GlassEffect />
         </button>
         <span>Search:</span>
         {refs.map(

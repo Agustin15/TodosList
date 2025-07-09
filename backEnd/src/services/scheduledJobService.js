@@ -5,7 +5,9 @@ const scheduledJobModel = new ScheduledJob();
 export const ScheduledJobService = {
   addJob: async (idNotification) => {
     try {
-      let resultAdded = await scheduledJobModel.post(idNotification);
+      scheduledJobModel.propIdNotification = idNotification;
+
+      let resultAdded = await scheduledJobModel.post();
       if (resultAdded == 0) throw new Error("Failed to add scheduled job");
 
       return resultAdded;
@@ -16,9 +18,8 @@ export const ScheduledJobService = {
 
   getJobByIdNotification: async (idNotification) => {
     try {
-      let result = await scheduledJobModel.getJobByIdNotification(
-        idNotification
-      );
+      scheduledJobModel.propIdNotification = idNotification;
+      let result = await scheduledJobModel.getJobByIdNotification();
       if (result.length == 0) throw new Error("Job of notification not found");
 
       return result[0];

@@ -42,7 +42,6 @@ export const CalendarEvents = () => {
     }
   }, [dateSelected]);
 
-
   const handleEventClickCalendar = (info) => {
     let idTask = info.event._def.extendedProps.idTask;
     location.href = urlFront + "tasks/" + idTask;
@@ -62,42 +61,44 @@ export const CalendarEvents = () => {
       <div className={styles.column}>
         <Title title={"Calendar tasks"} icon={iconCalendar}></Title>
         <div className={styles.containCalendar}>
-          <Wrapper>
-            <FullCalendar
-              plugins={[
-                dayGridPlugin,
-                multiMonthPlugin,
-                interactionPlugin,
-                timeGridPlugin
-              ]}
-              initialView="dayGridMonth"
-              events={eventsCalendar}
-              initialDate={initialDate(idTask)}
-              dayCellDidMount={(info) => dayView(info, idTask)}
-              dayMaxEventRows={1}
-              dateClick={handleEventAddEvent}
-              headerToolbar={{
-                start: "dayGridMonth,timeGridDay,multiMonthYear",
-                center: "title",
-                end: "today prev,next"
-              }}
-              eventClick={handleEventClickCalendar}
-            ></FullCalendar>
-          </Wrapper>
-          <ul>
-            <li className={styles.pending}>
-              <div></div>
-              Pending
-            </li>
-            <li className={styles.completed}>
-              <div></div>
-              Completed
-            </li>
-            <li className={styles.found}>
-              <div></div>
-              Wanted
-            </li>
-          </ul>
+          <div className={styles.backgroundCalendar}>
+            <Wrapper>
+              <FullCalendar
+                plugins={[
+                  dayGridPlugin,
+                  multiMonthPlugin,
+                  interactionPlugin,
+                  timeGridPlugin
+                ]}
+                initialView="dayGridMonth"
+                events={eventsCalendar}
+                initialDate={initialDate(idTask)}
+                dayCellDidMount={(info) => dayView(info, idTask)}
+                dayMaxEventRows={1}
+                dateClick={handleEventAddEvent}
+                headerToolbar={{
+                  start: "dayGridMonth,timeGridDay,multiMonthYear",
+                  center: "title",
+                  end: "today prev,next"
+                }}
+                eventClick={handleEventClickCalendar}
+              ></FullCalendar>
+            </Wrapper>
+            <ul>
+              <li className={styles.pending}>
+                <div></div>
+                Pending
+              </li>
+              <li className={styles.completed}>
+                <div></div>
+                Completed
+              </li>
+              <li className={styles.found}>
+                <div></div>
+                Wanted
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <br></br>

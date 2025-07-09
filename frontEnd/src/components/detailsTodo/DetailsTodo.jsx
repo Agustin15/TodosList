@@ -1,6 +1,7 @@
 import classesStyle from "./DetailsTodo.module.css";
-import iconInfoTitle from "../../assets/img/infoTitle.png";
+import iconInfoTitle from "../../assets/img/info.png";
 import { FilesProvider } from "../../context/FilesContext";
+import { GlassEffect } from "../glassEffect/GlassEffect";
 import iconNotFiles from "../../assets/img/notFiles.png";
 import iconCalendar from "../../assets/img/calendar.png";
 import { FilesTask } from "./FilesTask";
@@ -23,12 +24,15 @@ const DetailsTodo = ({ task, setOpenModalInfo }) => {
   return (
     <div className={classesStyle.contain}>
       <div className={classesStyle.header}>
+        <GlassEffect />
         <div className={classesStyle.title}>
           <h3>Task details</h3>
           <img src={iconInfoTitle}></img>
         </div>
         <div className={classesStyle.containBtnClose}>
-          <button onClick={() => setOpenModalInfo(false)}>X</button>
+          <button onClick={() => setOpenModalInfo(false)}>
+            X<div className={classesStyle.glassEffect}></div>
+          </button>
         </div>
       </div>
       <div className={classesStyle.containDetails}>

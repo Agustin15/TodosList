@@ -3,7 +3,6 @@ import iconDelete from "../../../assets/img/delete.png";
 import iconInfo from "../../../assets/img/info.png";
 import iconEdit from "../../../assets/img/editing.png";
 import { AlertFormSwal, AlertQuestionSwal } from "../../sweetAlert/sweetAlert";
-import { useState } from "react";
 import { useTasks } from "../../../context/TaskContext";
 import { useWindowSize } from "../../../context/WindowSizeContext";
 import { useFilterOptionTasks } from "../../../context/FilterOptionTasksContext";
@@ -73,6 +72,7 @@ export const MenuOption = ({ task, setOpenModalInfo, setOpenModalUpdate }) => {
           }}
         >
           <img src={iconEdit}></img>
+ 
         </button>
         <button
           className={styles.btnDetails}
@@ -81,6 +81,7 @@ export const MenuOption = ({ task, setOpenModalInfo, setOpenModalUpdate }) => {
           }}
         >
           <img src={iconInfo}></img>
+  
         </button>
       </div>
     </div>

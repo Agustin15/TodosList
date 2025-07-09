@@ -28,7 +28,8 @@ export const CalendarTasksService = {
   getTasksForCalendarByUser: async (idUser) => {
     let tasks;
     try {
-      tasks = await taskModel.getAllTasksByUser(idUser);
+      taskModel.propIdUser = idUser;
+      tasks = await taskModel.getAllTasksByUser();
 
       tasks = tasks.map((task) => {
         try {

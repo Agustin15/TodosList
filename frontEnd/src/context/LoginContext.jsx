@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import errorIcon from "../assets/img/errorIcon.png";
+import errorIcon from "../assets/img/errorIcon.ico";
 import { useFormUser } from "./FormUserContext";
 const LoginContext = createContext();
 

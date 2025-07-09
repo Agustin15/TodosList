@@ -1,14 +1,14 @@
 import { User } from "../model/userModel.js";
-import bcrypt from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 
 const userModel = new User();
 
 export const UserService = {
   createUser: async (userToAdd) => {
     try {
-      const userFoundByEmail = await UserService.findUserByEmail(
-        userToAdd.email
-      );
+      userModel.propName = userToAdd.name;
+      userModel.propLastname = userToAdd.lastname;
+      const userFoundByEmail = await UserService.findUserByEmail(userToAdd.email);
 
       if (userFoundByEmail) {
         throw new Error("Email is already taken");
@@ -16,12 +16,8 @@ export const UserService = {
 
       const hash = await bcrypt.hash(userToAdd.password, 10);
 
-      const userCreated = await userModel.post(
-        userToAdd.name,
-        userToAdd.lastname,
-        userToAdd.email,
-        hash
-      );
+      userModel.propPassword = hash;
+      const userCreated = await userModel.post();
 
       if (userCreated == 0) {
         throw new Error("Error to add user");
@@ -34,7 +30,9 @@ export const UserService = {
 
   getUserByEmail: async (email) => {
     try {
-      const userFound = await userModel.getUserByEmail(email);
+      userModel.propEmail = email;
+
+      const userFound = await userModel.getUserByEmail();
       return userFound;
     } catch (error) {
       throw error;
@@ -43,7 +41,9 @@ export const UserService = {
 
   findUserByEmail: async (email) => {
     try {
-      const userFound = await userModel.getUserByEmail(email);
+      userModel.propEmailAddress = email;
+
+      const userFound = await userModel.getUserByEmail();
       return userFound[0];
     } catch (error) {
       throw error;
@@ -52,7 +52,8 @@ export const UserService = {
 
   findUserByIdUser: async (idUser) => {
     try {
-      const userFound = await userModel.getUserById(idUser);
+      userModel.propIdUser = idUser;
+      const userFound = await userModel.getUserById();
       return userFound[0];
     } catch (error) {
       throw error;
@@ -89,7 +90,9 @@ export const UserService = {
 
       const hash = await bcrypt.hash(newPassword, 10);
 
-      let userUpdated = await userModel.patchPasswordUserById(hash, idUser);
+      userModel.propPassword = hash;
+      userModel.propIdUser = idUser;
+      let userUpdated = await userModel.patchPasswordUserById();
 
       if (userUpdated == 0) {
         throw new Error("Error to update user");
@@ -105,10 +108,10 @@ export const UserService = {
     try {
       const hash = await bcrypt.hash(newPassword, 10);
 
-      const passwordUpdated = await userModel.patchPasswordUserByEmail(
-        hash,
-        email
-      );
+      userModel.propEmail = email;
+      userModel.propPassword = hash;
+
+      const passwordUpdated = await userModel.patchPasswordUserByEmail();
       if (passwordUpdated == 0) {
         throw new Error("Error to update password user");
       }
@@ -127,13 +130,13 @@ export const UserService = {
         throw new Error("User not found");
       }
 
-      const userUpdated = await userModel.put(
-        name,
-        lastname,
-        userFound.email,
-        userFound.passwordUser,
-        userFound.idUser
-      );
+      userModel.propName = name;
+      userModel.propLastname = lastname;
+      userModel.propIdUser = idUser;
+      userModel.propPassword = userFound.passwordUser;
+      userModel.propEmail = userFound.email;
+
+      const userUpdated = await userModel.put();
 
       if (userUpdated == 0) {
         throw new Error("User not updated");
@@ -172,7 +175,11 @@ export const UserService = {
       if (!passwordVerify) {
         throw new Error("Failed to update, invalid password");
       }
-      let resultUpdated = await userModel.patchEmailUserById(newEmail, idUser);
+
+      userModel.propEmail = newEmail;
+      userModel.propIdUser = idUser;
+
+      let resultUpdated = await userModel.patchEmailUserById();
 
       if (resultUpdated == 0) throw new Error("Failed to update email user");
 
@@ -187,15 +194,5 @@ export const UserService = {
     } catch (error) {
       throw error;
     }
-  },
-  verifyValidString: (value) => {
-    let valid = true;
-    for (let f = 0; f < value.length; f++) {
-      if (!value[f].match(/[a-z]/i) || [f] == "") {
-        return false;
-      }
-    }
-
-    return valid;
   }
 };

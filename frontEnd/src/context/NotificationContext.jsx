@@ -2,6 +2,8 @@ import { createContext, useContext } from "react";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
+
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
@@ -14,7 +16,7 @@ export const NotificationProvider = ({ children }) => {
   }, []);
 
   const getNotificationRealTime = () => {
-    const socket = io("http://localhost:3000");
+    const socket = io(urlBack);
     socket.on("newNotifications", (notifications) => {
       if (notifications && notifications.length > 0) {
         setNotifications(notifications);
@@ -94,7 +96,6 @@ export const NotificationProvider = ({ children }) => {
   };
 
   const fetchPatchStateNotification = async (notification) => {
-   
     try {
       const response = await fetch(
         "/api/notification/" + notification.idNotification,

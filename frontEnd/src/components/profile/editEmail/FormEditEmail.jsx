@@ -9,6 +9,7 @@ import { useDataUser } from "../../../context/userDataContext";
 import { useEffect } from "react";
 import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
 import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
+import { GlassEffect } from "../../glassEffect/GlassEffect.jsx";
 
 const FormEditEmail = ({ email, setModalEditEmail }) => {
   const {
@@ -56,11 +57,14 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.navBar}>
-        <button onClick={handleClose}>X</button>
-      </div>
-      <div className={styles.title}>
-        <h4>Edit email</h4>
-        <img src={iconEditMail}></img>
+        <GlassEffect />
+        <div className={styles.containBtnClose}>
+          <button onClick={handleClose}>X</button>
+        </div>
+        <div className={styles.title}>
+          <h4>Edit email</h4>
+          <img src={iconEditMail}></img>
+        </div>
       </div>
 
       <div className={styles.containInputs}>
@@ -115,6 +119,7 @@ const FormEditEmail = ({ email, setModalEditEmail }) => {
         <button type="submit">
           Update
           {loading && <img src={loadingForm}></img>}
+          <GlassEffect />
         </button>
       </div>
     </form>

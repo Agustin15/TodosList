@@ -1,0 +1,7 @@
+.glassEffect {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 57%;
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(212, 212, 212, 0.2));
+}

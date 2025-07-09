@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    position: relative;
 }
 .options img {
     width: 19px;
@@ -28,10 +29,15 @@
     height: 2.2rem;
     border-radius: 100px;
     border: none;
-    background-color: rgb(28, 187, 153);
+    background: none;
     cursor: pointer;
 }
 
+.options button img {
+    width: 39px;
+    height: 39px;
+    cursor: pointer;
+}
 .options .openFile {
     width: 35px;
     height: 35px;

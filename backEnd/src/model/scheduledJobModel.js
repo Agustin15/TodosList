@@ -1,11 +1,23 @@
 import connection from "../config/database.js";
 
 export class ScheduledJob {
-  async post(idNotification) {
+  #idNotification;
+
+  get propIdNotification() {
+    return this.#idNotification;
+  }
+
+  set propIdNotification(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idNotification,it must be a number");
+    this.#idNotification = value;
+  }
+
+  async post() {
     try {
       const [result] = await connection.execute(
         "INSERT INTO scheduledJob (idNotification) values (?)",
-        [idNotification]
+        [this.propIdNotification]
       );
 
       return result.affectedRows;
@@ -13,11 +25,11 @@ export class ScheduledJob {
       throw new Error(error);
     }
   }
-  async getJobByIdNotification(idNotification) {
+  async getJobByIdNotification() {
     try {
       const [result] = await connection.execute(
         "select * from scheduledjob where idNotification=?",
-        [idNotification]
+        [this.propIdNotification]
       );
 
       return result;

@@ -2,6 +2,7 @@ import styles from "./Pagination.module.css";
 import { useFiles } from "../../../context/FilesContext";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { GlassEffect } from "../../glassEffect/GlassEffect";
 
 export const Pagination = () => {
   const { pages, index, setIndex, fetchGetFiles } = useFiles();
@@ -24,6 +25,7 @@ export const Pagination = () => {
         className={index == 1 ? styles.disabled : styles.enabled}
       >
         Prev
+        <GlassEffect />
       </button>
       <input
         ref={refInputIndex}
@@ -40,6 +42,7 @@ export const Pagination = () => {
         className={index < pages ? styles.enabled : styles.disabled}
       >
         Next
+        <GlassEffect />
       </button>
     </div>
   );

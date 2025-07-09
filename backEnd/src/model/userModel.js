@@ -1,11 +1,82 @@
 import connection from "../config/database.js";
 
 export class User {
-  async post(name, lastname, email, password) {
+  #name;
+  #lastname;
+  #emailAddress;
+  #password;
+  #idUser;
+
+  get propIdUser() {
+    return this.#idUser;
+  }
+
+  set propIdUser(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idUser,it must be a number");
+    this.#idUser = value;
+  }
+  get propName() {
+    return this.#name;
+  }
+
+  set propName(value) {
+    if (!value || value.length == 0 || !this.verifyValidString(value))
+      throw new Error("Enter a valid name");
+    this.#name = value;
+  }
+  get propLastname() {
+    return this.#lastname;
+  }
+
+  set propLastname(value) {
+    if (!value || value.length == 0 || !this.verifyValidString(value))
+      throw new Error("Enter a valid lastname");
+    this.#lastname = value;
+  }
+  get propEmailAddress() {
+    return this.#emailAddress;
+  }
+
+  set propEmailAddress(value) {
+    let regexEmail = /\S+@\S+\.\S+/;
+
+    if (!value || !regexEmail.test(value))
+      throw new Error("Enter a valid email");
+
+    this.#emailAddress = value;
+  }
+
+  get propPassword() {
+    return this.#password;
+  }
+
+  set propPassword(value) {
+    if (!value || value.length == 0) throw new Error("Enter a valid password");
+    this.#password = value;
+  }
+
+  verifyValidString(value) {
+    let valid = true;
+    for (let f = 0; f < value.length; f++) {
+      if (!value[f].match(/[a-z]/i) || [f] == "") {
+        return false;
+      }
+    }
+
+    return valid;
+  }
+
+  async post() {
     try {
       const [result] = await connection.execute(
         "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)",
-        [name, lastname, email, password]
+        [
+          this.propName,
+          this.propLastname,
+          this.propEmailAddress,
+          this.propPassword
+        ]
       );
       return result.affectedRows;
     } catch (error) {
@@ -13,11 +84,11 @@ export class User {
     }
   }
 
-  async patchPasswordUserById(password, idUser) {
+  async patchPasswordUserById() {
     try {
       const [result] = await connection.execute(
         "Update users set passwordUser=? where idUser=?",
-        [password, idUser]
+        [this.propPassword, this.propIdUser]
       );
       return result.affectedRows;
     } catch (error) {
@@ -25,22 +96,22 @@ export class User {
     }
   }
 
-  async patchPasswordUserByEmail(password, email) {
+  async patchPasswordUserByEmail() {
     try {
       const [result] = await connection.execute(
         "Update users set passwordUser=? where email=?",
-        [password, email]
+        [this.propPassword, this.propEmailAddress]
       );
       return result.affectedRows;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async patchEmailUserById(email, idUser) {
+  async patchEmailUserById() {
     try {
       const [result] = await connection.execute(
         "Update users set email=? where idUser=?",
-        [email, idUser]
+        [this.propEmailAddress, this.propIdUser]
       );
       return result.affectedRows;
     } catch (error) {
@@ -48,11 +119,17 @@ export class User {
     }
   }
 
-  async put(name, lastname, email, password, idUser) {
+  async put() {
     try {
       const [result] = await connection.execute(
         "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?",
-        [name, lastname, email, password, idUser]
+        [
+          this.propName,
+          this.propLastname,
+          this.propEmailAddress,
+          this.propPassword,
+          this.propIdUser
+        ]
       );
       return result.affectedRows;
     } catch (error) {
@@ -60,11 +137,11 @@ export class User {
     }
   }
 
-  async getUserByEmail(email) {
+  async getUserByEmail() {
     try {
       const [results] = await connection.execute(
         "select * from users where email=?",
-        [email]
+        [this.propEmailAddress]
       );
       return results;
     } catch (error) {
@@ -72,11 +149,11 @@ export class User {
     }
   }
 
-  async getUserById(idUser) {
+  async getUserById() {
     try {
       const [results] = await connection.execute(
         "select * from users where idUser=?",
-        [idUser]
+        [this.propIdUser]
       );
       return results;
     } catch (error) {

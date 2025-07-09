@@ -20,10 +20,8 @@
     width: 94%;
     height: 91vh;
     padding: 1rem;
-    border-radius: 3px;
-    background-color: white;
-    border: 1px solid rgb(204, 204, 204);
-    box-shadow: 2px 4px 2px rgb(6, 98, 134);
+    border-radius: 8px;
+    background: linear-gradient(rgb(228, 228, 228), rgb(185, 185, 185));
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -66,6 +64,14 @@
     width: 1rem;
     height: 1rem;
     border-radius: 99%;
+}
+
+.backgroundCalendar {
+    width: auto;
+    height: 95%;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
 }
 
 .dayDisabled {

@@ -11,7 +11,7 @@ import { filesRoutes } from "./routes/filesRoutes.js";
 import { subscriptionRoutes } from "./routes/subscriptionPushRoutes.js";
 import { notificationRoutes } from "./routes/notificationRoutes.js";
 import { NotificationToQueue } from "./services/notificationsQueue.js";
-import { Server } from "socket.io";
+import { ConnectionSocket } from "./config/connectionSocket.js";
 
 const app = express();
 export const server = createServer(app);
@@ -28,19 +28,11 @@ app.use("/subscription", subscriptionRoutes);
 app.use("/notification", notificationRoutes);
 app.use("/logout", logoutRoutes);
 
-NotificationToQueue.createNotificationQueue();
 NotificationToQueue.workerNotificationQueue();
+export const socketConnection = new ConnectionSocket(server);
 
-export let globalSocket;
-
-export const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:5173"
-  }
-});
-
-io.on("connection", (socket) => {
-  globalSocket = socket;
+socketConnection.io.on("connection", (socket) => {
+  socketConnection.propSocket = socket;
 });
 
 app.use((error, req, res, next) => {

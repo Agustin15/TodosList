@@ -5,6 +5,7 @@ import iconListNotifications from "../../assets/img/listNotificationsLogo.png";
 import gifLoaderNotifications from "../../assets/img/loader.gif";
 import { Title } from "../title/Title";
 import Header from "../header/Header";
+import { GlassEffect } from "../glassEffect/GlassEffect";
 import { ItemsNotifications } from "./itemsNotifications/itemsNotifications";
 import { AlertStateSubscription } from "./alertState/AlertStateSubscription";
 import { useSubscription } from "../../context/SubscriptionContext";
@@ -29,6 +30,7 @@ export const Notifications = () => {
             <div className={styles.columnContainBtnNotification}>
               {!loader && (
                 <button onClick={notifyMeAlert}>
+                  <GlassEffect />
                   <img
                     src={subscribed ? iconSubscribed : iconNotification}
                   ></img>

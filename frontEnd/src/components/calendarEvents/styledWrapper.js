@@ -14,6 +14,11 @@ export const Wrapper = styled.div`
   .fc-button-group button {
     box-shadow: 2px 2px 2px gray;
   }
+
+  tbody,thead{ 
+   background-color: rgba(255, 255, 255);
+  }
+
   tbody td .fc-event {
     overflow: hidden;
     width: 10rem;

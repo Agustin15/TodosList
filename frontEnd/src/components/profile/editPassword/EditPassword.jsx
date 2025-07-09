@@ -4,15 +4,11 @@ import iconPasswordHide from "../../../assets/img/hidden.png";
 import iconWarningInput from "../../../assets/img/warningInput.png";
 import loadingForm from "../../../assets/img/loadingForm.gif";
 import { useFormEditPassword } from "../../../context/FormEditPasswordContext";
+import { GlassEffect } from "../../glassEffect/GlassEffect";
 
 const EditPassword = ({ setModalEditPassword }) => {
-  const {
-    handleSubmit,
-    handlePassword,
-    errors,
-    loading,
-    setErrors,
-  } = useFormEditPassword();
+  const { handleSubmit, handlePassword, errors, loading, setErrors } =
+    useFormEditPassword();
 
   const handleClose = () => {
     setErrors({ currentPassword: "", newPassword: "", repeatPassword: "" });
@@ -22,11 +18,14 @@ const EditPassword = ({ setModalEditPassword }) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.navBar}>
-        <button onClick={handleClose}>X</button>
-      </div>
-      <div className={styles.title}>
-        <h4>Edit password</h4>
-        <img src={iconEditPassword}></img>
+        <GlassEffect />
+        <div className={styles.title}>
+          <h4>Edit password</h4>
+          <img src={iconEditPassword}></img>
+        </div>
+        <div className={styles.containBtnClose}>
+          <button onClick={handleClose}>X</button>
+        </div>
       </div>
 
       <div className={styles.containInputs}>
@@ -101,6 +100,7 @@ const EditPassword = ({ setModalEditPassword }) => {
         <button type="submit">
           Update
           {loading && <img src={loadingForm}></img>}
+          <GlassEffect />
         </button>
       </div>
     </form>

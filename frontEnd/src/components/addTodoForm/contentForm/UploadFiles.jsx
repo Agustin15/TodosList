@@ -1,5 +1,4 @@
-import iconFileNotUploaded from "../../../assets/img/cloudError.png";
-import iconFileUploaded from "../../../assets/img/cloudOk.png";
+import iconFileUploaded from "../../../assets/img/attachmentFiles.png";
 import iconFile from "../../../assets/img/file.png";
 import iconNotFiles from "../../../assets/img/notFiles.png";
 import classesStyle from "./ContentForm.module.css";
@@ -11,14 +10,8 @@ export const UploadFiles = ({ handleChange }) => {
 
   return (
     <div className={classesStyle.containFile}>
-      <img
-        src={
-          values.filesUploaded.length > 0
-            ? iconFileUploaded
-            : iconFileNotUploaded
-        }
-      ></img>
-      <label htmlFor="inputFile">Upload file(limit:10MB)</label>
+      <img src={iconFileUploaded}></img>
+      <label htmlFor="inputFile">Attachment files(limit:10MB)</label>
       <input
         id="inputFile"
         multiple

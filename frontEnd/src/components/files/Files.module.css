@@ -23,7 +23,6 @@
     justify-content: start;
     height: 87%;
     width: 97%;
-    padding-top: 1rem;
     padding-bottom: 1rem;
     border: 1px solid rgb(211, 211, 211);
     background-color: white;
@@ -34,18 +33,20 @@
     display: flex;
     align-items: start;
     flex-direction: column;
-    width: 99%;
+    width: 100%;
 }
 
 .containTable .title {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     font-weight: 100;
-    color: rgb(99, 99, 99);
+    color: rgb(255, 255, 255);
     gap: 0.7rem;
-    margin-left: 1rem;
-    padding-bottom: 1rem;
+    height: 2.5rem;
+    width: 100%;
+    background: linear-gradient(rgba(37, 112, 173), rgb(80, 170, 206));
 }
 
 .containTable .title img {
@@ -58,6 +59,7 @@
     align-items: center;
     justify-content: start;
     width: 100%;
+    margin-top: 0.4rem;
 }
 .containSearch input {
     height: 2.3rem;
@@ -69,9 +71,9 @@
     outline: none;
     background-image: url("../../assets/img//searchFile.png");
     background-repeat: no-repeat;
-    background-size: 22px;
-    background-position-y: 0.5rem;
-    background-position-x: 1rem;
+    background-size: 35px;
+    background-position-y: 0;
+    background-position-x: 0.5rem;
 }
 .containSearch input:hover {
     border-bottom: 2px solid gray;

@@ -30,9 +30,6 @@ export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
     if (typeof params.offset === "undefined") {
       throw new Error("Offset undefined");
     }
-    if (typeof params.state === "undefined") {
-      throw new Error("State undefined");
-    }
 
     let tasks = await TaskService.getTasksThisWeekByStateAndUserLimit(
       Number(params.offset),
@@ -57,10 +54,6 @@ export const getTasksThisWeekByStateAndUser = async (req, res) => {
       throw new Error("Params request null");
     }
     const params = JSON.parse(req.params.optionGetTasks);
-
-    if (typeof params.state === "undefined") {
-      throw new Error("State undefined");
-    }
 
     let tasks = await TaskService.getTasksThisWeekByStateAndUser(
       validAuthRequest.idUser,
@@ -92,10 +85,6 @@ export const getTasksLimitByFilterOption = async (req, res) => {
     if (!params.year) throw new Error("Year undefined");
 
     if (typeof !params.month == "undefined") throw new Error("Month undefined");
-
-    if (typeof params.state === "undefined") {
-      throw new Error("State undefined");
-    }
 
     tasks = await TaskService.getTasksLimitByFilterOption(
       validAuthRequest.idUser,
@@ -129,10 +118,6 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
     }
     if (!params.month) {
       throw new Error("Month undefined");
-    }
-
-    if (typeof params.state === "undefined") {
-      throw new Error("State undefined");
     }
 
     tasks = await TaskService.getQuantityTasksByFilterOption(
@@ -189,31 +174,6 @@ export const createTask = async (req, res) => {
     const task = req.body;
     const files = req.files;
 
-    if (typeof task.icon != "string" || task.icon.length == 0)
-      throw new Error("Invalid icon, it must be a string");
-
-    if (typeof task.descriptionTask != "string" || task.icon.length == 0)
-      throw new Error("Invalid description, it must be a string");
-
-    if (new Date(task.datetimeTask) == "Invalid Date")
-      throw new Error("Invalid datetime task");
-
-    if (
-      task.datetimeNotification.length > 0 &&
-      new Date(task.datetimeNotification) == "Invalid Date"
-    )
-      throw new Error("Invalid datetime notification");
-
-    if (new Date(task.datetimeTask).getTime() <= new Date().getTime())
-      throw new Error("Datetime task must be higher than datetime now");
-
-    if (
-      task.datetimeNotification.length > 0 &&
-      new Date(task.datetimeTask).getTime() <=
-        new Date(task.datetimeNotification).getTime()
-    )
-      throw new Error("Datetime notification must be less than datetime task");
-
     const taskCreated = await TaskService.createTask(
       task,
       validAuthRequest.idUser,
@@ -242,33 +202,6 @@ export const updateTask = async (req, res) => {
     let task = req.body;
     let files = req.files;
 
-    if (typeof task.icon != "string" || task.icon.length == 0)
-      throw new Error("Invalid icon, it must be a string");
-
-    if (typeof task.descriptionTask != "string" || task.icon.length == 0)
-      throw new Error("Invalid description, it must be a string");
-
-    if (new Date(task.datetimeTask) == "Invalid Date")
-      throw new Error("Invalid datetime task");
-
-    if (
-      task.datetimeNotification.length > 0 &&
-      new Date(task.datetimeNotification) == "Invalid Date"
-    )
-      throw new Error("Invalid datetime notification");
-
-    if (typeof task.state === "undefined") throw new Error("state undefined");
-
-    if (new Date(task.datetimeTask).getTime() <= new Date().getTime())
-      throw new Error("Datetime task must be higher than datetime now");
-
-    if (
-      task.datetimeNotification.length > 0 &&
-      new Date(task.datetimeTask).getTime() <=
-        new Date(task.datetimeNotification).getTime()
-    )
-      throw new Error("Datetime notification must be less than datetime task");
-
     const taskUpdated = await TaskService.updateTask(
       task,
       files,
@@ -295,10 +228,6 @@ export const updateStateTask = async (req, res) => {
       throw new Error("idTask undefined");
     }
 
-    if (typeof req.body.newState != "number") {
-      throw new Error("Invalid format new state, must be a number 0 or 1");
-    }
-
     const taskStateUpdated = await TaskService.updateStateTask(
       req.body.newState,
       Number(req.params.id),
@@ -316,12 +245,15 @@ export const updateStateTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
   try {
-    await authRequest(req, res);
+    let validAuth = await authRequest(req, res);
     if (!req.params.id) {
       throw new Error("idTask undefined");
     }
 
-    let deletedTask = await TaskService.deleteTask(req.params.id);
+    let deletedTask = await TaskService.deleteTask(
+      req.params.id,
+      validAuth.idUser
+    );
 
     res.status(201).json(deletedTask);
   } catch (error) {

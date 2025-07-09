@@ -8,16 +8,15 @@ const notificationModel = new Notification();
 export const NotificationService = {
   addNotification: async (subscriptions, task, idUser) => {
     try {
-      let notificationAdded = await notificationModel.post(
-        task.idTask,
-        task.datetimeNotification,
-        "pending"
-      );
+      notificationModel.propTask = task;
+      notificationModel.propDatetimeSend = task.datetimeNotification;
+      notificationModel.propState = "pending";
+      let notificationAdded = await notificationModel.post();
 
       if (notificationAdded == 0) throw new Error("Failed to add notification");
 
       let notificationFound =
-        await NotificationService.findNotificationByIdTask(task.idTask);
+        await NotificationService.findNotificationByIdTask(task);
 
       if (notificationFound.length == 0) {
         throw new Error("Notification not found");
@@ -32,7 +31,7 @@ export const NotificationService = {
       let idJob = `'${jobNotificationFound.idJob}'`;
 
       await SubscriptionNotificationService.addNotificationsSubscriptions(
-        notificationFound[0].idNotification,
+        notificationFound[0],
         subscriptions
       );
 
@@ -45,36 +44,52 @@ export const NotificationService = {
       throw error;
     }
   },
-  findNotificationByIdTask: async (idTask) => {
+  findNotificationByIdTask: async (task) => {
     try {
-      let notification = await notificationModel.getNotificationByIdTask(
-        idTask
-      );
+      notificationModel.propTask = task;
+      let notification = await notificationModel.getNotificationByIdTask();
+
       return notification;
     } catch (error) {
       throw new Error(error);
     }
   },
 
-  findNotificationsSentTasksUser: async (idUser) => {
+  findNotificationsSentTasksUser: async (task) => {
     try {
-      let notifications = await notificationModel.getNotificationsSentTasksUser(
-        idUser,
-        "pending"
-      );
+      notificationModel.propTask = task;
+      notificationModel.propState = "pending";
+
+      let notifications =
+        await notificationModel.getNotificationsSentTasksUser();
 
       return notifications;
     } catch (error) {
       throw new Error(error);
     }
   },
+
+  findNotificationsOfUserByState: async (state, idUser) => {
+    try {
+      notificationModel.propTask = { idUser: idUser };
+      notificationModel.propState = state;
+
+      let notifications =
+        await notificationModel.getNotificationsOfUserByState();
+
+      return notifications;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+
   updateNotification: async (idNotification, newDatetime) => {
     try {
+      notificationModel.propIdNotification = idNotification;
+      notificationModel.propDatetimeSend = newDatetime;
+
       let notificationUpdated =
-        await notificationModel.patchDatetimeNotification(
-          idNotification,
-          newDatetime
-        );
+        await notificationModel.patchDatetimeNotification();
 
       if (notificationUpdated == 0)
         throw new Error("Failed to update notification");
@@ -85,22 +100,13 @@ export const NotificationService = {
     }
   },
 
-  updateStateNotification: async (id, newState, option) => {
-    let idNotification;
+  updateStateNotification: async (id, newState) => {
     try {
-      if (option == "notificationSent") {
-        let notification = await NotificationService.findNotificationByIdTask(
-          id
-        );
-        idNotification = notification[0].idNotification;
-      } else {
-        idNotification = id;
-      }
+      notificationModel.propState = newState;
+      notificationModel.propIdNotification = id;
 
-      let notificationUpdated = await notificationModel.patchStateNotification(
-        idNotification,
-        newState
-      );
+      let notificationUpdated =
+        await notificationModel.patchStateNotification();
 
       if (notificationUpdated == 0)
         throw new Error("Failed to update state notification");
@@ -112,9 +118,13 @@ export const NotificationService = {
 
   deleteNotification: async (idNotification) => {
     try {
+      notificationModel.propIdNotification = idNotification;
+
       let jobNotificationFound =
         await ScheduledJobService.getJobByIdNotification(idNotification);
-      let deleted = await notificationModel.delete(idNotification);
+
+      let deleted = await notificationModel.delete();
+
       await NotificationToQueue.deleteNotificationFromQueue(
         `'${jobNotificationFound.idJob}'`
       );

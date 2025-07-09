@@ -183,7 +183,7 @@ export const TaskProvider = ({ children }) => {
 
     formData.append("datetimeTask", formatDate(task.datetimeTask));
     formData.append("datetimeNotification", task.datetimeNotification);
-    formData.append("state", task.isCompleted);
+    formData.append("state", task.isCompleted?1:0);
 
     setLoadingState(true);
     try {

@@ -13,49 +13,26 @@
     width: 2.7rem;
     height: 2.5rem;
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     list-style: none;
-    border-radius: 4px;
+    background: none;
     border: none;
-    box-shadow: 2px 2px 2px gray;
     cursor: pointer;
+    background: none;
 }
 
-.options .btnDelete {
-    background-color: rgb(214, 5, 5);
-}
-.options .btnUpdate {
-    background-color: rgb(8, 176, 182);
-}
-.options .btnUpdateDisabled {
-    background-color: rgb(5, 107, 110);
-    cursor: auto;
-}
-
-.options .btnUpdateDisabled img {
-    opacity: 70%;
-    cursor: auto;
-}
-
-.options .btnDetails {
-    background-color: rgb(8, 141, 182);
-}
 
 .options img {
-    width: 19px;
+    width: 33px;
     cursor: pointer;
 }
 
-.options .btnDelete:hover {
-    background-color: rgb(185, 10, 10);
+.options img:hover {
+  transform: scale(1.1);
 }
-.options .btnUpdate:hover {
-    background-color: rgb(15, 148, 153);
-}
-.options .btnDetails:hover {
-    background-color: rgb(20, 114, 143);
-}
+
 
 @media only screen and (max-width: 699px) {
     .options {
@@ -88,13 +65,13 @@
     }
 
     .buttons button {
-        width: 1.7rem;
+        width: auto;
         height: 1.6rem;
         list-style: none;
     }
 
     .buttons img {
-        width: 15px;
+        width: 24px;
         cursor: pointer;
     }
 }

@@ -6,6 +6,7 @@ import { useTasks } from "../../context/TaskContext";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { useState } from "react";
+import { GlassEffect } from "../glassEffect/GlassEffect.jsx";
 import { AlertFormSwal } from "../sweetAlert/sweetAlert.js";
 import { ValidationFormError } from "../../ValidationForm.js";
 import { useWindowSize } from "../../context/WindowSizeContext.jsx";
@@ -110,6 +111,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
   return (
     <div className={classesStyle.containForm}>
       <div className={classesStyle.header}>
+        <GlassEffect />
         <div className={classesStyle.title}>
           <h3>Complete task details</h3>
           <img src={iconAdd}></img>

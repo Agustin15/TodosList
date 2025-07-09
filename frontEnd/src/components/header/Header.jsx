@@ -1,13 +1,15 @@
 import classesStyle from "./Header.module.css";
 import logo from "../../assets/img/logo.png";
 import menuOpen from "../../assets/img/menuOpen.png";
-import notificationIcon from "../../assets/img/notification.png";
+import notificationIcon from "../../assets/img/notificationMenu.png";
 import accountIcon from "../../assets/img/profile.png";
-import iconMenuTask from "../../assets/img/tasksIcon.png";
-import panelIcon from "../../assets/img/panel.png";
+import iconMenuTask from "../../assets/img/iconTaskMenu.png";
+import panelIcon from "../../assets/img/dashboard.png";
 import calendarMenu from "../../assets/img/calendarMenu.png";
-import iconFilesSaved from "../../assets/img/filesSave.png";
+import iconFilesSaved from "../../assets/img/filesMenu.png";
 import logOutIcon from "../../assets/img/logOut.png";
+import { CountNotificationsProvider } from "../../context/CountNotificationsContext";
+import { CountNotifications } from "../countNotifications/CountNotifications";
 import { useEffect } from "react";
 import { useDataUser } from "../../context/userDataContext";
 import { useMenu } from "../../context/MenuContext";
@@ -73,7 +75,13 @@ const Header = () => {
                 </a>
               </li>
 
-              <li>
+              <li
+                className={
+                  location.href.indexOf("files") > -1
+                    ? classesStyle.optionCurrent
+                    : ""
+                }
+              >
                 <a href="/files">
                   <img
                     className={classesStyle.iconFilesSaved}
@@ -83,8 +91,18 @@ const Header = () => {
                 </a>
               </li>
 
-              <li>
+              <li
+                className={
+                  location.href.indexOf("activity") > -1
+                    ? classesStyle.optionCurrent
+                    : ""
+                }
+              >
                 <a href="/activity">
+                  <CountNotificationsProvider>
+                    <CountNotifications />
+                  </CountNotificationsProvider>
+
                   <img src={notificationIcon}></img>
                   <span>Activity</span>
                 </a>

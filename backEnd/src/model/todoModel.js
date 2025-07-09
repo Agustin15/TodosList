@@ -1,21 +1,99 @@
 import connection from "../config/database.js";
 export class Task {
-  async post(idUser, icon, descriptionTask, dateTask, isCompleted) {
+  #idTask;
+  #idUser;
+  #icon;
+  #descriptionTask;
+  #dateTask;
+  #isCompleted;
+
+  get propIdUser() {
+    return this.#idUser;
+  }
+
+  set propIdUser(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idUser,it must be a number");
+    this.#idUser = value;
+  }
+
+  get propIcon() {
+    return this.#icon;
+  }
+
+  set propIcon(value) {
+    if (typeof value != "string" || value.length == 0)
+      throw new Error("Invalid icon, it must be a string");
+    this.#icon = value;
+  }
+  get propDescription() {
+    return this.#descriptionTask;
+  }
+
+  set propDescription(value) {
+    if (typeof value != "string" || value.length == 0)
+      throw new Error("Invalid description, it must be a string");
+    this.#descriptionTask = value;
+  }
+  get propDatetime() {
+    return this.#dateTask;
+  }
+
+  set propDatetime(value) {
+    if (new Date(value) == "Invalid Date") throw new Error("Invalid Datetime");
+    if (new Date(value).getTime() <= new Date().getTime())
+      throw new Error("Datetime task must be higher than datetime now");
+
+    this.#dateTask = value;
+  }
+
+  get propIsCompleted() {
+    return this.#isCompleted;
+  }
+
+  set propIsCompleted(value) {
+    if (typeof value != "number" || (value != 0 && value != 1))
+      throw new Error("Invalid state, it must be a number 0 or 1");
+    this.#isCompleted = value;
+  }
+  get propIdTask() {
+    return this.#idTask;
+  }
+
+  set propIdTask(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idTask, must be a number");
+    this.#idTask = value;
+  }
+
+  async post() {
     try {
       const [result] = await connection.execute(
         "INSERT INTO tasks (idUser,icon,descriptionTask,datetimeTask,isCompleted) VALUES (?,?,?,?,?)",
-        [idUser, icon, descriptionTask, dateTask, isCompleted]
+        [
+          this.propIdUser,
+          this.propIcon,
+          this.propDescription,
+          this.propDatetime,
+          this.propIsCompleted
+        ]
       );
       return result.affectedRows;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async put(icon, descriptionTask, dateTask, isCompleted, idTask) {
+  async put() {
     try {
       const [result] = await connection.execute(
         "Update tasks set icon=?,descriptionTask=?,datetimeTask=?,isCompleted=? where idTask=?",
-        [icon, descriptionTask, dateTask, isCompleted, idTask]
+        [
+          this.propIcon,
+          this.propDescription,
+          this.propDatetime,
+          this.propIsCompleted,
+          this.propIdTask
+        ]
       );
       return result.affectedRows;
     } catch (error) {
@@ -23,11 +101,11 @@ export class Task {
     }
   }
 
-  async patchStateTask(newState, idTask) {
+  async patchStateTask() {
     try {
       const [result] = await connection.execute(
         "Update tasks set isCompleted=? where idTask=?",
-        [newState, idTask]
+        [this.propIsCompleted, this.propIdTask]
       );
 
       return result.affectedRows;
@@ -35,28 +113,23 @@ export class Task {
       throw new Error(error);
     }
   }
-  async delete(idTask) {
+  async delete() {
     try {
       const [result] = await connection.execute(
         "delete from tasks where idTask=?",
-        [idTask]
+        [this.propIdTask]
       );
       return result.affectedRows;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getTasksThisWeekByStateAndUser(
-    idUser,
-    firstSunday,
-    nextSaturday,
-    state
-  ) {
+  async getTasksThisWeekByStateAndUser(firstSunday, nextSaturday) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=?
          ORDER BY datetimeTask desc`,
-        [idUser, firstSunday, nextSaturday, state]
+        [this.propIdUser, firstSunday, nextSaturday, this.propIsCompleted]
       );
 
       return results;
@@ -65,15 +138,11 @@ export class Task {
     }
   }
 
-  async getTasksThisWeekUser(
-    idUser,
-    firstSunday,
-    nextSaturday,
-  ) {
+  async getTasksThisWeekUser(firstSunday, nextSaturday) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc`,
-        [idUser, firstSunday, nextSaturday]
+        [this.propIdUser, firstSunday, nextSaturday]
       );
 
       return results;
@@ -81,18 +150,12 @@ export class Task {
       throw new Error(error);
     }
   }
-  async getTasksThisWeekByStateAndUserLimit(
-    idUser,
-    firstSunday,
-    nextSaturday,
-    index,
-    state
-  ) {
+  async getTasksThisWeekByStateAndUserLimit(firstSunday, nextSaturday, index) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=? ORDER 
         BY datetimeTask desc LIMIT 10 OFFSET ${index} `,
-        [idUser, firstSunday, nextSaturday, state]
+        [this.propIdUser, firstSunday, nextSaturday, this.propIsCompleted]
       );
 
       return results;
@@ -101,11 +164,11 @@ export class Task {
     }
   }
 
-  async getTasksByWeekday(idUser, firstSunday, nextSaturday, weekday) {
+  async getTasksByWeekday(firstSunday, nextSaturday, weekday) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && weekday(datetimeTask)=?",
-        [idUser, firstSunday, nextSaturday, weekday]
+        [this.propIdUser, firstSunday, nextSaturday, weekday]
       );
       return results;
     } catch (error) {
@@ -113,28 +176,28 @@ export class Task {
     }
   }
 
-  async getTasksStateByWeekday(
-    idUser,
-    firstSunday,
-    nextSaturday,
-    weekday,
-    state
-  ) {
+  async getTasksStateByWeekday(firstSunday, nextSaturday, weekday) {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && weekday(datetimeTask)=? && isCompleted=?",
-        [idUser, firstSunday, nextSaturday, weekday, state]
+        [
+          this.propIdUser,
+          firstSunday,
+          nextSaturday,
+          weekday,
+          this.propIsCompleted
+        ]
       );
       return results;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getTasksLimitByFilterOption(idUser, year, month, state, index) {
+  async getTasksLimitByFilterOption(year, month, index) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=? LIMIT 10 OFFSET ${index} `,
-        [idUser, year, month, state]
+        [this.propIdUser, year, month, this.propIsCompleted]
       );
 
       return results;
@@ -143,11 +206,11 @@ export class Task {
     }
   }
 
-  async getQuantityTasksByFilterOption(idUser, year, month, state) {
+  async getQuantityTasksByFilterOption(year, month) {
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=?`,
-        [idUser, year, month, state]
+        [this.propIdUser, year, month, this.propIsCompleted]
       );
 
       return results.length;
@@ -156,11 +219,11 @@ export class Task {
     }
   }
 
-  async getTaskById(idUser, idTask) {
+  async getTaskById() {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && idTask=?",
-        [idUser, idTask]
+        [this.propIdUser, this.propIdTask]
       );
       return results;
     } catch (error) {
@@ -168,33 +231,33 @@ export class Task {
     }
   }
 
-  async getTaskRecentlyAdded(idUser, descriptionTask, datetimeTask) {
+  async getTaskRecentlyAdded() {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=? && descriptionTask=? && datetimeTask=?",
-        [idUser, descriptionTask, datetimeTask]
+        [this.propIdUser, this.propDescription, this.propDatetime]
       );
       return results;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getYearsTask(idUser) {
+  async getYearsTask() {
     try {
       const [results] = await connection.execute(
         "select DISTINCT YEAR(datetimeTask) from tasks where idUser=?",
-        [idUser]
+        [this.propIdUser]
       );
       return results;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getAllTasksByUser(idUser) {
+  async getAllTasksByUser() {
     try {
       const [results] = await connection.execute(
         "select * from tasks where idUser=?",
-        [idUser]
+        [this.propIdUser]
       );
       return results;
     } catch (error) {

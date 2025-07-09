@@ -6,11 +6,31 @@ export const getNotificationsSentTasksUser = async (req, res) => {
     let validAuth = await authRequest(req, res);
 
     let notifications =
-      await NotificationService.findNotificationsSentTasksUser(
+      await NotificationService.findNotificationsSentTasksUser({
+        idUser: validAuth.idUser
+      });
+
+    res.status(200).json(notifications);
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
+};
+
+export const getNotificationsOfUserByState = async (req, res) => {
+  try {
+    let validAuth = await authRequest(req, res);
+    if (!req.params.state) throw new Error("State undefined");
+
+    const notificationsFound =
+      await NotificationService.findNotificationsOfUserByState(
+        req.params.state,
         validAuth.idUser
       );
 
-    res.status(200).json(notifications);
+    res.status(200).json(notificationsFound);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401
@@ -28,9 +48,8 @@ export const updateStateNotification = async (req, res) => {
 
     const notificationUpdated =
       await NotificationService.updateStateNotification(
-        req.params.id,
-        req.body.newState,
-        "notificationSeen"
+        parseInt(req.params.id),
+        req.body.newState
       );
 
     res.status(200).json(notificationUpdated);

@@ -1,36 +1,15 @@
-import { Worker, Queue } from "bullmq";
+import { Worker } from "bullmq";
 import webpush from "web-push";
 import { SubscriptionPushService } from "./subscriptionPushService.js";
 import { NotificationService } from "./notificationService.js";
 import { ScheduledJobService } from "./scheduledJobService.js";
-import { globalSocket } from "../app.js";
-
-let notificationQueue;
-
-const connection = {
-  host: process.env.HOST_REDIS,
-  port: process.env.PORT_REDIS,
-  password: process.env.PASSWORD_REDIS
-};
+import { socketConnection } from "../app.js";
+import { redisConnection } from "../config/ConnectionRedis.js";
 
 export const NotificationToQueue = {
-  createNotificationQueue: () => {
-    try {
-      if (!connection.port) throw new Error("Redis port not declared");
-      if (!connection.host) throw new Error("Redis host not declared");
-      if (!connection.password) throw new Error("Redis password not declared");
-
-      notificationQueue = new Queue("notifications", {
-        connection: connection
-      });
-    } catch (error) {
-      throw error;
-    }
-  },
-
   deleteNotificationFromQueue: async (idJob) => {
     try {
-      let jobFound = await notificationQueue.getJob(idJob);
+      let jobFound = await redisConnection.propNotificationQueue.getJob(idJob);
 
       if (jobFound) {
         await jobFound.remove();
@@ -52,11 +31,12 @@ export const NotificationToQueue = {
 
       let delay = new Date(task.datetimeNotification).getTime() - Date.now();
 
-      let notificationQueueAdded = await notificationQueue.add(
-        "sendNotification",
-        { idUser: idUser, payload: payload },
-        { jobId: idJob, delay: delay }
-      );
+      let notificationQueueAdded =
+        await redisConnection.propNotificationQueue.add(
+          "sendNotification",
+          { idUser: idUser, payload: payload },
+          { jobId: idJob, delay: delay }
+        );
 
       if (!notificationQueueAdded)
         throw new Error("Failed to add job to queue");
@@ -116,19 +96,30 @@ export const NotificationToQueue = {
             }
           }
           if (sent) {
+            let notificationFound =
+              await NotificationService.findNotificationByIdTask(task);
+
+            if (notificationFound.length == 0) {
+              throw new Error("task notification not found");
+            }
+
             await NotificationService.updateStateNotification(
-              task.idTask,
-              "sent",
-              "notificationSent"
+              notificationFound[0].idNotification,
+              "sent"
             );
 
-            await NotificationService.findNotificationsSentTasksUser(idUser);
+            let notifications =
+              await NotificationService.findNotificationsSentTasksUser(idUser);
 
-            globalSocket.emit("newNotifications", notifications);
+            socketConnection.socket.emit("newNotifications", notifications);
           }
         },
         {
-          connection: connection
+          connection: {
+            host: redisConnection.propHost,
+            port: redisConnection.propPort,
+            password: redisConnection.propPassword
+          }
         }
       );
     } catch (error) {

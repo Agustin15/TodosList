@@ -1,45 +1,51 @@
-.msjError {
+.msjError,
+.msjErrorPassword {
   color: rgb(226, 0, 0);
   font-size: 14px;
   position: absolute;
-  margin-top: 5rem;
+  margin-top: 4.6rem;
+  gap: 0.5rem;
   margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+.msjError img,
+.msjErrorPassword img {
+  width: 22px;
+  height: 22px;
+}
 .msjErrorPassword {
   color: rgb(226, 0, 0);
   font-size: 12px;
   margin-left: 0.5rem;
   position: absolute;
-  margin-top: 5rem;
+  margin-top: 4.5rem;
 }
 
 @media only screen and (max-width: 699px) {
-  .msjError {
+  .msjError,
+  .msjErrorPassword {
     font-size: 13px;
     position: absolute;
     margin-left: 0.7rem;
-    margin-top: 5.3rem;
-  }
-  .msjErrorPassword {
-    font-size: 13px;
-    margin-left: 0.5rem;
+    gap: 0.4rem;
+    margin-top: 5.1rem;
   }
 }
 
 @media only screen and (min-width: 700px) and (max-width: 1024px) {
-  .msjError {
-    color: rgb(226, 0, 0);
-    font-size: 11px;
-    position: absolute;
-    margin-left: 0.4rem;
-    margin-top: 4.2rem;
-  }
+  .msjError,
   .msjErrorPassword {
     color: rgb(226, 0, 0);
     font-size: 12px;
-    margin-left: 0.6rem;
     position: absolute;
+    margin-left: 0.4rem;
     margin-top: 4rem;
+  }
+  .msjError img,
+  .msjErrorPassword img {
+    width: 19px;
+    height: 19px;
   }
 }

@@ -1,5 +1,5 @@
 import classesStyle from "./AlertErrorInput.module.css";
-import iconWarningInput from "../../../assets/img/WarningInput.png";
+import iconWarningInput from "../../../assets/img/warningInput.png";
 
 const AlertErrorInput = ({ input, error }) => {
   return (

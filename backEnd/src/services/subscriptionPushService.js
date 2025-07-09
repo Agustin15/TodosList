@@ -1,19 +1,18 @@
 import { SubscriptionPush } from "../model/subscripcionPushModel.js";
 import { SubscriptionNotificationService } from "./subscriptionNotificationService.js";
 import { NotificationService } from "./notificationService.js";
-
 import connection from "../config/database.js";
 const subscriptionPushModel = new SubscriptionPush();
 
 export const SubscriptionPushService = {
   addSubscriptionUser: async (subscription, idUser) => {
+    subscriptionPushModel.propIdUser = idUser;
+    subscriptionPushModel.propEndpointURL = subscription.endpoint;
+    subscriptionPushModel.propAuth = subscription.keys.auth;
+    subscriptionPushModel.propKeyp256dh = subscription.keys.p256dh;
+
     try {
-      const subscriptionAdded = await subscriptionPushModel.post(
-        idUser,
-        subscription.endpoint,
-        subscription.keys.p256dh,
-        subscription.keys.auth
-      );
+      const subscriptionAdded = await subscriptionPushModel.post();
 
       if (subscriptionAdded == 0) throw new Error("Failed to add subscription");
 
@@ -29,7 +28,7 @@ export const SubscriptionPushService = {
       let notificationsPending =
         await SubscriptionNotificationService.findPendingNotificationsByEndpoint(
           endpoint,
-          "pending"
+          { state: "pending" }
         );
 
       if (notificationsPending.length > 0) {
@@ -38,7 +37,7 @@ export const SubscriptionPushService = {
         for (const notification of notificationsPending) {
           let subscriptions =
             await SubscriptionNotificationService.findSubscriptionsDistinctByIdNotification(
-              notification.idNotification,
+              notification,
               endpoint
             );
 
@@ -57,8 +56,8 @@ export const SubscriptionPushService = {
           throw new Error("Failed to delete pending notification");
       }
 
-      const deletedSubscription =
-        await subscriptionPushModel.delete(endpoint);
+      subscriptionPushModel.propEndpointURL = endpoint;
+      const deletedSubscription = await subscriptionPushModel.delete();
 
       if (deletedSubscription == 0)
         throw new Error("Failed to delete subscription");
@@ -70,8 +69,9 @@ export const SubscriptionPushService = {
     }
   },
   getSubscriptionsByIdUser: async (idUser) => {
+    subscriptionPushModel.propIdUser = idUser;
     const userSubscriptions =
-      await subscriptionPushModel.getSubscriptionsByIdUser(idUser);
+      await subscriptionPushModel.getSubscriptionsByIdUser();
     return userSubscriptions;
   }
 };

@@ -1,9 +1,10 @@
 import styles from "./EditTodoForm.module.css";
 import ContentFormEdit from "./contentFormEdit/ContentFormEdit";
-import editIcon from "../../assets/img/editIcon.png";
+import editIcon from "../../assets/img/editing.png";
 import { useForm } from "../../context/formTaskContext/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
+import { GlassEffect } from "../glassEffect/GlassEffect.jsx";
 import { useEffect } from "react";
 import { AlertFormSwal } from "../sweetAlert/sweetAlert.js";
 import { ValidationFormError } from "../../ValidationForm.js";
@@ -104,6 +105,7 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   return (
     <div className={styles.containForm}>
       <div className={styles.header}>
+        <GlassEffect />
         <div className={styles.title}>
           <h3>Complete task details</h3>
           <img src={editIcon}></img>

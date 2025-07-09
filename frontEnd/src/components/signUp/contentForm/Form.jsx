@@ -2,9 +2,10 @@ import classesStyle from "../contentForm/contentForm.module.css";
 import hiddenEye from "../../../assets/img/hidden.png";
 import gifLoading from "../../../assets/img/loadingForm.gif";
 import AlertForm from "../alertForm/AlertForm";
+import { GlassEffect } from "../../glassEffect/GlassEffect";
 import AlertInputLogin from "../alertInputLogin/AlertInputLogin";
 import { useFormUser } from "../../../context/FormUserContext";
-import { useLogin } from "../../../context/LoginContext";;
+import { useLogin } from "../../../context/LoginContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const Form = () => {
@@ -72,6 +73,7 @@ export const Form = () => {
             autoComplete="off"
           ></input>
           <img
+            className={classesStyle.showPassword}
             ref={passwordIcon}
             onClick={handlePassword}
             src={hiddenEye}
@@ -89,6 +91,7 @@ export const Form = () => {
         <button type="submit">
           Sign up
           {loading && <img src={gifLoading}></img>}
+          <GlassEffect />
         </button>
       </div>
       <div className={classesStyle.haveAccountResponsive}>

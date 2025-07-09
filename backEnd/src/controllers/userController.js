@@ -8,31 +8,6 @@ export const createUser = async (req, res) => {
     }
     const userToAdd = req.body;
 
-    let regexEmail = /\S+@\S+\.\S+/;
-    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
-
-    if (
-      !userToAdd.name ||
-      userToAdd.name.length == 0 ||
-      !UserService.verifyValidString(userToAdd.name)
-    )
-      throw new Error("Invalid name");
-
-    if (
-      !userToAdd.lastname ||
-      userToAdd.lastname.length == 0 ||
-      !UserService.verifyValidString(userToAdd.lastname)
-    )
-      throw new Error("Invalid lastname");
-
-    if (!userToAdd.email || !regexEmail.test(userToAdd.email))
-      throw new Error("Invalid format email");
-
-    if (!userToAdd.password || !regexPassword.test(userToAdd.password))
-      throw new Error(
-        "Invalid format password,it must be minime eight characters and must has mayus and minus letters and some number"
-      );
-
     const userCreated = await UserService.createUser(userToAdd);
 
     res.status(201).json(userCreated);
@@ -51,11 +26,6 @@ export const getUserByEmail = async (req, res) => {
     }
 
     const email = req.params.email;
-
-    let regexEmail = /\S+@\S+\.\S+/;
-
-    if (!regexEmail.test(email)) throw new Error("Invalid format email");
-
     const userFound = await UserService.getUserByEmail(email);
     res.status(200).json(userFound);
   } catch (error) {
@@ -94,12 +64,6 @@ export const updatePasswordUserById = async (req, res) => {
 
     const newPassword = req.body.password;
     const currentPassword = req.body.currentPassword;
-    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
-
-    if (!regexPassword.test(newPassword))
-      throw new Error(
-        "Invalid format password,it must be minime eight characters and must has mayus and minus letters and some number"
-      );
 
     const userUpdated = await UserService.updatePasswordUserById(
       decodeTokenAuth.idUser,
@@ -107,7 +71,6 @@ export const updatePasswordUserById = async (req, res) => {
       currentPassword
     );
 
-    console.log(userUpdated);
     res.status(200).json(userUpdated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
@@ -127,13 +90,6 @@ export const updatePasswordByEmail = async (req, res) => {
 
     if (!req.body.newPassword) throw new Error("New password undefined");
     const newPassword = req.body.newPassword;
-
-    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
-
-    if (!regexPassword.test(newPassword))
-      throw new Error(
-        "Invalid format password,it must be minime eight characters and must has mayus and minus letters and some number"
-      );
 
     const passwordUpdated = await UserService.updatePasswordByEmail(
       decodeToken.mail,
@@ -164,10 +120,6 @@ export const updateUserById = async (req, res) => {
     const idUser = req.params.id;
     const { name, lastname } = req.body;
 
-    if (!UserService.verifyValidString(name)) throw new Error("Invalid name");
-    if (!UserService.verifyValidString(lastname))
-      throw new Error("Invalid lastname");
-
     const userUpdated = await UserService.updateUserById(
       name,
       lastname,
@@ -195,9 +147,6 @@ export const updateEmailUser = async (req, res) => {
 
     const newEmail = req.body.newEmail;
     const password = req.body.password;
-    let regexEmail = /\S+@\S+\.\S+/;
-
-    if (!regexEmail.test(newEmail)) throw new Error("Invalid format email");
 
     let userUpdated = await UserService.updateEmailUser(
       newEmail,

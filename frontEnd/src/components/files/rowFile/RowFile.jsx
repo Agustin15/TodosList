@@ -3,10 +3,10 @@ import iconOpenFile from "../../../assets/img/openDocument.png";
 import iconDownload from "../../../assets/img/download.png";
 import { useFiles } from "../../../context/FilesContext";
 import { useTasks } from "../../../context/TaskContext";
-import  iconFile from "../../../assets/img/file.png";
+import iconFile from "../../../assets/img/file.png";
 
 export const RowFile = ({ file }) => {
-  const { handleDownload, generateLink,  getMime } = useFiles();
+  const { handleDownload, generateLink, getMime } = useFiles();
   const { formatDate } = useTasks();
 
   return (
