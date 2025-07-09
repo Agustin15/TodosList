@@ -7,7 +7,6 @@ export class File {
   #file;
   #datetime;
 
-  
   get propIdFile() {
     return this.#idFile;
   }
@@ -71,7 +70,6 @@ export class File {
           this.propTask.idTask,
           this.propNameFile,
           this.propTypeFile,
-          this.propDatetime,
           this.propFile
         ]
       );

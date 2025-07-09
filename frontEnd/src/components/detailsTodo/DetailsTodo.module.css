@@ -1,6 +1,5 @@
 .contain {
   margin: auto;
-  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,7 +167,7 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  width: 8rem;
+  width: 99%;
 }
 
 .contain .containDetails table .options button {
@@ -230,7 +229,6 @@
   .contain {
     width: 94%;
     height: auto;
-    margin-top: 9rem;
   }
 
   .contain .containDetails h3 {
@@ -309,7 +307,7 @@
   .contain {
     width: 94%;
     height: auto;
-    margin-top: 5rem;
+    margin-top: 2rem;
   }
 
   .contain .containDetails h3 {

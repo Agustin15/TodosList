@@ -23,6 +23,12 @@
     background: none;
 }
 
+.options .btnUpdate {
+    filter: grayscale(0%);
+}
+.options .btnUpdateDisabled {
+    filter: grayscale(65%);
+}
 
 .options img {
     width: 33px;
@@ -30,9 +36,12 @@
 }
 
 .options img:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
-
+.options .btnUpdateDisabled img:hover {
+    transform: scale(1.0);
+    cursor: auto;
+}
 
 @media only screen and (max-width: 699px) {
     .options {
@@ -82,7 +91,7 @@
         list-style: none;
     }
     .buttons button img {
-        width: 17px;
-        height: 17px;
+        width: 28px;
+        height: 28px;
     }
 }

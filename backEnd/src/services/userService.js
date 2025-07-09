@@ -8,7 +8,9 @@ export const UserService = {
     try {
       userModel.propName = userToAdd.name;
       userModel.propLastname = userToAdd.lastname;
-      const userFoundByEmail = await UserService.findUserByEmail(userToAdd.email);
+      const userFoundByEmail = await UserService.findUserByEmail(
+        userToAdd.email
+      );
 
       if (userFoundByEmail) {
         throw new Error("Email is already taken");
@@ -30,7 +32,7 @@ export const UserService = {
 
   getUserByEmail: async (email) => {
     try {
-      userModel.propEmail = email;
+      userModel.propEmailAddress = email;
 
       const userFound = await userModel.getUserByEmail();
       return userFound;
@@ -52,7 +54,7 @@ export const UserService = {
 
   findUserByIdUser: async (idUser) => {
     try {
-      userModel.propIdUser = idUser;
+      userModel.propIdUser = parseInt(idUser);
       const userFound = await userModel.getUserById();
       return userFound[0];
     } catch (error) {
@@ -108,7 +110,7 @@ export const UserService = {
     try {
       const hash = await bcrypt.hash(newPassword, 10);
 
-      userModel.propEmail = email;
+      userModel.propEmailAddress = email;
       userModel.propPassword = hash;
 
       const passwordUpdated = await userModel.patchPasswordUserByEmail();
@@ -123,21 +125,19 @@ export const UserService = {
 
   updateUserById: async (name, lastname, idUser) => {
     try {
-      let userFound;
+      let userFound = await UserService.findUserByIdUser(idUser);
 
-      userFound = await UserService.findUserByIdUser(idUser);
       if (!userFound) {
         throw new Error("User not found");
       }
 
       userModel.propName = name;
       userModel.propLastname = lastname;
-      userModel.propIdUser = idUser;
+      userModel.propIdUser = parseInt(idUser);
       userModel.propPassword = userFound.passwordUser;
-      userModel.propEmail = userFound.email;
+      userModel.propEmailAddress = userFound.email;
 
       const userUpdated = await userModel.put();
-
       if (userUpdated == 0) {
         throw new Error("User not updated");
       }
@@ -176,7 +176,7 @@ export const UserService = {
         throw new Error("Failed to update, invalid password");
       }
 
-      userModel.propEmail = newEmail;
+      userModel.propEmailAddress = newEmail;
       userModel.propIdUser = idUser;
 
       let resultUpdated = await userModel.patchEmailUserById();

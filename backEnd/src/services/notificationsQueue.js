@@ -38,6 +38,7 @@ export const NotificationToQueue = {
           { jobId: idJob, delay: delay }
         );
 
+        console.log(notificationQueueAdded);
       if (!notificationQueueAdded)
         throw new Error("Failed to add job to queue");
     } catch (error) {
@@ -75,6 +76,7 @@ export const NotificationToQueue = {
           let userSubscriptions =
             await SubscriptionPushService.getSubscriptionsByIdUser(idUser);
 
+            console.log(userSubscriptions);
           if (userSubscriptions.length == 0)
             throw new Error("Error, subscriptions not found");
 
@@ -92,6 +94,7 @@ export const NotificationToQueue = {
             );
 
             if (notificationSent.statusCode == 201) {
+
               sent = true;
             }
           }
@@ -108,6 +111,7 @@ export const NotificationToQueue = {
               "sent"
             );
 
+         
             let notifications =
               await NotificationService.findNotificationsSentTasksUser(idUser);
 

@@ -22,7 +22,6 @@ export const findLimitFilesByIdUser = async (req, res) => {
   try {
     let validAuth = await authRequest(req, res);
     const { offset } = JSON.parse(req.params.getFilesParams);
-
     if (typeof offset === "undefined") {
       throw new Error("Offset undefined");
     }

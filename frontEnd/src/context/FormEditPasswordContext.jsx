@@ -73,7 +73,7 @@ export const FormEditPasswordProvider = ({ children }) => {
       const updatePassword = async () => {
         let passwordUpdated = await fetchUpdatePassword();
         if (passwordUpdated) {
-          AlertSwal(
+          AlertFormSwal(
             "Password updated sucesfully!",
             "Success",
             "success",

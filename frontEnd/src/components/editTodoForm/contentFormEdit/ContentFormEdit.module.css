@@ -212,8 +212,9 @@ input[type="checkbox"] {
 .containFile li button {
   width: 1.6rem;
   height: 1.6rem;
-  background-color: rgb(221, 2, 2);
+  background:none;
   border-radius: 3px;
+  box-shadow: none;
   margin-top: -0.1rem;
   display: flex;
   align-items: center;
@@ -221,12 +222,12 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 .containFile li button:hover {
-  background-color: rgb(206, 6, 6);
+  background: none;
 }
 
 .containFile li button img {
-  height: 13px;
-  width: 13px;
+  height: 25px;
+  width: 25px;
   opacity: 100%;
   margin-left: 0;
 }

@@ -48,6 +48,13 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
         );
 
         setUser(userUpdated);
+      } else {
+        AlertFormSwal(
+          "Failed to update user!",
+          "Oops",
+          "error",
+          windowWidth
+        );
       }
     }
   };

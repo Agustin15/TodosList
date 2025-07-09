@@ -11,6 +11,7 @@ export const FileService = {
       fileModel.propTask = task;
 
       let fileAdded = await fileModel.post();
+
       if (fileAdded == 0) {
         errorAdded = true;
       }
@@ -27,7 +28,8 @@ export const FileService = {
     let errorDeleted = false;
 
     for (const file of files) {
-      let fileDeleted = await fileModel.delete(file.idFile);
+      fileModel.propIdFile = file.idFile;
+      let fileDeleted = await fileModel.delete();
       if (fileDeleted == 0) {
         errorDeleted = true;
       }
@@ -100,7 +102,8 @@ export const FileService = {
 
   findQuantityFilesByIdUser: async (idUser) => {
     try {
-      const quantityFiles = await fileModel.getQuantityFilesByUser(idUser);
+      fileModel.propTask = { idUser: idUser };
+      const quantityFiles = await fileModel.getQuantityFilesByUser();
       return { quantityFiles: quantityFiles };
     } catch (error) {
       throw error;
@@ -109,7 +112,8 @@ export const FileService = {
 
   findLimitFilesByIdUser: async (idUser, offset) => {
     try {
-      const filesFound = await fileModel.getFilesByUserLimit(idUser, offset);
+      fileModel.propTask = { idUser: idUser };
+      const filesFound = await fileModel.getFilesByUserLimit(offset);
 
       let files = filesFound.map((file) => {
         file.fileTask = file.fileTask.toString("base64");

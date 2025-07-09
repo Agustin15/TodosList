@@ -9,14 +9,18 @@ const NotificationContext = createContext();
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [loaderNotifications, setLoaderNotifications] = useState(true);
+  const [socket, setSocket] = useState();
 
   useEffect(() => {
-    getNotificationRealTime();
+    setSocket(io(urlBack));
     fetchGetNotifications();
   }, []);
 
+  useEffect(() => {
+    if (socket) getNotificationRealTime();
+  }, [socket]);
+
   const getNotificationRealTime = () => {
-    const socket = io(urlBack);
     socket.on("newNotifications", (notifications) => {
       if (notifications && notifications.length > 0) {
         setNotifications(notifications);
@@ -110,6 +114,10 @@ export const NotificationProvider = ({ children }) => {
       );
 
       const result = await response.json();
+      if (!response.ok) {
+        if (response.status == 401) location.href = urlFront + "/login";
+        else throw result.messageError;
+      }
       return result;
     } catch (error) {
       console.log(error);
