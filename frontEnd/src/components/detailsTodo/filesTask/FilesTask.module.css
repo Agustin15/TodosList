@@ -1,0 +1,136 @@
+.containTable {
+    width: 100%;
+    height: 20rem;
+    overflow-y: scroll;
+}
+.tableFiles {
+    width: 99%;
+    height: auto;
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 5px;
+}
+
+.tableFiles thead {
+    box-shadow: 2px 2px 2px gray;
+    border: 1px solid rgb(218, 218, 218);
+    background: linear-gradient(white, gray);
+}
+
+.tableFiles .rowGray {
+    background: rgb(235, 235, 235);
+}
+.tableFiles .rowWhite {
+    background: white;
+}
+.tableFiles thead tr th {
+    width: auto;
+    padding: 0.4rem;
+}
+
+.tableFiles tbody tr td {
+    padding: 0.4rem;
+    text-align: center;
+}
+
+.containTable table .options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 99%;
+}
+
+.containTable table .options button {
+    width: 33px;
+    height: 33px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.containTable table .options button:hover {
+    transform: scale(1.1);
+}
+.containTable table .options button img {
+    width: 35px;
+    height: 35px;
+    margin-top: 0;
+}
+
+.containTable table .options .openFile {
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containTable table .options .imgOpenDocument {
+    width: 33px;
+    height: 33px;
+}
+.containTable table .options .imgOpenDocument:hover {
+    transform: scale(1.1);
+}
+
+@media only screen and (max-width: 699px) {
+    .containTable {
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .tableFiles {
+        width: auto;
+        height: auto;
+        border: 1px solid rgb(172, 172, 172);
+        border-radius: 5px;
+    }
+
+    .tableFiles thead {
+        font-size: 14px;
+    }
+    .tableFiles tbody {
+        font-size: 14px;
+    }
+
+    .tableFiles .cellName,
+    .tableFiles .cellTypeFile,
+    .tableFiles .cellDate {
+        width: 8rem;
+    }
+
+    .tableFiles .cellName {
+        width: 14rem;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containTable {
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .contain .containDetails .tableFiles {
+        width: auto;
+        height: auto;
+        border: 1px solid rgb(172, 172, 172);
+        border-radius: 5px;
+    }
+
+    .tableFiles thead {
+        font-size: 14px;
+    }
+    .tableFiles tbody {
+        font-size: 14px;
+    }
+    .tableFiles .cellName,
+    .tableFiles .cellTypeFile,
+    .tableFiles .cellDate {
+        width: 8rem;
+    }
+
+    .tableFiles .cellName {
+        width: 14rem;
+    }
+}

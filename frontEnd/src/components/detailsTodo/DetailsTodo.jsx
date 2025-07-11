@@ -4,7 +4,7 @@ import { FilesProvider } from "../../context/FilesContext";
 import { GlassEffect } from "../glassEffect/GlassEffect";
 import iconNotFiles from "../../assets/img/notFiles.png";
 import iconCalendar from "../../assets/img/calendar.png";
-import { FilesTask } from "./FilesTask";
+import { FilesTask } from "./filesTask/FilesTask";
 
 const DetailsTodo = ({ task, setOpenModalInfo }) => {
   const formatToStringDate = (date) => {

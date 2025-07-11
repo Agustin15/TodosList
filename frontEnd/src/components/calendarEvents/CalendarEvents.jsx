@@ -15,6 +15,7 @@ import { UserDataProvider } from "../../context/userDataContext";
 import { useParams } from "react-router-dom";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const CalendarEvents = () => {
@@ -58,8 +59,10 @@ export const CalendarEvents = () => {
       <UserDataProvider>
         <Header />
       </UserDataProvider>
+
       <div className={styles.column}>
         <Title title={"Calendar tasks"} icon={iconCalendar}></Title>
+
         <div className={styles.containCalendar}>
           <div className={styles.backgroundCalendar}>
             <Wrapper>

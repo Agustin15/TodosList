@@ -1,18 +1,16 @@
 import { createContext, useContext } from "react";
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useSocket } from "./SocketContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
-const urlBack = import.meta.env.VITE_LOCALHOST_BACK;
 
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
+  const { socket } = useSocket();
   const [notifications, setNotifications] = useState([]);
   const [loaderNotifications, setLoaderNotifications] = useState(true);
-  const [socket, setSocket] = useState();
 
   useEffect(() => {
-    setSocket(io(urlBack));
     fetchGetNotifications();
   }, []);
 

@@ -13,10 +13,11 @@ export const validationsCases = (
       validInput = value.length > 0 && new Date(value).getTime() > Date.now();
       break;
     case "datetimeNotification":
-      msj = "Date should be less than date task";
+      msj = "Date should be less than datetime task and current datetime ";
       validInput =
         value.length > 0 &&
-        new Date(value).getTime() < new Date(valueDatetimeTask).getTime()
+        new Date(value).getTime() <= new Date(valueDatetimeTask).getTime() &&
+        new Date(value).getTime() > Date.now();
       break;
     case "descriptionTask":
       msj = "Complete correctly description field";

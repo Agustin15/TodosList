@@ -34,7 +34,11 @@ export const CountNotificationsProvider = ({ children }) => {
 
   return (
     <CountNotificationsContext.Provider
-      value={{ countNotificationsNotSeen, fetchGetNotificationsByState }}
+      value={{
+        countNotificationsNotSeen,
+        fetchGetNotificationsByState,
+        setCountNotificationsNotSeen
+      }}
     >
       {children}
     </CountNotificationsContext.Provider>

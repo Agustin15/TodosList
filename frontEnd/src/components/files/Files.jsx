@@ -41,12 +41,12 @@ export const Files = () => {
 
   return (
     <div className={styles.containFiles}>
-      <UserDataProvider>
-        <MenuProvider>
+      <MenuProvider>
+        <UserDataProvider>
           <Title title={"Files uploaded"} icon={iconFilesSaved}></Title>
           <Header />
-        </MenuProvider>
-      </UserDataProvider>
+        </UserDataProvider>
+      </MenuProvider>
 
       <div className={styles.containTable}>
         <div className={styles.contentTable}>

@@ -8,7 +8,9 @@ import EditPassword from "./editPassword/EditPassword";
 import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import { useEffect, useState } from "react";
-import { useDataUser } from "../../context/UserDataContext";
+import { useDataUser } from "../../context/userDataContext";
+import { FormEditEmailProvider } from "../../context/FormEditEmailContext";
+import { FormEditPasswordProvider } from "../../context/FormEditPasswordContext";
 
 const Profile = () => {
   const [modalEditEmail, setModalEditEmail] = useState(false);
@@ -70,17 +72,23 @@ const Profile = () => {
 
       {modalEditEmail && (
         <Modal>
-          <FormEditEmail
-            email={user.email}
-            setModalEditEmail={setModalEditEmail}
-          ></FormEditEmail>
+          <FormEditEmailProvider>
+            <FormEditPasswordProvider>
+              <FormEditEmail
+                email={user.email}
+                setModalEditEmail={setModalEditEmail}
+              ></FormEditEmail>
+            </FormEditPasswordProvider>
+          </FormEditEmailProvider>
         </Modal>
       )}
       {modalEditPassword && (
         <Modal>
-          <EditPassword
-            setModalEditPassword={setModalEditPassword}
-          ></EditPassword>
+          <FormEditPasswordProvider>
+            <EditPassword
+              setModalEditPassword={setModalEditPassword}
+            ></EditPassword>
+          </FormEditPasswordProvider>
         </Modal>
       )}
     </>

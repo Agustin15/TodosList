@@ -1,0 +1,90 @@
+.menu {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    flex-direction: column;
+    font-weight: 100;
+    gap: 0.5rem;
+}
+
+.menu li {
+    cursor: pointer;
+    list-style: none;
+    height: 3rem;
+    width: 99%;
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+}
+.menu li img {
+    width: 25px;
+}
+.optionCurrent {
+    background-color: #4e97c2;
+    border-left: 1px solid white;
+}
+.menu li:hover {
+    border-left: 1px solid white;
+}
+
+.menu li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 100;
+    position: relative;
+}
+.menu li span {
+    display: flex;
+}
+
+.menu li button {
+    width: auto;
+    padding: 0.6rem;
+    background: white;
+    border-radius: 15px;
+    border: none;
+    color: black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+.menu li button:hover {
+    background: rgb(230, 230, 230);
+}
+
+.menu li button img {
+    width: 20px;
+}
+
+@media only screen and (max-width: 699px) {
+    .menu li a {
+        font-size: 14px;
+        width: 23px;
+        font-weight: bold;
+    }
+    .menu li img {
+        width: 23px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .menu li a {
+        font-size: 14px;
+        width: 23px;
+        font-weight: bold;
+    }
+    .menu li img {
+        width: 23px;
+    }
+}

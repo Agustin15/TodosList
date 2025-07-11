@@ -1,8 +1,8 @@
-import classesStyle from "./DetailsTodo.module.css";
-import iconOpenDocument from "../../assets/img/openDocument.png";
-import iconDownload from "../../assets/img/download.png";
-import { useTasks } from "../../context/TaskContext";
-import { useFiles } from "../../context/FilesContext";
+import classesStyle from "./FilesTask.module.css";
+import iconOpenDocument from "../../../assets/img/openDocument.png";
+import iconDownload from "../../../assets/img/download.png";
+import { useTasks } from "../../../context/TaskContext";
+import { useFiles } from "../../../context/FilesContext";
 
 export const FilesTask = ({ task }) => {
   const { formatDate } = useTasks();

@@ -6,6 +6,7 @@ import {
   useState
 } from "react";
 
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const TaskContext = createContext();
@@ -183,7 +184,7 @@ export const TaskProvider = ({ children }) => {
 
     formData.append("datetimeTask", formatDate(task.datetimeTask));
     formData.append("datetimeNotification", task.datetimeNotification);
-    formData.append("state", task.isCompleted?1:0);
+    formData.append("state", task.isCompleted ? 1 : 0);
 
     setLoadingState(true);
     try {

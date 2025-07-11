@@ -112,75 +112,6 @@
   width: 100%;
 }
 
-.header ul {
-  display: flex;
-  width: 100%;
-  justify-content: start;
-  flex-direction: column;
-  font-weight: 100;
-  gap: 0.5rem;
-}
-
-.header li {
-  cursor: pointer;
-  list-style: none;
-  height: 3rem;
-  width: 99%;
-  display: flex;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 13px;
-}
-.header li img {
-  width: 25px;
-}
-.optionCurrent {
-  background-color: #4e97c2;
-  border-left: 1px solid white;
-}
-.header li:hover {
-  border-left: 1px solid white;
-}
-
-.header li a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 100;
-  position: relative;
-}
-.header li span {
-  display: flex;
-}
-
-.header li button {
-  width: auto;
-  padding: 0.6rem;
-  background: white;
-  border-radius: 15px;
-  border: none;
-  color: black;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-.header li button:hover {
-  background: rgb(230, 230, 230);
-}
-
-.header li button img {
-  width: 20px;
-}
-
 .containDetailsProfileHidden {
   display: none;
 }
@@ -293,15 +224,6 @@
     }
   }
 
-  .header li a {
-    font-size: 14px;
-    width: 23px;
-    font-weight: bold;
-  }
-  .header li img {
-    width: 23px;
-  }
-
   .logOut {
     font-size: 16px;
   }
@@ -384,15 +306,6 @@
     to {
       left: -100%;
     }
-  }
-
-  .header li a {
-    font-size: 14px;
-    width: 23px;
-    font-weight: bold;
-  }
-  .header li img {
-    width: 23px;
   }
 
   .header .containProfile img {

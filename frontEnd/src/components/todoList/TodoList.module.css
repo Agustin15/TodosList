@@ -90,7 +90,6 @@
   height: 62px;
 }
 .warningShow {
-  opacity: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,15 +105,16 @@
 }
 
 .taskNotFoundShow {
-  opacity: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin-top: 3rem;
-  height: 20rem;
+  height: 71%;
   font-size: 18px;
+  color: rgb(61, 61, 61);
+
 }
 
 .taskNotFoundShow img {
@@ -178,7 +178,6 @@
     height: 62px;
   }
   .warningShow {
-    opacity: 70%;
     gap: 1rem;
     height: 95%;
     font-size: 15px;
@@ -190,7 +189,6 @@
   }
 
   .taskNotFoundShow {
-    opacity: 70%;
     font-size: 16px;
   }
 
@@ -258,7 +256,6 @@
   }
 
   .taskNotFoundShow {
-    opacity: 70%;
     font-size: 15px;
   }
 

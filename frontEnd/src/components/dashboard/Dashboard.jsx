@@ -5,7 +5,6 @@ import iconTitleDashboard from "../../assets/img/iconTitleDashboard.png";
 import { Title } from "../title/Title";
 import { TasksThisWeek } from "./tasksThisWeek/TasksThisWeek";
 import { UserDataProvider } from "../../context/userDataContext";
-import { WindowSizeProvider } from "../../context/WindowSizeContext";
 import { MenuProvider } from "../../context/MenuContext";
 
 export const Dashboard = () => {
@@ -13,18 +12,16 @@ export const Dashboard = () => {
     <>
       <div className={stylesDashboard.containDashboard}>
         <MenuProvider>
-          <WindowSizeProvider>
-            <UserDataProvider>
-              <Header></Header>
-            </UserDataProvider>
-            <div className={stylesDashboard.rowDashboard}>
-              <Title title={"Dashboard"} icon={iconTitleDashboard}></Title>
-              <div className={stylesDashboard.statisticsAndTasks}>
+          <UserDataProvider>
+            <Header></Header>
+          </UserDataProvider>
+          <div className={stylesDashboard.rowDashboard}>
+            <Title title={"Dashboard"} icon={iconTitleDashboard}></Title>
+            <div className={stylesDashboard.statisticsAndTasks}>
               <Statistics></Statistics>
               <TasksThisWeek></TasksThisWeek>
-              </div>
             </div>
-          </WindowSizeProvider>
+          </div>
         </MenuProvider>
       </div>
     </>

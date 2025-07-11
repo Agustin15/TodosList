@@ -6,6 +6,7 @@ import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
 import { useCalendarEvents } from "../../../context/CalendarEventsContext";
 import { ColumnOne } from "./ColumnOne";
+import { SubscriptionProvider } from "../../../context/SubscriptionContext";
 
 const ContentForm = ({ handleChange, stateCheckbox, setStateCheckbox }) => {
   const { values, setValues, cleanForm } = useForm();
@@ -21,12 +22,14 @@ const ContentForm = ({ handleChange, stateCheckbox, setStateCheckbox }) => {
   return (
     <div className={classesStyle.contentForm}>
       <div className={classesStyle.bodyForm}>
-        <ColumnOne
-          values={values}
-          handleChange={handleChange}
-          stateCheckbox={stateCheckbox}
-          setStateCheckbox={setStateCheckbox}
-        />
+        <SubscriptionProvider>
+          <ColumnOne
+            values={values}
+            handleChange={handleChange}
+            stateCheckbox={stateCheckbox}
+            setStateCheckbox={setStateCheckbox}
+          />
+        </SubscriptionProvider>
         <div className={classesStyle.columnTwo}>
           <UploadFiles handleChange={handleChange} />
         </div>

@@ -4,7 +4,7 @@ import iconMenuTask from "../../assets/img/menuTask.png";
 import EditTodoForm from "../editTodoForm/EditTodoForm";
 import DetailsTodo from "../detailsTodo/DetailsTodo";
 import Modal from "../modal/Modal";
-import { SubscriptionProvider } from "../../context/SubscriptionContext";
+import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext.jsx";
 import { MenuOption } from "./menuOptions/MenuOptions";
 import { useWindowSize } from "../../context/WindowSizeContext";
 import { AlertQuestionSwal, AlertFormSwal } from "../sweetAlert/sweetAlert.js";
@@ -71,12 +71,12 @@ const TodoItem = ({ task, index }) => {
   return (
     <>
       <li
-        key={task.id}
         style={{
           background:
             index % 2 == 0 ? "rgb(221, 221, 221)" : "rgb(241, 241, 241)"
         }}
         className={styles.task}
+        key={index}
       >
         <div className={styles.info}>
           <div
@@ -117,9 +117,9 @@ const TodoItem = ({ task, index }) => {
       </li>
       {openModalUpdate && (
         <Modal>
-          <SubscriptionProvider>
+          <FormTaskProvider>
             <EditTodoForm task={task} setOpenModalUpdate={setOpenModalUpdate} />
-          </SubscriptionProvider>
+          </FormTaskProvider>
         </Modal>
       )}
 

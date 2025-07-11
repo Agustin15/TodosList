@@ -5,6 +5,7 @@ import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
 import { UploadFiles } from "./UploadFiles";
 import { ColumnOne } from "./ColumnOne";
+import { SubscriptionProvider } from "../../../context/SubscriptionContext";
 
 const ContentFormEdit = ({ values, handleChange }) => {
   const { setFilesUploadedUpdateForm, cleanForm, updateEnabled } = useForm();
@@ -50,7 +51,9 @@ const ContentFormEdit = ({ values, handleChange }) => {
   return (
     <div className={styles.contentForm}>
       <div className={styles.bodyForm}>
-        <ColumnOne values={values} handleChange={handleChange} />
+        <SubscriptionProvider>
+          <ColumnOne values={values} handleChange={handleChange} />
+        </SubscriptionProvider>
         <div className={styles.columnTwo}>
           <UploadFiles handleChange={handleChange} values={values} />
         </div>

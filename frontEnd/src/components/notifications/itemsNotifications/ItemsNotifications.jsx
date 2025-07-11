@@ -5,6 +5,7 @@ import notificationSeen from "../../../assets/img/notificacionSeen.png";
 import { useNotification } from "../../../context/NotificationContext";
 import { useWindowSize } from "../../../context/WindowSizeContext";
 
+
 export const ItemsNotifications = ({ notifications }) => {
   const {
     formatToStringDate,

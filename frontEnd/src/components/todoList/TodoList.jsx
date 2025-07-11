@@ -14,8 +14,7 @@ import { useParams } from "react-router-dom";
 import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
 import { FilterOption } from "../filterOption/FilterOption";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
-import { WindowSizeProvider } from "../../context/WindowSizeContext";
-import { SubscriptionProvider } from "../../context/SubscriptionContext";
+import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext";
 
 const TodoList = () => {
   const { tasks, getTaskById, dispatch } = useTasks();
@@ -42,6 +41,7 @@ const TodoList = () => {
   return (
     <div className={styles.contentBody}>
       <Title title={"Tasks"} icon={iconAllTasks}></Title>
+
       <div className={styles.containTasks}>
         <div className={styles.header}>
           <div className={styles.rowHeader}>
@@ -52,44 +52,41 @@ const TodoList = () => {
           </div>
         </div>
         {!idTask && (
-          <WindowSizeProvider>
-            <FilterOption
-              setOpenModalAdd={setOpenModalAdd}
-              setTaskNotFound={setTaskNotFound}
-            />
-          </WindowSizeProvider>
+          <FilterOption
+            setOpenModalAdd={setOpenModalAdd}
+            setTaskNotFound={setTaskNotFound}
+          />
         )}
 
-        <ul id="ulTasks" className={styles.tasks}>
-          {loadingFilter == false ? (
-            tasks.length == 0 ? (
-              <div className={styles.warningShow}>
-                <img src={noTaskIcon}></img>
-                <h3>Not Tasks </h3>
-              </div>
-            ) : (
-              tasks.map((task, index) => (
-                <WindowSizeProvider>
-                  <TodoItem index={index} task={task}></TodoItem>
-                </WindowSizeProvider>
-              ))
-            )
-          ) : (
-            <div className={styles.loadingShow}>
-              <img src={gifLoadingTasks}></img>
-              <h3>loading tasks</h3>
+        {loadingFilter == false ? (
+          tasks.length == 0 ? (
+            <div className={styles.warningShow}>
+              <img src={noTaskIcon}></img>
+              <h3>Not Tasks </h3>
             </div>
-          )}
-
-          <div
-            className={
-              taskNotFound ? styles.taskNotFoundShow : styles.taskNotFoundHide
-            }
-          >
-            <img src={iconNoFound}></img>
-            <h3>Task not found</h3>
+          ) : (
+            <ul id="ulTasks" className={styles.tasks}>
+              {tasks.map((task, index) => (
+                <TodoItem index={index} task={task}></TodoItem>
+              ))}
+              <div
+                className={
+                  taskNotFound
+                    ? styles.taskNotFoundShow
+                    : styles.taskNotFoundHide
+                }
+              >
+                <img src={iconNoFound}></img>
+                <h3>Task not found</h3>
+              </div>
+            </ul>
+          )
+        ) : (
+          <div className={styles.loadingShow}>
+            <img src={gifLoadingTasks}></img>
+            <h3>loading tasks</h3>
           </div>
-        </ul>
+        )}
 
         {!idTask && <Pagination />}
       </div>
@@ -97,11 +94,9 @@ const TodoList = () => {
       {openModalAdd && (
         <Modal>
           <CalendarEventsProvider>
-            <WindowSizeProvider>
-              <SubscriptionProvider>
-                <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
-              </SubscriptionProvider>
-            </WindowSizeProvider>
+            <FormTaskProvider>
+              <AddTodoForm setOpenModalAdd={setOpenModalAdd} />
+            </FormTaskProvider>
           </CalendarEventsProvider>
         </Modal>
       )}
