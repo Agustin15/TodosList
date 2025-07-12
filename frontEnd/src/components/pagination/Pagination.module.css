@@ -18,7 +18,7 @@
 .index input {
     list-style: none;
     padding: 0.3rem;
-    width: 2rem;
+    width: 1.5rem;
     color: rgb(112, 112, 112);
     text-align: center;
     border: 1px solid rgb(184, 184, 184);
@@ -36,24 +36,20 @@
     text-align: center;
 }
 
-.nextPrev {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-}
-
-.nextPrev button {
-    background: linear-gradient(white, gray);
-    border: 1px solid rgb(182, 182, 182);
-    width: 2.5rem;
+.containPaginationShow button {
+    background: linear-gradient(rgb(64, 131, 175), rgb(63, 100, 165));
+    position: relative;
+    border: none;
+    width: 6rem;
     height: 1.6rem;
     display: flex;
+    color: white;
+    border-radius: 44px;
     align-items: center;
     justify-content: center;
 }
 
-.nextPrev button img {
+.containPaginationShow button img {
     width: 25px;
     height: 25px;
     opacity: 41%;
@@ -64,17 +60,7 @@
     transform: rotate(180deg);
 }
 
-.btnNextDisabled,
-.btnNextEnabled {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
 
-.btnPrevDisabled,
-.btnPrevEnabled {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
 .btnNextEnabled:hover {
     transform: scale(1.1);
     cursor: pointer;

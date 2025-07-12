@@ -49,6 +49,12 @@
   background: none;
   border: none;
   background: linear-gradient(red, rgb(196, 19, 19));
+  box-shadow:
+    inset 1px -1px 0 rgba(255, 255, 255, 0.4),
+    inset -1px 0 0 rgba(255, 255, 255, 0.4),
+    inset 0 1px 0 #fff,
+    -1px 1px 0 rgba(118, 29, 16, 0.8),
+    1px 0 0 rgba(118, 29, 16, 0.9);
   height: 1.4rem;
   width: 3rem;
   font-weight: bold;

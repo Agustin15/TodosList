@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTasks } from "../../context/TaskContext";
 import styles from "./Pagination.module.css";
-import iconArrow from "../../assets/img/arrow.png";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
+import { GlassEffect } from "../glassEffect/GlassEffect";
 
 export const Pagination = () => {
   const { dispatch } = useTasks();
@@ -46,6 +46,16 @@ export const Pagination = () => {
           : styles.containPaginationHide
       }
     >
+      <button
+        disabled={indexSelected == 1 ? true : false}
+        className={
+          indexSelected == 1 ? styles.btnPrevDisabled : styles.btnPrevEnabled
+        }
+        onClick={() => changePage(indexSelected)}
+      >
+        Prev
+        <GlassEffect />
+      </button>
       <div className={styles.index}>
         <input
           ref={refInputNumberIndex}
@@ -57,28 +67,17 @@ export const Pagination = () => {
         ></input>
         of {pages}
       </div>
-      <div className={styles.nextPrev}>
-        <button
-          disabled={indexSelected == 1 ? true : false}
-          className={
-            indexSelected == 1 ? styles.btnPrevDisabled : styles.btnPrevEnabled
-          }
-          onClick={() => changePage(indexSelected)}
-        >
-          <img src={iconArrow}></img>
-        </button>
-        <button
-          disabled={indexSelected < pages ? false : true}
-          className={
-            indexSelected < pages
-              ? styles.btnNextEnabled
-              : styles.btnNextDisabled
-          }
-          onClick={() => changePage(indexSelected)}
-        >
-          <img src={iconArrow}></img>
-        </button>
-      </div>
+
+      <button
+        disabled={indexSelected < pages ? false : true}
+        className={
+          indexSelected < pages ? styles.btnNextEnabled : styles.btnNextDisabled
+        }
+        onClick={() => changePage(indexSelected)}
+      >
+        Next
+        <GlassEffect />
+      </button>
     </div>
   );
 };

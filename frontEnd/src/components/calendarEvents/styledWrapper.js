@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const Wrapper = styled.div`
   .fc {
-    height: 84vh;
+    height: 82vh;
   }
 
   .fc .fc-daygrid-day.fc-day-today {

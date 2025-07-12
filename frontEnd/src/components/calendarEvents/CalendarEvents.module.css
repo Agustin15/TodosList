@@ -19,11 +19,14 @@
 .containCalendar {
     width: 94%;
     height: 91vh;
-    padding: 1rem;
-    border-radius: 8px;
-    background: linear-gradient(rgb(228, 228, 228), rgb(185, 185, 185));
+    padding: 0.8rem;
+    border-radius:9px;
+    background: linear-gradient(#80aada, #3b6aa0);
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 
 .containCalendar .titleCalendar h3 {
     font-size: 18px;
@@ -113,15 +116,26 @@
         padding-bottom: 2rem;
     }
     .containCalendar {
-        width: 83vw;
-        height: auto;
+        width: 84vw;
+        height: 85vh;
+        background: none;
         gap: 1rem;
         margin-left: 0;
-        margin-top: 6rem;
+        margin-top: 4rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: start;
+        justify-content: center;
+    }
+
+    .backgroundCalendar {
+        width: auto;
+        height: 91%;
+        padding: 1rem;
+        border-radius: 5px;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(223, 223, 223);
+        box-shadow: 2px 2px 2px gray;
     }
 
     .containCalendar .titleCalendar h3 {

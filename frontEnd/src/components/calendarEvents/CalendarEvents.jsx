@@ -3,7 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import multiMonthPlugin from "@fullcalendar/multimonth";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import iconCalendar from "../../assets/img/calendarTitle.png";
+import iconCalendar from "../../assets/img/calendarMobile.png";
 import Modal from "../modal/Modal";
 import { Title } from "../title/Title";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
@@ -11,6 +11,7 @@ import Header from "../header/Header";
 import styles from "./CalendarEvents.module.css";
 import { Wrapper } from "./styledWrapper.js";
 import { useState, useEffect } from "react";
+import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext.jsx";
 import { UserDataProvider } from "../../context/userDataContext";
 import { useParams } from "react-router-dom";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
@@ -108,7 +109,9 @@ export const CalendarEvents = () => {
       {modalAdd && (
         <Modal>
           <FilterOptionTasksProvider>
-            <AddTodoForm setOpenModalAdd={setModalAdd}></AddTodoForm>
+            <FormTaskProvider>
+              <AddTodoForm setOpenModalAdd={setModalAdd}></AddTodoForm>
+            </FormTaskProvider>
           </FilterOptionTasksProvider>
         </Modal>
       )}
