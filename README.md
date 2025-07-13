@@ -134,8 +134,14 @@
 
 ![Calendar](capturesApp/calendar.PNG)
 
-### Details task 
+### Files
 
 ![Files Uploaded](capturesApp/files.PNG)
+
+### Notifications
+
+![Files Uploaded](capturesApp/notifications.PNG)
+
+
 
 
