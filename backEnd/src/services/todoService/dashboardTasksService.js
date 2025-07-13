@@ -84,7 +84,7 @@ export const DashboardTasksService = {
             minute: "numeric"
           }).format(dateTask);
 
-          let filesTask = await FileService.findFilesByIdTask(task);
+          let filesTask = await FileService.findFilesByIdTask(task.idTask);
 
           return {
             id: task.idTask,

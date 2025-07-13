@@ -25,7 +25,7 @@ export const validationsCases = (
       break;
     case "icon":
       msj = "Invalid icon";
-      validInput = !value.match(validIcon) && value.length !== 0;
+      validInput = !value.match(validIcon);
       break;
     case "filesUploaded":
       msj = "Limit size exceeded";

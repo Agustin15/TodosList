@@ -25,29 +25,37 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
 
   const { updateTask } = useTasks();
 
+  const setIcon = (value) => {
+    if (values.icon.length == 0 || value.length == 0) return value;
+    else return null;
+  };
+
   const handleChange = (event) => {
     let name, value;
     name = event.target.name;
 
-    if (name == "filesUploaded") {
-      setFilesUploadedUpdateForm(
-        [filesUploadedUpdateForm, ...event.target.files].flat()
+    value =
+      name == "icon"
+        ? setIcon(event.target.value)
+        : name == "filesUploaded"
+        ? setFilesUploadedUpdateForm(
+            [filesUploadedUpdateForm, ...event.target.files].flat()
+          )
+        : event.target.value;
+
+    if (value != null) {
+      setValues({
+        ...values,
+        [name]: value
+      });
+
+      validationInput(
+        name,
+        name != "filesUploaded"
+          ? value
+          : [filesUploadedUpdateForm, ...event.target.files].flat()
       );
-    } else {
-      value = event.target.value;
     }
-
-    setValues({
-      ...values,
-      [name]: value
-    });
-
-    validationInput(
-      name,
-      name != "filesUploaded"
-        ? value
-        : [filesUploadedUpdateForm, ...event.target.files].flat()
-    );
   };
 
   useEffect(() => {

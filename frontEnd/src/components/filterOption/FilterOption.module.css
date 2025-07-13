@@ -67,7 +67,7 @@
     flex-direction: column;
     align-items: start;
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     border-radius: 7px;
     border: 1px solid rgb(197, 197, 197);
     margin-top: 21rem;
@@ -140,7 +140,6 @@
     border: none;
     cursor: pointer;
 }
-
 
 .panelFilterShow ul button:hover {
     background: linear-gradient(rgb(21, 135, 180), rgb(16, 106, 141));
@@ -265,7 +264,6 @@
     .panelFilterShow {
         margin-top: 20rem;
         margin-left: 0;
-        z-index: 5;
     }
 
     .panelFilterShow .filter {
@@ -299,7 +297,6 @@
         padding-bottom: 1rem;
         width: 29rem;
         gap: 0.5rem;
-        z-index: 1;
     }
 
     .panelFilterShow .filter {

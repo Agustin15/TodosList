@@ -37,9 +37,9 @@ export const TaskService = {
 
       tasksThisWeekUser = await Promise.all(
         tasksThisWeekUser.map(async (task) => {
-          let filesTask = await FileService.findFilesByIdTask(task);
+          let filesTask = await FileService.findFilesByIdTask(task.idTask);
           let notificationFound =
-            await NotificationService.findNotificationByIdTask(task);
+            await NotificationService.findNotificationByIdTask(task.idTask);
           notificationFound.length > 0
             ? (task.datetimeNotification = notificationFound[0].datetimeSend)
             : (task.datetimeNotification = "");
@@ -82,7 +82,7 @@ export const TaskService = {
             minute: "numeric"
           }).format(dateTask);
 
-          let filesTask = await FileService.findFilesByIdTask(task);
+          let filesTask = await FileService.findFilesByIdTask(task.idTask);
 
           return {
             id: task.idTask,
@@ -110,9 +110,9 @@ export const TaskService = {
       tasks = await taskModel.getTasksLimitByFilterOption(year, month, offset);
 
       for (const task of tasks) {
-        let filesTask = await FileService.findFilesByIdTask(task);
+        let filesTask = await FileService.findFilesByIdTask(task.idTask);
         let notificationFound =
-          await NotificationService.findNotificationByIdTask(task);
+          await NotificationService.findNotificationByIdTask(task.idTask);
         task.filesUploaded = filesTask;
         notificationFound.length > 0
           ? (task.datetimeNotification = notificationFound[0].datetimeSend)
@@ -150,7 +150,7 @@ export const TaskService = {
         throw new Error("Task not found");
       }
 
-      let filesTask = await FileService.findFilesByIdTask(taskModel);
+      let filesTask = await FileService.findFilesByIdTask(idTask);
       taskFoundById[0].filesUploaded = filesTask;
 
       return taskFoundById;
@@ -210,14 +210,16 @@ export const TaskService = {
       );
 
       if (files.length > 0) {
-        let fileAdded = await FileService.addFile(taskAddedFound, files);
+        let fileAdded = await FileService.addFile(taskAddedFound.idTask, files);
 
         if (!fileAdded.result) {
           errorAddFile = true;
         }
       }
 
-      let filesTask = await FileService.findFilesByIdTask(taskAddedFound);
+      let filesTask = await FileService.findFilesByIdTask(
+        taskAddedFound.idTask
+      );
       taskAddedFound.filesUploaded = filesTask;
       taskAddedFound.datetimeNotification = task.datetimeNotification;
 
@@ -250,7 +252,7 @@ export const TaskService = {
       taskModel.propIcon = task.icon;
       taskModel.propDescription = task.descriptionTask;
       taskModel.propDatetime = task.datetimeTask;
-      taskModel.propIsCompleted =parseInt(task.state);
+      taskModel.propIsCompleted = parseInt(task.state);
       taskModel.propIdTask = idTask;
 
       const taskUpdated = await taskModel.put();
@@ -266,19 +268,16 @@ export const TaskService = {
 
       taskUpdatedFound = taskUpdatedFound[0];
 
-      let filesChanged = await FileService.findFilesChanged(
-        taskUpdatedFound,
-        files
-      );
+      let filesChanged = await FileService.findFilesChanged(idTask, files);
       if (filesChanged.filesForAdd.length > 0) {
-        await FileService.addFile(taskUpdatedFound, filesChanged.filesForAdd);
+        await FileService.addFile(idTask, filesChanged.filesForAdd);
       }
       if (filesChanged.filesForDelete.length > 0) {
         await FileService.deleteFile(filesChanged.filesForDelete);
       }
 
       let notification = await NotificationService.findNotificationByIdTask(
-        taskUpdatedFound
+        idTask
       );
       task.idTask = idTask;
 
@@ -307,7 +306,7 @@ export const TaskService = {
 
       await connection.commit();
 
-      let filesTask = await FileService.findFilesByIdTask(task);
+      let filesTask = await FileService.findFilesByIdTask(idTask);
       taskUpdatedFound.filesUploaded = filesTask;
       taskUpdatedFound.datetimeNotification = task.datetimeNotification;
 
@@ -328,7 +327,7 @@ export const TaskService = {
       if (taskStateUpdated == 0) throw new Error("Failed to update state task");
 
       let task = await TaskService.findTasksByIdTask(idTask, idUser);
-      let filesTask = await FileService.findFilesByIdTask(task[0]);
+      let filesTask = await FileService.findFilesByIdTask(idTask);
 
       task[0].filesUploaded = filesTask;
       return task[0];
@@ -337,17 +336,14 @@ export const TaskService = {
     }
   },
 
-  deleteTask: async (idTask, idUser) => {
+  deleteTask: async (idTask) => {
     try {
       let jobId;
 
       await connection.beginTransaction();
 
-      let task = await TaskService.findTasksByIdTask(idTask, idUser);
-
-      let notificationFound = NotificationService.findNotificationByIdTask(
-        task[0]
-      );
+      let notificationFound =
+        NotificationService.findNotificationByIdTask(idTask);
 
       if (notificationFound.length > 0) {
         let jobNotificationFound = ScheduledJobService.getJobByIdNotification(
@@ -356,6 +352,8 @@ export const TaskService = {
 
         jobId = `'${jobNotificationFound.idJob}'`;
       }
+
+      taskModel.propIdTask = idTask;
 
       let deletedTask = await taskModel.delete();
 

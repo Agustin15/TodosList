@@ -68,9 +68,7 @@ export const SubscriptionProvider = ({ children }) => {
 
   const getRegisterSW = async () => {
     try {
-      const register = await navigator.serviceWorker.getRegistration(
-        "http://localhost:5173/"
-      );
+      const register = await navigator.serviceWorker.getRegistration(urlFront);
       return register;
     } catch (error) {
       console.log(error);

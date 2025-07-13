@@ -41,7 +41,7 @@ export class Task {
 
   set propDatetime(value) {
     if (new Date(value) == "Invalid Date") throw new Error("Invalid Datetime");
-    if (new Date(value).getTime() <= new Date().getTime())
+    if (new Date(value).getTime() <= Date.now())
       throw new Error("Datetime task must be higher than datetime now");
 
     this.#dateTask = value;

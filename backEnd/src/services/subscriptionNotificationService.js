@@ -2,11 +2,12 @@ import { SubscriptionNotification } from "../model/subscriptionNotificationModel
 const subscriptionNotificationModel = new SubscriptionNotification();
 
 export const SubscriptionNotificationService = {
-  addNotificationsSubscriptions: async (notification, subscriptions) => {
+  addNotificationsSubscriptions: async (idNotification, subscriptions) => {
     let errorAdd = false;
+
     try {
       for (const subscription of subscriptions) {
-        subscriptionNotificationModel.propNotification = notification;
+        subscriptionNotificationModel.propIdNotification = idNotification;
         subscriptionNotificationModel.propEndpointURL =
           subscription.endpointURL;
 
@@ -26,9 +27,9 @@ export const SubscriptionNotificationService = {
     }
   },
 
-  getNotificationSubscriptionByIdNotification: async (notification) => {
+  getNotificationSubscriptionByIdNotification: async (idNotification) => {
     try {
-      subscriptionNotificationModel.propNotification = notification;
+      subscriptionNotificationModel.propIdNotification = idNotification;
       let notificationOfSubscription =
         await subscriptionNotificationModel.getNotificationSubscriptionByIdNotifi();
 
@@ -38,11 +39,11 @@ export const SubscriptionNotificationService = {
     }
   },
   findSubscriptionsDistinctByIdNotification: async (
-    notification,
+    idNotification,
     endpointURL
   ) => {
     try {
-      subscriptionNotificationModel.propNotification = notification;
+      subscriptionNotificationModel.propIdNotification = idNotification;
       subscriptionNotificationModel.propEndpointURL = endpointURL;
       const subscriptions =
         await subscriptionNotificationModel.getSubscriptionsDistinctByIdNotification();
@@ -52,12 +53,13 @@ export const SubscriptionNotificationService = {
     }
   },
 
-  findPendingNotificationsByEndpoint: async (endpoint, notification) => {
+  findPendingNotificationsByEndpoint: async (endpoint) => {
     try {
-      subscriptionNotificationModel.propNotification = notification;
       subscriptionNotificationModel.propEndpointURL = endpoint;
       let pendingNotifications =
-        await subscriptionNotificationModel.getPendingNotificationsByEndpoint();
+        await subscriptionNotificationModel.getPendingNotificationsByEndpoint(
+          "pending"
+        );
 
       return pendingNotifications;
     } catch (error) {

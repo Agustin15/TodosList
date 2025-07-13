@@ -2,7 +2,7 @@ import connection from "../config/database.js";
 
 export class Notification {
   #idNotification;
-  #task;
+  #idTask;
   #datetimeSend;
   #state;
 
@@ -15,13 +15,14 @@ export class Notification {
       throw new Error("Invalid idNotification,it must be a number");
     this.#idNotification = value;
   }
-  get propTask() {
-    return this.#task;
+  get propIdTask() {
+    return this.#idTask;
   }
 
-  set propTask(value) {
-    if (!value) throw new Error("Enter task");
-    this.#task = value;
+  set propIdTask(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idTask,it must be a number");
+    this.#idTask = value;
   }
 
   get propDatetimeSend() {
@@ -30,8 +31,10 @@ export class Notification {
 
   set propDatetimeSend(value) {
     if (new Date(value) == "Invalid Date") throw new Error("Invalid Date");
-    if (new Date(this.propTask.dateTask).getTime() <= new Date(value).getTime())
-      throw new Error("Datetime notification must be less than datetime task");
+    if (new Date(value).getTime() <= Date.now())
+      throw new Error(
+        "Datetime notification must be higher than current datetime"
+      );
 
     this.#datetimeSend = value;
   }
@@ -49,7 +52,7 @@ export class Notification {
     try {
       const [result] = await connection.execute(
         "INSERT INTO notifications (idTask,datetimeSend,state) values (?,?,?)",
-        [this.propTask.idTask, this.propDatetimeSend, this.propState]
+        [this.propIdTask, this.propDatetimeSend, this.propState]
       );
 
       return result.affectedRows;
@@ -86,19 +89,18 @@ export class Notification {
     try {
       const [results] = await connection.execute(
         "select * from notifications where idTask=?",
-        [this.propTask.idTask]
+        [this.propIdTask]
       );
       return results;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getNotificationsSentTasksUser() {
+  async getNotificationsSentTasksUser(idUser) {
     try {
       const [results] = await connection.execute(
-        "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? &&" +
-          " notifications.state!=? order by notifications.datetimeSend desc",
-        [this.propTask.idUser, this.propState]
+        "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? && notifications.state!=? order by notifications.datetimeSend desc",
+        [idUser, this.propState]
       );
 
       return results;
@@ -107,12 +109,12 @@ export class Notification {
     }
   }
 
-  async getNotificationsOfUserByState() {
+  async getNotificationsOfUserByState(idUser) {
     try {
       const [results] = await connection.execute(
         "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? &&" +
           " notifications.state=?",
-        [this.propTask.idUser ,this.propState]
+        [idUser, this.propState]
       );
       return results;
     } catch (error) {

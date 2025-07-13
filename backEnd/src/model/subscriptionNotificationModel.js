@@ -1,17 +1,16 @@
 import connection from "../config/database.js";
 
 export class SubscriptionNotification {
-  #notification;
+  #idNotification;
   #endpointURL;
 
- 
-  get propNotification() {
-    return this.#notification;
+  get propIdNotification() {
+    return this.#idNotification;
   }
 
-  set propNotification(value) {
+  set propIdNotification(value) {
     if (!value) throw new Error("Enter notification");
-    this.#notification = value;
+    this.#idNotification = value;
   }
 
   get propEndpointURL() {
@@ -28,7 +27,7 @@ export class SubscriptionNotification {
     try {
       const [result] = await connection.execute(
         "INSERT INTO notifications_subscription (idNotification,endpointURL) values (?,?)",
-        [this.propNotification.idNotification, this.propEndpointURL]
+        [this.propIdNotification, this.propEndpointURL]
       );
 
       return result.affectedRows;
@@ -36,12 +35,12 @@ export class SubscriptionNotification {
       throw new Error(error);
     }
   }
-  async getPendingNotificationsByEndpoint() {
+  async getPendingNotificationsByEndpoint(state) {
     try {
       const [results] = await connection.execute(
         "select * from notifications_subscription inner join notifications on notifications_subscription.idNotification" +
           "=notifications.idNotification where notifications_subscription.endpointURL=? and notifications.state=?",
-        [this.propEndpointURL, this.propNotification.state]
+        [this.propEndpointURL, state]
       );
       return results;
     } catch (error) {
@@ -53,7 +52,7 @@ export class SubscriptionNotification {
     try {
       const [results] = await connection.execute(
         "select * from notifications_subscription where idNotification=?",
-        [this.propNotification.idNotification]
+        [this.propIdNotification]
       );
 
       return results;
@@ -65,7 +64,7 @@ export class SubscriptionNotification {
     try {
       const [results] = await connection.execute(
         "select * from notifications_subscription where idNotification=? and endpointURL!=?",
-        [this.propNotification.idNotification, this.propEndpointURL]
+        [this.propIdNotification, this.propEndpointURL]
       );
       return results;
     } catch (error) {

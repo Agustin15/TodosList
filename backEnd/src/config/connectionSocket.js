@@ -1,12 +1,11 @@
 import { Server } from "socket.io";
-
 export class ConnectionSocket {
   socket;
   io;
   constructor(server) {
     this.io = new Server(server, {
       cors: {
-        origin: "http://localhost:5173"
+        origin: process.env.LOCALHOST_URL_FRONT
       }
     });
   }

@@ -27,8 +27,7 @@ export const SubscriptionPushService = {
 
       let notificationsPending =
         await SubscriptionNotificationService.findPendingNotificationsByEndpoint(
-          endpoint,
-          { state: "pending" }
+          endpoint
         );
 
       if (notificationsPending.length > 0) {
@@ -37,7 +36,7 @@ export const SubscriptionPushService = {
         for (const notification of notificationsPending) {
           let subscriptions =
             await SubscriptionNotificationService.findSubscriptionsDistinctByIdNotification(
-              notification,
+              notification.idNotification,
               endpoint
             );
 

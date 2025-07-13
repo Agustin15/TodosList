@@ -5,7 +5,6 @@ import { useSubscription } from "../../../context/SubscriptionContext";
 import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
 
-
 export const ColumnOne = ({ values, handleChange }) => {
   const { subscribed } = useSubscription();
   const { formatDate } = useTasks();
@@ -21,7 +20,6 @@ export const ColumnOne = ({ values, handleChange }) => {
     setStateCheckbox(event.target.checked ? true : false);
   };
 
-  
   const { refDatetimeTask, errors } = useForm();
   return (
     <div className={styles.columnOne}>
@@ -29,7 +27,7 @@ export const ColumnOne = ({ values, handleChange }) => {
         <div className={styles.icon}>
           <label>Task icon:</label>
           <input
-            defaultValue={values.icon}
+            value={values.icon}
             onChange={handleChange}
             placeholder="Enter task icon"
             type="text"

@@ -11,7 +11,6 @@ import { AlertFormSwal } from "../sweetAlert/sweetAlert.js";
 import { ValidationFormError } from "../../ValidationForm.js";
 import { useWindowSize } from "../../context/WindowSizeContext.jsx";
 
-
 const AddTodoForm = ({ setOpenModalAdd }) => {
   const {
     values,
@@ -36,20 +35,30 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
     refCheckBoxThisWeek
   } = useFilterOptionTasks();
 
+  const setIcon = (value) => {
+    if (values.icon.length == 0 || value.length == 0) return value;
+    else return null;
+  };
+
   const handleChange = (event) => {
     let value, name;
     name = event.target.name;
+    value;
+
     value =
-      name == "filesUploaded"
-        ? Array.from(event.target.files)
+      name == "icon"
+        ? setIcon(event.target.value)
+        : name == "filesUploaded"
+        ? event.target.files
         : event.target.value;
 
-    setValues({
-      ...values,
-      [name]: value
-    });
-
-    validationInput(name, value);
+    if (value != null) {
+      setValues({
+        ...values,
+        [name]: value
+      });
+      validationInput(name, value);
+    }
   };
 
   const handleClose = () => {

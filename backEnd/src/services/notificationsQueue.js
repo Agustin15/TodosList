@@ -37,8 +37,6 @@ export const NotificationToQueue = {
           { idUser: idUser, payload: payload },
           { jobId: idJob, delay: delay }
         );
-
-        console.log(notificationQueueAdded);
       if (!notificationQueueAdded)
         throw new Error("Failed to add job to queue");
     } catch (error) {
@@ -76,7 +74,6 @@ export const NotificationToQueue = {
           let userSubscriptions =
             await SubscriptionPushService.getSubscriptionsByIdUser(idUser);
 
-            console.log(userSubscriptions);
           if (userSubscriptions.length == 0)
             throw new Error("Error, subscriptions not found");
 
@@ -94,13 +91,12 @@ export const NotificationToQueue = {
             );
 
             if (notificationSent.statusCode == 201) {
-
               sent = true;
             }
           }
           if (sent) {
             let notificationFound =
-              await NotificationService.findNotificationByIdTask(task);
+              await NotificationService.findNotificationByIdTask(task.idTask);
 
             if (notificationFound.length == 0) {
               throw new Error("task notification not found");
@@ -111,11 +107,20 @@ export const NotificationToQueue = {
               "sent"
             );
 
-         
-            let notifications =
+            let notificationsSent =
               await NotificationService.findNotificationsSentTasksUser(idUser);
 
-            socketConnection.socket.emit("newNotifications", notifications);
+            let notificationsNotSeen =
+              await NotificationService.findNotificationsOfUserByState(
+                "sent",
+                idUser
+              );
+            socketConnection.socket.emit("newNotifications", notificationsSent);
+            
+            socketConnection.socket.emit(
+              "newNotificationsNotSeen",
+              notificationsNotSeen
+            );
           }
         },
         {

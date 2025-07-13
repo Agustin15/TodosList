@@ -6,7 +6,6 @@ export const ScheduledJobService = {
   addJob: async (idNotification) => {
     try {
       scheduledJobModel.propIdNotification = idNotification;
-
       let resultAdded = await scheduledJobModel.post();
       if (resultAdded == 0) throw new Error("Failed to add scheduled job");
 

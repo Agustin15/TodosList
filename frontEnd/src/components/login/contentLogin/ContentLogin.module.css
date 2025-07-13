@@ -238,12 +238,8 @@
     width: 13.8rem;
   }
 
-  .containPassword img {
-    position: absolute;
-    width: 21px;
-    margin-top: 2.7rem;
-    cursor: pointer;
-    margin-left: 17rem;
+  .containPassword .showPassword {
+    margin-top: 2.8rem;
   }
 
   .form form input::placeholder {
@@ -363,11 +359,11 @@
   }
 
   .form .title img {
-    width: 83px;
+    width: 91px;
     margin-top: 4rem;
   }
   .form .title h3 {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .form {
@@ -394,9 +390,9 @@
   }
 
   .form input {
-    padding-left: 2rem;
-    width: 19rem;
-    height: 2.2rem;
+    padding-left: 2.3rem;
+    width: 23rem;
+    height: 2.4rem;
     font-size: 16px;
     border-radius: 75px;
     border: 2px solid rgb(204, 204, 204);
@@ -423,22 +419,18 @@
   .containPassword {
     position: relative;
   }
-  .containPassword img {
-    position: absolute;
-    width: 18px;
+  .containPassword .showPassword {
     margin-top: 2.3rem;
-    cursor: pointer;
-    margin-left: 19.4rem;
+    margin-left: 23rem;
   }
-
   .form form .containPassword input {
-    padding-left: 1.8rem;
+    padding-left: 2.3rem;
     padding-right: 2rem;
-    width: 17.2rem;
+    width: 21.2rem;
   }
   .form input {
-    background-position-y: 0.5rem;
-    background-position-x: 0.5rem;
+    background-position-y: 0.6rem;
+    background-position-x: 0.9rem;
     background-size: 17px;
     background-repeat: no-repeat;
   }
@@ -454,7 +446,8 @@
   .containUsername input {
     background-image: url("../../../assets/img/username.png");
     background-size: 16px;
-    background-position-y: 0.5rem;
+    background-position-y: 0.6rem;
+    background-position-x:0.9rem;
   }
 
   .containSignIn {
@@ -466,7 +459,7 @@
 
   .containSignIn button {
     width: 12rem;
-    font-size: 14px;
+    font-size: 16px;
     background-color: rgb(22, 22, 153);
     height: 2rem;
     border-radius: 75px;

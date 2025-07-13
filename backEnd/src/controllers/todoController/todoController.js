@@ -245,15 +245,12 @@ export const updateStateTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    await authRequest(req, res);
     if (!req.params.id) {
       throw new Error("idTask undefined");
     }
 
-    let deletedTask = await TaskService.deleteTask(
-      req.params.id,
-      validAuth.idUser
-    );
+    let deletedTask = await TaskService.deleteTask(Number(req.params.id));
 
     res.status(201).json(deletedTask);
   } catch (error) {

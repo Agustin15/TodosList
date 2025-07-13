@@ -2,13 +2,13 @@ import { File } from "../model/fileModel.js";
 const fileModel = new File();
 
 export const FileService = {
-  addFile: async (task, files) => {
+  addFile: async (idTask, files) => {
     let errorAdded = false;
     for (const file of files) {
       fileModel.propFile = file.buffer;
       fileModel.propNameFile = file.originalname;
       fileModel.propTypeFile = file.mimetype;
-      fileModel.propTask = task;
+      fileModel.propIdTask = idTask;
 
       let fileAdded = await fileModel.post();
 
@@ -42,8 +42,8 @@ export const FileService = {
     return { result: true };
   },
 
-  findFilesByIdTask: async (task) => {
-    fileModel.propTask = task;
+  findFilesByIdTask: async (idTask) => {
+    fileModel.propIdTask = idTask;
     let filesTask = await fileModel.getFilesByIdTask();
 
     filesTask = filesTask.map((file) => {
@@ -53,16 +53,16 @@ export const FileService = {
     return filesTask;
   },
 
-  findFilesChanged: async (task, filesUpdated) => {
+  findFilesChanged: async (idTask, filesUpdated) => {
     try {
-      const filesTask = await FileService.findFilesByIdTask(task);
+      const filesTask = await FileService.findFilesByIdTask(idTask);
       let filesForAdd = FileService.searchFilesForAdd(
-        task.idTask,
+        idTask,
         filesUpdated,
         filesTask
       );
       let filesForDelete = FileService.searchFilesForDelete(
-        task.idTask,
+        idTask,
         filesUpdated,
         filesTask
       );
@@ -102,8 +102,7 @@ export const FileService = {
 
   findQuantityFilesByIdUser: async (idUser) => {
     try {
-      fileModel.propTask = { idUser: idUser };
-      const quantityFiles = await fileModel.getQuantityFilesByUser();
+      const quantityFiles = await fileModel.getQuantityFilesByUser(idUser);
       return { quantityFiles: quantityFiles };
     } catch (error) {
       throw error;
@@ -112,8 +111,7 @@ export const FileService = {
 
   findLimitFilesByIdUser: async (idUser, offset) => {
     try {
-      fileModel.propTask = { idUser: idUser };
-      const filesFound = await fileModel.getFilesByUserLimit(offset);
+      const filesFound = await fileModel.getFilesByUserLimit(offset, idUser);
 
       let files = filesFound.map((file) => {
         file.fileTask = file.fileTask.toString("base64");
