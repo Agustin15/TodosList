@@ -439,8 +439,8 @@
 
   .form input {
     padding-left: 2.4rem;
-    width: 14rem;
-    height: 2.1rem;
+    width: 15rem;
+    height: 2.3rem;
     font-size: 14px;
     border-radius: 75px;
     border: 2px solid rgb(204, 204, 204);
@@ -449,7 +449,7 @@
 
   .form form input::placeholder {
     color: rgb(87, 87, 87);
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .form form input:hover {
@@ -473,18 +473,18 @@
   .containPassword .showPassword {
     position: absolute;
     width: 16px;
-    margin-top: 2rem;
+    margin-top: 2.2rem;
     cursor: pointer;
-    margin-left: 14.5rem;
+    margin-left: 15.6rem;
   }
 
   .form form .containPassword input {
-    padding-left: 0.5rem;
-    padding-right: 1.6rem;
-    width: 14.1rem;
+    padding-left: 1rem;
+    padding-right: 2rem;
+    width: 14rem;
   }
   .form input {
-    background-position-y: 0.5rem;
+    background-position-y: 0.6rem;
     background-position-x: 0.9rem;
     background-size: 17px;
     background-repeat: no-repeat;

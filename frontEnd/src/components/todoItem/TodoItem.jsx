@@ -76,7 +76,6 @@ const TodoItem = ({ task, index }) => {
             index % 2 == 0 ? "rgb(221, 221, 221)" : "rgb(241, 241, 241)"
         }}
         className={styles.task}
-        key={index}
       >
         <div className={styles.info}>
           <div

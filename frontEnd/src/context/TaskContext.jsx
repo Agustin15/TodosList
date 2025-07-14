@@ -6,7 +6,6 @@ import {
   useState
 } from "react";
 
-
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const TaskContext = createContext();
@@ -298,6 +297,7 @@ export const TaskProvider = ({ children }) => {
         }
       );
       const result = await response.json();
+
       if (!response.ok) {
         if (response.status == 401) {
           logout();
@@ -312,7 +312,6 @@ export const TaskProvider = ({ children }) => {
       console.log(error);
     } finally {
       setLoadingState(false);
-      return data;
     }
   };
 

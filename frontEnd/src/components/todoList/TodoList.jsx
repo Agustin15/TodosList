@@ -17,7 +17,7 @@ import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext";
 
 const TodoList = () => {
-  const { tasks, getTaskById, dispatch } = useTasks();
+  const { tasks, getTaskById, dispatch, loadingState } = useTasks();
   const {
     getTasksThisWeekByStateAndUser,
     getTasksThisWeekByStateAndUserLimit,
@@ -58,7 +58,7 @@ const TodoList = () => {
           />
         )}
 
-        {loadingFilter == false ? (
+        {!loadingFilter || !loadingState ? (
           tasks.length == 0 ? (
             <div className={styles.warningShow}>
               <img src={noTaskIcon}></img>
@@ -67,7 +67,7 @@ const TodoList = () => {
           ) : (
             <ul id="ulTasks" className={styles.tasks}>
               {tasks.map((task, index) => (
-                <TodoItem index={index} task={task}></TodoItem>
+                <TodoItem key={index} index={index} task={task}></TodoItem>
               ))}
               <div
                 className={
