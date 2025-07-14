@@ -138,9 +138,6 @@
 
 ![Files Uploaded](capturesApp/files.PNG)
 
-### Activity
-
-![Notifications](capturesApp/notifications.PNG)
 
 
 
