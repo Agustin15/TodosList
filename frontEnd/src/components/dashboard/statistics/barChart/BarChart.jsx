@@ -6,6 +6,7 @@ import { useTasks } from "../../../../context/TaskContext";
 import styles from "../Statistics.module.css";
 import { useState, useEffect } from "react";
 import { useWindowSize } from "../../../../context/WindowSizeContext";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const BarChart = () => {
   const { loadingState, tasksIncompleteByWeekday, tasksCompleteByWeekday } =
@@ -72,14 +73,26 @@ export const BarChart = () => {
         name: "Completed",
         color: "#39e76b",
         showInLegend: true,
-        dataPoints: datapointsCompleteByWeekday
+        dataPoints: datapointsCompleteByWeekday,
+        click: function (event) {
+          location.href = `${urlFront}tasks?tasksWeekDay=${JSON.stringify({
+            state: 1,
+            weekday: event.dataPoint.label
+          })}`;
+        }
       },
       {
         type: "stackedColumn",
         name: "Incomplete",
         color: "#d10909",
         showInLegend: true,
-        dataPoints: datapointsIncompleteByWeekday
+        dataPoints: datapointsIncompleteByWeekday,
+        click: function (event) {
+          location.href = `${urlFront}tasks?tasksWeekDay=${JSON.stringify({
+            state: 0,
+            weekday: event.dataPoint.label
+          })}`;
+        }
       }
     ]
   };

@@ -1,11 +1,12 @@
 import { authRequest } from "../../auth/auth.js";
 import { TaskService } from "../../services/todoService/taskService.js";
+import { ListTasksService } from "../../services/todoService/listTasksService.js";
 
 export const getYearsOfTasks = async (req, res) => {
   try {
     const validAuthRequest = await authRequest(req, res);
 
-    const yearsTasks = await TaskService.getYearsOfTasks(
+    const yearsTasks = await ListTasksService.getYearsOfTasks(
       validAuthRequest.idUser
     );
 
@@ -31,7 +32,7 @@ export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
       throw new Error("Offset undefined");
     }
 
-    let tasks = await TaskService.getTasksThisWeekByStateAndUserLimit(
+    let tasks = await ListTasksService.getTasksThisWeekByStateAndUserLimit(
       Number(params.offset),
       validAuthRequest.idUser,
       Number(params.state)
@@ -55,8 +56,32 @@ export const getTasksThisWeekByStateAndUser = async (req, res) => {
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
-    let tasks = await TaskService.getTasksThisWeekByStateAndUser(
+    let tasks = await ListTasksService.getTasksThisWeekByStateAndUser(
       validAuthRequest.idUser,
+      Number(params.state)
+    );
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
+};
+
+export const getTasksByDayAndState = async (req, res) => {
+  try {
+    const validAuthRequest = await authRequest(req, res);
+
+    if (!req.params) {
+      throw new Error("Params request null");
+    }
+    const params = JSON.parse(req.params.optionGetTasks);
+
+    let tasks = await ListTasksService.getTasksByDayAndState(
+      validAuthRequest.idUser,
+      params.day,
       Number(params.state)
     );
 
@@ -86,7 +111,7 @@ export const getTasksLimitByFilterOption = async (req, res) => {
 
     if (typeof !params.month == "undefined") throw new Error("Month undefined");
 
-    tasks = await TaskService.getTasksLimitByFilterOption(
+    tasks = await ListTasksService.getTasksLimitByFilterOption(
       validAuthRequest.idUser,
       Number(params.year),
       Number(params.month),
@@ -120,7 +145,7 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
       throw new Error("Month undefined");
     }
 
-    tasks = await TaskService.getQuantityTasksByFilterOption(
+    tasks = await ListTasksService.getQuantityTasksByFilterOption(
       validAuthRequest.idUser,
       Number(params.year),
       Number(params.month),
@@ -149,7 +174,7 @@ export const getTaskById = async (req, res) => {
       throw new Error("idTask undefined");
     }
 
-    const taskFoundById = await TaskService.getTaskById(
+    const taskFoundById = await ListTasksService.getTaskById(
       validAuthRequest.idUser,
       Number(id)
     );

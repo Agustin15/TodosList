@@ -1,12 +1,13 @@
 import { Task } from "../../model/todoModel.js";
+import { TaskService } from "./taskService.js";
 import { FileService } from "../fileService.js";
 const taskModel = new Task();
 
 export const DashboardTasksService = {
   getTasksByWeekday: async (idUser) => {
     try {
-      let firstSunday = DashboardTasksService.getFirstSunday();
-      let nextSaturday = DashboardTasksService.getNextSaturday();
+      let firstSunday = TaskService.getFirstSunday();
+      let nextSaturday = TaskService.getNextSaturday();
 
       taskModel.propIdUser = idUser;
       taskModel.propIsCompleted = 0;
@@ -62,8 +63,8 @@ export const DashboardTasksService = {
 
   getTasksThisWeekUser: async (idUser) => {
     try {
-      let firstSunday = DashboardTasksService.getFirstSunday();
-      let nextSaturday = DashboardTasksService.getNextSaturday();
+      let firstSunday = TaskService.getFirstSunday();
+      let nextSaturday = TaskService.getNextSaturday();
 
       taskModel.propIdUser = idUser;
 
@@ -101,40 +102,6 @@ export const DashboardTasksService = {
       return tasksThisWeekUser;
     } catch (error) {
       throw error;
-    }
-  },
-
-  getFirstSunday: () => {
-    let dateCurrent = new Date();
-    dateCurrent.setMinutes(
-      dateCurrent.getMinutes() - dateCurrent.getTimezoneOffset()
-    );
-
-    if (dateCurrent.getDay() == 0) {
-      return dateCurrent;
-    } else {
-      let millisecondsDays = 3600000 * 24 * dateCurrent.getDay();
-      let firstSundayMillieseconds = dateCurrent.getTime() - millisecondsDays;
-      let firstSunday = new Date(firstSundayMillieseconds);
-      return firstSunday;
-    }
-  },
-
-  getNextSaturday: () => {
-    let dateCurrent = new Date();
-    dateCurrent.setMinutes(
-      dateCurrent.getMinutes() - dateCurrent.getTimezoneOffset()
-    );
-
-    if (dateCurrent.getDay() == 6) {
-      return dateCurrent;
-    } else {
-      let differencesDays = 6 - dateCurrent.getDay();
-      let millisecondsDays = 3600000 * 24 * differencesDays;
-
-      let nextSaturdayMillieseconds = dateCurrent.getTime() + millisecondsDays;
-      let nextSaturday = new Date(nextSaturdayMillieseconds);
-      return nextSaturday;
     }
   }
 };

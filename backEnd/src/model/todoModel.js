@@ -175,6 +175,7 @@ export class Task {
       throw new Error(error);
     }
   }
+  
 
   async getTasksStateByWeekday(firstSunday, nextSaturday, weekday) {
     try {
@@ -264,4 +265,5 @@ export class Task {
       throw new Error(error);
     }
   }
+ 
 }

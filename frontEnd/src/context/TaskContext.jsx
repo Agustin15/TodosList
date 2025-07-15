@@ -5,6 +5,7 @@ import {
   useReducer,
   useState
 } from "react";
+import { useLocation } from "react-router-dom";
 
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
@@ -31,9 +32,10 @@ export const TaskProvider = ({ children }) => {
   const [tasksIncompleteByWeekday, setTasksIncompleteByWeekday] = useState([]);
   const [tasksCompleteByWeekday, setTasksCompleteByWeekday] = useState([]);
   const [loadingState, setLoadingState] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    if (location.href.indexOf("dashboard") > -1) {
+    if ((location.pathname = "/dashboard")) {
       getTasksThisWeekUser();
       getTasksByWeekday();
     }
@@ -279,7 +281,8 @@ export const TaskProvider = ({ children }) => {
   };
 
   const getTaskById = async (params) => {
-    let data = null;
+    let data;
+
     setLoadingState(true);
     const optionGetTasks = {
       option: "getTaskById",
@@ -315,6 +318,42 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+  const getTasksByWeekdayFromChart = async (state, day) => {
+    setLoadingState(true);
+
+    const optionGetTasks = {
+      option: "getTasksByWeekdayFromChart",
+      state: state,
+      day: day
+    };
+  
+    try {
+      const response = await fetch(
+        "/api/todos/" + JSON.stringify(optionGetTasks),
+        {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      const result = await response.json();
+      if (!response.ok) {
+        if (response.status == 401) {
+          logout();
+        }
+        throw result.messageError;
+      }
+      if (result) {
+        dispatch({ type: "setTasks", payload: result });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -327,6 +366,7 @@ export const TaskProvider = ({ children }) => {
         getTaskById,
         deleteTask,
         tasksThisWeek,
+        getTasksByWeekdayFromChart,
         getTasksThisWeekUser,
         tasksCompleteByWeekday,
         tasksIncompleteByWeekday,

@@ -1,164 +1,49 @@
 import connection from "../../config/database.js";
 import { Task } from "../../model/todoModel.js";
 import { FileService } from "../fileService.js";
-import { DashboardTasksService } from "./dashboardTasksService.js";
 import { NotificationService } from "../notificationService.js";
 import { SubscriptionPushService } from "../subscriptionPushService.js";
 import { NotificationToQueue } from "../notificationsQueue.js";
 import { ScheduledJobService } from "../scheduledJobService.js";
 
 const taskModel = new Task();
+
 export const TaskService = {
-  getYearsOfTasks: async (idUser) => {
-    try {
-      taskModel.propIdUser = idUser;
+  
+  getFirstSunday: () => {
+    let dateCurrent = new Date();
+    dateCurrent.setMinutes(
+      dateCurrent.getMinutes() - dateCurrent.getTimezoneOffset()
+    );
 
-      const yearsTasks = await taskModel.getYearsTask();
-      return yearsTasks;
-    } catch (error) {
-      throw error;
+    if (dateCurrent.getDay() == 0) {
+      return dateCurrent;
+    } else {
+      let millisecondsDays = 3600000 * 24 * dateCurrent.getDay();
+      let firstSundayMillieseconds = dateCurrent.getTime() - millisecondsDays;
+      let firstSunday = new Date(firstSundayMillieseconds);
+      return firstSunday;
     }
   },
 
-  getTasksThisWeekByStateAndUserLimit: async (offset, idUser, state) => {
-    try {
-      let firstSunday = DashboardTasksService.getFirstSunday();
-      let nextSaturday = DashboardTasksService.getNextSaturday();
+  getNextSaturday: () => {
+    let dateCurrent = new Date();
+    dateCurrent.setMinutes(
+      dateCurrent.getMinutes() - dateCurrent.getTimezoneOffset()
+    );
 
-      taskModel.propIdUser = idUser;
-      taskModel.propIsCompleted = state;
+    if (dateCurrent.getDay() == 6) {
+      return dateCurrent;
+    } else {
+      let differencesDays = 6 - dateCurrent.getDay();
+      let millisecondsDays = 3600000 * 24 * differencesDays;
 
-      let tasksThisWeekUser =
-        await taskModel.getTasksThisWeekByStateAndUserLimit(
-          firstSunday,
-          nextSaturday,
-          offset
-        );
-
-      tasksThisWeekUser = await Promise.all(
-        tasksThisWeekUser.map(async (task) => {
-          let filesTask = await FileService.findFilesByIdTask(task.idTask);
-          let notificationFound =
-            await NotificationService.findNotificationByIdTask(task.idTask);
-          notificationFound.length > 0
-            ? (task.datetimeNotification = notificationFound[0].datetimeSend)
-            : (task.datetimeNotification = "");
-
-          task.filesUploaded = filesTask;
-
-          return task;
-        })
-      );
-
-      return tasksThisWeekUser;
-    } catch (error) {
-      throw error;
+      let nextSaturdayMillieseconds = dateCurrent.getTime() + millisecondsDays;
+      let nextSaturday = new Date(nextSaturdayMillieseconds);
+      return nextSaturday;
     }
   },
-
-  getTasksThisWeekByStateAndUser: async (idUser, state) => {
-    try {
-      let firstSunday = DashboardTasksService.getFirstSunday();
-      let nextSaturday = DashboardTasksService.getNextSaturday();
-
-      taskModel.propIdUser = idUser;
-      taskModel.propIsCompleted = state;
-
-      let tasksThisWeekUser = await taskModel.getTasksThisWeekByStateAndUser(
-        firstSunday,
-        nextSaturday
-      );
-
-      tasksThisWeekUser = await Promise.all(
-        tasksThisWeekUser.map(async (task) => {
-          let dateTask = new Date(task.datetimeTask);
-
-          let datetimeString = new Intl.DateTimeFormat("en-UY", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric"
-          }).format(dateTask);
-
-          let filesTask = await FileService.findFilesByIdTask(task.idTask);
-
-          return {
-            id: task.idTask,
-            icon: task.icon,
-            description: task.descriptionTask,
-            idUser: task.idUser,
-            date: datetimeString,
-            isCompleted: task.isCompleted,
-            files: filesTask
-          };
-        })
-      );
-
-      return tasksThisWeekUser;
-    } catch (error) {
-      throw error;
-    }
-  },
-  getTasksLimitByFilterOption: async (idUser, year, month, state, offset) => {
-    let tasks;
-    try {
-      taskModel.propIdUser = idUser;
-      taskModel.propIsCompleted = state;
-
-      tasks = await taskModel.getTasksLimitByFilterOption(year, month, offset);
-
-      for (const task of tasks) {
-        let filesTask = await FileService.findFilesByIdTask(task.idTask);
-        let notificationFound =
-          await NotificationService.findNotificationByIdTask(task.idTask);
-        task.filesUploaded = filesTask;
-        notificationFound.length > 0
-          ? (task.datetimeNotification = notificationFound[0].datetimeSend)
-          : (task.datetimeNotification = "");
-      }
-
-      return tasks;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  getQuantityTasksByFilterOption: async (idUser, year, month, state) => {
-    let tasks;
-    try {
-      taskModel.propIdUser = idUser;
-      taskModel.propIsCompleted = state;
-
-      tasks = await taskModel.getQuantityTasksByFilterOption(year, month);
-
-      return tasks;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  getTaskById: async (idUser, idTask) => {
-    try {
-      taskModel.propIdTask = idTask;
-      taskModel.propIdUser = idUser;
-
-      const taskFoundById = await taskModel.getTaskById();
-
-      if (!taskFoundById || taskFoundById.length == 0) {
-        throw new Error("Task not found");
-      }
-
-      let filesTask = await FileService.findFilesByIdTask(idTask);
-      taskFoundById[0].filesUploaded = filesTask;
-
-      return taskFoundById;
-    } catch (error) {
-      throw error;
-    }
-  },
-
+ 
   findTasksByIdTask: async (idTask, idUser) => {
     try {
       taskModel.propIdTask = idTask;
@@ -287,7 +172,6 @@ export const TaskService = {
             notification[0].idNotification
           );
         } else {
-          console.log(task.datetimeNotification);
           await NotificationService.updateNotification(
             notification[0].idNotification,
             task.datetimeNotification

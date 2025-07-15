@@ -10,27 +10,36 @@ import { Pagination } from "../pagination/Pagination";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
 import { useTasks } from "../../context/TaskContext";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
 import { FilterOption } from "../filterOption/FilterOption";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext";
 
 const TodoList = () => {
-  const { tasks, getTaskById, dispatch, loadingState } = useTasks();
+  const {
+    tasks,
+    getTaskById,
+    getTasksByWeekdayFromChart,
+    dispatch,
+    loadingState
+  } = useTasks();
   const {
     getTasksThisWeekByStateAndUser,
     getTasksThisWeekByStateAndUserLimit,
     loadingFilter
   } = useFilterOptionTasks();
 
+  const [searchParams] = useSearchParams();
+  const { idTask } = useParams();
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
-
-  const { idTask } = useParams();
+  const [optionSearch] = useState(JSON.parse(searchParams.get("tasksWeekDay")));
 
   useEffect(() => {
-    if (idTask) {
+    if (optionSearch)
+      getTasksByWeekdayFromChart(optionSearch.state, optionSearch.weekday);
+    else if (idTask) {
       getTaskById({ id: idTask });
     } else {
       getTasksThisWeekByStateAndUser();
@@ -40,13 +49,18 @@ const TodoList = () => {
 
   return (
     <div className={styles.contentBody}>
-      <Title title={"Tasks"} icon={iconAllTasks}></Title>
+      <Title
+        title={optionSearch ? `Tasks ${optionSearch.weekday}` : "Tasks"}
+        icon={iconAllTasks}
+      ></Title>
 
       <div className={styles.containTasks}>
         <div className={styles.header}>
           <div className={styles.rowHeader}>
             <div className={styles.title}>
-              <h3>List tasks</h3>
+              <h3>
+                {optionSearch ? `Tasks ${optionSearch.weekday}` : "Tasks"}
+              </h3>
               <img src={iconAllTasks}></img>
             </div>
           </div>

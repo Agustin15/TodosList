@@ -9,13 +9,14 @@ import {
   getTasksThisWeekByStateAndUser,
   getTasksThisWeekByStateAndUserLimit,
   getYearsOfTasks,
+  getTasksByDayAndState,
   getTaskById
 } from "../controllers/todoController/todoController.js";
 
 import { getTasksForCalendarByUser } from "../controllers/todoController/calendarTasks.js";
 import {
   getTasksByWeekday,
-  getTasksThisWeekUser,
+  getTasksThisWeekUser
 } from "../controllers/todoController/dashboardTasks.js";
 
 import multer from "multer";
@@ -51,6 +52,9 @@ tasksRouter.get("/:optionGetTasks", (req, res) => {
 
     case "getTaskById":
       return getTaskById(req, res);
+
+    case "getTasksByWeekdayFromChart":
+      return getTasksByDayAndState(req, res);
 
     case "getTasksForCalendarByUser":
       return getTasksForCalendarByUser(req, res);
