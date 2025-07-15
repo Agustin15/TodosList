@@ -9,43 +9,18 @@ import { Title } from "../title/Title";
 import { Pagination } from "../pagination/Pagination";
 import AddTodoForm from "../addTodoForm/AddTodoForm";
 import { useTasks } from "../../context/TaskContext";
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import { CalendarEventsProvider } from "../../context/CalendarEventsContext";
 import { FilterOption } from "../filterOption/FilterOption";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
 import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext";
 
 const TodoList = () => {
-  const {
-    tasks,
-    getTaskById,
-    getTasksByWeekdayFromChart,
-    dispatch,
-    loadingState
-  } = useTasks();
-  const {
-    getTasksThisWeekByStateAndUser,
-    getTasksThisWeekByStateAndUserLimit,
-    loadingFilter
-  } = useFilterOptionTasks();
+  const { tasks, loadingState } = useTasks();
+  const { loadingFilter, optionSearch, idTask } = useFilterOptionTasks();
 
-  const [searchParams] = useSearchParams();
-  const { idTask } = useParams();
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
-  const [optionSearch] = useState(JSON.parse(searchParams.get("tasksWeekDay")));
-
-  useEffect(() => {
-    if (optionSearch)
-      getTasksByWeekdayFromChart(optionSearch.state, optionSearch.weekday);
-    else if (idTask) {
-      getTaskById({ id: idTask });
-    } else {
-      getTasksThisWeekByStateAndUser();
-      getTasksThisWeekByStateAndUserLimit(1, dispatch);
-    }
-  }, []);
 
   return (
     <div className={styles.contentBody}>
@@ -65,7 +40,7 @@ const TodoList = () => {
             </div>
           </div>
         </div>
-        {!idTask && (
+        {!idTask && !optionSearch && (
           <FilterOption
             setOpenModalAdd={setOpenModalAdd}
             setTaskNotFound={setTaskNotFound}
@@ -79,7 +54,12 @@ const TodoList = () => {
               <h3>Not Tasks </h3>
             </div>
           ) : (
-            <ul id="ulTasks" className={styles.tasks}>
+            <ul
+              id="ulTasks"
+              className={
+                idTask || optionSearch ? styles.tasksSearched : styles.tasks
+              }
+            >
               {tasks.map((task, index) => (
                 <TodoItem key={index} index={index} task={task}></TodoItem>
               ))}

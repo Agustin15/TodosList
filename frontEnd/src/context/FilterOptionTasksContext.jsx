@@ -2,6 +2,8 @@ import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { createContext } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useTasks } from "./TaskContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const FilterOptionTasksContext = createContext();
@@ -12,20 +14,36 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const refSelectState = useRef();
   const refCheckBoxThisWeek = useRef();
   const refInputNumberIndex = useRef();
+
   const [openFilter, setOpenFilter] = useState(false);
   const [indexSelected, setIndexSelected] = useState(1);
   const [quantityTasks, setQuantityTask] = useState();
-  const [loadingFilter, setLoadingFilter] = useState(true);
+  const [loadingFilter, setLoadingFilter] = useState(false);
 
-  const logout = () => {
-    location.href = `${urlFront}login`;
-  };
+  const { idTask } = useParams();
+  const [searchParams] = useSearchParams();
+  const { dispatch, getTasksByWeekdayFromChart, getTaskById } = useTasks();
+  const [optionSearch] = useState(JSON.parse(searchParams.get("tasksWeekDay")));
 
   useEffect(() => {
     if (refInputNumberIndex.current) {
       refInputNumberIndex.current.value = indexSelected;
     }
   }, [indexSelected]);
+
+  useEffect(() => {
+    if (optionSearch)
+      getTasksByWeekdayFromChart(optionSearch.state, optionSearch.weekday);
+    else if (idTask) {
+      getTaskById({ id: idTask });
+    } else {
+      queryTasksDependingOptions();
+    }
+  }, []);
+
+  const logout = () => {
+    location.href = `${urlFront}login`;
+  };
 
   const getTasksThisWeekByStateAndUser = async () => {
     const optionGetTasks = {
@@ -60,7 +78,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
     }
   };
 
-  const getTasksThisWeekByStateAndUserLimit = async (offset, dispatch) => {
+  const getTasksThisWeekByStateAndUserLimit = async (offset) => {
     const optionGetTasks = {
       option: "getTasksThisWeekByStateAndUserLimit",
       offset: (offset - 1) * 10,
@@ -93,7 +111,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
       setLoadingFilter(false);
     }
   };
-  const getTasksFilter = async (optionFilter, offset, dispatch) => {
+  const getTasksFilter = async (optionFilter, offset) => {
     setLoadingFilter(true);
 
     const optionGetTasks = {
@@ -196,6 +214,22 @@ export const FilterOptionTasksProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const queryTasksDependingOptions = async (indexParam) => {
+    if (refCheckBoxThisWeek.current.checked) {
+      await getTasksThisWeekByStateAndUser();
+      getTasksThisWeekByStateAndUserLimit(
+        indexParam ? indexParam : indexSelected
+      );
+    } else {
+      await getQuantityTasksFilter("getQuantityTasksByFilterOption");
+      getTasksFilter(
+        "getTasksLimitByFilterOption",
+        indexParam ? indexParam : indexSelected
+      );
+    }
+  };
+
   return (
     <FilterOptionTasksContext.Provider
       value={{
@@ -206,16 +240,15 @@ export const FilterOptionTasksProvider = ({ children }) => {
         setIndexSelected,
         refCheckBoxThisWeek,
         refInputNumberIndex,
-        getTasksFilter,
-        getQuantityTasksFilter,
-        getTasksThisWeekByStateAndUser,
-        getTasksThisWeekByStateAndUserLimit,
         getYearsOfTasks,
+        queryTasksDependingOptions,
         loadingFilter,
         quantityTasks,
         setQuantityTask,
         openFilter,
-        setOpenFilter
+        setOpenFilter,
+        optionSearch,
+        idTask
       }}
     >
       {children}

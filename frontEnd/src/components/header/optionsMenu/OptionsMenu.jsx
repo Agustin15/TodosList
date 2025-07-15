@@ -7,16 +7,16 @@ import notificationIcon from "../../../assets/img/notificationMenu.png";
 import { CountNotificationsProvider } from "../../../context/CountNotificationsContext";
 import { CountNotifications } from "../../countNotifications/CountNotifications";
 import { useSubscription } from "../../../context/SubscriptionContext";
-import { useLocation } from "react-router-dom";
 
 export const OptionsMenu = () => {
-  let location = useLocation();
   const { subscribed } = useSubscription();
   return (
     <ul className={classesStyle.menu}>
       <li
         className={
-          location.pathname == "/dashboard" ? classesStyle.optionCurrent : ""
+          location.href.indexOf("/dashboard") > -1
+            ? classesStyle.optionCurrent
+            : ""
         }
       >
         <a href="/dashboard">
@@ -26,7 +26,7 @@ export const OptionsMenu = () => {
       </li>
       <li
         className={
-          location.pathname == "/tasks" ? classesStyle.optionCurrent : ""
+          location.href.indexOf("/tasks") > -1 ? classesStyle.optionCurrent : ""
         }
       >
         <a href="/tasks">
@@ -36,7 +36,9 @@ export const OptionsMenu = () => {
       </li>
       <li
         className={
-          location.pathname == "/calendar" ? classesStyle.optionCurrent : ""
+          location.href.indexOf("/calendar") > -1
+            ? classesStyle.optionCurrent
+            : ""
         }
       >
         <a href="/calendar">
@@ -47,7 +49,7 @@ export const OptionsMenu = () => {
 
       <li
         className={
-          location.pathname == "/files" ? classesStyle.optionCurrent : ""
+          location.href.indexOf("/files") > -1 ? classesStyle.optionCurrent : ""
         }
       >
         <a href="/files">
@@ -61,7 +63,9 @@ export const OptionsMenu = () => {
 
       <li
         className={
-          location.pathname == "/activity" ? classesStyle.optionCurrent : ""
+          location.href.indexOf("/activity") > -1
+            ? classesStyle.optionCurrent
+            : ""
         }
       >
         <a href="/activity">

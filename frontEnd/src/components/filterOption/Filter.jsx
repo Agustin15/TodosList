@@ -4,7 +4,6 @@ import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 
 export const Filter = ({ setRefs, years }) => {
-  const { dispatch } = useTasks();
   const [checkedThisWeek, setCheckedThisWeek] = useState(true);
   const {
     refSelectMonth,
@@ -12,10 +11,7 @@ export const Filter = ({ setRefs, years }) => {
     refSelectYear,
     refCheckBoxThisWeek,
     setIndexSelected,
-    getTasksFilter,
-    getQuantityTasksFilter,
-    getTasksThisWeekByStateAndUser,
-    getTasksThisWeekByStateAndUserLimit
+    queryTasksDependingOptions
   } = useFilterOptionTasks();
 
   const months = [
@@ -33,13 +29,7 @@ export const Filter = ({ setRefs, years }) => {
     "December"
   ];
   const handleSearch = async () => {
-    if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekByStateAndUser();
-      getTasksThisWeekByStateAndUserLimit(1, dispatch);
-    } else {
-      getTasksFilter("getTasksLimitByFilterOption", 1, dispatch);
-      getQuantityTasksFilter("getQuantityTasksByFilterOption");
-    }
+    await queryTasksDependingOptions(1);
     setRefs(
       refCheckBoxThisWeek.current.checked
         ? [refCheckBoxThisWeek, refSelectState]

@@ -326,7 +326,7 @@ export const TaskProvider = ({ children }) => {
       state: state,
       day: day
     };
-  
+
     try {
       const response = await fetch(
         "/api/todos/" + JSON.stringify(optionGetTasks),

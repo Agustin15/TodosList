@@ -22,18 +22,10 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
     cleanValues
   } = useForm();
   const { setEventAdded, dateSelected } = useCalendarEvents();
-  const { addTask, dispatch } = useTasks();
+  const { addTask } = useTasks();
   const { windowWidth } = useWindowSize();
   const [stateCheckbox, setStateCheckbox] = useState();
-
-  const {
-    getQuantityTasksFilter,
-    getTasksFilter,
-    indexSelected,
-    getTasksThisWeekByStateAndUser,
-    getTasksThisWeekByStateAndUserLimit,
-    refCheckBoxThisWeek
-  } = useFilterOptionTasks();
+  const { queryTasksDependingOptions } = useFilterOptionTasks();
 
   const setIcon = (value) => {
     if (values.icon.length == 0 || value.length == 0) return value;
@@ -109,13 +101,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
   };
 
   const eventAdded = () => {
-    if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekByStateAndUser();
-      getTasksThisWeekByStateAndUserLimit(indexSelected, dispatch);
-    } else {
-      getQuantityTasksFilter("getQuantityTasksByFilterOption");
-      getTasksFilter("getTasksLimitByFilterOption", indexSelected, dispatch);
-    }
+    queryTasksDependingOptions();
   };
 
   return (

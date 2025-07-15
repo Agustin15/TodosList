@@ -11,13 +11,11 @@ export const MenuOption = ({ task, setOpenModalInfo, setOpenModalUpdate }) => {
   const { deleteTask, dispatch, tasks } = useTasks();
   const { windowWidth } = useWindowSize();
   const {
-    getQuantityTasksFilter,
-    getTasksFilter,
     indexSelected,
     setIndexSelected,
-    getTasksThisWeekByStateAndUser,
-    getTasksThisWeekByStateAndUserLimit,
-    refCheckBoxThisWeek
+    queryTasksDependingOptions,
+    optionSearch,
+    idTask
   } = useFilterOptionTasks();
 
   const handleDeleteTask = async () => {
@@ -38,15 +36,16 @@ export const MenuOption = ({ task, setOpenModalInfo, setOpenModalUpdate }) => {
       }
     }
   };
-  const eventDeleted = () => {
-    if (refCheckBoxThisWeek.current.checked) {
-      getTasksThisWeekByStateAndUser();
-      getTasksThisWeekByStateAndUserLimit(indexSelected, dispatch);
-    } else {
-      getQuantityTasksFilter("getQuantityTasksByFilterOption");
-      getTasksFilter("getTasksLimitByFilterOption", indexSelected, dispatch);
-    }
 
+  const eventDeleted = async () => {
+    if (optionSearch || idTask) {
+      dispatch({
+        type: "setTasks",
+        payload: tasks.filter((taskItem) => taskItem.idTask != task.idTask)
+      });
+    } else {
+      await queryTasksDependingOptions();
+    }
     if (tasks.length == 1 && indexSelected > 1) {
       setIndexSelected(indexSelected - 1);
     }
@@ -72,7 +71,6 @@ export const MenuOption = ({ task, setOpenModalInfo, setOpenModalUpdate }) => {
           }}
         >
           <img src={iconEdit}></img>
- 
         </button>
         <button
           className={styles.btnDetails}
@@ -81,7 +79,6 @@ export const MenuOption = ({ task, setOpenModalInfo, setOpenModalUpdate }) => {
           }}
         >
           <img src={iconInfo}></img>
-  
         </button>
       </div>
     </div>
