@@ -31,6 +31,8 @@ app.use("/logout", logoutRoutes);
 NotificationToQueue.workerNotificationQueue();
 export const socketConnection = new ConnectionSocket(server);
 
+
+
 socketConnection.io.on("connection", (socket) => {
   socketConnection.propSocket = socket;
 });

@@ -6,6 +6,7 @@ import { ScheduledJobService } from "./scheduledJobService.js";
 import { socketConnection } from "../app.js";
 import { redisConnection } from "../config/ConnectionRedis.js";
 
+
 export const NotificationToQueue = {
   deleteNotificationFromQueue: async (idJob) => {
     try {
@@ -37,6 +38,7 @@ export const NotificationToQueue = {
           { idUser: idUser, payload: payload },
           { jobId: idJob, delay: delay }
         );
+
       if (!notificationQueueAdded)
         throw new Error("Failed to add job to queue");
     } catch (error) {
@@ -116,7 +118,7 @@ export const NotificationToQueue = {
                 idUser
               );
             socketConnection.socket.emit("newNotifications", notificationsSent);
-            
+
             socketConnection.socket.emit(
               "newNotificationsNotSeen",
               notificationsNotSeen

@@ -73,7 +73,7 @@ const TodoItem = ({ task, index }) => {
       <li
         style={{
           background:
-            index % 2 == 0 ? "rgb(221, 221, 221)" : "rgb(241, 241, 241)"
+            index % 2 == 0 ? "rgb(221, 221, 221)" : "rgba(255, 255, 255, 1)"
         }}
         className={styles.task}
       >

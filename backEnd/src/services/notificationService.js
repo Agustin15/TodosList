@@ -94,7 +94,7 @@ export const NotificationService = {
   updateNotification: async (idNotification, newDatetime) => {
     try {
       notificationModel.propIdNotification = idNotification;
-      notificationModel.propDatetimeSend = newDatetime;
+      notificationModel.propDatetimeSend = new Date(newDatetime);
 
       let notificationUpdated =
         await notificationModel.patchDatetimeNotification();

@@ -49,7 +49,7 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
       name == "icon"
         ? setIcon(event.target.value)
         : name == "filesUploaded"
-        ? event.target.files
+        ? Array.from(event.target.files)
         : event.target.value;
 
     if (value != null) {

@@ -287,6 +287,7 @@ export const TaskService = {
             notification[0].idNotification
           );
         } else {
+          console.log(task.datetimeNotification);
           await NotificationService.updateNotification(
             notification[0].idNotification,
             task.datetimeNotification
