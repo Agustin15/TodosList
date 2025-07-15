@@ -5,7 +5,6 @@ import iconListNotifications from "../../assets/img/listNotificationsLogo.png";
 import gifLoaderNotifications from "../../assets/img/loader.gif";
 import { Title } from "../title/Title";
 import Header from "../header/Header";
-import { MenuProvider } from "../../context/MenuContext";
 import { UserDataProvider } from "../../context/userDataContext";
 import { GlassEffect } from "../glassEffect/GlassEffect";
 import { ItemsNotifications } from "./itemsNotifications/itemsNotifications";

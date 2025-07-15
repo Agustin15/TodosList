@@ -37,7 +37,6 @@
 - [fullcalendar/multimonth](https://fullcalendar.io/docs/react)
 - [styled-components](https://github.com/styled-components/styled-components)
 - [sweetalert2](https://sweetalert2.github.io/)
-  
 
 **_Configuracion del proxy, archivo vite.config:_**
 
@@ -49,13 +48,14 @@
         rewrite: (path) => path.replace(/^\/api/, "")
       }
     }
-  }
+
+}
 
 **_Configuracion del archivo .env_**
 
     VITE_LOCALHOST_FRONT=http://localhost:PORT/
     VITE_APPLICATION_SERVER=<MyVapidPublicKeyGenerate https://vapidkeys.com/>
-    
+
 > ## Instalacion backend ⚙
 
 **_Dirigirse a a la carpeta backEnd:_**
@@ -78,6 +78,7 @@
 - [mysql2](https://sidorares.github.io/node-mysql2/docs)
 - [webpush](https://github-com.translate.goog/web-push-libs/web-push?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc#readme)
 - [bullmq](https://docs.bullmq.io/)
+- [socket.io](https://github.com/socketio/socket.io)
 
 **_Configuracion del archivo .env_**
 
@@ -94,20 +95,21 @@
     VAPID_PRIVATE_KEY=<My Vapid Private Key Generate in https://vapidkeys.com/>
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTIFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
+    LOCALHOST_URL_FRONT=<My localhost frontend>
 
 > ### Instalar servidor Redis usando docker
-   
+
 **_Buscar imagen redis_**
- 
+
     docker search redis
-   
+
 **_Descargar la primera imagen_**
-    
+
     docker pull redis
 
 **_Iniciar contenedor con imagen_**
 
-    docker run --name myRedis -d -p <port>:<port> redis:latest redis-server --requirepass <password>  
+    docker run --name myRedis -d -p <port>:<port> redis:latest redis-server --requirepass <password>
 
 > ## Iniciar ▶
 
@@ -119,18 +121,23 @@
 
     npm run start
 
-
 ### Login
+
 ![Login](capturesApp/login.PNG)
 
 ### Dashboard
+
 ![Dashboard](capturesApp/dashboard.PNG)
 
-### List tasks filtered
+### List tasks pending
 
-![List tasks filtered](capturesApp/list%20tasks.PNG)
+![List tasks pending](capturesApp/list%20tasks.PNG)
 
-### Calendar 
+### List tasks completed
+
+![List tasks completed](capturesApp/list%20tasks%20completed.PNG)
+
+### Calendar
 
 ![Calendar](capturesApp/calendar.PNG)
 
@@ -138,7 +145,6 @@
 
 ![Files Uploaded](capturesApp/files.PNG)
 
+### Notifications
 
-
-
-
+![Files Uploaded](capturesApp/notifications.PNG)
