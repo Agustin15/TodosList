@@ -155,13 +155,13 @@ export const ListTasksService = {
   getTasksByDayAndState: async (idUser, day, stateTasks) => {
     try {
       const days = [
-        "sunday",
         "monday",
         "tuesday",
         "wednesday",
         "thursday",
         "friday",
-        "saturday"
+        "saturday",
+        "sunday"
       ];
       let firstSunday = TaskService.getFirstSunday();
       let nextSaturday = TaskService.getNextSaturday();
