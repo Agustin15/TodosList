@@ -123,28 +123,28 @@
 
 ### Login
 
-![Login](capturesApp/login.PNG)
+![Login](capturesApp/loginCapture.PNG)
 
 ### Dashboard
 
-![Dashboard](capturesApp/dashboard.PNG)
+![Dashboard](capturesApp/dashboardCapture.PNG)
 
 ### List tasks pending
 
-![List tasks pending](capturesApp/list%20tasks.PNG)
+![List tasks pending](capturesApp/listTasksCapture.PNG)
 
 ### List tasks completed
 
-![List tasks completed](capturesApp/list%20tasks%20completed.PNG)
+![List tasks completed](capturesApp/listTasksCompletedCapture.PNG)
 
 ### Calendar
 
-![Calendar](capturesApp/calendar.PNG)
+![Calendar](capturesApp/calendarCapture.PNG)
 
 ### Files
 
-![Files Uploaded](capturesApp/files.PNG)
+![Files Uploaded](capturesApp/filesCapture.PNG)
 
 ### Notifications
 
-![Files Uploaded](capturesApp/notifications.PNG)
+![Files Uploaded](capturesApp/notificationsCapture.PNG)

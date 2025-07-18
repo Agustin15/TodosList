@@ -2,12 +2,31 @@ import styles from "./Home.module.css";
 import dashboardCapture from "../../assets/img/dashboardCapture.jpg";
 import listTasksCapture from "../../assets/img/listTasksCapture.jpg";
 import iconLogo from "../../assets/img/logo.png";
+import iconHelp from "../../assets/img/help.png";
 import homePageIcon from "../../assets/img/homePageIcon.png";
 import listTaskCompletedCapture from "../../assets/img/listTaskCompletedCapture.jpg";
 import calendarCapture from "../../assets/img/calendarCapture.jpg";
+import { useEffect, useRef, useState } from "react";
+import { FormHelp } from "./formHelp/FormHelp";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const Home = () => {
+  const ulRef = useRef();
+  const [arrayIndexs] = useState([0, 1, 2, 3]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    sliderPagination();
+  }, [currentIndex]);
+
+  const sliderPagination = () => {
+    setTimeout(() => {
+      if (currentIndex == arrayIndexs.length - 1) {
+        setTimeout(() => setCurrentIndex(0), 500);
+      } else setCurrentIndex(currentIndex + 1);
+    }, 4900);
+  };
+
   return (
     <div className={styles.containHome}>
       <header>
@@ -21,7 +40,7 @@ export const Home = () => {
       <div className={styles.rowOne}>
         <div className={styles.containSlider}>
           <div className={styles.contentSlider}>
-            <ul className={styles.slider}>
+            <ul ref={ulRef} className={styles.slider}>
               <li>
                 <img src={dashboardCapture}></img>
               </li>
@@ -37,10 +56,14 @@ export const Home = () => {
             </ul>
           </div>
           <ul className={styles.pagination}>
-            <li className={styles.indexCurrent}></li>
-            <li className={styles.index}></li>
-            <li className={styles.index}></li>
-            <li className={styles.index}></li>
+            {arrayIndexs.map((index) => (
+              <li
+                key={index}
+                className={
+                  index == currentIndex ? styles.indexCurrent : styles.index
+                }
+              ></li>
+            ))}
           </ul>
         </div>
 
@@ -50,7 +73,7 @@ export const Home = () => {
               <h3>Welcome to Todolist!</h3>
               <p>
                 you will can be manage his tasks like never before!, you has the
-                possibility of see the statistics of his week for has a better
+                possibility of see the statistics of your week for has a better
                 visualization of tasks completed and incomplete.
               </p>
               <p>
@@ -66,6 +89,14 @@ export const Home = () => {
             <img src={homePageIcon}></img>
           </div>
         </div>
+      </div>
+
+      <div className={styles.containHelp}>
+        <FormHelp />
+        <button>
+          Help
+          <img src={iconHelp}></img>
+        </button>
       </div>
     </div>
   );

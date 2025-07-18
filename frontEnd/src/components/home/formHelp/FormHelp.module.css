@@ -1,0 +1,134 @@
+.containFormHelp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    height: 27rem;
+    width: 22rem;
+    position: absolute;
+    margin-right: 1rem;
+    margin-top: -28%;
+}
+
+.containFormHelp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    height: 27rem;
+    width: 22rem;
+    position: absolute;
+    margin-right: 1rem;
+    margin-top: -28%;
+    animation-name: showForm;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+
+.containFormHelp .header {
+    width: 100%;
+    background: linear-gradient(rgb(63, 63, 63), rgb(53, 53, 53));
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    position: relative;
+    height: 2.7rem;
+    box-shadow: 2px 2px 2px gray;
+}
+
+.containFormHelp .header .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.containFormHelp .header .title img {
+    width: 16px;
+    height: 16px;
+}
+
+.containFormHelp .header .close {
+    width: 105%;
+    position: absolute;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+
+.containFormHelp .header button {
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+    width: 3.3rem;
+    height: 1.2rem;
+    border-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background: linear-gradient(rgb(207, 69, 69), rgb(196, 19, 19));
+    box-shadow:
+        inset 1px -1px 0 rgba(255, 255, 255, 0.4),
+        inset -1px 0 0 rgba(255, 255, 255, 0.4),
+        inset 0 1px 0 #fff,
+        -1px 1px 0 rgba(118, 29, 16, 0.8),
+        1px 0 0 rgba(118, 29, 16, 0.9);
+}
+
+.containFormHelp .header button:hover {
+    background: linear-gradient(rgb(184, 54, 54), rgb(196, 19, 19));
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.columnInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 96%;
+    gap: 0.5rem;
+}
+
+.columnInput input {
+    width: 76%;
+    border-radius: 5px;
+    height: 2.2rem;
+    outline: none;
+    font-size: 14px;
+}
+.columnInput input:hover,
+.columnInput textarea:hover {
+    border: 2px solid rgb(120, 174, 255);
+}
+
+.columnInput label {
+    width: 79%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.columnInput textarea {
+    font-size: 14px;
+    width: 75%;
+    height: 5.5rem;
+    outline: none;
+    resize: none;
+    border-radius: 4px;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+}
