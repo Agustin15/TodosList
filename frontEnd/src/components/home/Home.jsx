@@ -8,12 +8,14 @@ import listTaskCompletedCapture from "../../assets/img/listTaskCompletedCapture.
 import calendarCapture from "../../assets/img/calendarCapture.jpg";
 import { useEffect, useRef, useState } from "react";
 import { FormHelp } from "./formHelp/FormHelp";
+import { FormHelpProvider } from "../../context/FormHelpContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const Home = () => {
   const ulRef = useRef();
   const [arrayIndexs] = useState([0, 1, 2, 3]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [openFormHelp, setOpenFormHelp] = useState(false);
 
   useEffect(() => {
     sliderPagination();
@@ -22,7 +24,7 @@ export const Home = () => {
   const sliderPagination = () => {
     setTimeout(() => {
       if (currentIndex == arrayIndexs.length - 1) {
-        setTimeout(() => setCurrentIndex(0), 500);
+        setTimeout(() => setCurrentIndex(0), 300);
       } else setCurrentIndex(currentIndex + 1);
     }, 4900);
   };
@@ -92,8 +94,13 @@ export const Home = () => {
       </div>
 
       <div className={styles.containHelp}>
-        <FormHelp />
-        <button>
+        <FormHelpProvider>
+          <FormHelp
+            openFormHelp={openFormHelp}
+            setOpenFormHelp={setOpenFormHelp}
+          />
+        </FormHelpProvider>
+        <button onClick={() => setOpenFormHelp(true)}>
           Help
           <img src={iconHelp}></img>
         </button>

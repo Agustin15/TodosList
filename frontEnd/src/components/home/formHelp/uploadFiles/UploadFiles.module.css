@@ -1,0 +1,131 @@
+.containUploadFiles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 96%;
+    gap: 0.5rem;
+    position: relative;
+}
+.containUploadFiles .labelFiles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+}
+
+.optionAttachment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 87%;
+    height: 2.7rem;
+    border: 1px solid rgb(172, 171, 171);
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.optionAttachment input {
+    display: none;
+}
+.optionAttachment:hover {
+    border: 2px solid rgb(26, 176, 187);
+}
+
+.optionAttachment img {
+    width: 27px;
+    height: 27px;
+}
+.containUploadFiles ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 0.4rem;
+    width: 91%;
+    height: auto;
+    padding-bottom: 1rem;
+}
+
+.containUploadFiles ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 3rem;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 14px;
+    width: 86%;
+    border-radius: 15px;
+    border: 1px solid rgb(180, 180, 180);
+}
+.containUploadFiles ul li .containClose {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 93%;
+    top: -0.7rem;
+    position: absolute;
+}
+
+.containUploadFiles ul li .containClose button {
+    background: none;
+    box-shadow: none;
+    color: gray;
+    font-size: 16px;
+    margin-right: 0;
+    width: auto;
+    margin-top: 0;
+    font-weight: normal;
+}
+
+.containUploadFiles ul li .rowFile {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 99%;
+    gap: 0.4rem;
+}
+
+.containUploadFiles ul li img {
+    width: 21px;
+    height: 21px;
+    margin-left: 1rem;
+}
+
+.containUploadFiles ul li span {
+    width: 21px;
+    height: 21px;
+    margin-top: 0.3rem;
+    width: 76%;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.containUploadFiles ul .error {
+    border: 1px solid rgb(255, 71, 71);
+    height: 4rem;
+}
+
+.containUploadFiles ul .correct img {
+    width: 27px;
+    height: 27px;
+}
+
+.containUploadFiles ul li .detailsErrorFile {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.3rem;
+    font-size: 13px;
+    width: 99%;
+    color: red;
+}
+
+.containUploadFiles ul li .detailsErrorFile img {
+    width: 17px;
+    height: 17px;
+}

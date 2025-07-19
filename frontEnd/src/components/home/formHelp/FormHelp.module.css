@@ -4,29 +4,29 @@
     align-items: center;
     background-color: white;
     border-radius: 4px;
-    height: 27rem;
+    height: 36rem;
     width: 22rem;
     position: absolute;
     margin-right: 1rem;
-    margin-top: -28%;
-}
-
-.containFormHelp {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    border-radius: 4px;
-    height: 27rem;
-    width: 22rem;
-    position: absolute;
-    margin-right: 1rem;
-    margin-top: -28%;
+    margin-top: -39%;
     animation-name: showForm;
-    animation-duration: 1s;
+    animation-duration: 0.4s;
     animation-fill-mode: forwards;
 }
 
+@keyframes showForm {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.containFormHelpHidden {
+    display: none;
+}
 
 .containFormHelp .header {
     width: 100%;
@@ -41,7 +41,6 @@
     justify-content: start;
     position: relative;
     height: 2.7rem;
-    box-shadow: 2px 2px 2px gray;
 }
 
 .containFormHelp .header .title {
@@ -93,6 +92,8 @@ form {
     flex-direction: column;
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
+    gap: 2rem;
+    overflow-y: scroll;
 }
 .columnInput {
     display: flex;
@@ -101,14 +102,16 @@ form {
     justify-content: start;
     width: 96%;
     gap: 0.5rem;
+    position: relative;
 }
 
 .columnInput input {
-    width: 76%;
+    width: 71%;
     border-radius: 5px;
     height: 2.2rem;
     outline: none;
     font-size: 14px;
+    padding-right: 1.7rem;
 }
 .columnInput input:hover,
 .columnInput textarea:hover {
@@ -116,19 +119,46 @@ form {
 }
 
 .columnInput label {
-    width: 79%;
+    width: 81%;
     display: flex;
     align-items: center;
     justify-content: start;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .columnInput textarea {
     font-size: 14px;
-    width: 75%;
+    width: 71%;
     height: 5.5rem;
     outline: none;
     resize: none;
     border-radius: 4px;
     padding-left: 1rem;
+    padding-right: 1.7rem;
     padding-top: 0.5rem;
+}
+
+.columnInput img {
+    position: absolute;
+    margin-top: 0%;
+    width: 22px;
+    height: 22px;
+    margin-left: 15.7rem;
+    margin-top: 2rem;
+}
+.inputError,
+.inputErrorQuery {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 13px;
+    position: absolute;
+    width: 81%;
+    margin-top: 4.2rem;
+    color: red;
+}
+
+.inputErrorQuery {
+    margin-top: 8rem;
 }
