@@ -107,7 +107,8 @@
 }
 .containUploadFiles ul .error {
     border: 1px solid rgb(255, 71, 71);
-    height: 4rem;
+    height: auto;
+    padding-bottom: 0.5rem;
 }
 
 .containUploadFiles ul .correct img {
@@ -117,7 +118,8 @@
 
 .containUploadFiles ul li .detailsErrorFile {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
     justify-content: start;
     gap: 0.3rem;
     font-size: 13px;
@@ -128,4 +130,11 @@
 .containUploadFiles ul li .detailsErrorFile img {
     width: 17px;
     height: 17px;
+}
+
+.containUploadFiles ul li .typeError {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.3rem;
 }

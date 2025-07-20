@@ -1,5 +1,5 @@
 import { UserService } from "../services/userService.js";
-import { authRequest, authRequestResetPassword } from "../auth/auth.js";
+import { authRequest } from "../auth/auth.js";
 
 export const createUser = async (req, res) => {
   try {
@@ -72,31 +72,6 @@ export const updatePasswordUserById = async (req, res) => {
     );
 
     res.status(200).json(userUpdated);
-  } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
-  }
-};
-
-export const updatePasswordByEmail = async (req, res) => {
-  try {
-    const decodeToken = await authRequestResetPassword(req, res);
-
-    if (Object.values(req.body).length == 0) {
-      throw new Error("Body request null");
-    }
-
-    if (!req.body.newPassword) throw new Error("New password undefined");
-    const newPassword = req.body.newPassword;
-
-    const passwordUpdated = await UserService.updatePasswordByEmail(
-      decodeToken.mail,
-      newPassword
-    );
-
-    res.status(200).json(passwordUpdated);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401

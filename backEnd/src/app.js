@@ -12,6 +12,7 @@ import { subscriptionRoutes } from "./routes/subscriptionPushRoutes.js";
 import { notificationRoutes } from "./routes/notificationRoutes.js";
 import { NotificationToQueue } from "./services/notificationsQueue.js";
 import { ConnectionSocket } from "./config/connectionSocket.js";
+import { helpQueryClientRoutes } from "./routes/helpQueryClientRoutes.js";
 
 const app = express();
 export const server = createServer(app);
@@ -26,6 +27,7 @@ app.use("/resetPassword", resetPasswordRoutes);
 app.use("/userData", userDataRoutes);
 app.use("/subscription", subscriptionRoutes);
 app.use("/notification", notificationRoutes);
+app.use("/helpQuery", helpQueryClientRoutes);
 app.use("/logout", logoutRoutes);
 
 NotificationToQueue.workerNotificationQueue();

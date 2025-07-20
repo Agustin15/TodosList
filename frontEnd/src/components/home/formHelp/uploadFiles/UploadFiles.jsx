@@ -22,7 +22,7 @@ export const UploadFiles = () => {
             onChange={(event) => handleChange(event, true)}
             id="inputFiles"
             type="file"
-            accept="image/png, image/jpeg, image/jpg"
+            // accept="image/png, image/jpeg, image/jpg"
           ></input>
         </div>
       </label>
@@ -64,15 +64,25 @@ export const UploadFiles = () => {
                 index > 2 ||
                 mimeAccept.indexOf(file.type.toLowerCase()) == -1) && (
                 <div className={styles.detailsErrorFile}>
-                  <img src={iconWarningInput}></img>
                   {file.size > 1000 * 10000 && (
-                    <p>File size exceeded the max</p>
+                    <div className={styles.typeError}>
+                      <img src={iconWarningInput}></img>
+                      <p>File size exceeded the max</p>
+                    </div>
                   )}
 
-                  {index > 2 && <p>Limit files quantity exceeded</p>}
+                  {index > 2 && (
+                    <div className={styles.typeError}>
+                      <img src={iconWarningInput}></img>
+                      <p>Limit of files allow exceeded </p>
+                    </div>
+                  )}
 
                   {mimeAccept.indexOf(file.type.toLowerCase()) == -1 && (
-                    <p>Type file not allow</p>
+                    <div className={styles.typeError}>
+                      <img src={iconWarningInput}></img>
+                      <p>Type file not allow</p>
+                    </div>
                   )}
                 </div>
               )}

@@ -23,7 +23,7 @@ export class User {
   set propName(value) {
     if (!value || value.length == 0 || !this.verifyValidString(value))
       throw new Error("Enter a valid name");
-    this.#name = value;
+    this.#name = this.toUpperCase(value);
   }
   get propLastname() {
     return this.#lastname;
@@ -32,7 +32,8 @@ export class User {
   set propLastname(value) {
     if (!value || value.length == 0 || !this.verifyValidString(value))
       throw new Error("Enter a valid lastname");
-    this.#lastname = value;
+
+    this.#lastname = this.toUpperCase(value);
   }
   get propEmailAddress() {
     return this.#emailAddress;
@@ -52,7 +53,12 @@ export class User {
   }
 
   set propPassword(value) {
-    if (!value || value.length == 0) throw new Error("Enter a valid password");
+    let regexPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/;
+
+    if (!regexPassword.test(value))
+      throw new Error(
+        "Weak password (min 8 chars and must has mayus and minus letters and some number)"
+      );
     this.#password = value;
   }
 
@@ -63,8 +69,16 @@ export class User {
         return false;
       }
     }
-
     return valid;
+  }
+  toUpperCase(value) {
+    let newValue = [...value].map((letter, index) => {
+      if (index == 0) {
+        return letter.toUpperCase();
+      }
+      return letter;
+    });
+    return newValue.join("");
   }
 
   async post() {
