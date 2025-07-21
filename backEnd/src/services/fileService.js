@@ -122,5 +122,15 @@ export const FileService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  verifyAmountSizeOfFiles: (files) => {
+    const amountSize = files.reduce((ac, file) => {
+      return (ac += file.size);
+    }, 0);
+
+    if (amountSize > 1000 * 10000) return true;
+
+    return false;
   }
 };

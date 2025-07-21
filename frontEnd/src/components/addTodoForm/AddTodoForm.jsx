@@ -12,46 +12,13 @@ import { ValidationFormError } from "../../ValidationForm.js";
 import { useWindowSize } from "../../context/WindowSizeContext.jsx";
 
 const AddTodoForm = ({ setOpenModalAdd }) => {
-  const {
-    values,
-    setValues,
-    filesSizeExceeded,
-    validationInput,
-    validationForm,
-    cleanForm,
-    cleanValues
-  } = useForm();
+  const { values, filesSizeExceeded, validationForm, cleanForm, cleanValues } =
+    useForm();
   const { setEventAdded, dateSelected } = useCalendarEvents();
   const { addTask } = useTasks();
   const { windowWidth } = useWindowSize();
   const [stateCheckbox, setStateCheckbox] = useState();
   const { queryTasksDependingOptions } = useFilterOptionTasks();
-
-  const setIcon = (value) => {
-    if (values.icon.length == 0 || value.length == 0) return value;
-    else return null;
-  };
-
-  const handleChange = (event) => {
-    let value, name;
-    name = event.target.name;
-    value;
-
-    value =
-      name == "icon"
-        ? setIcon(event.target.value)
-        : name == "filesUploaded"
-        ? Array.from(event.target.files)
-        : event.target.value;
-
-    if (value != null) {
-      setValues({
-        ...values,
-        [name]: value
-      });
-      validationInput(name, value);
-    }
-  };
 
   const handleClose = () => {
     if (setEventAdded) setEventAdded(false);
@@ -118,7 +85,6 @@ const AddTodoForm = ({ setOpenModalAdd }) => {
       </div>
       <form onSubmit={handleSubmit}>
         <ContentForm
-          handleChange={handleChange}
           stateCheckbox={stateCheckbox}
           setStateCheckbox={setStateCheckbox}
         />

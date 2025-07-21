@@ -5,11 +5,11 @@ import { useSubscription } from "../../../context/SubscriptionContext";
 import { useRef } from "react";
 import { useTasks } from "../../../context/TaskContext";
 
-export const ColumnOne = ({values,handleChange,setStateCheckbox,stateCheckbox}) => {
-  const { errors, refDatetimeTask } = useForm();
+export const ColumnOne = ({ setStateCheckbox, stateCheckbox }) => {
+  const { errors, refDatetimeTask, handleChange, values } = useForm();
   const refCheckBoxNotification = useRef();
   const { subscribed } = useSubscription();
-  const {formatDate } = useTasks();
+  const { formatDate } = useTasks();
   const valueCheckboxNotification = () => {
     setStateCheckbox(refCheckBoxNotification.current.checked ? true : false);
   };

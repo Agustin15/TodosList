@@ -5,11 +5,12 @@ import { useSubscription } from "../../../context/SubscriptionContext";
 import { useTasks } from "../../../context/TaskContext";
 import { useEffect } from "react";
 
-export const ColumnOne = ({ values, handleChange }) => {
+export const ColumnOne = () => {
   const { subscribed } = useSubscription();
   const { formatDate } = useTasks();
-  const { stateCheckbox, setStateCheckbox } = useForm();
-
+  const { stateCheckbox, setStateCheckbox, handleChange, values } = useForm();
+  const { refDatetimeTask, errors } = useForm();
+  
   useEffect(() => {
     if (values.datetimeNotification && values.datetimeNotification.length > 0) {
       setStateCheckbox(true);
@@ -20,7 +21,6 @@ export const ColumnOne = ({ values, handleChange }) => {
     setStateCheckbox(event.target.checked ? true : false);
   };
 
-  const { refDatetimeTask, errors } = useForm();
   return (
     <div className={styles.columnOne}>
       <div className={styles.rowForm}>

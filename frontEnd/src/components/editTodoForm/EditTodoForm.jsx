@@ -3,60 +3,31 @@ import ContentFormEdit from "./contentFormEdit/ContentFormEdit";
 import editIcon from "../../assets/img/editing.png";
 import { useForm } from "../../context/formTaskContext/FormTaskContext";
 import { useTasks } from "../../context/TaskContext";
-import { useState } from "react";
 import { GlassEffect } from "../glassEffect/GlassEffect.jsx";
 import { useEffect } from "react";
 import { AlertFormSwal } from "../sweetAlert/sweetAlert.js";
 import { ValidationFormError } from "../../ValidationForm.js";
 
 const EditTodoForm = ({ task, setOpenModalUpdate }) => {
-  const [values, setValues] = useState({ ...task });
   const {
-    validationInput,
     validationForm,
     stateCheckbox,
     verifiyChangedValues,
     setUpdateEnabled,
+    createFiles,
     cleanForm,
     filesSizeExceeded,
-    filesUploadedUpdateForm,
-    setFilesUploadedUpdateForm
+    values,
+    setValues
   } = useForm();
-
   const { updateTask } = useTasks();
 
-  const setIcon = (value) => {
-    if (values.icon.length == 0 || value.length == 0) return value;
-    else return null;
-  };
-
-  const handleChange = (event) => {
-    let name, value;
-    name = event.target.name;
-
-    value =
-      name == "icon"
-        ? setIcon(event.target.value)
-        : name == "filesUploaded"
-        ? setFilesUploadedUpdateForm(
-            [filesUploadedUpdateForm, ...event.target.files].flat()
-          )
-        : event.target.value;
-
-    if (value != null) {
-      setValues({
-        ...values,
-        [name]: value
-      });
-
-      validationInput(
-        name,
-        name != "filesUploaded"
-          ? value
-          : [filesUploadedUpdateForm, ...event.target.files].flat()
-      );
-    }
-  };
+  useEffect(() => {
+    setValues({
+      ...task,
+      ["filesUploaded"]: createFiles(task.filesUploaded)
+    });
+  }, []);
 
   useEffect(() => {
     if (values) {
@@ -86,7 +57,7 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
       if (filesSizeExceeded || !validation) {
         throw new ValidationFormError("Complete correctly the fields please");
       } else {
-        let taskUpdated = await updateTask(valuesForm, filesUploadedUpdateForm);
+        let taskUpdated = await updateTask(valuesForm);
         if (taskUpdated) {
           title = "Succesfully!";
           msj = "Task updated succesfully!";
@@ -106,7 +77,6 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
 
   const handleClose = () => {
     cleanForm();
-    setFilesUploadedUpdateForm([]);
     setOpenModalUpdate(false);
   };
 
@@ -124,7 +94,7 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <ContentFormEdit values={values} handleChange={handleChange} />
+        <ContentFormEdit />
       </form>
     </div>
   );

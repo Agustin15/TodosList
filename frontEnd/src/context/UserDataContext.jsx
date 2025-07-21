@@ -65,7 +65,7 @@ export const UserDataProvider = ({ children }) => {
       const result = await response.json();
 
       if (!response.ok) {
-        if (response.status == 401) location.href = urlFront + "/login";
+        if (response.status == 401) location.href = urlFront + "login";
         else throw result.messageError;
       }
       if (result) {
@@ -96,7 +96,7 @@ export const UserDataProvider = ({ children }) => {
       const result = await response.json();
 
       if (!response.ok) {
-        if (response.status == 401) location.href = urlFront + "/login";
+        if (response.status == 401) location.href = urlFront + "login";
         else throw result.messageError;
       }
       if (result) {

@@ -25,14 +25,9 @@ export const FormTaskProvider = ({ children }) => {
 
   const [updateEnabled, setUpdateEnabled] = useState(false);
   const [filesSizeExceeded, setFilesSizeExceeded] = useState(false);
-  const [filesUploadedUpdateForm, setFilesUploadedUpdateForm] = useState([]);
   const [stateCheckbox, setStateCheckbox] = useState();
 
   const { formatDate } = useTasks();
-
-  useEffect(() => {
-    validationInput("filesUploaded", filesUploadedUpdateForm);
-  }, [filesUploadedUpdateForm]);
 
   const validationInput = (nameInput, value) => {
     let validationInput = validationsCases(
@@ -62,22 +57,31 @@ export const FormTaskProvider = ({ children }) => {
     let changedValue = false;
 
     for (const key of Object.keys(values)) {
-      let valueTask = task[key],
-        value = values[key];
+      if (key != "filesUploaded") {
+        let valueTask = task[key],
+          value = values[key];
 
-      if (key == "datetimeTask" || key == "datetimeNotification") {
-        valueTask = formatDate(task[key]);
-        value = formatDate(values[key]);
-      }
+        if (key == "datetimeTask" || key == "datetimeNotification") {
+          valueTask = formatDate(task[key]);
+          value = formatDate(values[key]);
+        }
 
-      if (valueTask != value) {
-        changedValue = true;
+        if (valueTask != value) {
+          changedValue = true;
+          break;
+        }
+      } else {
+        if (
+          task.filesUploaded.length != values.filesUploaded.length ||
+          values.filesUploaded.find((file) => !file.fromDatabase)
+        )
+          changedValue = true;
         break;
       }
     }
-
     return changedValue;
   };
+
   const cleanValues = () => {
     setValues({
       icon: "",
@@ -100,18 +104,79 @@ export const FormTaskProvider = ({ children }) => {
   };
 
   const cleanForm = () => {
-    setFilesSizeExceeded(false);
-    setFilesUploadedUpdateForm([]);
     cleanErrors();
     cleanValues();
   };
 
-  const deleteFileOption = (lastModified, nameFile) => {
-    setFilesUploadedUpdateForm(
-      filesUploadedUpdateForm.filter(
-        (file) => file.lastModified != lastModified && file.name != nameFile
-      )
-    );
+  const createFiles = (filesFromDatabase) => {
+    let filesUploaded = filesFromDatabase.map((file) => {
+      if (file.fileTask) {
+        return createFile(file);
+      } else {
+        return file;
+      }
+    });
+
+    return Array.from(filesUploaded);
+  };
+
+  function base64ToBlob(base64, contentType) {
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteArrays.push(byteCharacters.charCodeAt(i));
+    }
+
+    const byteArray = new Uint8Array(byteArrays);
+    return new Blob([byteArray], { type: contentType });
+  }
+
+  const createFile = (file) => {
+    let blob = base64ToBlob(file.fileTask, file.typeFile);
+    const newFile = new File([blob], file.nameFile, {
+      type: file.typeFile
+    });
+
+    newFile.fromDatabase = true;
+    return newFile;
+  };
+
+  const setIcon = (value) => {
+    if (values.icon.length == 0 || value.length == 0) return value;
+    else return null;
+  };
+
+  const deleteFileOption = (indexFile) => {
+    handleChange({
+      target: {
+        name: "filesUploaded",
+        files: values.filesUploaded.filter((file, index) => index != indexFile)
+      }
+    });
+  };
+
+  const handleChange = (event, newFilesToAdd) => {
+    let name, value, files;
+    name = event.target.name;
+    files = event.target.files;
+
+    if (name == "icon") {
+      value = setIcon(event.target.value);
+    } else if (name == "filesUploaded") {
+      if (newFilesToAdd) {
+        value = [...values[name], Array.from(files)].flat();
+      } else value = files;
+    } else value = event.target.value;
+
+    if (value != null) {
+      setValues({
+        ...values,
+        [name]: value
+      });
+
+      validationInput(name, value);
+    }
   };
 
   return (
@@ -120,9 +185,12 @@ export const FormTaskProvider = ({ children }) => {
         values,
         setValues,
         setStateCheckbox,
+        handleChange,
+        deleteFileOption,
         stateCheckbox,
         updateEnabled,
         setUpdateEnabled,
+        createFiles,
         verifiyChangedValues,
         errors,
         setErrors,
@@ -132,10 +200,7 @@ export const FormTaskProvider = ({ children }) => {
         validationForm,
         cleanValues,
         cleanForm,
-        refDatetimeTask,
-        filesUploadedUpdateForm,
-        setFilesUploadedUpdateForm,
-        deleteFileOption
+        refDatetimeTask
       }}
     >
       {children}

@@ -88,7 +88,9 @@ export const Home = () => {
               </a>
             </div>
 
-            <img src={homePageIcon}></img>
+            <div className={styles.containImage}>
+              <img src={homePageIcon}></img>
+            </div>
           </div>
         </div>
       </div>

@@ -9,11 +9,11 @@ export const validationsCases = (
 
   switch (nameInput) {
     case "datetimeTask":
-      msj = "Date is not higher than date now";
+      msj = "The Date is not higher than date now";
       validInput = value.length > 0 && new Date(value).getTime() > Date.now();
       break;
     case "datetimeNotification":
-      msj = "Date should be less than datetime task and current datetime ";
+      msj = "The Date must be less than datetime task and higher than current datetime ";
       validInput =
         value.length > 0 &&
         new Date(value).getTime() <= new Date(valueDatetimeTask).getTime() &&

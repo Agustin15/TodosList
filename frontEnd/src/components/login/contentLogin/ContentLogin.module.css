@@ -26,6 +26,7 @@
 
 .form form {
   margin-top: 1rem;
+  width: 95%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -447,7 +448,7 @@
     background-image: url("../../../assets/img/username.png");
     background-size: 16px;
     background-position-y: 0.6rem;
-    background-position-x:0.9rem;
+    background-position-x: 0.9rem;
   }
 
   .containSignIn {

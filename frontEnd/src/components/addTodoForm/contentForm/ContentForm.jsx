@@ -8,8 +8,8 @@ import { useCalendarEvents } from "../../../context/CalendarEventsContext";
 import { ColumnOne } from "./ColumnOne";
 import { SubscriptionProvider } from "../../../context/SubscriptionContext";
 
-const ContentForm = ({ handleChange, stateCheckbox, setStateCheckbox }) => {
-  const { values, setValues, cleanForm } = useForm();
+const ContentForm = ({ stateCheckbox, setStateCheckbox }) => {
+  const { setValues, cleanForm, values } = useForm();
   const { loadingState } = useTasks();
   const { dateSelected } = useCalendarEvents();
 
@@ -24,14 +24,12 @@ const ContentForm = ({ handleChange, stateCheckbox, setStateCheckbox }) => {
       <div className={classesStyle.bodyForm}>
         <SubscriptionProvider>
           <ColumnOne
-            values={values}
-            handleChange={handleChange}
             stateCheckbox={stateCheckbox}
             setStateCheckbox={setStateCheckbox}
           />
         </SubscriptionProvider>
         <div className={classesStyle.columnTwo}>
-          <UploadFiles handleChange={handleChange} />
+          <UploadFiles />
         </div>
       </div>
       <div className={classesStyle.buttons}>

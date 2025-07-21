@@ -95,12 +95,10 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: start;
   gap: 0.5rem;
-  padding: 0.5rem;
-  padding-left: 0%;
-  padding-top: 2rem;
+  padding-top: 2.3rem;
   width: 31rem;
   position: relative;
-  height: 16rem;
+  height: 17rem;
   border-radius: 6px;
   border: 1px solid gray;
   font-size: 13px;
@@ -155,10 +153,11 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 99%;
-  gap: 0.4rem;
-  margin-top: 1.5rem;
+  width: 100%;
+  gap: 0.7rem;
+  margin-top: 2rem;
   height: 9rem;
+  padding-bottom: 1rem;
   overflow-y: scroll;
 }
 .containFile .notFilesUploaded {
@@ -172,24 +171,55 @@ input[type="checkbox"] {
 }
 
 .containFile li {
-  border-top: 1px solid rgb(221, 221, 221);
-  box-shadow: 1px 1px 1px gray;
-  background: linear-gradient(rgb(245, 245, 245), rgb(189, 189, 189));
-  color: black;
-  width: 98%;
+  border: 1px solid rgb(190, 190, 190);
+  border-radius: 22px;
+  box-shadow: 2px 2px 2px gray;
+  background: linear-gradient(rgb(24, 112, 139), rgb(27, 110, 158));
+  background-size: cover;
+  color: rgb(255, 255, 255);
+  width: 99%;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
   height: 2rem;
-  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.containFile li .rowFile {
   display: flex;
   align-items: center;
   justify-content: start;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  width: 99%;
 }
-
-.containFile ul li img {
+.containFile li .rowFile span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 81%;
+}
+.containFile .rowFile img {
+  cursor: auto;
+  margin-left: 1rem;
   width: 25px;
   height: 25px;
-  margin-left: 1rem;
-  margin-top: 0;
+}
+
+.containFile .containDelete {
+  width: 99%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  position: absolute;
+}
+
+.containFile .containDelete img {
+  width: 25px;
+  height: 25px;
+  opacity: 100%;
+  margin-right: 0.4rem;
+  cursor: pointer;
 }
 
 .bodyForm textarea {
@@ -282,7 +312,7 @@ input[type="checkbox"] {
     width: 99%;
   }
   .containFile {
-    width: 88%;
+    width: 19rem;
     height: 13rem;
     margin-top: 1rem;
     font-size: 14px;
@@ -296,6 +326,20 @@ input[type="checkbox"] {
   }
   .containFile ul {
     height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  .containFile li {
+    width: 98%;
+  }
+
+  .containFile ul li .rowFile {
+    width: 81%;
+  }
+
+  .containFile .containDelete img {
+    width: 21px;
+    height: 21px;
   }
 
   .containFile .notFilesUploaded img {
@@ -370,11 +414,21 @@ input[type="checkbox"] {
 
   .containFile ul {
     height: 100%;
+    width: 100%;
+    margin-top: 2rem;
   }
 
-  .containFile ul img {
-    width: 25px;
-    height: 25px;
+  .containFile ul li {
+    width: 97%;
+  }
+
+  .containFile ul li .rowFile {
+    width: 81%;
+  }
+
+  .containFile .containDelete img {
+    width: 21px;
+    height: 21px;
   }
 
   .bodyForm textarea {

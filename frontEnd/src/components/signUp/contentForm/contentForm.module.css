@@ -28,6 +28,7 @@
 
 .form form {
   margin-top: 1rem;
+  width: 95%;
   display: flex;
   align-items: center;
   flex-direction: column;

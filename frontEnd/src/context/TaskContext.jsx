@@ -174,12 +174,12 @@ export const TaskProvider = ({ children }) => {
     return dateString;
   };
 
-  const updateTask = async (task, filesUploadedUpdateForm) => {
+  const updateTask = async (task) => {
     let data;
     const formData = new FormData();
     formData.append("icon", task.icon);
     formData.append("descriptionTask", task.descriptionTask);
-    filesUploadedUpdateForm.forEach((file, index) => {
+    task.filesUploaded.forEach((file, index) => {
       formData.append("filesUpload" + index, file);
     });
 

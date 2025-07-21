@@ -9,7 +9,6 @@ import { ScheduledJobService } from "../scheduledJobService.js";
 const taskModel = new Task();
 
 export const TaskService = {
-  
   getFirstSunday: () => {
     let dateCurrent = new Date();
     dateCurrent.setMinutes(
@@ -43,7 +42,7 @@ export const TaskService = {
       return nextSaturday;
     }
   },
- 
+
   findTasksByIdTask: async (idTask, idUser) => {
     try {
       taskModel.propIdTask = idTask;
@@ -95,6 +94,9 @@ export const TaskService = {
       );
 
       if (files.length > 0) {
+        if (FileService.verifyAmountSizeOfFiles(files))
+          throw new Error("Limit amount size of 10MB of files exceeded");
+
         let fileAdded = await FileService.addFile(taskAddedFound.idTask, files);
 
         if (!fileAdded.result) {
@@ -152,6 +154,11 @@ export const TaskService = {
       );
 
       taskUpdatedFound = taskUpdatedFound[0];
+
+      if (files.length > 0) {
+        if (FileService.verifyAmountSizeOfFiles(files))
+          throw new Error("Limit amount size of 10MB of files exceeded");
+      }
 
       let filesChanged = await FileService.findFilesChanged(idTask, files);
       if (filesChanged.filesForAdd.length > 0) {

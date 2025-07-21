@@ -49,6 +49,7 @@
     align-items: center;
     width: 99%;
     height: 86%;
+    margin-top: 2rem;
 }
 
 .containSlider {
@@ -56,6 +57,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 53%;
+    height: 93%;
     gap: 0.1rem;
 }
 
@@ -64,10 +67,12 @@
     flex-direction: column;
     align-items: start;
     justify-content: center;
-    width: 41rem;
+    width: 95%;
+    height: 99%;
     border-radius: 15px;
-    background: rgba(255, 255, 255, 0.2);
+    background: none;
     border-radius: 16px;
+    background: rgba(192, 192, 192, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -82,7 +87,8 @@
     justify-content: start;
     list-style: none;
     gap: 1.5rem;
-    width: 180rem;
+    height: 99%;
+    width: 410%;
     animation-name: carrousel;
     animation-duration: 20s;
     animation-iteration-count: infinite;
@@ -96,27 +102,28 @@
 
     25%,
     48% {
-        margin-left: -42.5rem;
+        margin-left: -103.3%;
     }
 
     50%,
     73% {
-        margin-left: -85rem;
+        margin-left: -206.7%;
     }
     75%,
     99% {
-        margin-left: -127.5rem;
+        margin-left: -310%;
     }
 }
 .contentSlider .slider li {
-    width: 41rem;
-    height: 22rem;
+    width: 99%;
+    height: 99%;
     border-radius: 15px;
 }
 
 .contentSlider .slider li img {
     width: 100%;
     height: 100%;
+    border-radius: 1rem;
 }
 
 .containSlider .pagination {
@@ -150,6 +157,7 @@
     color: white;
     align-items: center;
     width: 45%;
+    margin-top: 3rem;
 }
 
 .welcome .description {
@@ -157,17 +165,19 @@
     flex-direction: column;
     align-items: start;
     gap: 1rem;
+    width: 99%;
     font-size: 25px;
 }
 .welcome p {
     font-size: 17px;
-    width: 21rem;
+    width: 100%;
 }
 
 .welcome .rowWelcome {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
+    width: 100%;
     align-items: center;
 }
 
@@ -224,4 +234,176 @@
 
 .containHelp button:hover {
     background-color: rgb(235, 235, 235);
+}
+
+@media only screen and (max-width: 699px) {
+    .containHome {
+        background: url("../../assets/img/backgroundHome.jpg");
+    }
+    .containHome header {
+        padding-top: 0.4rem;
+    }
+    .containHome header img {
+        width: 45px;
+    }
+
+    .containHome header a {
+        margin-right: 1rem;
+        font-size: 18px;
+    }
+
+    .rowOne {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        margin-top: 1.5rem;
+    }
+
+    .containSlider {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.1rem;
+    }
+
+    .contentSlider {
+        width: 91%;
+        border-radius: 15px;
+        border-radius: 16px;
+        background: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        padding: 0.8rem;
+        overflow-x: hidden;
+        margin-left: 0;
+    }
+
+    .contentSlider .slider {
+        width: 425%;
+    }
+
+    @keyframes carrousel {
+        0%,
+        23% {
+            margin-left: 0;
+        }
+
+        25%,
+        48% {
+            margin-left: -108%;
+        }
+
+        50%,
+        73% {
+            margin-left: -216%;
+        }
+        75%,
+        99% {
+            margin-left: -325%;
+        }
+    }
+    .contentSlider .slider li {
+        width: 85%;
+        height: 99%;
+    }
+
+    .contentSlider .slider li img {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .containSlider .pagination {
+        margin-top: 0.2rem;
+    }
+
+    .containSlider .pagination li {
+        height: 0.6rem;
+        width: 0.6rem;
+    }
+
+    .welcome {
+        height: 24rem;
+        color: white;
+        align-items: start;
+        width: 99%;
+        margin-top: 1.5rem;
+        position: relative;
+    }
+
+    .welcome .description {
+        gap: 1rem;
+        font-size: 21px;
+        margin-left: 1rem;
+    }
+    .welcome p {
+        font-size: 17px;
+        width: 95%;
+    }
+
+    .welcome .rowWelcome {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .welcome .containImage {
+        width: 99%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: end;
+        height: 83%;
+    }
+    .welcome .rowWelcome img {
+        width: 45%;
+        height: 45%;
+        margin-left: 7rem;
+    }
+
+    .welcome button {
+        font-size: 17px;
+        margin-top: 6rem;
+    }
+
+    .containHelp {
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding-bottom: 1rem;
+    }
+
+    .containHelp button {
+        margin-right: 1rem;
+        cursor: pointer;
+        width: 7rem;
+        height: 2.8rem;
+        border: none;
+        font-weight: bold;
+        font-size: 17px;
+        color: rgb(14, 110, 173);
+        background-color: white;
+        border-radius: 45px;
+        gap: 0.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .containHelp button img {
+        cursor: pointer;
+        width: 22px;
+        height: 22px;
+    }
+
+    .containHelp button:hover {
+        background-color: rgb(235, 235, 235);
+    }
 }
