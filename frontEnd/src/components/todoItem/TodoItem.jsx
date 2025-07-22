@@ -85,7 +85,7 @@ const TodoItem = ({ task, index }) => {
             onClick={() => changeState(task)}
           >
             <span>{task.icon}</span>
-            <GlassEffect />
+         
           </div>
           <div className={styles.descriptionAndDate}>
             <span>{formatToStringDate(task.datetimeTask)}</span>

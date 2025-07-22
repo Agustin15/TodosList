@@ -4,6 +4,7 @@ import listTasksCapture from "../../assets/img/listTasksCapture.jpg";
 import iconLogo from "../../assets/img/logo.png";
 import iconHelp from "../../assets/img/help.png";
 import homePageIcon from "../../assets/img/homePageIcon.png";
+import iconUserAvatar from "../../assets/img/userAvatar.png";
 import listTaskCompletedCapture from "../../assets/img/listTaskCompletedCapture.jpg";
 import calendarCapture from "../../assets/img/calendarCapture.jpg";
 import { useEffect, useRef, useState } from "react";
@@ -36,7 +37,10 @@ export const Home = () => {
           <h3>Todolist</h3>
           <img src={iconLogo}></img>
         </div>
-        <a href={urlFront + "login"}>Login</a>
+        <a href={urlFront + "login"}>
+          <img src={iconUserAvatar}></img>
+          Login
+        </a>
       </header>
 
       <div className={styles.rowOne}>
@@ -83,9 +87,11 @@ export const Home = () => {
                 when you be subscribe!
               </p>
 
-              <a href={urlFront + "signUp"}>
-                <button>Sign up</button>
-              </a>
+              <div className={styles.containBtn}>
+                <a href={urlFront + "signUp"}>
+                  <button>Sign up</button>
+                </a>
+              </div>
             </div>
 
             <div className={styles.containImage}>

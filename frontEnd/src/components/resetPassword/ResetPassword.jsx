@@ -5,6 +5,7 @@ import iconWarning from "../../assets/img/warningInput.png";
 import gifLoading from "../../assets/img/gifLoading.gif";
 import Alert from "../resetPassword/alert/Alert";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
+import {GlassEffect} from "../glassEffect/GlassEffect";
 
 const ResetPassword = () => {
   const [mail, setMail] = useState("");
@@ -94,7 +95,10 @@ const ResetPassword = () => {
             )}
           </div>
 
-          <button>Send</button>
+          <button>
+            <GlassEffect></GlassEffect>
+            Send
+          </button>
           {loading && (
             <div className={styles.loading}>
               <span>loading</span>

@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   margin-left: 7%;
-  height: 99vh;
+  height: 100vh;
   width: 96%;
   background: rgb(241, 241, 241);
 }
@@ -22,7 +22,7 @@
   gap: 0rem;
   margin: auto;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   border-radius: 9px;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -132,6 +132,7 @@
   .header .title {
     display: none;
   }
+
   .rowTodoList {
     display: flex;
     flex-direction: row;
@@ -146,12 +147,13 @@
     justify-content: start;
     margin-top: 0;
     margin-left: 0;
+    height: 100vh;
     width: 100%;
   }
 
   .containTasks {
     width: 99%;
-    height: 92vh;
+    height: auto;
     margin-top: 4rem;
     border: none;
     justify-content: start;
@@ -164,8 +166,9 @@
 
   .tasks,
   .tasksSearched {
-    height: 75%;
+    height: 72vh;
     width: 91%;
+    padding-bottom: 1rem;
   }
 
   .tasksSearched {
@@ -178,7 +181,7 @@
     color: rgb(49, 49, 49);
     opacity: 80%;
     gap: 0.5rem;
-    height: 95%;
+    height: 72vh;
   }
   .loadingShow img {
     width: 62px;
@@ -186,7 +189,7 @@
   }
   .warningShow {
     gap: 1rem;
-    height: 95%;
+    height: 72vh;
     font-size: 15px;
   }
 
@@ -197,6 +200,7 @@
 
   .taskNotFoundShow {
     font-size: 16px;
+    height: 72vh;
   }
 
   .taskNotFoundShow img {
@@ -216,12 +220,10 @@
     margin-top: 0;
   }
 
-  .tasks {
-    width: 95%;
-  }
-
+  .tasks,
   .tasksSearched {
-    height: 91%;
+    width: 95%;
+    height: 72vh;
   }
 
   .contentBody {
@@ -230,13 +232,12 @@
     margin-top: 0;
     margin-left: 0;
     width: 100%;
+    height: auto;
   }
 
   .containTasks {
     width: 100%;
     height: auto;
-    min-height: 82vh;
-    max-height: 122vh;
     margin-top: 4.5rem;
     justify-content: start;
     box-shadow: none;
@@ -255,13 +256,16 @@
     color: rgb(49, 49, 49);
     opacity: 80%;
     gap: 0.5rem;
-    height: 95%;
+    height: 72vh;
   }
   .loadingShow img {
     width: 72px;
     height: 72px;
   }
 
+  .warningShow {
+    height: 72vh;
+  }
   .warningShow img {
     width: 80px;
     padding-left: 1.2rem;
@@ -269,6 +273,7 @@
 
   .taskNotFoundShow {
     font-size: 15px;
+    height: 72vh;
   }
 
   .taskNotFoundShow img {

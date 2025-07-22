@@ -6,6 +6,7 @@ import iconWarning from "../../assets/img/warningInput.png";
 import AlertRedirect from "./alertRedirect/AlertRedirect";
 import { useNewPassword } from "../../context/NewPasswordContext";
 import { useEffect } from "react";
+import { GlassEffect } from "../glassEffect/GlassEffect";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const NewPassword = () => {
@@ -81,7 +82,10 @@ const NewPassword = () => {
               </div>
             )}
           </div>
-          <button>Send</button>
+          <button>
+            <GlassEffect />
+            Send
+          </button>
           {loading && (
             <div className={styles.loading}>
               <span>loading</span>

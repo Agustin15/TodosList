@@ -9,74 +9,76 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
     useFormHelp();
 
   return (
-    <div
-      className={
-        openFormHelp ? styles.containFormHelp : styles.containFormHelpHidden
-      }
-    >
-      <div className={styles.header}>
-        <div className={styles.title}>
-          <h3>How we can help you?</h3>
+    <div className={openFormHelp ? styles.modalForm : styles.modalFormHidden}>
+      <div
+        className={
+          openFormHelp ? styles.containFormHelp : styles.containFormHelpHidden
+        }
+      >
+        <div className={styles.header}>
+          <div className={styles.title}>
+            <h3>How we can help you?</h3>
+          </div>
+          <div className={styles.close}>
+            <button onClick={() => closeForm(setOpenFormHelp)}>X</button>
+          </div>
         </div>
-        <div className={styles.close}>
-          <button onClick={() => closeForm(setOpenFormHelp)}>X</button>
-        </div>
+
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <div className={styles.columnForm}>
+            <div className={styles.columnInput}>
+              <label>Name:</label>
+              <input
+                name="name"
+                autoComplete="off"
+                onChange={(event) => handleChange(event)}
+                placeholder="Enter name"
+                type="text"
+              ></input>
+              {errors.name && <img src={iconError}></img>}
+              <div className={styles.inputError}>
+                <p>{errors.name}</p>
+              </div>
+            </div>
+
+            <div className={styles.columnInput}>
+              <label>Email:</label>
+              <input
+                onChange={(event) => handleChange(event)}
+                name="email"
+                autoComplete="off"
+                placeholder="Enter email"
+                type="email"
+              ></input>
+              {errors.email && <img src={iconError}></img>}
+              <div className={styles.inputError}>
+                <p>{errors.email}</p>
+              </div>
+            </div>
+
+            <div className={styles.columnInput}>
+              <label>Query:</label>
+              <textarea
+                onChange={(event) => handleChange(event)}
+                name="description"
+                placeholder="Describe your problem please"
+              ></textarea>
+              {errors.description && <img src={iconError}></img>}
+              <div className={styles.inputErrorQuery}>
+                <p>{errors.description}</p>
+              </div>
+            </div>
+            <UploadFiles />
+          </div>
+
+          <div className={styles.containSend}>
+            <button type="submit">
+              Send
+              {loadingForm && <img src={gifLoadingForm}></img>}
+            </button>
+          </div>
+        </form>
       </div>
-
-      <form onSubmit={(event) => handleSubmit(event)}>
-        <div className={styles.columnForm}>
-          <div className={styles.columnInput}>
-            <label>Name:</label>
-            <input
-              name="name"
-              autoComplete="off"
-              onChange={(event) => handleChange(event)}
-              placeholder="Enter name"
-              type="text"
-            ></input>
-            {errors.name && <img src={iconError}></img>}
-            <div className={styles.inputError}>
-              <p>{errors.name}</p>
-            </div>
-          </div>
-
-          <div className={styles.columnInput}>
-            <label>Email:</label>
-            <input
-              onChange={(event) => handleChange(event)}
-              name="email"
-              autoComplete="off"
-              placeholder="Enter email"
-              type="email"
-            ></input>
-            {errors.email && <img src={iconError}></img>}
-            <div className={styles.inputError}>
-              <p>{errors.email}</p>
-            </div>
-          </div>
-
-          <div className={styles.columnInput}>
-            <label>Query:</label>
-            <textarea
-              onChange={(event) => handleChange(event)}
-              name="description"
-              placeholder="Describe your problem please"
-            ></textarea>
-            {errors.description && <img src={iconError}></img>}
-            <div className={styles.inputErrorQuery}>
-              <p>{errors.description}</p>
-            </div>
-          </div>
-          <UploadFiles />
-        </div>
-
-        <div className={styles.containSend}>
-          <button type="submit">
-            Send
-            {loadingForm && <img src={gifLoadingForm}></img>}
-          </button>
-        </div>
-      </form>
     </div>
   );
 };

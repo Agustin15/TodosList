@@ -10,7 +10,7 @@ export const ColumnOne = () => {
   const { formatDate } = useTasks();
   const { stateCheckbox, setStateCheckbox, handleChange, values } = useForm();
   const { refDatetimeTask, errors } = useForm();
-  
+
   useEffect(() => {
     if (values.datetimeNotification && values.datetimeNotification.length > 0) {
       setStateCheckbox(true);
@@ -43,7 +43,7 @@ export const ColumnOne = () => {
               min={formatDate(new Date())}
               name="datetimeTask"
               ref={refDatetimeTask}
-              defaultValue={formatDate(values.datetimeTask)}
+              value={formatDate(values.datetimeTask)}
               onChange={handleChange}
               type="datetime-local"
             ></input>
@@ -70,7 +70,7 @@ export const ColumnOne = () => {
             min={formatDate(new Date())}
             disabled={subscribed && stateCheckbox ? false : true}
             name="datetimeNotification"
-            defaultValue={
+            value={
               values.datetimeNotification && stateCheckbox
                 ? formatDate(values.datetimeNotification)
                 : ""
@@ -86,7 +86,7 @@ export const ColumnOne = () => {
       <div className={styles.description}>
         <label>Description:</label>
         <textarea
-          defaultValue={values.descriptionTask}
+          value={values.descriptionTask}
           onChange={handleChange}
           placeholder="Description..."
           name="descriptionTask"

@@ -146,11 +146,11 @@
   justify-content: center;
   cursor: pointer;
   border: none;
-  background: linear-gradient(rgb(5, 77, 105), rgb(58, 187, 204));
+  background: linear-gradient(rgb(5, 77, 105), rgb(55, 129, 158));
 }
 
 .containSignUp button:hover {
-  background: linear-gradient(rgb(5, 77, 105), rgb(50, 157, 172));
+  background: linear-gradient(rgb(5, 77, 105), rgb(45, 139, 151));
 }
 .containSignUp button img {
   width: 22px;
