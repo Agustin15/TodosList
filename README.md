@@ -131,11 +131,11 @@
 
 ### List tasks pending
 
-![List tasks pending](capturesApp/listTasksCapture.PNG)
+![List tasks pending](capturesApp/listTasksCapture.jpg)
 
 ### List tasks completed
 
-![List tasks completed](capturesApp/listTasksCompletedCapture.PNG)
+![List tasks completed](capturesApp/listTasksCompletedCapture.jpg)
 
 ### Calendar
 
