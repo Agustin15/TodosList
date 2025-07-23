@@ -6,7 +6,6 @@ import logo from "../../../assets/img/logo.png";
 import WelcomeFormSignUp from "../../signUp/welcomeSignUp/WelcomeFormSignUp.jsx";
 import AlertForm from "../../signUp/alertForm/AlertForm.jsx";
 import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
-import { GlassEffect } from "../../glassEffect/GlassEffect.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
@@ -99,7 +98,6 @@ const ContentLogin = () => {
             <button type="submit">
               Log in
               {loading && <img src={gifLoading}></img>}
-              <GlassEffect />
             </button>
           </div>
           <div className={classesStyle.haveAccountResponsive}>

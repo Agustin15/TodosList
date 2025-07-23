@@ -34,8 +34,9 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
                 onChange={(event) => handleChange(event)}
                 placeholder="Enter name"
                 type="text"
+                className={errors.name ? styles.errorInput : ""}
               ></input>
-              {errors.name && <img src={iconError}></img>}
+
               <div className={styles.inputError}>
                 <p>{errors.name}</p>
               </div>
@@ -49,8 +50,9 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
                 autoComplete="off"
                 placeholder="Enter email"
                 type="email"
+                className={errors.email ? styles.errorInput : ""}
               ></input>
-              {errors.email && <img src={iconError}></img>}
+
               <div className={styles.inputError}>
                 <p>{errors.email}</p>
               </div>
@@ -62,8 +64,9 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
                 onChange={(event) => handleChange(event)}
                 name="description"
                 placeholder="Describe your problem please"
+                className={errors.description ? styles.errorInput : ""}
               ></textarea>
-              {errors.description && <img src={iconError}></img>}
+
               <div className={styles.inputErrorQuery}>
                 <p>{errors.description}</p>
               </div>

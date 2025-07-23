@@ -146,12 +146,9 @@
   justify-content: center;
   cursor: pointer;
   border: none;
-  background: linear-gradient(rgb(5, 77, 105), rgb(55, 129, 158));
+  background: linear-gradient(188deg, rgb(34, 105, 237), rgb(35, 143, 175));
 }
 
-.containSignUp button:hover {
-  background: linear-gradient(rgb(5, 77, 105), rgb(45, 139, 151));
-}
 .containSignUp button img {
   width: 22px;
   height: 22px;
@@ -179,7 +176,7 @@
 
 @media only screen and (max-width: 699px) {
   .form {
-    width: 100%;
+    width: 96%;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -192,7 +189,7 @@
   }
 
   .form form {
-    width: 89%;
+    width: 91%;
     padding-bottom: 2rem;
   }
   .form label {

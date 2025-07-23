@@ -2,14 +2,14 @@ import styles from "./Home.module.css";
 import dashboardCapture from "../../assets/img/dashboardCapture.jpg";
 import listTasksCapture from "../../assets/img/listTasksCapture.jpg";
 import iconLogo from "../../assets/img/logo.png";
-import iconHelp from "../../assets/img/help.png";
 import homePageIcon from "../../assets/img/homePageIcon.png";
 import iconUserAvatar from "../../assets/img/userAvatar.png";
-import listTaskCompletedCapture from "../../assets/img/listTaskCompletedCapture.jpg";
+import listTaskCompletedCapture from "../../assets/img/listTasksCompletedCapture.jpg";
 import calendarCapture from "../../assets/img/calendarCapture.jpg";
-import { useEffect, useRef, useState } from "react";
-import { FormHelp } from "./formHelp/FormHelp";
 import { FormHelpProvider } from "../../context/FormHelpContext";
+import { FormHelp } from "./formHelp/FormHelp";
+import { useEffect, useRef, useState } from "react";
+import { Footer } from "./footer/footer";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const Home = () => {
@@ -30,8 +30,22 @@ export const Home = () => {
     }, 4900);
   };
 
+  useEffect(() => {
+    let body = [...document.getElementsByTagName("body")][0];
+    if (openFormHelp) {
+      window.scrollTo(0, 0);
+      body.style.overflowY = "hidden";
+    } else body.style.overflowY = "auto";
+  }, [openFormHelp]);
+
   return (
     <div className={styles.containHome}>
+      <FormHelpProvider>
+        <FormHelp
+          openFormHelp={openFormHelp}
+          setOpenFormHelp={setOpenFormHelp}
+        />
+      </FormHelpProvider>
       <header>
         <div className={styles.titleHeader}>
           <h3>Todolist</h3>
@@ -101,18 +115,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className={styles.containHelp}>
-        <FormHelpProvider>
-          <FormHelp
-            openFormHelp={openFormHelp}
-            setOpenFormHelp={setOpenFormHelp}
-          />
-        </FormHelpProvider>
-        <button onClick={() => setOpenFormHelp(true)}>
-          Help
-          <img src={iconHelp}></img>
-        </button>
-      </div>
+      <Footer setOpenFormHelp={setOpenFormHelp}></Footer>
     </div>
   );
 };

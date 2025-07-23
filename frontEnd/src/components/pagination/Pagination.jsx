@@ -54,7 +54,6 @@ export const Pagination = () => {
         onClick={() => changePage(indexSelected)}
       >
         Prev
-        <GlassEffect />
       </button>
       <div className={styles.index}>
         <input
@@ -76,7 +75,6 @@ export const Pagination = () => {
         onClick={() => changePage(indexSelected)}
       >
         Next
-        <GlassEffect />
       </button>
     </div>
   );

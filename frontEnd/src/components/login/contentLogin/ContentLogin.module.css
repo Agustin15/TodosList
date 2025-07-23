@@ -130,13 +130,10 @@
   position: relative;
   cursor: pointer;
   border: none;
-  background: linear-gradient(rgb(5, 77, 105), rgb(55, 129, 158));
+  background: linear-gradient(188deg, rgb(34, 105, 237), rgb(35, 143, 175));
   box-shadow: 2px 2px 2px gray;
 }
 
-.containSignIn button:hover {
-  background: linear-gradient(rgb(5, 77, 105), rgb(46, 107, 131));
-}
 .containSignIn button img {
   width: 22px;
   height: 22px;
@@ -162,6 +159,10 @@
     border: none;
     box-shadow: none;
     position: relative;
+  }
+
+  .form form {
+    width: 75%;
   }
 
   .form label {
@@ -221,7 +222,7 @@
   }
 
   .form .title img {
-    width: 90px;
+    width: 120px;
     margin-top: 4rem;
   }
   .form .title h3 {
@@ -360,7 +361,7 @@
   }
 
   .form .title img {
-    width: 91px;
+    width: 100px;
     margin-top: 4rem;
   }
   .form .title h3 {

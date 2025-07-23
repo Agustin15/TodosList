@@ -157,7 +157,7 @@ export const UserService = {
     try {
       const userEmailUsed = await UserService.findUserByEmail(newEmail);
 
-      if (!userEmailUsed) {
+      if (userEmailUsed) {
         throw new Error("Failed to update, email in use");
       }
 

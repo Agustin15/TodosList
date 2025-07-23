@@ -25,7 +25,6 @@ export const Pagination = () => {
         className={index == 1 ? styles.disabled : styles.enabled}
       >
         Prev
-        <GlassEffect />
       </button>
       <input
         ref={refInputIndex}
@@ -42,7 +41,6 @@ export const Pagination = () => {
         className={index < pages ? styles.enabled : styles.disabled}
       >
         Next
-        <GlassEffect />
       </button>
     </div>
   );

@@ -1,9 +1,12 @@
+body {
+    overflow-x: hidden;
+}
 .containHome {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    height: 100vh;
+    height: auto;
     width: 100vw;
     background: url("../../assets/img/backgroundHome.jpg");
     background-size: cover;
@@ -34,7 +37,7 @@
 
 .containHome header a {
     color: white;
-    margin-right: 1rem;
+    margin-right: 3rem;
     font-size: 18px;
     cursor: pointer;
     text-decoration: none;
@@ -208,41 +211,6 @@
     background-color: rgb(218, 218, 218);
 }
 
-.containHelp {
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    padding-bottom: 1rem;
-}
-
-.containHelp button {
-    margin-right: 1rem;
-    cursor: pointer;
-    width: 7rem;
-    height: 2.8rem;
-    border: none;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgb(14, 110, 173);
-    background-color: white;
-    border-radius: 45px;
-    gap: 0.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.containHelp button img {
-    cursor: pointer;
-    width: 22px;
-    height: 22px;
-}
-
-.containHelp button:hover {
-    background-color: rgb(235, 235, 235);
-}
-
 @media only screen and (max-width: 699px) {
     .containHome {
         background: url("../../assets/img/backgroundHomeMobile.jpg");
@@ -390,5 +358,136 @@
 
     .welcome .containBtn button {
         margin-top: 1.5rem;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containHome header a {
+        margin-right: 1.5rem;
+    }
+
+    .rowOne {
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        margin-top: 1.5rem;
+    }
+
+    .containSlider {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 81%;
+        height: 17rem;
+        margin-left: 0;
+        justify-content: center;
+        gap: 0.1rem;
+    }
+
+    .contentSlider {
+        width: 91%;
+    }
+
+    .contentSlider .slider {
+        width: 415%;
+    }
+
+    @keyframes carrousel {
+        0%,
+        23% {
+            margin-left: 0;
+        }
+
+        25%,
+        48% {
+            margin-left: -105%;
+        }
+
+        50%,
+        73% {
+            margin-left: -210%;
+        }
+        75%,
+        99% {
+            margin-left: -314.5%;
+        }
+    }
+    .contentSlider .slider li {
+        width: 85%;
+        height: 99%;
+    }
+
+    .contentSlider .slider li img {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .containSlider .pagination {
+        margin-top: 0.5rem;
+    }
+
+    .containSlider .pagination li {
+        height: 0.6rem;
+        width: 0.6rem;
+    }
+
+    .welcome {
+        height: 24rem;
+        color: white;
+        align-items: start;
+        width: 99%;
+        margin-top: 2rem;
+        position: relative;
+    }
+
+    .welcome .description {
+        gap: 1rem;
+        font-size: 21px;
+        margin-left: 1rem;
+    }
+    .welcome p {
+        font-size: 17px;
+        width: 95%;
+    }
+
+    .welcome .rowWelcome {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .welcome .containImage {
+        width: 87%;
+        position: absolute;
+        display: flex;
+        align-items: end;
+        flex-direction: column;
+        justify-content: end;
+        height: 73%;
+    }
+    .welcome .rowWelcome img {
+        width: 192px;
+        height: 192px;
+        margin-right: 1rem;
+    }
+
+    .welcome .containBtn {
+        font-size: 17px;
+        margin-top: 0.3rem;
+        width: 97%;
+        height: 57%;
+        display: flex;
+        align-items: end;
+        justify-content: start;
+        position: absolute;
+        z-index: 2;
+    }
+
+    .welcome .containBtn button {
+        margin-top: 1.5rem;
+        width: 12rem;
     }
 }

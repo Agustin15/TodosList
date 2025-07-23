@@ -19,19 +19,17 @@
 }
 
 .pagination button {
-    width: 5rem;
+    width: 7rem;
     color: white;
     position: relative;
-    height: 1.6rem;
+    height: 1.8rem;
     box-shadow: 2px 2px 2px gray;
     background: linear-gradient(rgba(37, 112, 173), rgb(80, 170, 206));
     border-radius: 22px;
 }
 .pagination .disabled {
-    background: linear-gradient(rgb(19, 68, 109), rgb(60, 129, 156));
+    cursor: auto;
 }
 .pagination .enabled {
     cursor: pointer;
-    background: linear-gradient(rgba(37, 112, 173), rgb(80, 170, 206));
 }
-

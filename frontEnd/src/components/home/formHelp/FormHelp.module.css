@@ -2,9 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     position: absolute;
-    margin-right: 1rem;
-    margin-top: -39%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(53, 53, 53, 0.3);
+    z-index: 4;
 }
 
 .containFormHelp {
@@ -12,9 +15,10 @@
     flex-direction: column;
     align-items: center;
     background-color: white;
+    color: black;
     border-radius: 4px;
     height: 36rem;
-    width: 22rem;
+    width: 32rem;
     animation-name: showForm;
     animation-duration: 0.4s;
     animation-fill-mode: forwards;
@@ -63,7 +67,7 @@
 }
 
 .containFormHelp .header .close {
-    width: 105%;
+    width: 97%;
     position: absolute;
     display: flex;
     align-items: start;
@@ -147,6 +151,15 @@ form,
     font-size: 14px;
     padding-right: 1.7rem;
 }
+
+.columnInput .errorInput {
+    background: url("../../../assets/img/warningInput.png");
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position-x: 99%;
+    background-position-y: 0.4rem;
+}
+
 .columnInput input:hover,
 .columnInput textarea:hover {
     border: 2px solid rgb(120, 174, 255);
@@ -178,7 +191,7 @@ form,
     margin-top: 0%;
     width: 22px;
     height: 22px;
-    margin-left: 15.7rem;
+    margin-left: 21.5rem;
     margin-top: 2rem;
 }
 .inputError,
@@ -213,9 +226,6 @@ form,
         align-items: center;
         height: 100vh;
         width: 100%;
-        margin-right: 0;
-        margin-top: 0;
-        z-index: 4;
         top: 0;
         left: 0;
     }
@@ -253,6 +263,12 @@ form,
         height: 99%;
     }
 
+    .columnInput textarea {
+        width: 71%;
+        height: 6rem;
+        padding-top: 1rem;
+    }
+
     .columnForm {
         overflow-y: scroll;
         width: 100%;
@@ -269,14 +285,102 @@ form,
         padding-right: 1.7rem;
     }
 
-    .columnInput img {
-        margin-left: 15rem;
+    .columnInput .errorInput {
+        background-size: 22px;
     }
 
     .containSend button {
         margin-top: 0.3rem;
     }
     .inputErrorQuery {
-        margin-top: 8rem;
+        margin-top: 9rem;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .modalFormHidden {
+        display: none;
+        animation-name: showForm;
+        animation-duration: 0.4s;
+        animation-fill-mode: forwards;
+    }
+
+    .modalForm {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 99vh;
+        width: 100%;
+        top:0;
+        left: 0;
+    }
+
+    @keyframes showForm {
+        from {
+            transform: scale(0);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+    .containFormHelp {
+        height:98%;
+        width: 93%;
+        overflow-y: scroll;
+        position: relative;
+        margin-right: 0;
+        margin-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .containFormHelpHidden {
+        display: none;
+    }
+
+    .containFormHelp .header .title {
+        font-size: 15px;
+    }
+
+    form,
+    .columnForm {
+        width: 99%;
+        gap: 0.5rem;
+        height: 99%;
+    }
+
+    .columnInput textarea {
+        width: 71%;
+        height: 6rem;
+        padding-top: 1rem;
+    }
+
+    .columnForm {
+        overflow-y: scroll;
+        width: 100%;
+        gap: 1.7rem;
+        height: 91%;
+    }
+
+    .columnInput input {
+        width: 71%;
+        border-radius: 5px;
+        height: 2.2rem;
+        outline: none;
+        font-size: 14px;
+        padding-right: 1.7rem;
+    }
+
+    .columnInput .errorInput {
+        background-size: 22px;
+    }
+
+    .containSend button {
+        margin-top: 0.3rem;
+    }
+    .inputErrorQuery {
+        margin-top: 9rem;
     }
 }

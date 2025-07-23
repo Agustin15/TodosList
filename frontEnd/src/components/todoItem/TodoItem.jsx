@@ -73,7 +73,7 @@ const TodoItem = ({ task, index }) => {
       <li
         style={{
           background:
-            index % 2 == 0 ? "rgb(221, 221, 221)" : "rgba(255, 255, 255, 1)"
+            index % 2 == 0 ? "rgba(240, 240, 240, 1)" : "rgba(255, 255, 255, 1)"
         }}
         className={styles.task}
       >
@@ -85,7 +85,6 @@ const TodoItem = ({ task, index }) => {
             onClick={() => changeState(task)}
           >
             <span>{task.icon}</span>
-         
           </div>
           <div className={styles.descriptionAndDate}>
             <span>{formatToStringDate(task.datetimeTask)}</span>

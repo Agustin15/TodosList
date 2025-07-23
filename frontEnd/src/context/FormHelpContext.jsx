@@ -108,7 +108,7 @@ export const FormHelpProvider = ({ children }) => {
     handleChange({ target: { files: files, name: "files", value: "" } });
   };
 
-  const closeForm = (setOpenFormHelp) => {
+  const closeForm = (closeForm) => {
     setErrors({
       name: "",
       email: "",
@@ -123,7 +123,7 @@ export const FormHelpProvider = ({ children }) => {
       files: []
     });
 
-    setOpenFormHelp(false);
+    closeForm();
   };
 
   const handleSubmit = async (event) => {

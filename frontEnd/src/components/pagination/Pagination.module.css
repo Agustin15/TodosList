@@ -37,9 +37,10 @@
 }
 
 .containPaginationShow button {
-    background: linear-gradient(rgb(64, 131, 175), rgb(63, 100, 165));
+    background: linear-gradient(rgb(88, 157, 202), rgb(48, 91, 167));
     position: relative;
     border: none;
+    box-shadow: 2px 2px 2px gray;
     width: 6rem;
     height: 1.6rem;
     display: flex;
@@ -55,18 +56,9 @@
     opacity: 41%;
 }
 
-.btnNextDisabled img,
-.btnNextEnabled img {
-    transform: rotate(180deg);
-}
-
 
 .btnNextEnabled:hover {
     transform: scale(1.1);
     cursor: pointer;
-}
-
-.btnPrevEnabled:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+    box-shadow: none;
 }
