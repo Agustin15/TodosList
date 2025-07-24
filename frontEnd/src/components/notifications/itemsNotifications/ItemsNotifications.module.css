@@ -5,10 +5,9 @@
     align-items: center;
     width: 100%;
     list-style: none;
-    gap: 1rem;
     margin-top: 1rem;
+    background-color: white;
     padding-bottom: 1rem;
-    overflow-y: scroll;
 }
 
 .listNotifications li {
@@ -16,11 +15,12 @@
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    width: 99%;
+    width: 100%;
     gap: 0.5rem;
     height: auto;
     border: 1px solid rgb(209, 209, 209);
-    border-radius: 11px;
+    border-left: 0;
+    border-right: 0;
     position: relative;
     background: white;
 }
@@ -130,7 +130,6 @@
 @media only screen and (max-width: 699px) {
     .listNotifications {
         width: 100%;
-        gap: 0.6rem;
         margin-top: 0;
         border-top: 1px solid gray;
         padding-top: 1rem;
@@ -138,7 +137,6 @@
 
     .listNotifications li {
         height: 5.4rem;
-        width: 97%;
     }
 
     .listNotifications li img {
@@ -201,7 +199,6 @@
 
     .listNotifications li {
         height: 7rem;
-        width: 97%;
     }
 
     .listNotifications li img {

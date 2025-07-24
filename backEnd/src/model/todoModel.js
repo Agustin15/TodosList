@@ -175,7 +175,6 @@ export class Task {
       throw new Error(error);
     }
   }
-  
 
   async getTasksStateByWeekday(firstSunday, nextSaturday, weekday) {
     try {
@@ -197,7 +196,8 @@ export class Task {
   async getTasksLimitByFilterOption(year, month, index) {
     try {
       const [results] = await connection.execute(
-        `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=? LIMIT 10 OFFSET ${index} `,
+        `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=? 
+        order by datetimeTask desc LIMIT 10 OFFSET ${index}`,
         [this.propIdUser, year, month, this.propIsCompleted]
       );
 
@@ -265,5 +265,4 @@ export class Task {
       throw new Error(error);
     }
   }
- 
 }

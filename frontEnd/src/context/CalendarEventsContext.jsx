@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import styles from "../components/calendarEvents/CalendarEvents.module.css";
 import { useContext } from "react";
 
@@ -93,14 +93,15 @@ export const CalendarEventsProvider = ({ children }) => {
       let eventCalendar = eventsCalendar.find(
         (event) => event.extendedProps.idTask == idTask
       );
-      date = eventCalendar.date;
+
+      if (eventCalendar) date = eventCalendar.date;
     }
     return date;
   };
 
-  const dayView = (info, idTask) => {
+  const dayViewOfTaskFound = (info, idTask) => {
     let dateTodayString = formatDateViewCell(Date());
-    
+
     if (eventsCalendar.length > 0 && idTask) {
       let eventCalendar = eventsCalendar.find(
         (event) => event.extendedProps.idTask == idTask
@@ -123,7 +124,7 @@ export const CalendarEventsProvider = ({ children }) => {
         setDateSelected,
         dateSelected,
         getTasksForCalendar,
-        dayView,
+        dayViewOfTaskFound,
         initialDate
       }}
     >

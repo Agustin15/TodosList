@@ -13,7 +13,7 @@ import { Wrapper } from "./styledWrapper.js";
 import { useState, useEffect } from "react";
 import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext.jsx";
 import { UserDataProvider } from "../../context/userDataContext";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
 
@@ -27,15 +27,16 @@ export const CalendarEvents = () => {
     dateSelected,
     setDateSelected,
     getTasksForCalendar,
-    dayView,
+    dayViewOfTaskFound,
     initialDate
   } = useCalendarEvents();
 
   const [modalAdd, setModalAdd] = useState(false);
-  const { idTask } = useParams();
+  const [searchParams] = useSearchParams();
+  const idTaskParam = searchParams.get("idTask");
 
   useEffect(() => {
-    getTasksForCalendar(idTask);
+    getTasksForCalendar(idTaskParam);
   }, [eventAdded]);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const CalendarEvents = () => {
 
   const handleEventClickCalendar = (info) => {
     let idTask = info.event._def.extendedProps.idTask;
-    location.href = urlFront + "tasks/" + idTask;
+    location.href = `${urlFront}tasks?idTask=${idTask}`;
   };
   const handleEventAddEvent = (info) => {
     if (info.date >= new Date()) {
@@ -76,8 +77,7 @@ export const CalendarEvents = () => {
                 ]}
                 initialView="dayGridMonth"
                 events={eventsCalendar}
-                initialDate={initialDate(idTask)}
-                dayCellDidMount={(info) => dayView(info, idTask)}
+                initialDate={initialDate(idTaskParam)}
                 dayMaxEventRows={1}
                 dateClick={handleEventAddEvent}
                 headerToolbar={{
@@ -89,18 +89,9 @@ export const CalendarEvents = () => {
               ></FullCalendar>
             </Wrapper>
             <ul>
-              <li className={styles.pending}>
-                <div></div>
-                Pending
-              </li>
-              <li className={styles.completed}>
-                <div></div>
-                Completed
-              </li>
-              <li className={styles.found}>
-                <div></div>
-                Wanted
-              </li>
+              <li className={styles.pending}>Pending</li>
+              <li className={styles.completed}>Completed</li>
+              <li className={styles.found}>Wanted</li>
             </ul>
           </div>
         </div>

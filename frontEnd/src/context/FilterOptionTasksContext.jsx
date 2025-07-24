@@ -20,10 +20,10 @@ export const FilterOptionTasksProvider = ({ children }) => {
   const [quantityTasks, setQuantityTask] = useState();
   const [loadingFilter, setLoadingFilter] = useState(false);
 
-  const { idTask } = useParams();
   const [searchParams] = useSearchParams();
-  const { dispatch, getTasksByWeekdayFromChart, getTaskById } = useTasks();
   const [optionSearch] = useState(JSON.parse(searchParams.get("tasksWeekDay")));
+  const [idTaskParam] = useState(searchParams.get("idTask"));
+  const { dispatch, getTasksByWeekdayFromChart, getTaskById } = useTasks();
 
   useEffect(() => {
     if (refInputNumberIndex.current) {
@@ -34,8 +34,8 @@ export const FilterOptionTasksProvider = ({ children }) => {
   useEffect(() => {
     if (optionSearch)
       getTasksByWeekdayFromChart(optionSearch.state, optionSearch.weekday);
-    else if (idTask) {
-      getTaskById({ id: idTask });
+    else if (idTaskParam) {
+      getTaskById({ id: idTaskParam });
     } else {
       queryTasksDependingOptions();
     }
@@ -248,7 +248,7 @@ export const FilterOptionTasksProvider = ({ children }) => {
         openFilter,
         setOpenFilter,
         optionSearch,
-        idTask
+        idTaskParam
       }}
     >
       {children}

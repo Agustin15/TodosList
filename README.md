@@ -123,11 +123,11 @@
 
 ### Login
 
-![Login](capturesApp/loginCapture.PNG)
+![Login](capturesApp/loginCapture.jpg)
 
 ### Dashboard
 
-![Dashboard](capturesApp/dashboardCapture.PNG)
+![Dashboard](capturesApp/dashboardCapture.jpg)
 
 ### List tasks pending
 
@@ -139,12 +139,12 @@
 
 ### Calendar
 
-![Calendar](capturesApp/calendarCapture.PNG)
+![Calendar](capturesApp/calendarCapture.jpg)
 
 ### Files
 
-![Files Uploaded](capturesApp/filesCapture.PNG)
+![Files Uploaded](capturesApp/filesCapture.jpg)
 
 ### Notifications
 
-![Files Uploaded](capturesApp/notificationsCapture.PNG)
+![Files Uploaded](capturesApp/notificationsCapture.jpg)

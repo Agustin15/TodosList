@@ -313,13 +313,13 @@ input[type="checkbox"] {
   }
   .containFile {
     width: 19rem;
-    height: 13rem;
+    height: 16rem;
     margin-top: 1rem;
     font-size: 14px;
   }
   .containFile img {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
   }
   .containFile span {
     font-size: 13px;
@@ -343,8 +343,8 @@ input[type="checkbox"] {
   }
 
   .containFile .notFilesUploaded img {
-    width: 37px;
-    height: 37px;
+    width: 57px;
+    height: 57px;
   }
 
   .bodyForm textarea {

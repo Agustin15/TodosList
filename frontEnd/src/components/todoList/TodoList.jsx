@@ -17,7 +17,7 @@ import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext"
 
 const TodoList = () => {
   const { tasks, loadingState } = useTasks();
-  const { loadingFilter, optionSearch, idTask } = useFilterOptionTasks();
+  const { loadingFilter, optionSearch, idTaskParam } = useFilterOptionTasks();
 
   const [taskNotFound, setTaskNotFound] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -40,49 +40,45 @@ const TodoList = () => {
             </div>
           </div>
         </div>
-        {!idTask && !optionSearch && (
+        {!idTaskParam && !optionSearch && (
           <FilterOption
             setOpenModalAdd={setOpenModalAdd}
             setTaskNotFound={setTaskNotFound}
           />
         )}
 
-        {!loadingFilter || !loadingState ? (
-          tasks.length == 0 ? (
-            <div className={styles.warningShow}>
-              <img src={noTaskIcon}></img>
-              <h3>Not Tasks </h3>
-            </div>
-          ) : (
-            <ul
-              id="ulTasks"
-              className={
-                idTask || optionSearch ? styles.tasksSearched : styles.tasks
-              }
-            >
-              {tasks.map((task, index) => (
-                <TodoItem key={index} index={index} task={task}></TodoItem>
-              ))}
-              <div
-                className={
-                  taskNotFound
-                    ? styles.taskNotFoundShow
-                    : styles.taskNotFoundHide
-                }
-              >
-                <img src={iconNoFound}></img>
-                <h3>Task not found</h3>
-              </div>
-            </ul>
-          )
-        ) : (
+        {loadingFilter || loadingFilter || loadingState ? (
           <div className={styles.loadingShow}>
             <img src={gifLoadingTasks}></img>
             <h3>loading tasks</h3>
           </div>
+        ) : tasks.length == 0 ? (
+          <div className={styles.warningShow}>
+            <img src={noTaskIcon}></img>
+            <h3>Not Tasks </h3>
+          </div>
+        ) : (
+          <ul
+            id="ulTasks"
+            className={
+              idTaskParam || optionSearch ? styles.tasksSearched : styles.tasks
+            }
+          >
+            {tasks.map((task, index) => (
+              <TodoItem key={index} index={index} task={task}></TodoItem>
+            ))}
+            <div
+              className={
+                taskNotFound ? styles.taskNotFoundShow : styles.taskNotFoundHide
+              }
+            >
+              <img src={iconNoFound}></img>
+              <h3>Task not found</h3>
+            </div>
+          </ul>
         )}
 
-        {!idTask && <Pagination />}
+        {!idTaskParam && <Pagination />}
       </div>
 
       {openModalAdd && (

@@ -6,6 +6,8 @@ import homePageIcon from "../../assets/img/homePageIcon.png";
 import iconUserAvatar from "../../assets/img/userAvatar.png";
 import listTaskCompletedCapture from "../../assets/img/listTasksCompletedCapture.jpg";
 import calendarCapture from "../../assets/img/calendarCapture.jpg";
+import filesCapture from "../../assets/img/filesCapture.jpg";
+import notificationCapture from "../../assets/img/notificationsCapture.jpg";
 import { FormHelpProvider } from "../../context/FormHelpContext";
 import { FormHelp } from "./formHelp/FormHelp";
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +16,7 @@ const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const Home = () => {
   const ulRef = useRef();
-  const [arrayIndexs] = useState([0, 1, 2, 3]);
+  const [arrayIndexs] = useState([0, 1, 2, 3, 4, 5]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [openFormHelp, setOpenFormHelp] = useState(false);
 
@@ -27,7 +29,7 @@ export const Home = () => {
       if (currentIndex == arrayIndexs.length - 1) {
         setTimeout(() => setCurrentIndex(0), 300);
       } else setCurrentIndex(currentIndex + 1);
-    }, 4900);
+    },4000);
   };
 
   useEffect(() => {
@@ -72,6 +74,12 @@ export const Home = () => {
               </li>
               <li>
                 <img src={calendarCapture}></img>
+              </li>
+              <li>
+                <img src={filesCapture}></img>
+              </li>
+              <li>
+                <img src={notificationCapture}></img>
               </li>
             </ul>
           </div>

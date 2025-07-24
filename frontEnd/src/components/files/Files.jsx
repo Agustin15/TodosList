@@ -76,15 +76,7 @@ export const Files = () => {
                 </tr>
               </thead>
               <tbody>
-                {loading == false ? (
-                  files.length == 0 && quantityFiles == 0 ? (
-                    <NotFiles />
-                  ) : (
-                    files.map((file, index) => (
-                      <RowFile file={file} key={index} />
-                    ))
-                  )
-                ) : (
+                {loading ? (
                   <tr>
                     <td colSpan={5} rowSpan={5}>
                       <div className={styles.loading}>
@@ -93,6 +85,12 @@ export const Files = () => {
                       </div>
                     </td>
                   </tr>
+                ) : files.length == 0 && quantityFiles == 0 ? (
+                  <NotFiles />
+                ) : (
+                  files.map((file, index) => (
+                    <RowFile file={file} key={index} />
+                  ))
                 )}
 
                 {notResults && (

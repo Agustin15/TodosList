@@ -59,4 +59,3 @@ constraint fk_idNotificationSubscription foreign key(idNotification) references 
 constraint fk_endpointUrl foreign key(endpointURL) references subscription(endpointURL) on delete cascade,
 primary key(idNotification,endpointURL)
 );
-

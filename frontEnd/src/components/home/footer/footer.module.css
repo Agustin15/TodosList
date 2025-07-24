@@ -10,7 +10,7 @@
     height: auto;
     margin-left: 0;
     background: linear-gradient(rgb(36, 36, 36), rgb(43, 42, 42));
-    clip-path: ellipse(100% 58% at 50% 100%);
+    clip-path: ellipse(100% 76% at 50% 100%);
 }
 
 .contact {
@@ -19,7 +19,7 @@
     align-items: center;
     justify-content: start;
     gap: 1rem;
-    margin-top: 12rem;
+    margin-top: 5rem;
 }
 
 .contact span {

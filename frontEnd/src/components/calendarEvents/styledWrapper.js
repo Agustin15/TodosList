@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const Wrapper = styled.div`
   .fc {
     height: 82vh;
@@ -28,7 +29,7 @@ export const Wrapper = styled.div`
 
   @media only screen and (max-width: 699px) {
     .fc {
-      width: 84vw;
+      width: 100%;
       height: 71vh;
     }
     .fc-header-toolbar {

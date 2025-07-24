@@ -27,15 +27,7 @@
   width: 15px;
 }
 
-.task .btnStateIncomplete,
-.task .btnStateComplete {
-  border: 2px solid rgb(255, 255, 255);
-  background: none;
-}
-
-.task .iconCompleted,
-.task .iconPending {
-  cursor: pointer;
+.task .icon {
   font-size: 21px;
   display: flex;
   position: relative;
@@ -45,26 +37,50 @@
   margin-left: 1rem;
   height: 3.7rem;
   border-radius: 99%;
-  background: linear-gradient(rgb(60, 206, 116), rgb(36, 168, 87));
-  box-shadow: 2px 2px 2px gray;
-}
-.task .iconPending {
-  background: linear-gradient(rgb(236, 104, 111), rgb(240, 69, 78));
+  background: linear-gradient(rgb(118, 181, 240), rgb(23, 71, 110));
 }
 
-.task .iconPending span,
-.task .iconCompleted span {
+.task .icon span {
   font-size: 28px;
 }
 
-.task .iconCompleted:hover {
-  background: linear-gradient(rgb(55, 182, 104), rgb(36, 168, 87));
-  box-shadow: none;
+.task .stateCompleted,
+.task .statePending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  font-weight: bold;
 }
 
-.task .iconPending:hover {
-  background: linear-gradient(rgb(218, 65, 73), rgb(206, 50, 58));
-  box-shadow: none;
+.task .stateCompleted button,
+.task .statePending button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border-radius: 99%;
+  border: none;
+  width: 1.7rem;
+  height: 1.7rem;
+}
+.task .stateCompleted button img,
+.task .statePending button img {
+  width: 23px;
+  height: 23px;
+}
+
+.task .stateCompleted button:hover,
+.task .statePending button:hover {
+  transform: scale(1.1);
+}
+
+.task .statePending {
+  color: red;
+}
+
+.task .stateCompleted {
+  color: rgb(9, 202, 41);
 }
 
 .task .info {
@@ -94,7 +110,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 0.5rem;
+  gap: 0.6rem;
   width: 85%;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -111,14 +127,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.task .columnTask {
+.menuTask {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
 }
-
 .openMenu {
   display: none;
 }
@@ -126,42 +139,34 @@
 @media only screen and (max-width: 699px) {
   .task {
     display: flex;
-    flex-direction: column;
-    justify-content: start;
-    position: relative;
-    width: 103%;
-    height: 5.5rem;
+    justify-content: space-between;
+    align-items: end;
+    width: 107%;
+    height: auto;
     color: rgb(0, 0, 0);
     padding: 0;
     border-radius: 9px;
-    gap: 0.8rem;
+    gap: 0.1rem;
+  }
+
+  .task .icon {
+    margin-left: 0.7rem;
+    padding: 1.7rem;
+    width: 0;
+    height: 0;
+    background: linear-gradient(rgb(118, 181, 240), rgb(23, 71, 110));
+  }
+
+  .task .icon span {
+    font-size: 23px;
   }
 
   .task .info button img {
-    height: 16px;
-    width: 16px;
+    height: 23px;
+    width: 23px;
   }
   .task .info button {
     display: none;
-  }
-
-  .task .iconCompleted,
-  .task .iconPending {
-    font-size: 15px;
-    width: 0;
-    height: 0;
-    padding: 1.5rem;
-    margin-left: 0.5rem;
-  }
-
-  .task .iconPending span,
-  .task .iconCompleted span {
-    font-size: 21px;
-  }
-
-  .descriptionAndDate {
-    gap: 0.5rem;
-    width: 85%;
   }
 
   .task .info {
@@ -169,35 +174,44 @@
     gap: 1rem;
     height: 100%;
   }
+  .descriptionAndDate {
+    gap: 0.5rem;
+    width: 85%;
+  }
 
-  .task .info img {
-    width: 20px;
-    cursor: pointer;
+  .task .stateCompleted button,
+  .task .statePending button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border-radius: 99%;
+    border: none;
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+  .task .stateCompleted button img,
+  .task .statePending button img {
+    width: 19px;
+    height: 19px;
+  }
+
+  .menuTask {
+    height: 94%;
   }
 
   .openMenu,
   .openMenuDisplay {
     display: flex;
-    justify-content: end;
+    height: 87%;
+    justify-content: center;
     align-items: end;
-    width: 78%;
-    height: 4.3rem;
-    z-index: 1;
-    position: absolute;
   }
 
-  .openMenuDisplay {
-    animation-name: displayMenu;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-  }
-  @keyframes displayMenu {
-    from {
-      width: 81%;
-    }
-    to {
-      width: 72%;
-    }
+  .openMenu img,
+  .openMenuDisplay img {
+    width: 22px;
+    height: 22px;
   }
 }
 

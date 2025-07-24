@@ -69,7 +69,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 52%;
-    height: 78%;
+    height: 25rem;
     gap: 0.1rem;
 }
 
@@ -99,30 +99,39 @@ body {
     list-style: none;
     gap: 1.5rem;
     height: 99%;
-    width: 410%;
+    width: 618%;
     animation-name: carrousel;
-    animation-duration: 20s;
+    animation-duration: 30s;
     animation-iteration-count: infinite;
 }
-
 @keyframes carrousel {
     0%,
-    23% {
+    14% {
         margin-left: 0;
     }
 
-    25%,
-    48% {
-        margin-left: -103.3%;
+    17%,
+    31% {
+        margin-left: -103.5%;
     }
 
-    50%,
-    73% {
-        margin-left: -206.7%;
+    34%,
+    48% {
+        margin-left: -207%;
     }
-    75%,
+
+    51%,
+    65% {
+        margin-left: -310.5%;
+    }
+    68%,
+    82% {
+        margin-left: -414%;
+    }
+
+    85%,
     99% {
-        margin-left: -310%;
+        margin-left: -517.9%;
     }
 }
 .contentSlider .slider li {
@@ -134,22 +143,24 @@ body {
 .contentSlider .slider li img {
     width: 100%;
     height: 100%;
+    border-radius: 4px;
 }
 
 .containSlider .pagination {
+    
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
     width: 99%;
-    margin-top: 1rem;
+    margin-top: 0.7rem;
     list-style: none;
 }
 
 .containSlider .pagination li {
     border-radius: 99%;
-    height: 1rem;
-    width: 1rem;
+    height: 0.8rem;
+    width: 0.8rem;
 }
 
 .containSlider .pagination .indexCurrent {
@@ -163,10 +174,11 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: start;
+    align-items: start;
     height: 24rem;
     color: white;
-    align-items: center;
-    width: 45%;
+    width: 48%;
+    margin-left: 1rem;
     margin-top: 3rem;
 }
 
@@ -177,10 +189,11 @@ body {
     gap: 1rem;
     width: 99%;
     font-size: 25px;
+    margin-left: 1rem;
 }
 .welcome p {
     font-size: 17px;
-    width: 100%;
+    width: 99%;
 }
 
 .welcome .rowWelcome {
@@ -259,27 +272,37 @@ body {
     }
 
     .contentSlider .slider {
-        width: 425%;
+        width: 640%;
     }
 
     @keyframes carrousel {
         0%,
-        23% {
+        14% {
             margin-left: 0;
         }
 
-        25%,
-        48% {
+        17%,
+        31% {
             margin-left: -108%;
         }
 
-        50%,
-        73% {
+        34%,
+        48% {
             margin-left: -216%;
         }
-        75%,
+
+        51%,
+        65% {
+            margin-left: -324%;
+        }
+        68%,
+        82% {
+            margin-left: -431.5%;
+        }
+
+        85%,
         99% {
-            margin-left: -325%;
+            margin-left: -539.6%;
         }
     }
     .contentSlider .slider li {
@@ -378,7 +401,7 @@ body {
         flex-direction: column;
         align-items: center;
         width: 81%;
-        height: 17rem;
+        height: 18rem;
         margin-left: 0;
         justify-content: center;
         gap: 0.1rem;
@@ -389,27 +412,37 @@ body {
     }
 
     .contentSlider .slider {
-        width: 415%;
+        width: 622%;
     }
 
     @keyframes carrousel {
         0%,
-        23% {
+        14% {
             margin-left: 0;
         }
 
-        25%,
-        48% {
-            margin-left: -105%;
+        17%,
+        31% {
+            margin-left: -104.2%;
         }
 
-        50%,
-        73% {
-            margin-left: -210%;
+        34%,
+        48% {
+            margin-left: -208.5%;
         }
-        75%,
+        51%,
+        65% {
+            margin-left: -313%;
+        }
+
+        68%,
+        82% {
+            margin-left: -417.4%;
+        }
+
+        85%,
         99% {
-            margin-left: -314.5%;
+            margin-left: -521.8%;
         }
     }
     .contentSlider .slider li {

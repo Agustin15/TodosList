@@ -55,7 +55,7 @@ const DetailsTodo = ({ task, setOpenModalInfo }) => {
         </li>
         <li>
           <h3>Date:</h3>
-          <a href={"/calendar/" + task.idTask}>
+          <a href={"/calendar?idTask=" + task.idTask}>
             <div className={classesStyle.detailsDate}>
               <img src={iconCalendar}></img>
               <span>{formatToStringDate(task.datetimeTask)}</span>

@@ -1,10 +1,12 @@
 import stylesTasksThisWeek from "./TasksThisWeek.module.css";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
-export const Task = ({taskThisWeek,index}) => {
+export const Task = ({ taskThisWeek, index }) => {
   return (
     <li
-      onClick={() => (location.href = urlFront + "tasks/" + taskThisWeek.id)}
+      onClick={() =>
+        (location.href = `${urlFront}tasks?idTask=${taskThisWeek.id}`)
+      }
       className={
         index % 2 == 0
           ? stylesTasksThisWeek.liGray
