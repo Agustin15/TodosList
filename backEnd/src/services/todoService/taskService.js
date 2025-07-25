@@ -234,11 +234,11 @@ export const TaskService = {
 
       await connection.beginTransaction();
 
-      let notificationFound =
+      let notificationFound =await
         NotificationService.findNotificationByIdTask(idTask);
 
       if (notificationFound.length > 0) {
-        let jobNotificationFound = ScheduledJobService.getJobByIdNotification(
+        let jobNotificationFound = await ScheduledJobService.getJobByIdNotification(
           notificationFound[0].idNotification
         );
 
