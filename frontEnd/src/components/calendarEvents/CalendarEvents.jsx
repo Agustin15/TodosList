@@ -78,7 +78,8 @@ export const CalendarEvents = () => {
                 initialView="dayGridMonth"
                 events={eventsCalendar}
                 initialDate={initialDate(idTaskParam)}
-                dayMaxEventRows={1}
+                // dayCellDidMount={(info) => dayViewOfTaskFound(info, idTaskParam)}
+                dayMaxEventRows={0}
                 dateClick={handleEventAddEvent}
                 headerToolbar={{
                   start: "dayGridMonth,timeGridDay,multiMonthYear",
@@ -91,7 +92,6 @@ export const CalendarEvents = () => {
             <ul>
               <li className={styles.pending}>Pending</li>
               <li className={styles.completed}>Completed</li>
-              <li className={styles.found}>Wanted</li>
             </ul>
           </div>
         </div>

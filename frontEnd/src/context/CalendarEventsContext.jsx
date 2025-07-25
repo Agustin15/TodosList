@@ -100,8 +100,7 @@ export const CalendarEventsProvider = ({ children }) => {
   };
 
   const dayViewOfTaskFound = (info, idTask) => {
-    let dateTodayString = formatDateViewCell(Date());
-
+   
     if (eventsCalendar.length > 0 && idTask) {
       let eventCalendar = eventsCalendar.find(
         (event) => event.extendedProps.idTask == idTask
