@@ -13,7 +13,6 @@ import { Wrapper } from "./styledWrapper.js";
 import { useState, useEffect } from "react";
 import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext.jsx";
 import { UserDataProvider } from "../../context/userDataContext";
-import { useSearchParams } from "react-router-dom";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
 
@@ -27,13 +26,11 @@ export const CalendarEvents = () => {
     dateSelected,
     setDateSelected,
     getTasksForCalendar,
-    dayViewOfTaskFound,
+    idTaskParam,
     initialDate
   } = useCalendarEvents();
 
   const [modalAdd, setModalAdd] = useState(false);
-  const [searchParams] = useSearchParams();
-  const idTaskParam = searchParams.get("idTask");
 
   useEffect(() => {
     getTasksForCalendar(idTaskParam);
@@ -78,7 +75,6 @@ export const CalendarEvents = () => {
                 initialView="dayGridMonth"
                 events={eventsCalendar}
                 initialDate={initialDate(idTaskParam)}
-                // dayCellDidMount={(info) => dayViewOfTaskFound(info, idTaskParam)}
                 dayMaxEventRows={0}
                 dateClick={handleEventAddEvent}
                 headerToolbar={{

@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import styles from "../components/calendarEvents/CalendarEvents.module.css";
 import { useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const CalendarEventsContext = createContext();
 
@@ -8,6 +9,12 @@ export const CalendarEventsProvider = ({ children }) => {
   const [eventsCalendar, setEventsCalendar] = useState([]);
   const [eventAdded, setEventAdded] = useState(false);
   const [dateSelected, setDateSelected] = useState();
+  const [searchParams] = useSearchParams();
+  const idTaskParam = searchParams.get("idTask");
+
+  useEffect(() => {
+    if (idTaskParam && eventsCalendar.length > 0) dayViewOfTaskFound();
+  }, [eventsCalendar]);
 
   const getTasksForCalendar = async (idTask) => {
     const optionGetTasks = {
@@ -99,18 +106,22 @@ export const CalendarEventsProvider = ({ children }) => {
     return date;
   };
 
-  const dayViewOfTaskFound = (info, idTask) => {
-   
-    if (eventsCalendar.length > 0 && idTask) {
-      let eventCalendar = eventsCalendar.find(
-        (event) => event.extendedProps.idTask == idTask
-      );
+  const dayViewOfTaskFound = () => {
+    let cellDays = document
+      .querySelector(".fc-daygrid-body")
+      .querySelectorAll("td");
 
-      let dateTaskString = formatDateViewCell(eventCalendar.date);
+    let eventFound = eventsCalendar.find(
+      (event) => event.extendedProps.idTask == idTaskParam
+    );
 
-      if (dateTaskString == info.el.dataset.date) {
-        info.el.classList.add(styles.dayOfTask);
-      }
+    if (eventFound) {
+      let dateTaskString = formatDateViewCell(eventFound.date);
+
+      cellDays.forEach((cell) => {
+        if (cell.dataset.date == dateTaskString)
+          cell.classList.add(styles.dayOfTask);
+      });
     }
   };
   return (
@@ -123,7 +134,7 @@ export const CalendarEventsProvider = ({ children }) => {
         setDateSelected,
         dateSelected,
         getTasksForCalendar,
-        dayViewOfTaskFound,
+        idTaskParam,
         initialDate
       }}
     >
