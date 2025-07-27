@@ -17,12 +17,13 @@ export class File {
     this.#idFile = value;
   }
 
-   get propIdTask() {
+  get propIdTask() {
     return this.#idTask;
   }
 
   set propIdTask(value) {
-    if (typeof value  !="number") throw new Error("Invalid idTask,it must be a number");
+    if (typeof value != "number")
+      throw new Error("Invalid idTask,it must be a number");
     this.#idTask = value;
   }
 
@@ -66,12 +67,7 @@ export class File {
     try {
       const [result] = await connection.execute(
         "Insert into files (idTask,nameFile,typeFile,datetimeUpload,fileTask) values(?,?,?,CURRENT_TIME(),?)",
-        [
-          this.propIdTask,
-          this.propNameFile,
-          this.propTypeFile,
-          this.propFile
-        ]
+        [this.propIdTask, this.propNameFile, this.propTypeFile, this.propFile]
       );
       return result.affectedRows;
     } catch (error) {
@@ -115,10 +111,24 @@ export class File {
     }
   }
 
-  async getFilesByUserLimit(offset,idUser) {
+  async getFilesByUserLimit(offset, idUser) {
     try {
       const [results] = await connection.execute(
-        `select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=? LIMIT 10 OFFSET ${offset}`,
+        `select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=? order by 
+        files.datetimeUpload desc LIMIT 10 OFFSET ${offset}`,
+        [idUser]
+      );
+
+      return results;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  async getAllFilesUser(idUser) {
+    try {
+      const [results] = await connection.execute(
+        "select files.fileTask from files inner join tasks on files.idTask=tasks.idTask where" +
+          " tasks.idUser=?",
         [idUser]
       );
 

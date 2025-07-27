@@ -16,6 +16,5 @@ filesRoutes.get("/:getFilesParams", (req, res) => {
 
     case "getFilesLimitByUser":
       return findLimitFilesByIdUser(req, res);
-      break;
   }
 });

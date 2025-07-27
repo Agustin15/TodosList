@@ -4,46 +4,25 @@ import iconNotFound from "../../assets/img/noFound.png";
 import iconLoadingFiles from "../../assets/img/loadingFiles.gif";
 import { useFiles } from "../../context/FilesContext";
 import Header from "../header/Header";
+import { Storage } from "./storage/Storage";
+import { SearchFile } from "./SearchFile";
 import { UserDataProvider } from "../../context/userDataContext";
 import { MenuProvider } from "../../context/MenuContext";
 import { NotFiles } from "./notFiles/NotFiles";
 import { Pagination } from "./pagination/Pagination";
 import { RowFile } from "./rowFile/RowFile";
 import { Title } from "../title/Title";
-import { GlassEffect } from "../glassEffect/GlassEffect";
 import { useState } from "react";
 
 export const Files = () => {
   const { pages, quantityFiles, files, loading } = useFiles();
   const [notResults, setNotResults] = useState();
 
-  const handleSearch = (event) => {
-    let tbody = document.querySelector("tbody");
-    if (files.length > 0) {
-      tbody.querySelectorAll("tr").forEach((row) => {
-        if (
-          row.textContent
-            .toLocaleLowerCase()
-            .indexOf(event.target.value.toLocaleLowerCase()) > -1
-        )
-          row.style.display = "table-row";
-        else row.style.display = "none";
-      });
-
-      let rowsHidden = [...tbody.querySelectorAll("tr")].filter(
-        (row) => row.style.display == "none"
-      );
-
-      if (files.length == rowsHidden.length) setNotResults(true);
-      else setNotResults(false);
-    }
-  };
-
   return (
     <div className={styles.containFiles}>
       <MenuProvider>
         <UserDataProvider>
-          <Title title={"Files uploaded"} icon={iconFilesSaved}></Title>
+          <Title title={"Files storage"} icon={iconFilesSaved}></Title>
           <Header />
         </UserDataProvider>
       </MenuProvider>
@@ -52,17 +31,10 @@ export const Files = () => {
         <div className={styles.contentTable}>
           <div className={styles.header}>
             <div className={styles.title}>
-              <GlassEffect />
-              <h3>Unit Files</h3>
+              <h3>Files storage</h3>
               <img src={iconFilesSaved}></img>
             </div>
-            <div className={styles.containSearch}>
-              <input
-                onKeyDown={(event) => handleSearch(event)}
-                type="text"
-                placeholder="Search..."
-              ></input>
-            </div>
+            <Storage />
           </div>
           <div className={styles.scroll}>
             <table>
@@ -74,7 +46,13 @@ export const Files = () => {
                   <th>Task</th>
                   <th>Options</th>
                 </tr>
+                <tr className={styles.rowSearch}>
+                  <td>
+                    <SearchFile setNotResults={setNotResults} files={files} />
+                  </td>
+                </tr>
               </thead>
+
               <tbody>
                 {loading ? (
                   <tr>
@@ -89,7 +67,7 @@ export const Files = () => {
                   <NotFiles />
                 ) : (
                   files.map((file, index) => (
-                    <RowFile file={file} key={index} />
+                    <RowFile index={index} file={file} key={index} />
                   ))
                 )}
 
@@ -106,6 +84,7 @@ export const Files = () => {
               </tbody>
             </table>
           </div>
+
           {pages > 0 && <Pagination />}
         </div>
       </div>

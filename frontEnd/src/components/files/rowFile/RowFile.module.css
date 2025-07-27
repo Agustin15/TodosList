@@ -1,3 +1,10 @@
+.rowGray {
+    background-color: rgb(243, 243, 243);
+}
+
+.rowWhite {
+    background-color: white;
+}
 .options {
     display: flex;
     align-items: center;
@@ -19,6 +26,7 @@
 }
 .contentCellName img {
     width: 22px;
+    margin-left: 1rem;
 }
 
 .options button {

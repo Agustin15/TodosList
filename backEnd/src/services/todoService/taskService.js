@@ -94,8 +94,7 @@ export const TaskService = {
       );
 
       if (files.length > 0) {
-        if (FileService.verifyAmountSizeOfFiles(files))
-          throw new Error("Limit amount size of 10MB of files exceeded");
+        await FileService.verifyAmountSizeOfFiles(files, idUser);
 
         let fileAdded = await FileService.addFile(taskAddedFound.idTask, files);
 
@@ -156,10 +155,9 @@ export const TaskService = {
       taskUpdatedFound = taskUpdatedFound[0];
 
       if (files.length > 0) {
-        if (FileService.verifyAmountSizeOfFiles(files))
-          throw new Error("Limit amount size of 10MB of files exceeded");
+        await FileService.verifyAmountSizeOfFiles(files, idUser);
       }
-
+      
       let filesChanged = await FileService.findFilesChanged(idTask, files);
       if (filesChanged.filesForAdd.length > 0) {
         await FileService.addFile(idTask, filesChanged.filesForAdd);
@@ -234,13 +232,14 @@ export const TaskService = {
 
       await connection.beginTransaction();
 
-      let notificationFound =await
-        NotificationService.findNotificationByIdTask(idTask);
+      let notificationFound =
+        await NotificationService.findNotificationByIdTask(idTask);
 
       if (notificationFound.length > 0) {
-        let jobNotificationFound = await ScheduledJobService.getJobByIdNotification(
-          notificationFound[0].idNotification
-        );
+        let jobNotificationFound =
+          await ScheduledJobService.getJobByIdNotification(
+            notificationFound[0].idNotification
+          );
 
         jobId = `'${jobNotificationFound.idJob}'`;
       }

@@ -1,4 +1,5 @@
 import { File } from "../model/fileModel.js";
+import { StorageService } from "./storageService.js";
 const fileModel = new File();
 
 export const FileService = {
@@ -124,13 +125,29 @@ export const FileService = {
     }
   },
 
-  verifyAmountSizeOfFiles: (files) => {
+  verifyAmountSizeOfFiles: async (files, idUser) => {
     const amountSize = files.reduce((ac, file) => {
       return (ac += file.size);
     }, 0);
 
-    if (amountSize > 1000 * 10000) return true;
+    if (amountSize > 10 * Math.pow(10, 6))
+      throw new Error("Limit amount size of 10MB of files exceeded");
 
-    return false;
+    const storageUsedUser = await StorageService.getStorageFilesUsedByUser(
+      idUser
+    );
+
+    if (storageUsedUser.bytesUsed + amountSize > storageUsedUser.limitSize)
+      throw new Error("This amount size files exceed your limit storage");
+  },
+
+  findAllFilesUser: async (idUser) => {
+    try {
+      const allFilesOfUser = await fileModel.getAllFilesUser(idUser);
+
+      return allFilesOfUser;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 };

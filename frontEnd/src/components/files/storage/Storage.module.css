@@ -1,0 +1,105 @@
+.containStorageUsed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid rgb(175, 175, 175);
+    height: 5.4rem;
+    gap: 0.6rem;
+    top: 4rem;
+    width: 100%;
+}
+
+.containStorageUsed .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+}
+
+.containStorageUsed img {
+    width: 27px;
+    height: 27px;
+}
+
+.barStorageUsed {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 15%;
+    height: 0.4rem;
+    border-radius: 44px;
+    border: 1px solid gray;
+}
+
+.sizeStorageUsed {
+    background-color: rgb(27, 112, 182);
+    height: 100%;
+    border-radius: 44px;
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 17px;
+}
+
+.loader img {
+    width: 22px;
+    height: 22px;
+}
+
+.noDataStorage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 17px;
+    margin-top: -0.4rem;
+}
+
+.noDataStorage img {
+    width: 36px;
+    height: 36px;
+}
+
+@media only screen and (max-width: 699px) {
+    .containStorageUsed {
+        height: 5.3rem;
+        gap: 0.6rem;
+        width: 107%;
+        margin-top: 0.5rem;
+    }
+    .containStorageUsed .title span {
+        font-size: 16px;
+    }
+    .containStorageUsed span {
+        font-size: 14px;
+    }
+
+    .barStorageUsed {
+        width: 47%;
+        height: 0.5rem;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containStorageUsed {
+        height: 5.3rem;
+        gap: 0.6rem;
+        width: 107%;
+    }
+    .containStorageUsed .title span {
+        font-size: 16px;
+    }
+    .containStorageUsed span {
+        font-size: 14px;
+    }
+
+    .barStorageUsed {
+        width: 29%;
+        height: 0.6rem;
+    }
+}

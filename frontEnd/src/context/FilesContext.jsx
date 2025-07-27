@@ -30,6 +30,7 @@ export const FilesProvider = ({ children }) => {
   const [files, setFiles] = useState([]);
   const [pages, setPages] = useState(0);
   const [quantityFiles, setQuantityFiles] = useState(0);
+
   const [index, setIndex] = useState(1);
   const mimeAccept = [
     { type: "image/bmp", icon: iconBmp },
