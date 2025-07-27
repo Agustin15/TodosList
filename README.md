@@ -56,6 +56,10 @@
     VITE_LOCALHOST_FRONT=http://localhost:PORT/
     VITE_APPLICATION_SERVER=<MyVapidPublicKeyGenerate https://vapidkeys.com/>
 
+**_Configuracion del service worker(sw.js)_**
+
+    urlLocalhostFrontend=http://localhost:PORT/
+
 > ## Instalacion backend ⚙
 
 **_Dirigirse a a la carpeta backEnd:_**
@@ -95,7 +99,7 @@
     VAPID_PRIVATE_KEY=<My Vapid Private Key Generate in https://vapidkeys.com/>
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTIFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
-    LOCALHOST_URL_FRONT=<My localhost frontend>
+    LOCALHOST_URL_FRONT=http://localhost:PORT/
 
 > ### Instalar servidor Redis usando docker
 

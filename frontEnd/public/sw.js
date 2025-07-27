@@ -1,3 +1,5 @@
+const urlLocalhostFrontend = "http://localhost:5173/";
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open("resources").then((cache) => cache.addAll(["/logo.png"]))
@@ -47,7 +49,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   const idTask = event.notification.data.idTask;
 
-  let url = "http://localhost:5173/tasks?idTask=" + idTask;
+  let url = urlLocalhostFrontend + "tasks?idTask=" + idTask;
 
   let windowOpen;
 
