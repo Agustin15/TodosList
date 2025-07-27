@@ -47,7 +47,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   const idTask = event.notification.data.idTask;
 
-  let url = "http://localhost:5173/tasks/" + idTask;
+  let url = "http://localhost:5173/tasks?idTask=" + idTask;
 
   let windowOpen;
 
