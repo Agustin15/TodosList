@@ -59,3 +59,19 @@ constraint fk_idNotificationSubscription foreign key(idNotification) references 
 constraint fk_endpointUrl foreign key(endpointURL) references subscription(endpointURL) on delete cascade,
 primary key(idNotification,endpointURL)
 );
+
+
+CREATE TABLE verificationTwoStep(
+idVerification int not null primary key auto_increment,
+idUser int not null,
+enabled tinyint not null,
+constraint fk_idUserVerification foreign key(idUser) references users(idUser) on delete cascade
+);
+
+CREATE TABLE verificationCode(
+idVerification int not null,
+codeOfVerification int not null,
+expirationTime int not null,
+primary key(idVerification,expirationTime),
+constraint fk_idVerification foreign key(idVerification) references verificationTwoStep(idVerification) 
+);

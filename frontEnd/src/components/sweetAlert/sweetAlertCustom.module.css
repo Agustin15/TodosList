@@ -16,7 +16,7 @@ body {
 .customBtnConfirmRed{
     background-color: rgb(206, 63, 63);
     font-weight: bold;
-    width: 6rem;
+    width: auto;
 }
 
 .customBtnConfirmRed:hover {
@@ -25,7 +25,7 @@ body {
 .customBtnConfirmWarning {
     background-color: rgb(230, 118, 44);
     font-weight: bold;
-    width: 6rem;
+    width: auto;
 }
 
 .customBtnConfirmWarning:hover {
@@ -34,7 +34,7 @@ body {
 .customBtnConfirmGreen {
     background-color: rgb(19, 170, 69);
     font-weight: bold;
-    width: 6rem;
+    width: auto;
 }
 
 .customBtnConfirmGreen:hover {
@@ -57,7 +57,7 @@ body {
     .customBtnConfirmWarning,
     .customBtnConfirmGreen,
     .customCancel {
-        width: 5rem;
+        width: auto;
         font-size: 14px;
     }
     .customWidth {

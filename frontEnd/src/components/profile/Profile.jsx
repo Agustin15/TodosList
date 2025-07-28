@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useDataUser } from "../../context/userDataContext";
 import { FormEditEmailProvider } from "../../context/FormEditEmailContext";
 import { FormEditPasswordProvider } from "../../context/FormEditPasswordContext";
+import { VerificationTwoStepProvider } from "../../context/VerificationTwoStepContext";
 
 const Profile = () => {
   const [modalEditEmail, setModalEditEmail] = useState(false);
@@ -60,11 +61,13 @@ const Profile = () => {
       {user && (
         <>
           <div className={styles.contentBody}>
-            <ContentBody
-              user={user}
-              setModalEditEmail={setModalEditEmail}
-              setModalEditPassword={setModalEditPassword}
-            />
+            <VerificationTwoStepProvider>
+              <ContentBody
+                user={user}
+                setModalEditEmail={setModalEditEmail}
+                setModalEditPassword={setModalEditPassword}
+              />
+            </VerificationTwoStepProvider>
           </div>
           <br></br>
         </>

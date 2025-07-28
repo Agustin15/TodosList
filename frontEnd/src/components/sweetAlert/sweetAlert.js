@@ -1,5 +1,7 @@
 import Swal from "sweetalert2";
 import styles from "./sweetAlertCustom.module.css";
+import iconVerification from "../../assets/img/verificationTwoStep.png";
+import { fetchAddVerificationTwoStep } from "./fetchsToAlertConfirmVerification.js";
 
 export const AlertFormSwal = (msj, title, icon, windowWidth) => {
   Swal.fire({
@@ -8,7 +10,7 @@ export const AlertFormSwal = (msj, title, icon, windowWidth) => {
     <p class=${styles.customMsj}>${msj}</p>
   `,
     icon: icon,
-    width: windowWidth <= 699 ? 300 : 415,
+    width: windowWidth <= 699 ? 300 : 425,
     confirmButtonText: "OK",
     draggable: false,
     customClass: {
@@ -53,4 +55,52 @@ export const AlertQuestionSwal = async (
     return result.isConfirmed;
   });
   return confirm;
+};
+
+export const AlertConfirmPasswordToVerification = async (
+  nameButton,
+  msj,
+  colorConfirm,
+  windowWidth
+) => {
+  await Swal.fire({
+    title: "Verification two step",
+    html: `
+    <p class=${styles.customMsj}>${msj}</p>
+  `,
+    input: "password",
+    inputAttributes: {
+      autocapitalize: "off"
+    },
+    imageUrl: iconVerification,
+    imageWidth: 75,
+    imageHeight: 75,
+    showCancelButton: true,
+    confirmButtonText: nameButton,
+    preConfirm: async (passwordConfirm) => {
+      if (passwordConfirm.length == 0)
+        Swal.showValidationMessage("Enter password");
+      else {
+        const result = await fetchAddVerificationTwoStep(passwordConfirm);
+        if (result.state == "error")
+          AlertFormSwal(result.error, "Oops", "error", windowWidth);
+        else {
+          AlertFormSwal(
+            "Verification two step activated successfully!",
+            "Success",
+            "success",
+            windowWidth
+          );
+        }
+      }
+    },
+    customClass: {
+      title: styles.customTitle,
+      confirmButton:
+        colorConfirm == "red"
+          ? styles.customBtnConfirmRed
+          : styles.customBtnConfirmGreen,
+      cancelButton: styles.customCancel
+    }
+  });
 };

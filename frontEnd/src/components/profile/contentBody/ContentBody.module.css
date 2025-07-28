@@ -179,8 +179,7 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  margin-top: 1rem;
-  gap: 1.5rem;
+  margin-top: 0.4rem;
 }
 
 form .rowForm {
@@ -188,6 +187,7 @@ form .rowForm {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
+  margin-top: 1rem;
 }
 
 form .columnInput {
@@ -223,7 +223,7 @@ form button {
   border: none;
   border-radius: 99px;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   box-shadow: 2px 2px 2px gray;
   position: relative;
 }
@@ -240,7 +240,6 @@ form .btnDisabled {
 form .btnEnabled {
   background: linear-gradient(rgba(37, 112, 173), rgb(80, 170, 206));
 }
-
 
 form .editInput {
   position: absolute;
@@ -264,14 +263,38 @@ form .editInput img {
   opacity: 76%;
 }
 
-form .editInput img:hover{
- transform: scale(1.1);
+form .editInput img:hover {
+  transform: scale(1.1);
 }
 
 form .inputEmail {
   width: 11rem;
   padding-right: 1rem;
 }
+
+form .optionVerificationTwoStep {
+  display: flex;
+  justify-content: end;
+  width: 87%;
+  align-items: center;
+}
+form .optionVerificationTwoStep button {
+  width: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  background: none;
+}
+form .optionVerificationTwoStep button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+form .optionVerificationTwoStep button img {
+  width: 45px;
+  height: 45px;
+}
+
 @media only screen and (max-width: 699px) {
   .detailsUser {
     width: 90%;

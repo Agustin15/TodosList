@@ -1,0 +1,62 @@
+import connection from "../config/database.js";
+export class VerificationTwoStep {
+  #idUser;
+  #enabled = false;
+
+  set propIdUser(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idUser,it must be a number");
+    this.#idUser = value;
+  }
+
+  get propIdUser() {
+    return this.#idUser;
+  }
+  set propEnabled(value) {
+    this.#enabled = value;
+  }
+
+  get propEnabled() {
+    return this.#enabled;
+  }
+
+  async post() {
+    try {
+      const [result] = await connection.execute(
+        "INSERT INTO verificationTwoStep (idUser,enabled) values (?,?)",
+        [this.propIdUser, this.propEnabled]
+      );
+
+      return result.affectedRows;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async patch() {
+    try {
+      const [result] = await connection.execute(
+        "update verificationTwoStep set enabled=? where idUser=?",
+        [this.propEnabled, this.propIdUser]
+      );
+
+      return result.affectedRows;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getVerificationByUser() {
+
+    try {
+      const [results] = await connection.execute(
+        "select * from verificationTwoStep where idUser=?",
+        [this.propIdUser]
+      );
+
+      return results;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+}

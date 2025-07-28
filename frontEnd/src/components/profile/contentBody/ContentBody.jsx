@@ -1,6 +1,7 @@
 import styles from "./ContentBody.module.css";
 import iconUserInfo from "../../../assets/img/userInfo.png";
 import iconEmail from "../../../assets/img/emailProfile.png";
+import iconVerificationTwoStep from "../../../assets/img/verificationTwoStep.png";
 import gifLoadingForm from "../../../assets/img/loadingForm.gif";
 import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
 import iconEdit from "../../../assets/img/edit.png";
@@ -8,9 +9,11 @@ import { AlertInput } from "./alertInput/AlertInput";
 import { useDataUser } from "../../../context/userDataContext";
 import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
 import { GlassEffect } from "../../glassEffect/GlassEffect.jsx";
+import { useVerificationTwoStep } from "../../../context/VerificationTwoStepContext.jsx";
 
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   const { windowWidth } = useWindowSize();
+  const { handleActivateVerification } = useVerificationTwoStep();
   const {
     user,
     setUser,
@@ -49,12 +52,7 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
 
         setUser(userUpdated);
       } else {
-        AlertFormSwal(
-          "Failed to update user!",
-          "Oops",
-          "error",
-          windowWidth
-        );
+        AlertFormSwal("Failed to update user!", "Oops", "error", windowWidth);
       }
     }
   };
@@ -146,6 +144,12 @@ const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
           {loaderForm && <img src={gifLoadingForm}></img>}
           <GlassEffect />
         </button>
+
+        <div className={styles.optionVerificationTwoStep}>
+          <button type="button" onClick={handleActivateVerification}>
+            <img src={iconVerificationTwoStep}></img>
+          </button>
+        </div>
       </form>
     </>
   );
