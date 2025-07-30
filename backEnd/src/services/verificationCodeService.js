@@ -5,7 +5,6 @@ import { UserService } from "./userService.js";
 const verificationCodeModel = new VerificationCode();
 
 export const VerificationCodeService = {
-  
   sendVerificationCode: async (idUser) => {
     try {
       const verificationFound =
@@ -19,7 +18,10 @@ export const VerificationCodeService = {
       verificationCodeModel.propIdVerification =
         verificationFound.idVerification;
 
-      const codeHash = await bcrypt.hash(verificationCodeModel.propCode, 10);
+      const codeHash = await bcrypt.hash(
+        verificationCodeModel.propCode.toString(),
+        10
+      );
 
       verificationCodeModel.propCodeHash = codeHash;
 
@@ -40,6 +42,38 @@ export const VerificationCodeService = {
         throw new Error("Failed to send verification email");
 
       return verificationSent;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  comprobateVerificationCode: async (codeEntered, idUser) => {
+    try {
+      const verificationTwoStepFound =
+        await VerificationTwoStepService.findVerificationByUser(idUser);
+
+      if (!verificationTwoStepFound)
+        throw new Error("Verification two step not found");
+
+      verificationCodeModel.propIdVerification =
+        verificationTwoStepFound.idVerification;
+
+      const verificationsCodeFound =
+        await verificationCodeModel.getVerificationsCodeByIdVerification();
+
+      if (verificationsCodeFound.length == 0)
+        throw new Error("Verifications code not found");
+
+      for (const verificationCodeFound of verificationsCodeFound) {
+        let match = await bcrypt.compare(
+          codeEntered.toString(),
+          verificationCodeFound.codeOfVerification
+        );
+
+        if (match && verificationCodeFound.expirationTime > Date.now()) {
+          return true;
+        } else throw new Error("Verification code entered not recognized");
+      }
     } catch (error) {
       throw error;
     }

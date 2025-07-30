@@ -5,6 +5,7 @@ import logo from "../../../assets/img/logo.png";
 import deleteIcon from "../../../assets/img/deleteKeyboard.png";
 import backIcon from "../../../assets/img/backKeyboard.png";
 import { useVerificationTwoStep } from "../../../context/VerificationTwoStepContext";
+import { useEffect } from "react";
 
 export const VerificationTwoStep = () => {
   const {
@@ -14,9 +15,9 @@ export const VerificationTwoStep = () => {
     fetchSendVerificationCode
   } = useVerificationTwoStep();
 
-  // useEffect(() => {
-  //   fetchSendVerificationCode();
-  // }, []);
+  useEffect(() => {
+    fetchSendVerificationCode();
+  }, []);
 
   const keyboard = [
     [

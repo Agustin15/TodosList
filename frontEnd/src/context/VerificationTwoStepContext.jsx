@@ -42,15 +42,45 @@ export const VerificationTwoStepProvider = ({ children }) => {
   };
 
   const fetchSendVerificationCode = async () => {
-
     let data;
     try {
-      const response = await fetch("/api/verificationCode/", {
-        method: "POST",
+      const response = await fetch(
+        "/api/verificationCode/" +
+          JSON.stringify({ option: "sendVerificationCode" }),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ idUser: idUser })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status == 401) {
+          location.href = urlFront + "login";
+        }
+        throw result.messageError;
+      }
+
+      if (result) data = result;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      return data;
+    }
+  };
+
+  const fetchGetVerificationTwoStepUser = async () => {
+    let data;
+    try {
+      const response = await fetch("/api/verificationTwoStep/", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ idUser: idUser })
+        }
       });
 
       const result = await response.json();
@@ -129,6 +159,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
       value={{
         handleActivateVerification,
         fetchSendVerificationCode,
+        fetchGetVerificationTwoStepUser,
         showVerificationTwoStep,
         setShowVerificationTwoStep,
         handleComprobateVerificationCode,

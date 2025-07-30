@@ -1,4 +1,5 @@
 import connection from "../config/database.js";
+import nodemailer from "nodemailer";
 import { randomInt } from "node:crypto";
 
 export class VerificationCode {
@@ -12,7 +13,7 @@ export class VerificationCode {
 
   set propIdVerification(value) {
     if (typeof value != "number")
-      throw new Error("Invalid idUser,it must be a number");
+      throw new Error("Invalid idVerification,it must be a number");
     this.#idVerification = value;
   }
 
@@ -92,11 +93,11 @@ export class VerificationCode {
     }
   }
 
-  async getVerificationCodeByIdVerificationAndCode() {
+  async getVerificationsCodeByIdVerification() {
     try {
       const [results] = await connection.execute(
-        "select * from verifications_code where idVerification=? and codeOfVerification=?",
-        [this.propIdVerification, this.propCode]
+        "select * from verifications_code where idVerification=?",
+        [this.propIdVerification]
       );
 
       return results;

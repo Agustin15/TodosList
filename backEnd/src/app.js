@@ -15,7 +15,7 @@ import { NotificationToQueue } from "./services/notificationsQueue.js";
 import { ConnectionSocket } from "./config/connectionSocket.js";
 import { helpQueryClientRoutes } from "./routes/helpQueryClientRoutes.js";
 import { verificationTwoStepRoutes } from "./routes/verificationTwoStepRoutes.js";
-
+import { verificationCodeRoutes } from "./routes/verificationCodeRoutes.js";
 
 const app = express();
 export const server = createServer(app);
@@ -28,7 +28,7 @@ app.use("/storage", storageRoutes);
 app.use("/signup", signUpRouter);
 app.use("/login", loginRoutes);
 app.use("/verificationTwoStep", verificationTwoStepRoutes);
-// app.use("/verificationCode", verificationCodeRoutes);
+app.use("/verificationCode", verificationCodeRoutes);
 app.use("/resetPassword", resetPasswordRoutes);
 app.use("/userData", userDataRoutes);
 app.use("/subscription", subscriptionRoutes);

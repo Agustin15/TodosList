@@ -6,7 +6,7 @@ idUser int primary key auto_increment,
 nameUser varchar(50) not null,
 lastname varchar(50) not null,
 email varchar(50) not null,
-passwordUser varchar(200) not null
+passwordUser varchar(60) not null
 );
 
 CREATE TABLE tasks(
@@ -70,8 +70,12 @@ constraint fk_idUserVerification foreign key(idUser) references users(idUser) on
 
 CREATE TABLE verifications_code(
 idVerification int not null,
-codeOfVerification int not null,
-expirationTime int not null,
+codeOfVerification varchar(60) not null,
+expirationTime bigint not null,
 primary key(idVerification,expirationTime),
 constraint fk_idVerification foreign key(idVerification) references verifications_two_step(idVerification) 
 );
+
+
+
+
