@@ -16,6 +16,7 @@ import { ConnectionSocket } from "./config/connectionSocket.js";
 import { helpQueryClientRoutes } from "./routes/helpQueryClientRoutes.js";
 import { verificationTwoStepRoutes } from "./routes/verificationTwoStepRoutes.js";
 
+
 const app = express();
 export const server = createServer(app);
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use("/storage", storageRoutes);
 app.use("/signup", signUpRouter);
 app.use("/login", loginRoutes);
 app.use("/verificationTwoStep", verificationTwoStepRoutes);
+// app.use("/verificationCode", verificationCodeRoutes);
 app.use("/resetPassword", resetPasswordRoutes);
 app.use("/userData", userDataRoutes);
 app.use("/subscription", subscriptionRoutes);

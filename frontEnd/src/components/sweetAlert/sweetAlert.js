@@ -1,7 +1,10 @@
 import Swal from "sweetalert2";
 import styles from "./sweetAlertCustom.module.css";
 import iconVerification from "../../assets/img/verificationTwoStep.png";
-import { fetchAddVerificationTwoStep } from "./fetchsToAlertConfirmVerification.js";
+import {
+  fetchAddVerificationTwoStep,
+  fetchPatchVerificationTwoStep
+} from "./fetchsToAlertConfirmVerification.js";
 
 export const AlertFormSwal = (msj, title, icon, windowWidth) => {
   Swal.fire({
@@ -61,13 +64,15 @@ export const AlertConfirmPasswordToVerification = async (
   nameButton,
   msj,
   colorConfirm,
-  windowWidth
+  windowWidth,
+  verificationTwoStep
 ) => {
   await Swal.fire({
     title: "Verification two step",
     html: `
     <p class=${styles.customMsj}>${msj}</p>
   `,
+    width: windowWidth <= 699 ? 340 : 445,
     input: "password",
     inputAttributes: {
       autocapitalize: "off"
@@ -81,12 +86,25 @@ export const AlertConfirmPasswordToVerification = async (
       if (passwordConfirm.length == 0)
         Swal.showValidationMessage("Enter password");
       else {
-        const result = await fetchAddVerificationTwoStep(passwordConfirm);
+        let result;
+
+        if (!verificationTwoStep) {
+          result = await fetchAddVerificationTwoStep(passwordConfirm);
+        } else {
+          result = await fetchPatchVerificationTwoStep(
+            passwordConfirm,
+            verificationTwoStep.enabled ? 0 : 1
+          );
+        }
         if (result.state == "error")
           AlertFormSwal(result.error, "Oops", "error", windowWidth);
         else {
           AlertFormSwal(
-            "Verification two step activated successfully!",
+            `Verification two step ${
+              !verificationTwoStep || verificationTwoStep.enabled
+                ? "desactivated"
+                : "activated"
+            } successfully!`,
             "Success",
             "success",
             windowWidth

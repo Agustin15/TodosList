@@ -4,9 +4,10 @@ import { randomInt } from "node:crypto";
 export class VerificationCode {
   static min = 100000;
   static max = 999999;
-  static durationCode = 60000; //(one minute in milliseconds)
+  static durationCode = 300000; //(five minutes in milliseconds)
   #idVerification;
   #code;
+  #codeHash;
   #expirationTime;
 
   set propIdVerification(value) {
@@ -18,14 +19,23 @@ export class VerificationCode {
   get propIdVerification() {
     return this.#idVerification;
   }
+
   set propCode(value) {
-    if (value.toString().length != 6)
-      throw new Error("Code must be only of six digits");
+    if (value.toString().length != 6 || !this.#verifyCharsValidCode(value))
+      throw new Error("Code must have only six digits");
     this.#code = value;
   }
 
   get propCode() {
     return this.#code;
+  }
+  set propCodeHash(value) {
+    if (!value) throw new Error("Code hash undefined");
+    this.#codeHash = value;
+  }
+
+  get propCodeHash() {
+    return this.#codeHash;
   }
   set propExpirationTime(value) {
     if (!value) throw new Error("Invalid date");
@@ -38,8 +48,18 @@ export class VerificationCode {
     return this.#expirationTime;
   }
 
-  generateCode() {
-    this.propCode = randomInt(VerificationCode.min, VerificationCode.max);
+  #verifyCharsValidCode(code) {
+    for (let f = 0; f < code.length; f++) {
+      if (!/^[0-9]$/.test(code[f])) return false;
+    }
+    return true;
+  }
+  async generateCode() {
+    while (true) {
+      this.propCode = randomInt(VerificationCode.min, VerificationCode.max);
+      const verificationCodesFound = await this.getVerificationCodeByCode();
+      if (verificationCodesFound.length == 0) break;
+    }
   }
   generateExpirationTime() {
     //expiration in 1 minute
@@ -49,8 +69,8 @@ export class VerificationCode {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO verificationCode (idVerification,codeOfVerification,expirationTime) values(?,?,?)",
-        [this.propIdVerification, this.propCode, this.propExpirationTime]
+        "INSERT INTO verifications_code (idVerification,codeOfVerification,expirationTime) values(?,?,?)",
+        [this.propIdVerification, this.propCodeHash, this.propExpirationTime]
       );
 
       return result.affectedRows;
@@ -62,7 +82,7 @@ export class VerificationCode {
   async getVerificationCodeByCode() {
     try {
       const [results] = await connection.execute(
-        "select * from verificationCode where codeOfVerification=?",
+        "select * from verifications_code where codeOfVerification=?",
         [this.propCode]
       );
 
@@ -75,11 +95,45 @@ export class VerificationCode {
   async getVerificationCodeByIdVerificationAndCode() {
     try {
       const [results] = await connection.execute(
-        "select * from verificationCode where idVerification=? and codeOfVerification=?",
+        "select * from verifications_code where idVerification=? and codeOfVerification=?",
         [this.propIdVerification, this.propCode]
       );
 
       return results;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async sendCodeByEmail(emailUser) {
+    try {
+      if (!process.env.APP_MAIL) throw new Error("APP MAIL not declared");
+      if (!process.env.PASSWORD_APP_MAIL)
+        throw new Error("PASSWORD APP MAIL not declared");
+
+      const appEmail = process.env.APP_MAIL;
+      const passwordEmailApp = process.env.PASSWORD_APP_MAIL;
+
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: appEmail,
+          pass: passwordEmailApp
+        }
+      });
+
+      const emailSent = await transporter.sendMail({
+        from: appEmail,
+        to: emailUser,
+        subject: "Todolist verification code",
+        html: `<p>Hi,your one-time verification code:<h3>${this.propCode}</h3></p><br>
+              <p>This code expires after 5 minutes.If you did not request this,please change your password or 
+              contact us</p>`
+      });
+
+      return emailSent;
     } catch (error) {
       throw new Error(error);
     }

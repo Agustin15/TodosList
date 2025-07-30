@@ -1,0 +1,305 @@
+.containVerificationTwoStep {
+    width: 50%;
+    height: auto;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    background: rgb(255, 255, 255);
+    gap: 1rem;
+}
+.containVerificationTwoStep .title {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.titleResponsive {
+    display: none;
+}
+
+.containVerificationTwoStep .title img {
+    width: 130px;
+}
+.containVerificationTwoStep .title h3 {
+    font-size: 20px;
+}
+
+.containVerificationTwoStep input {
+    width: 36%;
+    font-size: 22px;
+    gap: 1rem;
+    height: 2.3rem;
+    padding-left: 1rem;
+    outline: navajowhite;
+    color: black;
+    cursor: auto;
+}
+
+.containVerificationTwoStep input::placeholder {
+    color: rgb(126, 126, 126);
+    font-size: 26px;
+}
+.containVerificationTwoStep input:focus {
+    border: 2px solid rgb(80, 220, 255);
+    box-shadow: 0px 1px 6px 2px skyblue;
+}
+
+.containVerificationTwoStep .keyboard {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.1rem;
+    width: 39%;
+}
+.containVerificationTwoStep .keyboard li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22%;
+}
+
+.containVerificationTwoStep .keyboard li button {
+    font-size: 21px;
+    width: 100%;
+    height: 3.3rem;
+    border: 1px solid rgb(201, 201, 201);
+    box-shadow: 2px 2px 2px gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containVerificationTwoStep .keyboard .optionClean {
+    width: 67%;
+}
+
+.containVerificationTwoStep .keyboard li button img {
+    width: 24px;
+    height: 24px;
+}
+
+.containVerificationTwoStep .keyboard li button .iconNext {
+    width: 24px;
+    height: 24px;
+    transform: rotateY(180deg);
+}
+
+.containVerificationTwoStep .keyboard li button:hover,
+.containVerificationTwoStep .btnVerify:hover {
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.containVerificationTwoStep .btnVerify {
+    width: 12rem;
+    border: none;
+    margin-top: 2rem;
+    height: 2rem;
+    border-radius: 75px;
+    box-shadow: 2px 2px 2px gray;
+    background: linear-gradient(188deg, rgb(34, 105, 237), rgb(71, 166, 179));
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 699px) {
+    .containVerificationTwoStep {
+        width: 100%;
+        height: auto;
+    }
+
+    .titleResponsive {
+        display: flex;
+        justify-content: center;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 1rem;
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        width: 100%;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        margin-top: 0;
+        background-image: radial-gradient(
+                circle at 40% 91%,
+                rgba(50, 34, 141, 0.04) 0%,
+                rgba(50, 34, 141, 0.04) 50%,
+                rgba(68, 21, 203, 0.04) 50%,
+                rgba(68, 21, 203, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 66% 97%,
+                rgba(36, 36, 36, 0.04) 0%,
+                rgba(36, 36, 36, 0.04) 50%,
+                rgba(46, 46, 46, 0.04) 50%,
+                rgba(46, 46, 46, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 86% 7%,
+                rgba(40, 40, 40, 0.04) 0%,
+                rgba(40, 40, 40, 0.04) 50%,
+                rgba(200, 200, 200, 0.04) 50%,
+                rgba(200, 200, 200, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 15% 16%,
+                rgba(99, 99, 99, 0.04) 0%,
+                rgba(99, 99, 99, 0.04) 50%,
+                rgba(45, 45, 45, 0.04) 50%,
+                rgba(45, 45, 45, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 75% 99%,
+                rgba(243, 243, 243, 0.04) 0%,
+                rgba(243, 243, 243, 0.04) 50%,
+                rgba(37, 37, 37, 0.04) 50%,
+                rgba(37, 37, 37, 0.04) 100%
+            ),
+            linear-gradient(188deg, rgb(34, 105, 237), rgb(35, 143, 175));
+    }
+
+    .titleResponsive img {
+        width: 48px;
+        height: 48px;
+        margin-top: 0.2rem;
+    }
+    .containVerificationTwoStep .title {
+        margin-top: 4rem;
+        gap: 0.5rem;
+        height: auto;
+        padding-bottom: 0;
+    }
+    .containVerificationTwoStep .title img {
+        width: 120px;
+    }
+    .containVerificationTwoStep .title h3 {
+        font-size: 18px;
+    }
+
+    .containVerificationTwoStep input {
+        width: 76%;
+        font-size: 18px;
+        margin-top: 1rem;
+        height: 2.3rem;
+    }
+
+    .containVerificationTwoStep .keyboard {
+        width: 78%;
+    }
+
+    .containVerificationTwoStep .keyboard .optionClean {
+        width: 67%;
+    }
+
+    .containVerificationTwoStep .btnVerify {
+        height: 2.2rem;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containVerificationTwoStep {
+        width: 100%;
+        height: auto;
+    }
+
+    .titleResponsive {
+        display: flex;
+        justify-content: center;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 1rem;
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        width: 100%;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        margin-top: 0;
+        background-image: radial-gradient(
+                circle at 40% 91%,
+                rgba(50, 34, 141, 0.04) 0%,
+                rgba(50, 34, 141, 0.04) 50%,
+                rgba(68, 21, 203, 0.04) 50%,
+                rgba(68, 21, 203, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 66% 97%,
+                rgba(36, 36, 36, 0.04) 0%,
+                rgba(36, 36, 36, 0.04) 50%,
+                rgba(46, 46, 46, 0.04) 50%,
+                rgba(46, 46, 46, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 86% 7%,
+                rgba(40, 40, 40, 0.04) 0%,
+                rgba(40, 40, 40, 0.04) 50%,
+                rgba(200, 200, 200, 0.04) 50%,
+                rgba(200, 200, 200, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 15% 16%,
+                rgba(99, 99, 99, 0.04) 0%,
+                rgba(99, 99, 99, 0.04) 50%,
+                rgba(45, 45, 45, 0.04) 50%,
+                rgba(45, 45, 45, 0.04) 100%
+            ),
+            radial-gradient(
+                circle at 75% 99%,
+                rgba(243, 243, 243, 0.04) 0%,
+                rgba(243, 243, 243, 0.04) 50%,
+                rgba(37, 37, 37, 0.04) 50%,
+                rgba(37, 37, 37, 0.04) 100%
+            ),
+            linear-gradient(188deg, rgb(34, 105, 237), rgb(35, 143, 175));
+    }
+
+    .titleResponsive img {
+        width: 48px;
+        height: 48px;
+        margin-top: 0.2rem;
+    }
+    .containVerificationTwoStep .title {
+        margin-top: 4rem;
+        gap: 0.5rem;
+        height: auto;
+        padding-bottom: 0;
+    }
+    .containVerificationTwoStep .title img {
+        width: 124px;
+    }
+    .containVerificationTwoStep .title h3 {
+        font-size: 21px;
+    }
+
+    .containVerificationTwoStep input {
+        width: 76%;
+        font-size: 18px;
+        margin-top: 1.4rem;
+        height: 2.6rem;
+    }
+
+    .containVerificationTwoStep .keyboard {
+        width: 78%;
+    }
+
+    .containVerificationTwoStep .keyboard li button {
+        height: 2.4rem;
+    }
+
+    .containVerificationTwoStep .keyboard .optionClean {
+        width: 66%;
+    }
+
+    .containVerificationTwoStep .btnVerify {
+        height: 2.2rem;
+        width: 35%;
+    }
+}

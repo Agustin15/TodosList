@@ -47,7 +47,7 @@ export class SubscriptionPush {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO subscription (idUser,endpointURL,p256dh,auth) values (?,?,?,?)",
+        "INSERT INTO subscriptions (idUser,endpointURL,p256dh,auth) values (?,?,?,?)",
         [
           this.propIdUser,
           this.propEndpointURL,
@@ -66,7 +66,7 @@ export class SubscriptionPush {
   async delete() {
     try {
       const [result] = await connection.execute(
-        "delete from subscription where endpointURL=?",
+        "delete from subscriptions where endpointURL=?",
         [this.propEndpointURL]
       );
 
@@ -78,7 +78,7 @@ export class SubscriptionPush {
   async getSubscriptionsByIdUser() {
     try {
       const [results] = await connection.execute(
-        "select * from subscription where idUser=?",
+        "select * from subscriptions where idUser=?",
         [this.propIdUser]
       );
       return results;
@@ -90,7 +90,7 @@ export class SubscriptionPush {
   async getSubscriptionByEndpoint() {
     try {
       const [results] = await connection.execute(
-        "select * from subscription where endpointURL=?",
+        "select * from subscriptions where endpointURL=?",
         [this.propEndpointURL]
       );
       return results;

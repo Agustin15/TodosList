@@ -1,11 +1,11 @@
 import { Storage } from "../model/storageModel.js";
-import { FileService } from "./fileService.js";
+import { File } from "../model/fileModel.js";
 
 export const StorageService = {
   getStorageFilesUsedByUser: async (idUser) => {
     try {
-      const filesUser = await FileService.findAllFilesUser(idUser);
-      const storageModel = new Storage(idUser, filesUser);
+      const fileModel = new File();
+      const storageModel = new Storage(idUser, fileModel);
 
       const storageUsed = storageModel.calculateStorageFilesUsedByUser();
 

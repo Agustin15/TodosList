@@ -16,7 +16,7 @@ export class ScheduledJob {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO scheduledJob (idNotification) values (?)",
+        "INSERT INTO scheduled_jobs (idNotification) values (?)",
         [this.propIdNotification]
       );
 
@@ -28,7 +28,7 @@ export class ScheduledJob {
   async getJobByIdNotification() {
     try {
       const [result] = await connection.execute(
-        "select * from scheduledjob where idNotification=?",
+        "select * from scheduled_jobs where idNotification=?",
         [this.propIdNotification]
       );
 

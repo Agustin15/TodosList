@@ -1,5 +1,5 @@
 import { User } from "../model/userModel.js";
-import bcrypt, { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 
 const userModel = new User();
 

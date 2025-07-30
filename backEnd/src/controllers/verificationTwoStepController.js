@@ -3,13 +3,11 @@ import { VerificationTwoStepService } from "../services/verificationTwoStepServi
 
 export const addVerificationTwoStep = async (req, res) => {
   try {
-
     const validAuth = await authRequest(req, res);
 
     if (!req.body) throw new Error("Body request null");
 
-    if (req.body.confirmPassword == null)
-      throw new Error("confirmPassword undefined");
+    if (!req.body.confirmPassword) throw new Error("confirmPassword undefined");
 
     let confirmPassword = req.body.confirmPassword;
 
@@ -48,8 +46,11 @@ export const updateStateVerificationByUser = async (req, res) => {
   try {
     if (!req.body) throw new Error("Body request null");
 
-    if (req.body.newState == null) throw new Error("New state undefined");
+    if (req.body.newState == null) throw new Error("newState undefined");
 
+    if (!req.body.confirmPassword) throw new Error("confirmPassword undefined");
+
+    let confirmPassword = req.body.confirmPassword;
     let newState = req.body.newState;
 
     const validAuth = await authRequest(req, res);
@@ -57,7 +58,8 @@ export const updateStateVerificationByUser = async (req, res) => {
     const verificationFound =
       await VerificationTwoStepService.changeStateVerificationTwoStep(
         validAuth.idUser,
-        newState
+        newState,
+        confirmPassword
       );
 
     res.status(200).json(verificationFound);

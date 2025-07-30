@@ -30,7 +30,7 @@ constraint fk_idTask foreign key(idTask) references tasks(idTask) on delete casc
 );
 
 
-CREATE TABLE subscription(
+CREATE TABLE subscriptions(
 idUser int NOT NULL,
 endpointURL varchar(200) NOT NULL primary key,
 p256dh varchar(100) NOT NULL,
@@ -46,7 +46,7 @@ datetimeSend datetime not null,
 state varchar(50) not null,
 constraint fk_idTaskNotification foreign key(idTask) references tasks(idTask )on delete cascade
 );
-CREATE TABLE scheduledJob(
+CREATE TABLE scheduled_jobs(
 idJob int not null primary key auto_increment,
 idNotification int not null,
 constraint fk_idNotification foreign key(idNotification) references notifications(idNotification) on delete cascade
@@ -56,22 +56,22 @@ CREATE TABLE notifications_subscription(
 idNotification int not null,
 endpointURL varchar(200) not null,
 constraint fk_idNotificationSubscription foreign key(idNotification) references notifications(idNotification) on delete cascade,
-constraint fk_endpointUrl foreign key(endpointURL) references subscription(endpointURL) on delete cascade,
+constraint fk_endpointUrl foreign key(endpointURL) references subscriptions(endpointURL) on delete cascade,
 primary key(idNotification,endpointURL)
 );
 
 
-CREATE TABLE verificationTwoStep(
+CREATE TABLE verifications_two_step(
 idVerification int not null primary key auto_increment,
 idUser int not null,
 enabled tinyint not null,
 constraint fk_idUserVerification foreign key(idUser) references users(idUser) on delete cascade
 );
 
-CREATE TABLE verificationCode(
+CREATE TABLE verifications_code(
 idVerification int not null,
 codeOfVerification int not null,
 expirationTime int not null,
 primary key(idVerification,expirationTime),
-constraint fk_idVerification foreign key(idVerification) references verificationTwoStep(idVerification) 
+constraint fk_idVerification foreign key(idVerification) references verifications_two_step(idVerification) 
 );

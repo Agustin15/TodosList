@@ -1,16 +1,17 @@
 import FormSignUp from "../signUp/FormSignUp";
 import { FormUserProvider } from "../../context/FormUserContext";
 import { LoginProvider } from "../../context/LoginContext";
+import { VerificationTwoStepProvider } from "../../context/VerificationTwoStepContext";
 
 const SignUpPage = () => {
   return (
-
-      <FormUserProvider>
+    <FormUserProvider>
+      <VerificationTwoStepProvider>
         <LoginProvider>
           <FormSignUp></FormSignUp>
         </LoginProvider>
-      </FormUserProvider>
-
+      </VerificationTwoStepProvider>
+    </FormUserProvider>
   );
 };
 

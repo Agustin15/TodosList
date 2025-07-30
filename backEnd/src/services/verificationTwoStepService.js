@@ -26,10 +26,19 @@ export const VerificationTwoStepService = {
     }
   },
 
-  changeStateVerificationTwoStep: async (idUser, newState) => {
+  changeStateVerificationTwoStep: async (idUser, newState, confirmPassword) => {
     try {
+ 
       verificationTwoStepModel.propIdUser = idUser;
       verificationTwoStepModel.propEnabled = newState;
+
+      const userFound = await UserService.findUserByIdUser(idUser);
+
+      if (!userFound) throw new Error("User not found");
+
+      let match = await bcrypt.compare(confirmPassword, userFound.passwordUser);
+
+      if (!match) throw new Error("Password entered is incorrect");
 
       const verificationTwoStepUpdated = await verificationTwoStepModel.patch();
 

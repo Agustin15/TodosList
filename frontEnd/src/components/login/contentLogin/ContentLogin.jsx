@@ -6,9 +6,11 @@ import logo from "../../../assets/img/logo.png";
 import WelcomeFormSignUp from "../../signUp/welcomeSignUp/WelcomeFormSignUp.jsx";
 import AlertForm from "../../signUp/alertForm/AlertForm.jsx";
 import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
+import { VerificationTwoStep } from "../verificationTwoStep/verificationTwoStep.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
+import { useVerificationTwoStep } from "../../../context/VerificationTwoStepContext.jsx";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ContentLogin = () => {
@@ -23,15 +25,12 @@ const ContentLogin = () => {
   } = useFormUser();
 
   const { fetchLogin, loading } = useLogin();
+  const { showVerificationTwoStep } = useVerificationTwoStep();
 
   useEffect(() => {
     if (user) {
       const resultSignIn = async () => {
-        const login = await fetchLogin(user, `/api/login/`);
-
-        if (login) {
-          location.href = `${urlFront}dashboard`;
-        }
+        await fetchLogin(user, `/api/login/`);
       };
 
       resultSignIn();
@@ -46,7 +45,14 @@ const ContentLogin = () => {
         optionLink={"Sign up"}
         link={`${urlFront}signup`}
       ></WelcomeFormSignUp>
-      <div className={classesStyle.form}>
+
+      {showVerificationTwoStep && <VerificationTwoStep />}
+
+      <div
+        className={
+          showVerificationTwoStep ? classesStyle.formHidden : classesStyle.form
+        }
+      >
         <div className={classesStyle.titleResponsive}>
           <img src={logo}></img>
           <h3>Welcome to TodoList!</h3>

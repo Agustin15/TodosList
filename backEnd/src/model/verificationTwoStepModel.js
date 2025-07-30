@@ -23,7 +23,7 @@ export class VerificationTwoStep {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO verificationTwoStep (idUser,enabled) values (?,?)",
+        "INSERT INTO verifications_two_step (idUser,enabled) values (?,?)",
         [this.propIdUser, this.propEnabled]
       );
 
@@ -36,7 +36,7 @@ export class VerificationTwoStep {
   async patch() {
     try {
       const [result] = await connection.execute(
-        "update verificationTwoStep set enabled=? where idUser=?",
+        "update verifications_two_step set enabled=? where idUser=?",
         [this.propEnabled, this.propIdUser]
       );
 
@@ -50,7 +50,7 @@ export class VerificationTwoStep {
 
     try {
       const [results] = await connection.execute(
-        "select * from verificationTwoStep where idUser=?",
+        "select * from verifications_two_step where idUser=?",
         [this.propIdUser]
       );
 
