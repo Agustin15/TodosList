@@ -1,3 +1,4 @@
+import connection from "../config/database.js";
 import { VerificationCode } from "../model/verificationCodeModel.js";
 import { VerificationTwoStepService } from "../services/verificationTwoStepService.js";
 import bcrypt from "bcrypt";
@@ -7,6 +8,7 @@ const verificationCodeModel = new VerificationCode();
 export const VerificationCodeService = {
   sendVerificationCode: async (idUser) => {
     try {
+      await connection.beginTransaction();
       const verificationFound =
         await VerificationTwoStepService.findVerificationByUser(idUser);
 
@@ -41,8 +43,10 @@ export const VerificationCodeService = {
       if (!verificationSent)
         throw new Error("Failed to send verification email");
 
+      await connection.commit();
       return verificationSent;
     } catch (error) {
+      await connection.rollback();
       throw error;
     }
   },
