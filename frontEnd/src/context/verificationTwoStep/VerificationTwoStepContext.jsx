@@ -3,9 +3,12 @@ import { createContext } from "react";
 import {
   AlertConfirmPasswordToVerification,
   AlertFormSwal
-} from "../components/sweetAlert/sweetAlert.js";
-import { useWindowSize } from "./WindowSizeContext.jsx";
+} from "../../components/sweetAlert/sweetAlert.js";
+
+import { useWindowSize } from "../WindowSizeContext.jsx";
 import { useState } from "react";
+import { configKeyboard } from "./configKeyboard.js";
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 const VerificationTwoStepContext = createContext();
 
@@ -13,6 +16,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
   const { windowWidth } = useWindowSize();
   const [showVerificationTwoStep, setShowVerificationTwoStep] = useState(false);
   const [idUser, setIdUser] = useState();
+  const [loading, setLoading] = useState(false);
   const refInput = useRef();
 
   const handleActivateVerification = async () => {
@@ -73,6 +77,41 @@ export const VerificationTwoStepProvider = ({ children }) => {
     }
   };
 
+  const fetchVerifyVerificationCode = async (codeEntered) => {
+    let data;
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "/api/verificationCode/" +
+          JSON.stringify({ option: "comprobateVerificationCode" }),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ idUser: idUser, codeEntered: codeEntered })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status == 401) {
+          location.href = urlFront + "login";
+        }
+        throw result.messageError;
+      }
+
+      if (result) data = result;
+    } catch (error) {
+      console.log(error);
+      AlertFormSwal(error, "Oops", "error", windowWidth);
+    } finally {
+      setLoading(false);
+      if (data) location.href = urlFront + "dashboard";
+    }
+  };
+
   const fetchGetVerificationTwoStepUser = async () => {
     let data;
     try {
@@ -107,56 +146,25 @@ export const VerificationTwoStepProvider = ({ children }) => {
     return true;
   };
   const handleComprobateVerificationCode = (code) => {
-    if (code.length != 6 || !verifyCharsValidCode(code))
+    if (code.length != 6 || !verifyCharsValidCode(code)) {
       AlertFormSwal(
         "Enter a valid verification code",
         "Warning",
         "warning",
         windowWidth
       );
+    } else fetchVerifyVerificationCode(code);
   };
 
   const handleKeyChar = (event, btnValue) => {
     refInput.current.focus();
-    switch (true) {
-      case btnValue.value >= 0 && btnValue.value <= 9:
-        refInput.current.value += btnValue.value;
-        break;
-      case btnValue.value == "clean":
-        refInput.current.value = "";
-        break;
-      case btnValue.value == "next":
-        if (refInput.current.value.length > 0) {
-          positionCursor("forward", refInput.current.selectionStart + 1);
-        }
-        break;
-      case btnValue.value == "back":
-        if (refInput.current.value.length > 0) {
-          positionCursor("backward", refInput.current.selectionStart - 1);
-        }
-        break;
-      case btnValue.value == "delete":
-        if (refInput.current.value.length > 0) {
-          const newValue = Array.from(refInput.current.value).filter(
-            (number, index) => index != refInput.current.selectionStart - 1
-          );
-
-          refInput.current.value = newValue.join("");
-          positionCursor("backward", refInput.current.selectionStart - 1);
-        }
-        break;
-    }
-  };
-
-  const positionCursor = (direction, position) => {
-    if (refInput.current.value.length > 0) {
-      refInput.current.setSelectionRange(position, position, direction);
-    }
+    configKeyboard(refInput, btnValue);
   };
 
   return (
     <VerificationTwoStepContext.Provider
       value={{
+        loading,
         handleActivateVerification,
         fetchSendVerificationCode,
         fetchGetVerificationTwoStepUser,

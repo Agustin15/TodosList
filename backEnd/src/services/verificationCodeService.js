@@ -64,16 +64,20 @@ export const VerificationCodeService = {
       if (verificationsCodeFound.length == 0)
         throw new Error("Verifications code not found");
 
+      let notMatch = 0;
       for (const verificationCodeFound of verificationsCodeFound) {
         let match = await bcrypt.compare(
-          codeEntered.toString(),
+          codeEntered,
           verificationCodeFound.codeOfVerification
         );
 
         if (match && verificationCodeFound.expirationTime > Date.now()) {
           return true;
-        } else throw new Error("Verification code entered not recognized");
+        } else notMatch++;
       }
+
+      if (notMatch == verificationsCodeFound.length)
+        throw new Error("Verification code entered not recognized");
     } catch (error) {
       throw error;
     }

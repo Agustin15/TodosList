@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import errorIcon from "../assets/img/errorIcon.ico";
 import { useFormUser } from "./FormUserContext";
-import { useVerificationTwoStep } from "./VerificationTwoStepContext";
+import { useVerificationTwoStep } from "./verificationTwoStep/VerificationTwoStepContext";
 const LoginContext = createContext();
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
@@ -19,7 +19,7 @@ export const LoginProvider = ({ children }) => {
     }
   };
 
-  const fetchLogin = async (user, url) => {
+  const fetchLogin = async (user, url, option) => {
     let data = null;
     setLoading(true);
     try {
@@ -47,7 +47,10 @@ export const LoginProvider = ({ children }) => {
       });
     } finally {
       setLoading(false);
-      if (data) login(data);
+
+      if (option == "login") {
+        if (data) login(data);
+      } else return data;
     }
   };
 

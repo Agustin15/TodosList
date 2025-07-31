@@ -130,7 +130,8 @@ export class VerificationCode {
         to: emailUser,
         subject: "Todolist verification code",
         html: `<p>Hi,your one-time verification code:<h3>${this.propCode}</h3></p><br>
-              <p>This code expires after 5 minutes.If you did not request this,please change your password or 
+              <p>This code expires after 5 minutes,</p>
+              <p>if you did not request this,please change your password or 
               contact us</p>`
       });
 

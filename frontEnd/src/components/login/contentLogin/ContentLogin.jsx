@@ -10,7 +10,7 @@ import { VerificationTwoStep } from "../verificationTwoStep/verificationTwoStep.
 import { useFormUser } from "../../../context/FormUserContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
-import { useVerificationTwoStep } from "../../../context/VerificationTwoStepContext.jsx";
+import { useVerificationTwoStep } from "../../../context/verificationTwoStep/VerificationTwoStepContext.jsx";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ContentLogin = () => {
@@ -30,7 +30,7 @@ const ContentLogin = () => {
   useEffect(() => {
     if (user) {
       const resultSignIn = async () => {
-        await fetchLogin(user, `/api/login/`);
+        await fetchLogin(user, `/api/login/`, "login");
       };
 
       resultSignIn();

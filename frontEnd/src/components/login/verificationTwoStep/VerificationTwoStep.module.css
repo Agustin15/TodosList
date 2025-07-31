@@ -11,7 +11,7 @@
 }
 .containVerificationTwoStep .title {
     padding-top: 1rem;
-    padding-bottom: 2rem;
+    padding-bottom: 0.3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,11 +26,13 @@
     width: 130px;
 }
 .containVerificationTwoStep .title h3 {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .containVerificationTwoStep input {
     width: 36%;
+    border-radius: 45px;
+    border: 2px solid gray;
     font-size: 22px;
     gap: 1rem;
     height: 2.3rem;
@@ -45,7 +47,7 @@
     font-size: 26px;
 }
 .containVerificationTwoStep input:focus {
-    border: 2px solid rgb(80, 220, 255);
+    border: 2px solid rgb(35, 159, 190);
     box-shadow: 0px 1px 6px 2px skyblue;
 }
 
@@ -62,26 +64,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 22%;
+    width: 21%;
 }
 
 .containVerificationTwoStep .keyboard li button {
     font-size: 21px;
     width: 100%;
-    height: 3.3rem;
+    height: 3rem;
     border: 1px solid rgb(201, 201, 201);
     box-shadow: 2px 2px 2px gray;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
-.containVerificationTwoStep .keyboard .optionClean {
-    width: 67%;
+
+.containVerificationTwoStep .keyboard li button span {
+    position: absolute;
 }
 
 .containVerificationTwoStep .keyboard li button img {
     width: 24px;
     height: 24px;
+    position: absolute;
 }
 
 .containVerificationTwoStep .keyboard li button .iconNext {
@@ -90,16 +95,40 @@
     transform: rotateY(180deg);
 }
 
+.glassEffect {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 53%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.containVerificationTwoStep .keyboard .optionClean {
+    width: 64%;
+}
+
 .containVerificationTwoStep .keyboard li button:hover,
 .containVerificationTwoStep .btnVerify:hover {
     box-shadow: none;
     cursor: pointer;
 }
+.containVerificationTwoStep p {
+    margin-top: 1rem;
+}
+.containVerificationTwoStep a {
+    color: rgb(20, 72, 133);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.containVerificationTwoStep a:hover {
+    text-decoration: underline;
+}
 
 .containVerificationTwoStep .btnVerify {
     width: 12rem;
     border: none;
-    margin-top: 2rem;
+    margin-top: 1rem;
     height: 2rem;
     border-radius: 75px;
     box-shadow: 2px 2px 2px gray;
@@ -107,6 +136,39 @@
     color: white;
     font-size: 16px;
     font-weight: bold;
+}
+
+.containVerificationTwoStep .btnVerify img {
+    width: 22px;
+    height: 22px;
+}
+
+.containAlertSentAgainHidden {
+    display: none;
+}
+.containAlertSentAgain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 16px;
+    animation-name: showAlert;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.containAlertSentAgain img {
+    width: 22px;
+    height: 22px;
+}
+
+@keyframes showAlertSent {
+    from {
+        transform: scale(0);
+    }
+
+    from {
+        transform: scale(1);
+    }
 }
 
 @media only screen and (max-width: 699px) {
@@ -185,18 +247,18 @@
     }
 
     .containVerificationTwoStep input {
-        width: 76%;
+        width: 69%;
         font-size: 18px;
         margin-top: 1rem;
         height: 2.3rem;
     }
 
+    .containVerificationTwoStep p {
+        width: 75%;
+        text-align: center;
+    }
     .containVerificationTwoStep .keyboard {
         width: 78%;
-    }
-
-    .containVerificationTwoStep .keyboard .optionClean {
-        width: 67%;
     }
 
     .containVerificationTwoStep .btnVerify {
@@ -280,12 +342,16 @@
     }
 
     .containVerificationTwoStep input {
-        width: 76%;
+        width: 69%;
         font-size: 18px;
         margin-top: 1.4rem;
         height: 2.6rem;
     }
 
+    .containVerificationTwoStep p {
+        width: 75%;
+        text-align: center;
+    }
     .containVerificationTwoStep .keyboard {
         width: 78%;
     }
@@ -295,7 +361,7 @@
     }
 
     .containVerificationTwoStep .keyboard .optionClean {
-        width: 66%;
+        width: 63.6%;
     }
 
     .containVerificationTwoStep .btnVerify {

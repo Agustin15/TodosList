@@ -9,7 +9,7 @@ import { AlertInput } from "./alertInput/AlertInput";
 import { useDataUser } from "../../../context/userDataContext";
 import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
 import { GlassEffect } from "../../glassEffect/GlassEffect.jsx";
-import { useVerificationTwoStep } from "../../../context/VerificationTwoStepContext.jsx";
+import { useVerificationTwoStep } from "../../../context/verificationTwoStep/VerificationTwoStepContext.jsx";
 
 const ContentBody = ({ setModalEditEmail, setModalEditPassword }) => {
   const { windowWidth } = useWindowSize();

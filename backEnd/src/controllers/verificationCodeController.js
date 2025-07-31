@@ -1,4 +1,5 @@
 import { VerificationCodeService } from "../services/verificationCodeService.js";
+import jwt from "jsonwebtoken";
 
 export const sendVerificationCode = async (req, res) => {
   try {
@@ -45,6 +46,31 @@ export const comprobateVerificationCode = async (req, res) => {
         codeEntered,
         idUser
       );
+
+    if (verificationCodeValid) {
+      const token = jwt.sign({ idUser: idUser }, secretKey, {
+        algorithm: "HS256",
+        expiresIn: "1h"
+      });
+
+      const refreshToken = jwt.sign({ idUser: idUser }, secretKeyRefresh, {
+        algorithm: "HS256",
+        expiresIn: "24h"
+      });
+
+      res.cookie("accessToken", token, {
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax"
+      });
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 60 * 60 * 24 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax"
+      });
+    }
 
     res.status(200).json(verificationCodeValid);
   } catch (error) {

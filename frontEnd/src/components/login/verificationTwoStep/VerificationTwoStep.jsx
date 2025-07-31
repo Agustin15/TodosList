@@ -1,23 +1,33 @@
 import styles from "./VerificationTwoStep.module.css";
 import gifLoading from "../../../assets/img/loadingForm.gif";
 import loginIcon from "../../../assets/img/Login.gif";
+import infoIcon from "../../../assets/img/info.png";
 import logo from "../../../assets/img/logo.png";
 import deleteIcon from "../../../assets/img/deleteKeyboard.png";
 import backIcon from "../../../assets/img/backKeyboard.png";
-import { useVerificationTwoStep } from "../../../context/VerificationTwoStepContext";
+import { useVerificationTwoStep } from "../../../context/verificationTwoStep/VerificationTwoStepContext";
 import { useEffect } from "react";
+import { useState } from "react";
 
 export const VerificationTwoStep = () => {
   const {
     handleComprobateVerificationCode,
     handleKeyChar,
     refInput,
-    fetchSendVerificationCode
+    fetchSendVerificationCode,
+    loading
   } = useVerificationTwoStep();
 
-  useEffect(() => {
-    fetchSendVerificationCode();
-  }, []);
+  const [sentAgain, setSentAgain] = useState(false);
+
+  // useEffect(() => {
+  //   fetchSendVerificationCode();
+  // }, []);
+
+  const sendVerificationCodeAgain = async () => {
+    await fetchSendVerificationCode();
+    setSentAgain(true);
+  };
 
   const keyboard = [
     [
@@ -70,8 +80,9 @@ export const VerificationTwoStep = () => {
               }
             >
               <button onClick={(event) => handleKeyChar(event, column)}>
+                <div className={styles.glassEffect}></div>
                 {indexCol != 3 ? (
-                  column.value
+                  <span>{column.value}</span>
                 ) : (
                   <img
                     className={
@@ -86,12 +97,28 @@ export const VerificationTwoStep = () => {
         )}
       </ul>
 
+      <p>
+        Do you not received the code?{" "}
+        <a onClick={sendVerificationCodeAgain}>We are send again</a>
+      </p>
+      <div
+        className={
+          sentAgain
+            ? styles.containAlertSentAgain
+            : styles.containAlertSentAgainHidden
+        }
+      >
+        <img src={infoIcon}></img>
+        <span>Verification code sent again!</span>
+      </div>
+
       <button
         type="button"
         onClick={() => handleComprobateVerificationCode(refInput.current.value)}
         className={styles.btnVerify}
       >
         Verify
+        {loading && <img src={gifLoading}></img>}
       </button>
     </div>
   );

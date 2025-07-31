@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useDataUser } from "../../context/userDataContext";
 import { FormEditEmailProvider } from "../../context/FormEditEmailContext";
 import { FormEditPasswordProvider } from "../../context/FormEditPasswordContext";
-import { VerificationTwoStepProvider } from "../../context/VerificationTwoStepContext";
+import { VerificationTwoStepProvider } from "../../context/verificationTwoStep/VerificationTwoStepContext";
 
 const Profile = () => {
   const [modalEditEmail, setModalEditEmail] = useState(false);

@@ -17,7 +17,7 @@ const ContentFormSignUp = () => {
   useEffect(() => {
     if (user) {
       const resultSignUp = async () => {
-        const result = await fetchLogin(user, `api/signup/`);
+        const result = await fetchLogin(user, `api/signup/`, "signup");
         if (result) {
           cleanForm();
           redirect();
