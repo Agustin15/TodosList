@@ -47,12 +47,12 @@ export class SubscriptionPush {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO subscriptions (idUser,endpointURL,p256dh,auth) values (?,?,?,?)",
+        "INSERT INTO subscriptions (endpointURL,p256dh,auth,idUser) values (?,?,?,?)",
         [
-          this.propIdUser,
           this.propEndpointURL,
           this.propKeyp256dh,
-          this.propAuth
+          this.propAuth,
+          this.propIdUser
         ]
       );
 

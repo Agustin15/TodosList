@@ -11,39 +11,39 @@ passwordUser varchar(60) not null
 
 CREATE TABLE tasks(
 idTask int primary key auto_increment,
-idUser int not null,
 icon varchar(11) not null,
 descriptionTask varchar(130) not null,
 datetimeTask datetime not null,
 isCompleted tinyint not null,
+idUser int not null,
 
 constraint fk_idUser foreign key(idUser) references users(idUser)
 );
 CREATE TABLE files(
 idFile int primary key auto_increment,
-idTask int not null  ,
 nameFile varchar(50) not null,
 typeFile varchar(50) not null,
 datetimeUpload datetime not null,
 fileTask mediumblob not null,
+idTask int not null,
 constraint fk_idTask foreign key(idTask) references tasks(idTask) on delete cascade
 );
 
 
 CREATE TABLE subscriptions(
-idUser int NOT NULL,
 endpointURL varchar(200) NOT NULL primary key,
 p256dh varchar(100) NOT NULL,
 auth varchar(50) NOT NULL,
+idUser int NOT NULL,
 constraint fk_idUserSubscription foreign key(idUser) references users(idUser) on delete cascade
 
 );
 
 CREATE TABLE notifications(
 idNotification int not null primary key auto_increment,
-idTask int not null,
 datetimeSend datetime not null,
 state varchar(50) not null,
+idTask int not null,
 constraint fk_idTaskNotification foreign key(idTask) references tasks(idTask )on delete cascade
 );
 CREATE TABLE scheduled_jobs(
@@ -63,16 +63,15 @@ primary key(idNotification,endpointURL)
 
 CREATE TABLE verifications_two_step(
 idVerification int not null primary key auto_increment,
-idUser int not null,
 enabled tinyint not null,
+idUser int not null,
 constraint fk_idUserVerification foreign key(idUser) references users(idUser) on delete cascade
 );
 
 CREATE TABLE verifications_code(
-idVerification int not null,
-codeOfVerification varchar(60) not null,
+codeOfVerification varchar(60) not null primary key,
 expirationTime bigint not null,
-primary key(idVerification,expirationTime),
+idVerification int not null,
 constraint fk_idVerification foreign key(idVerification) references verifications_two_step(idVerification) 
 );
 

@@ -69,13 +69,13 @@ export class Task {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO tasks (idUser,icon,descriptionTask,datetimeTask,isCompleted) VALUES (?,?,?,?,?)",
+        "INSERT INTO tasks (icon,descriptionTask,datetimeTask,isCompleted,idUser) VALUES (?,?,?,?,?)",
         [
-          this.propIdUser,
           this.propIcon,
           this.propDescription,
           this.propDatetime,
-          this.propIsCompleted
+          this.propIsCompleted,
+          this.propIdUser
         ]
       );
       return result.affectedRows;

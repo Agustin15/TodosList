@@ -51,8 +51,8 @@ export class Notification {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO notifications (idTask,datetimeSend,state) values (?,?,?)",
-        [this.propIdTask, this.propDatetimeSend, this.propState]
+        "INSERT INTO notifications (datetimeSend,state,idTask) values (?,?,?)",
+        [this.propDatetimeSend, this.propState, this.propIdTask]
       );
 
       return result.affectedRows;

@@ -70,8 +70,8 @@ export class VerificationCode {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO verifications_code (idVerification,codeOfVerification,expirationTime) values(?,?,?)",
-        [this.propIdVerification, this.propCodeHash, this.propExpirationTime]
+        "INSERT INTO verifications_code (codeOfVerification,expirationTime,idVerification) values(?,?,?)",
+        [this.propCodeHash, this.propExpirationTime, this.propIdVerification]
       );
 
       return result.affectedRows;

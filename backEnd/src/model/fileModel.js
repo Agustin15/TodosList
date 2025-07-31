@@ -66,8 +66,8 @@ export class File {
   async post() {
     try {
       const [result] = await connection.execute(
-        "Insert into files (idTask,nameFile,typeFile,datetimeUpload,fileTask) values(?,?,?,CURRENT_TIME(),?)",
-        [this.propIdTask, this.propNameFile, this.propTypeFile, this.propFile]
+        "Insert into files (nameFile,typeFile,datetimeUpload,fileTask,idTask) values(?,?,CURRENT_TIME(),?,?)",
+        [this.propNameFile, this.propTypeFile, this.propFile, this.propIdTask]
       );
       return result.affectedRows;
     } catch (error) {
