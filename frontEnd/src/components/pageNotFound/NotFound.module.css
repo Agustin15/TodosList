@@ -1,0 +1,32 @@
+.notFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    height: 89vh;
+}
+.notFound img {
+    width: 372px;
+    height: 372px;
+}
+
+@media only screen and (max-width: 699px) {
+    .notFound {
+        height: 84vh;
+    }
+    .notFound img {
+        width: 272px;
+        height: 272px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .notFound {
+        height: 87vh;
+    }
+    .notFound img {
+        width: 252px;
+        height: 252px;
+    }
+}

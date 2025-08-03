@@ -74,7 +74,3 @@ expirationTime bigint not null,
 idVerification int not null,
 constraint fk_idVerification foreign key(idVerification) references verifications_two_step(idVerification) 
 );
-
-
-
-

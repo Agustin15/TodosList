@@ -39,6 +39,14 @@ export const comprobateVerificationCode = async (req, res) => {
       throw new Error("codeEntered undefined");
     }
 
+    if (!process.env.JWT_SECRET_KEY)
+      throw new Error("JWT secret key not declared");
+    if (!process.env.JWT_SECRET_KEY_REFRESH)
+      throw new Error("JWT secret refresh key not declared");
+
+    const secretKey = process.env.JWT_SECRET_KEY;
+    const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
+    
     const { idUser, codeEntered } = req.body;
 
     const verificationCodeValid =

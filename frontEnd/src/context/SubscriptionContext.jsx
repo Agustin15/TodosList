@@ -28,6 +28,7 @@ export const SubscriptionProvider = ({ children }) => {
       let register = await getRegisterSW();
       let subscription = await register.pushManager.getSubscription();
       setSubscribed(subscription);
+      
     } catch (error) {
       console.log(error);
     } finally {
@@ -120,6 +121,7 @@ export const SubscriptionProvider = ({ children }) => {
         let unsubscribe = await subscribed.unsubscribe();
         if (unsubscribe) {
           setSubscribed();
+          setEndpointSubscription();
           showAlert();
         }
       }
@@ -128,7 +130,11 @@ export const SubscriptionProvider = ({ children }) => {
 
   const fetchDeleteSubscriptions = async () => {
     let data;
-    let param = { endpoint: encodeURIComponent(subscribed.endpoint) };
+    let param = {
+      endpoint: encodeURIComponent(
+        subscribed ? subscribed.endpoint : endpointSubscription
+      )
+    };
     try {
       const response = await fetch(
         "/api/subscription/" + JSON.stringify(param),

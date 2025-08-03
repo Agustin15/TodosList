@@ -11,12 +11,14 @@ import { FileViewerPage } from "./components/pages/FileViewerPage";
 import { NotificationsPage } from "./components/pages/NotificationsPage";
 import { FilesPage } from "./components/pages/FilesPage";
 import { Home } from "./components/home/Home";
+import { PageNotFound } from "./components/pages/PageNotFound";
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/*" element={<Home />}></Route>
+        <Route path="/*" element={<PageNotFound />}></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/signup" element={<SignUpPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>

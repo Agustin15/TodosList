@@ -9,15 +9,22 @@ export const Footer = ({ setOpenFormHelp }) => {
       <div className={styles.contact}>
         <span>You can contact us!</span>
         <ul>
-          <li>
-            <img src={phoneContactIcon}></img>
-          </li>
-          <li>
-            <img src={emailContactIcon}></img>
-          </li>
-          <li>
-            <img src={linkedinContactIcon}></img>
-          </li>
+          <a href="https://wa.me/<number>">
+            <li>
+              <img src={phoneContactIcon}></img>
+            </li>
+          </a>
+
+          <a href="mailto:<email>">
+            <li>
+              <img src={emailContactIcon}></img>
+            </li>
+          </a>
+          <a href="https://www.linkedin.com/in/<profile>/">
+            <li>
+              <img src={linkedinContactIcon}></img>
+            </li>
+          </a>
         </ul>
       </div>
 

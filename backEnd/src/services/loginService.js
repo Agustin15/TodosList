@@ -5,9 +5,10 @@ import jwt from "jsonwebtoken";
 
 export const LoginService = {
   login: async (email, password) => {
-    if (!process.env.JWT_SECRET_KEY) throw new Error("JWT secret key");
+    if (!process.env.JWT_SECRET_KEY)
+      throw new Error("JWT secret key not declared");
     if (!process.env.JWT_SECRET_KEY_REFRESH)
-      throw new Error("JWT secret refresh key");
+      throw new Error("JWT secret refresh key not declared");
 
     const secretKey = process.env.JWT_SECRET_KEY;
     const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;

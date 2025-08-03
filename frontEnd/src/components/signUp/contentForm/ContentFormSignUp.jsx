@@ -31,7 +31,7 @@ const ContentFormSignUp = () => {
   const redirect = () => {
     setOpenAlertSuccesfully(true);
     setTimeout(function () {
-      location.href = urlFront + "/login";
+      location.href = urlFront + "login";
     }, 3000);
   };
 

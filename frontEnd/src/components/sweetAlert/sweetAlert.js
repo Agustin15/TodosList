@@ -101,9 +101,9 @@ export const AlertConfirmPasswordToVerification = async (
         else {
           AlertFormSwal(
             `Verification two step ${
-              !verificationTwoStep || verificationTwoStep.enabled
-                ? "desactivated"
-                : "activated"
+              !verificationTwoStep || !verificationTwoStep.enabled
+                ? "activated"
+                : "desactivated"
             } successfully!`,
             "Success",
             "success",

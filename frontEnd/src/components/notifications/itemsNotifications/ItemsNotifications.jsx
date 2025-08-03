@@ -17,7 +17,7 @@ export const ItemsNotifications = ({ notifications }) => {
 
   const redirectToTask = (notification) => {
     if (notification.state == "seen")
-      location.href = "/tasks/" + notification.idTask;
+      location.href = "/tasks?idTask=" + notification.idTask;
     else fetchPatchStateNotification(notification);
   };
   return (

@@ -20,9 +20,11 @@ export const VerificationTwoStep = () => {
 
   const [sentAgain, setSentAgain] = useState(false);
 
-  // useEffect(() => {
-  //   fetchSendVerificationCode();
-  // }, []);
+  useEffect(() => {
+    if (!sentAgain) {
+      fetchSendVerificationCode();
+    }
+  }, []);
 
   const sendVerificationCodeAgain = async () => {
     await fetchSendVerificationCode();

@@ -1,9 +1,11 @@
 const urlLocalhostFrontend = "http://localhost:5173/";
+let subscription;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open("resources").then((cache) => cache.addAll(["/logo.png"]))
   );
+
   self.skipWaiting();
 });
 
@@ -64,3 +66,5 @@ self.addEventListener("notificationclick", (event) => {
     else event.target.clients.openWindow(url);
   });
 });
+
+
