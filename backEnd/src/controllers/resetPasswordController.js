@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { ResetPasswordService } from "../services/resetPasswordService.js";
-import { authRequestResetPassword } from "../auth/auth.js";
+import { authRequestByHeader } from "../auth/auth.js";
 
 export const sendEmailToReset = async (req, res) => {
   try {
@@ -33,7 +33,7 @@ export const sendEmailToReset = async (req, res) => {
 
 export const updatePasswordByEmail = async (req, res) => {
   try {
-    const decodeToken = await authRequestResetPassword(req, res);
+    const decodeToken = await authRequestByHeader(req, res);
 
     if (!req.body || Object.values(req.body).length == 0) {
       throw new Error("Body request null");

@@ -27,10 +27,11 @@ export const login = async (req, res) => {
         sameSite: "lax"
       });
       res.status(200).json({ userHasVerification: false });
-    } else if (loginResult.idUser)
-      res
-        .status(200)
-        .json({ userHasVerification: true, idUser: loginResult.idUser });
+    } else if (loginResult.tokenVerification)
+      res.status(200).json({
+        userHasVerification: true,
+        tokenVerification: loginResult.tokenVerification
+      });
   } catch (error) {
     res.status(401).json({ messageError: error.message });
   }

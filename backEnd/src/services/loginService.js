@@ -1,6 +1,7 @@
 import { UserService } from "./userService.js";
 import { VerificationTwoStepService } from "./verificationTwoStepService.js";
-import bcrypt, { hash } from "bcrypt";
+import { VerificationCodeService } from "./verificationCodeService.js";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const LoginService = {
@@ -20,31 +21,45 @@ export const LoginService = {
     }
 
     let verifyPassword = await bcrypt.compare(password, userFound.passwordUser);
-    if (!verifyPassword) {
+    if (!verifyPassword)
       throw new Error("Authentication failed,invalid password entered");
-    } else {
-      const verificationTwoStepFound =
-        await VerificationTwoStepService.findVerificationByUser(
-          userFound.idUser
-        );
 
-      if (!verificationTwoStepFound || verificationTwoStepFound.enabled == 0) {
-        const token = jwt.sign({ idUser: userFound.idUser }, secretKey, {
+    const verificationTwoStepFound =
+      await VerificationTwoStepService.findVerificationByUser(userFound.idUser);
+
+    if (!verificationTwoStepFound || verificationTwoStepFound.enabled == 0) {
+      const token = jwt.sign({ idUser: userFound.idUser }, secretKey, {
+        algorithm: "HS256",
+        expiresIn: "1h"
+      });
+
+      const refreshToken = jwt.sign(
+        { idUser: userFound.idUser },
+        secretKeyRefresh,
+        {
           algorithm: "HS256",
-          expiresIn: "1h"
-        });
+          expiresIn: "24h"
+        }
+      );
 
-        const refreshToken = jwt.sign(
-          { idUser: userFound.idUser },
-          secretKeyRefresh,
-          {
-            algorithm: "HS256",
-            expiresIn: "24h"
-          }
-        );
+      return { login: true, token: token, refreshToken: refreshToken };
+    } else {
+      const verificationCodeSent =
+        await VerificationCodeService.sendVerificationCode(userFound.idUser);
 
-        return { login: true, token: token, refreshToken: refreshToken };
-      } else return { login: true, idUser: userFound.idUser };
+      if (!verificationCodeSent)
+        throw new Error("Failed to send verification code");
+
+      const tokenVerification = jwt.sign(
+        { email: userFound.email, idUser: userFound.idUser },
+        secretKey,
+        {
+          algorithm: "HS256",
+          expiresIn: "5m"
+        }
+      );
+
+      return { login: true, tokenVerification: tokenVerification };
     }
   }
 };

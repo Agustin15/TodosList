@@ -1,3 +1,10 @@
+.rowVerificationTwoStep {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .containVerificationTwoStep {
     width: 50%;
     height: auto;
@@ -16,6 +23,7 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    width: 99%;
 }
 
 .titleResponsive {
@@ -26,7 +34,15 @@
     width: 130px;
 }
 .containVerificationTwoStep .title h3 {
-    font-size: 18px;
+    font-size: 19px;
+    font-weight: normal;
+    text-align: center;
+    width: 98%;
+}
+.containVerificationTwoStep .title h3 a {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
 }
 
 .containVerificationTwoStep input {
@@ -127,6 +143,10 @@
 }
 
 .containVerificationTwoStep .btnVerify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
     width: 12rem;
     border: none;
     margin-top: 1rem;
@@ -239,12 +259,15 @@
         gap: 0.5rem;
         height: auto;
         padding-bottom: 0;
+        width: 99%;
     }
     .containVerificationTwoStep .title img {
         width: 120px;
     }
     .containVerificationTwoStep .title h3 {
         font-size: 18px;
+        text-align: center;
+        width: 98%;
     }
 
     .containVerificationTwoStep input {
@@ -334,12 +357,15 @@
         gap: 0.5rem;
         height: auto;
         padding-bottom: 0;
+        width: 99%;
     }
     .containVerificationTwoStep .title img {
         width: 124px;
     }
     .containVerificationTwoStep .title h3 {
         font-size: 21px;
+        text-align: center;
+        width: 98%;
     }
 
     .containVerificationTwoStep input {

@@ -1,10 +1,12 @@
 import express from "express";
 import {
   sendVerificationCode,
-  comprobateVerificationCode
+  comprobateVerificationCode,
+  dataToken
 } from "../controllers/verificationCodeController.js";
 export const verificationCodeRoutes = express.Router();
 
+verificationCodeRoutes.get("/", dataToken);
 verificationCodeRoutes.post("/:option", (req, res) => {
   if (!req.params) {
     throw new Error("Params request null");

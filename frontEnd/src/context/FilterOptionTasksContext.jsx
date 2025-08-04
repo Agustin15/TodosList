@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { createContext } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useTasks } from "./TaskContext";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import SignUpPage from "./components/pages/SignUpPage";
 import TodoListPage from "./components/pages/TodoListPage";
 import LoginPage from "./components/pages/LoginPage";
+import { VerificationTwoStepPage } from "./components/pages/VerificationTwoStepPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import NewPasswordPage from "./components/pages/NewPasswordPage";
 import ProfilePage from "./components/pages/ProfilePage";
@@ -22,6 +23,10 @@ const App = () => {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/signup" element={<SignUpPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
+        <Route
+          path="/verificationTwoStep"
+          element={<VerificationTwoStepPage />}
+        ></Route>
         <Route path="/dashboard" element={<DashboardPage />}></Route>
         <Route path="/tasks" element={<TodoListPage />}></Route>
         <Route path="/calendar" element={<CalendarPage />}></Route>

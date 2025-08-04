@@ -14,9 +14,8 @@ const VerificationTwoStepContext = createContext();
 
 export const VerificationTwoStepProvider = ({ children }) => {
   const { windowWidth } = useWindowSize();
-  const [showVerificationTwoStep, setShowVerificationTwoStep] = useState(false);
-  const [idUser, setIdUser] = useState();
   const [loading, setLoading] = useState(false);
+  const [decodeToken, setDecodeToken] = useState();
   const refInput = useRef();
 
   const handleActivateVerification = async () => {
@@ -45,7 +44,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
     );
   };
 
-  const fetchSendVerificationCode = async () => {
+  const fetchSendVerificationCode = async (decodeToken) => {
     let data;
     try {
       const response = await fetch(
@@ -56,28 +55,29 @@ export const VerificationTwoStepProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ idUser: idUser })
+          body: JSON.stringify({
+            idUser: decodeToken.idUser,
+            option: "sendAgain"
+          })
         }
       );
 
       const result = await response.json();
 
       if (!response.ok) {
-        if (response.status == 401) {
-          location.href = urlFront + "login";
-        }
         throw result.messageError;
       }
 
       if (result) data = result;
     } catch (error) {
+      AlertFormSwal(error, "Oops", "error", windowWidth);
       console.log(error);
     } finally {
       return data;
     }
   };
 
-  const fetchVerifyVerificationCode = async (codeEntered) => {
+  const fetchVerifyVerificationCode = async (codeEntered, token) => {
     let data;
     setLoading(true);
     try {
@@ -87,18 +87,16 @@ export const VerificationTwoStepProvider = ({ children }) => {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.stringify(token)}`
           },
-          body: JSON.stringify({ idUser: idUser, codeEntered: codeEntered })
+          body: JSON.stringify({ codeEntered: codeEntered })
         }
       );
 
       const result = await response.json();
 
       if (!response.ok) {
-        if (response.status == 401) {
-          location.href = urlFront + "login";
-        }
         throw result.messageError;
       }
 
@@ -109,6 +107,35 @@ export const VerificationTwoStepProvider = ({ children }) => {
     } finally {
       setLoading(false);
       if (data) location.href = urlFront + "dashboard";
+    }
+  };
+
+  const fetchDecodeVerificationToken = async (token) => {
+    let data;
+    try {
+      const response = await fetch("/api/verificationCode/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.stringify(token)}`
+        }
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status == 401) {
+          location.href = urlFront + "login";
+        }
+        throw result.messageError;
+      }
+
+      if (result) data = result;
+    } catch (error) {
+      console.log(error);
+    } finally {
+     
+      setDecodeToken(data);
     }
   };
 
@@ -145,7 +172,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
     }
     return true;
   };
-  const handleComprobateVerificationCode = (code) => {
+  const handleComprobateVerificationCode = (code, token) => {
     if (code.length != 6 || !verifyCharsValidCode(code)) {
       AlertFormSwal(
         "Enter a valid verification code",
@@ -153,7 +180,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
         "warning",
         windowWidth
       );
-    } else fetchVerifyVerificationCode(code);
+    } else fetchVerifyVerificationCode(code, token);
   };
 
   const handleKeyChar = (event, btnValue) => {
@@ -165,16 +192,14 @@ export const VerificationTwoStepProvider = ({ children }) => {
     <VerificationTwoStepContext.Provider
       value={{
         loading,
+        decodeToken,
         handleActivateVerification,
         fetchSendVerificationCode,
         fetchGetVerificationTwoStepUser,
-        showVerificationTwoStep,
-        setShowVerificationTwoStep,
+        fetchDecodeVerificationToken,
         handleComprobateVerificationCode,
         handleKeyChar,
-        refInput,
-        setIdUser,
-        idUser
+        refInput
       }}
     >
       {children}

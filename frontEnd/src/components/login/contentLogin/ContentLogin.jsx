@@ -6,11 +6,10 @@ import logo from "../../../assets/img/logo.png";
 import WelcomeFormSignUp from "../../signUp/welcomeSignUp/WelcomeFormSignUp.jsx";
 import AlertForm from "../../signUp/alertForm/AlertForm.jsx";
 import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
-import { VerificationTwoStep } from "../verificationTwoStep/verificationTwoStep.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
-import { useVerificationTwoStep } from "../../../context/verificationTwoStep/VerificationTwoStepContext.jsx";
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ContentLogin = () => {
@@ -25,7 +24,6 @@ const ContentLogin = () => {
   } = useFormUser();
 
   const { fetchLogin, loading } = useLogin();
-  const { showVerificationTwoStep } = useVerificationTwoStep();
 
   useEffect(() => {
     if (user) {
@@ -46,13 +44,7 @@ const ContentLogin = () => {
         link={`${urlFront}signup`}
       ></WelcomeFormSignUp>
 
-      {showVerificationTwoStep && <VerificationTwoStep />}
-
-      <div
-        className={
-          showVerificationTwoStep ? classesStyle.formHidden : classesStyle.form
-        }
-      >
+      <div className={classesStyle.form}>
         <div className={classesStyle.titleResponsive}>
           <img src={logo}></img>
           <h3>Welcome to TodoList!</h3>

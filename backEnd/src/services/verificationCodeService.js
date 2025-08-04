@@ -2,12 +2,15 @@ import connection from "../config/database.js";
 import { VerificationCode } from "../model/verificationCodeModel.js";
 import { VerificationTwoStepService } from "../services/verificationTwoStepService.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { UserService } from "./userService.js";
 const verificationCodeModel = new VerificationCode();
 
 export const VerificationCodeService = {
-  sendVerificationCode: async (idUser) => {
+  sendVerificationCode: async (idUser, option) => {
     try {
+      let result;
+
       await connection.beginTransaction();
       const verificationFound =
         await VerificationTwoStepService.findVerificationByUser(idUser);
@@ -36,15 +39,29 @@ export const VerificationCodeService = {
 
       if (!userFound) throw new Error("User not found");
 
-      const verificationSent = await verificationCodeModel.sendCodeByEmail(
-        userFound.email
-      );
+      result = await verificationCodeModel.sendCodeByEmail(userFound.email);
 
-      if (!verificationSent)
-        throw new Error("Failed to send verification email");
+      if (!result) throw new Error("Failed to send verification email");
+
+      if (option == "sendAgain") {
+        if (!process.env.JWT_SECRET_KEY)
+          throw new Error("JWT secret key not declared");
+        const secretKey = process.env.JWT_SECRET_KEY;
+
+        const newVerificationToken = jwt.sign(
+          { email: userFound.email, idUser: idUser },
+          secretKey,
+          {
+            algorithm: "HS256",
+            expiresIn: "5m"
+          }
+        );
+
+        result = newVerificationToken;
+      }
 
       await connection.commit();
-      return verificationSent;
+      return result;
     } catch (error) {
       await connection.rollback();
       throw error;

@@ -30,7 +30,7 @@ export const authRequest = async (req, res) => {
   }
 };
 
-export const authRequestResetPassword = async (req, res) => {
+export const authRequestByHeader = async (req, res) => {
   if (!process.env.JWT_SECRET_KEY)
     throw new Error("JWT Secret key not declared");
 

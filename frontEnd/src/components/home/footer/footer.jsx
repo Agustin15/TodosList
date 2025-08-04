@@ -20,7 +20,10 @@ export const Footer = ({ setOpenFormHelp }) => {
               <img src={emailContactIcon}></img>
             </li>
           </a>
-          <a href="https://www.linkedin.com/in/<profile>/">
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/<profile>"
+          >
             <li>
               <img src={linkedinContactIcon}></img>
             </li>
