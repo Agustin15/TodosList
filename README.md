@@ -119,7 +119,7 @@
 
 **_Iniciar localhost watch live con nodemon_**
 
-    npm run dev
+    npm run dev //si genera el error "failed to initizalize database" vuelva a ejecturar el comando y iniciara correctamente
 
 **_Para iniciar localhost pero sin watch live con node_**
 
