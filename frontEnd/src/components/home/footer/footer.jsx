@@ -9,20 +9,20 @@ export const Footer = ({ setOpenFormHelp }) => {
       <div className={styles.contact}>
         <span>You can contact us!</span>
         <ul>
-          <a href="https://wa.me/<number>">
+          <a href="https://wa.me/598514200">
             <li>
               <img src={phoneContactIcon}></img>
             </li>
           </a>
 
-          <a href="mailto:<email>">
+          <a href="mailto:agus20m05@gmail.com">
             <li>
               <img src={emailContactIcon}></img>
             </li>
           </a>
           <a
             target="_blank"
-            href="https://www.linkedin.com/in/<profile>"
+            href="https://www.linkedin.com/in/agustin-miranda-953634239/"
           >
             <li>
               <img src={linkedinContactIcon}></img>
