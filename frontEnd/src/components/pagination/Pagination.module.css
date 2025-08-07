@@ -37,7 +37,6 @@
 }
 
 .containPaginationShow button {
-    background: linear-gradient(rgb(88, 157, 202), rgb(48, 91, 167));
     position: relative;
     border: none;
     box-shadow: 2px 2px 2px gray;
@@ -50,15 +49,14 @@
     justify-content: center;
 }
 
-.containPaginationShow button img {
-    width: 25px;
-    height: 25px;
-    opacity: 41%;
+.containPaginationShow .btnPrevDisabled,
+.containPaginationShow .btnNextDisabled {
+    cursor: auto;
+    background: linear-gradient(rgb(54, 103, 136), rgb(52, 81, 136));
 }
 
-
-.btnNextEnabled:hover {
-    transform: scale(1.1);
+.btnPrevEnabled,
+.btnNextEnabled {
     cursor: pointer;
-    box-shadow: none;
+    background: linear-gradient(rgb(88, 157, 202), rgb(48, 91, 167));
 }

@@ -21,7 +21,6 @@ try {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME
   });
-
 } catch (error) {
   console.error("Database connection failed," + error);
   process.exit(1);

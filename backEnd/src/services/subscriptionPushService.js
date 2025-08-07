@@ -23,6 +23,7 @@ export const SubscriptionPushService = {
   },
   deleteSubscription: async (endpoint) => {
     try {
+      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       connection.beginTransaction();
 
       let notificationsPending =
@@ -64,6 +65,7 @@ export const SubscriptionPushService = {
       connection.commit();
       return deletedSubscription;
     } catch (error) {
+      connection.rollback();
       throw error;
     }
   },

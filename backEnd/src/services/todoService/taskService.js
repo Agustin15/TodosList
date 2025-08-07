@@ -73,6 +73,7 @@ export const TaskService = {
 
   createTask: async (task, idUser, files) => {
     try {
+      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
 
       taskModel.propIdUser = idUser;
@@ -133,6 +134,7 @@ export const TaskService = {
 
   updateTask: async (task, files, idTask, idUser) => {
     try {
+      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
 
       taskModel.propIcon = task.icon;
@@ -230,6 +232,7 @@ export const TaskService = {
     try {
       let jobId;
 
+      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
 
       let notificationFound =

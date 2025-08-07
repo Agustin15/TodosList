@@ -12,8 +12,6 @@ CONSTRAINT check_lastname CHECK(REGEXP_LIKE(lastname,'^[A-Za-z]')),
 CONSTRAINT check_email CHECK(REGEXP_LIKE(email,'^[A-Za-z0-9]+@[a-z]+\\.[a-zA-Z]'))
 );
 
-INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES ("Agustin","Miranda","agus@gmail.com","34redfwrew432");
-
 CREATE TABLE tasks(
 idTask int primary key auto_increment,
 icon varchar(11) not null,
@@ -124,7 +122,7 @@ FOR EACH ROW
 BEGIN
 IF NEW.datetimeUpload<CURDATE() or NEW.datetimeUpload>CURDATE() THEN
  SIGNAL SQLSTATE '45000'
- SET MESSAGE_TEXT = "La fecha de subida del archivo debe ser la actual";
+ SET MESSAGE_TEXT = "La fecha de subida del archivo debe ser igual a la fecha actual";
 END IF;
 END;
 // delimiter ;

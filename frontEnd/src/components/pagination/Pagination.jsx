@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTasks } from "../../context/TaskContext";
 import styles from "./Pagination.module.css";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
-import { GlassEffect } from "../glassEffect/GlassEffect";
+
 
 export const Pagination = () => {
   const { dispatch } = useTasks();

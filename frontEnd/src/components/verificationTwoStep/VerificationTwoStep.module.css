@@ -124,11 +124,17 @@
     width: 64%;
 }
 
-.containVerificationTwoStep .keyboard li button:hover,
 .containVerificationTwoStep .btnVerify:hover {
     box-shadow: none;
     cursor: pointer;
 }
+
+.containVerificationTwoStep .keyboard li button:hover {
+    border: 2px solid rgb(56, 187, 219);
+    box-shadow: 0px 1px 6px 2px skyblue;
+    cursor: pointer;
+}
+
 .containVerificationTwoStep p {
     margin-top: 1rem;
 }

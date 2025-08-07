@@ -26,9 +26,11 @@
     box-shadow: 2px 2px 2px gray;
     background: linear-gradient(rgba(37, 112, 173), rgb(80, 170, 206));
     border-radius: 22px;
+    border: none;
 }
 .pagination .disabled {
     cursor: auto;
+    background: linear-gradient(rgb(24, 76, 119), rgb(46, 88, 105));
 }
 .pagination .enabled {
     cursor: pointer;

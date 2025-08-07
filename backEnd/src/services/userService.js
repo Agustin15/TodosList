@@ -1,5 +1,6 @@
 import { User } from "../model/userModel.js";
 import bcrypt from "bcrypt";
+import connection from "../config/database.js";
 
 const userModel = new User();
 
@@ -8,6 +9,10 @@ export const UserService = {
     try {
       userModel.propName = userToAdd.name;
       userModel.propLastname = userToAdd.lastname;
+
+      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      
+      await connection.beginTransaction();
       const userFoundByEmail = await UserService.findUserByEmail(
         userToAdd.email
       );
@@ -24,8 +29,10 @@ export const UserService = {
       if (userCreated == 0) {
         throw new Error("Error to add user");
       }
+      await connection.commit();
       return userCreated;
     } catch (error) {
+      await connection.rollback();
       throw error;
     }
   },

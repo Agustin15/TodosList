@@ -119,7 +119,7 @@
 
 **_Iniciar localhost watch live con nodemon_**
 
-    npm run dev //si genera el error "failed to initialize database" vuelva a ejecutar el comando e iniciara correctamente
+    npm run dev //si genera el error "Database connection failed,Error: connect ETIMEDOUT" vuelva a ejecutar el comando e iniciara correctamente
 
 **_Para iniciar localhost pero sin watch live con node_**
 

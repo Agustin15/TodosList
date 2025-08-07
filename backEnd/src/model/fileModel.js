@@ -5,7 +5,6 @@ export class File {
   #nameFile;
   #typeFile;
   #file;
-  #datetime;
 
   get propIdFile() {
     return this.#idFile;
@@ -54,20 +53,12 @@ export class File {
     this.#file = value;
   }
 
-  get propDatetime() {
-    return this.#datetime;
-  }
-
-  set propDatetime(value) {
-    if (new Date(value) == "Invalid Date") throw new Error("Invalid Date");
-    this.#datetime = value;
-  }
 
   async post() {
     try {
       const [result] = await connection.execute(
-        "Insert into files (nameFile,typeFile,datetimeUpload,fileTask,idTask) values(?,?,CURRENT_TIME(),?,?)",
-        [this.propNameFile, this.propTypeFile, this.propFile, this.propIdTask]
+        "Insert into files (nameFile,typeFile,datetimeUpload,fileTask,idTask) values(?,?,CURDATE(),?,?)",
+        [this.propNameFile, this.propTypeFile,this.propFile, this.propIdTask]
       );
       return result.affectedRows;
     } catch (error) {

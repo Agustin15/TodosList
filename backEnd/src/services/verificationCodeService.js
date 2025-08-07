@@ -11,6 +11,7 @@ export const VerificationCodeService = {
     try {
       let result;
 
+      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
       const verificationFound =
         await VerificationTwoStepService.findVerificationByUser(idUser);
