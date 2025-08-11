@@ -17,7 +17,7 @@ idTask int primary key auto_increment,
 icon varchar(11) not null,
 descriptionTask varchar(130) not null,
 datetimeTask datetime not null,
-isCompleted tinyint not null,
+isCompleted bit not null,
 idUser int not null,
 CONSTRAINT fk_idUser FOREIGN KEY(idUser) REFERENCES users(idUser),
 CONSTRAINT check_isCompleted CHECK(isCompleted=1 OR isCompleted=0),
@@ -47,9 +47,9 @@ CONSTRAINT check_idUserSubscriptions CHECK(idUser>0)
 );
 
 CREATE TABLE notifications(
-idNotification int not null primary key auto_increment,
+idNotification int primary key auto_increment,
 datetimeSend datetime not null,
-state varchar(50) not null,
+state varchar(7) not null,
 idTask int not null,
 CONSTRAINT fk_idTaskNotification FOREIGN KEY(idTask) REFERENCES tasks(idTask ) ON DELETE CASCADE,
 CONSTRAINT check_state CHECK(state LIKE "pending" OR state LIKE "seen" OR state LIKE "sent"),
@@ -57,15 +57,15 @@ CONSTRAINT check_idTaskNotifications CHECK(idTask>0)
 );
 
 CREATE TABLE scheduled_jobs(
-idJob int not null primary key auto_increment,
+idJob int primary key auto_increment,
 idNotification int not null,
 CONSTRAINT fk_idNotification FOREIGN KEY(idNotification) REFERENCES notifications(idNotification) ON DELETE CASCADE,
 CONSTRAINT check_idNotification CHECK(idNotification>0)
 );
 
 CREATE TABLE notifications_subscription(
-idNotification int not null,
-endpointURL varchar(200) not null,
+idNotification int,
+endpointURL varchar(200),
 PRIMARY KEY(idNotification,endpointURL),
 CONSTRAINT fk_idNotificationSubscription FOREIGN KEY(idNotification) REFERENCES notifications(idNotification) 
 ON DELETE CASCADE,
@@ -75,8 +75,8 @@ CONSTRAINT check_idNotificationSubscriptions CHECK(idNotification>0)
 
 
 CREATE TABLE verifications_two_step(
-idVerification int not null primary key auto_increment,
-enabled tinyint not null,
+idVerification int primary key auto_increment,
+enabled bit not null,
 idUser int not null,
 CONSTRAINT fk_idUserVerification FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE,
 CONSTRAINT check_enabled CHECK(enabled=1 OR enabled=0),
@@ -84,7 +84,7 @@ CONSTRAINT check_userVerifications CHECK(idUser>0)
 );
 
 CREATE TABLE verifications_code(
-codeOfVerification varchar(60) not null primary key,
+codeOfVerification varchar(60) primary key,
 expirationTime bigint not null,
 idVerification int not null,
 CONSTRAINT fk_idVerification FOREIGN KEY(idVerification) REFERENCES verifications_two_step(idVerification),
