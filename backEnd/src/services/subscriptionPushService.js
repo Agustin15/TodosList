@@ -70,9 +70,13 @@ export const SubscriptionPushService = {
     }
   },
   getSubscriptionsByIdUser: async (idUser) => {
-    subscriptionPushModel.propIdUser = idUser;
-    const userSubscriptions =
-      await subscriptionPushModel.getSubscriptionsByIdUser();
-    return userSubscriptions;
+    try {
+      subscriptionPushModel.propIdUser = idUser;
+      const userSubscriptions =
+        await subscriptionPushModel.getSubscriptionsByIdUser();
+      return userSubscriptions;
+    } catch (error) {
+      throw error;
+    }
   }
 };

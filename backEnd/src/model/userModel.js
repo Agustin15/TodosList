@@ -21,19 +21,19 @@ export class User {
   }
 
   set propName(value) {
-    if (!value || value.length == 0 || !this.verifyValidString(value))
+    if (!value || value.length == 0 || !this.#verifyValidString(value))
       throw new Error("Enter a valid name");
-    this.#name = this.toUpperCase(value);
+    this.#name = this.#toUpperCase(value);
   }
   get propLastname() {
     return this.#lastname;
   }
 
   set propLastname(value) {
-    if (!value || value.length == 0 || !this.verifyValidString(value))
+    if (!value || value.length == 0 || !this.#verifyValidString(value))
       throw new Error("Enter a valid lastname");
 
-    this.#lastname = this.toUpperCase(value);
+    this.#lastname = this.#toUpperCase(value);
   }
   get propEmailAddress() {
     return this.#emailAddress;
@@ -62,7 +62,7 @@ export class User {
     this.#password = value;
   }
 
-  verifyValidString(value) {
+  #verifyValidString(value) {
     let valid = true;
     for (let f = 0; f < value.length; f++) {
       if (!value[f].match(/[a-z]/i) || [f] == "") {
@@ -71,7 +71,7 @@ export class User {
     }
     return valid;
   }
-  toUpperCase(value) {
+  #toUpperCase(value) {
     let newValue = [...value].map((letter, index) => {
       if (index == 0) {
         return letter.toUpperCase();

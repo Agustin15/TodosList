@@ -6,7 +6,6 @@ import { ScheduledJobService } from "./scheduledJobService.js";
 import { socketConnection } from "../app.js";
 import { redisConnection } from "../config/ConnectionRedis.js";
 
-
 export const NotificationToQueue = {
   deleteNotificationFromQueue: async (idJob) => {
     try {
@@ -142,11 +141,18 @@ export const NotificationToQueue = {
   },
 
   updateNotificationQueue: async (idNotification, task, idUser) => {
-    let jobNotificationFound = await ScheduledJobService.getJobByIdNotification(
-      idNotification
-    );
-    let idJob = `'${jobNotificationFound.idJob}'`;
-    await NotificationToQueue.deleteNotificationFromQueue(idJob);
-    await NotificationToQueue.scheduleNotificationToQueue(idUser, task, idJob);
+    try {
+      let jobNotificationFound =
+        await ScheduledJobService.getJobByIdNotification(idNotification);
+      let idJob = `'${jobNotificationFound.idJob}'`;
+      await NotificationToQueue.deleteNotificationFromQueue(idJob);
+      await NotificationToQueue.scheduleNotificationToQueue(
+        idUser,
+        task,
+        idJob
+      );
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 };

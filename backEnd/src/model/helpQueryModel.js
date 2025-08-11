@@ -13,10 +13,10 @@ export class HelpQuery {
     this.propFile = files;
   }
   set propName(value) {
-    if (!value || value.length == 0 || !this.verifyValidString(value))
+    if (!value || value.length == 0 || !this.#verifyValidString(value))
       throw new Error("Enter a valid name");
 
-    this.#name = this.toUpperCase(value);
+    this.#name = this.#toUpperCase(value);
   }
   get propName() {
     return this.#name;
@@ -47,9 +47,9 @@ export class HelpQuery {
       throw new Error("Limit quantity of files exceeded");
 
     if (value && value.length > 0) {
-      if (this.fileSizeExceededOfLimit(value)) {
+      if (this.#fileSizeExceededOfLimit(value)) {
         throw new Error("Limit size file exceeded (only allow 10MB)");
-      } else if (!this.verifyAllowTypeFile(value))
+      } else if (!this.#verifyAllowTypeFile(value))
         throw new Error(
           "Type file not allow, (only allow images png,jpeg,jpg)"
         );
@@ -61,7 +61,7 @@ export class HelpQuery {
     return this.#files;
   }
 
-  verifyValidString(value) {
+  #verifyValidString(value) {
     let valid = true;
     for (let f = 0; f < value.length; f++) {
       if (!value[f].match(/[a-z]/i) || [f] == "") {
@@ -70,7 +70,7 @@ export class HelpQuery {
     }
     return valid;
   }
-  toUpperCase(value) {
+  #toUpperCase(value) {
     let newValue = [...value].map((letter, index) => {
       if (index == 0) {
         return letter.toUpperCase();
@@ -79,7 +79,7 @@ export class HelpQuery {
     });
     return newValue.join("");
   }
-  fileSizeExceededOfLimit = (files) => {
+  #fileSizeExceededOfLimit = (files) => {
     let exceeded = false;
     for (const file of files) {
       if (file.size > 1000 * 10000) {
@@ -89,7 +89,7 @@ export class HelpQuery {
     return exceeded;
   };
 
-  verifyAllowTypeFile = (files) => {
+  #verifyAllowTypeFile = (files) => {
     const mimeAccept = ["image/png", "image/jpeg", "image/jpg", "image/jfif"];
 
     let allow = true;
