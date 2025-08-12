@@ -1,5 +1,5 @@
 export class Storage {
-  static limitStorage = 2 * Math.pow(10, 9); //8GB, 8 billones de bytes;
+  static limitStorage = 8 * Math.pow(10, 9); //8GB, 8 billones de bytes;
   #idUser;
   #limitStorageUser;
   #file;
