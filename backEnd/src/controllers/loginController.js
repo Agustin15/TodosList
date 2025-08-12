@@ -16,14 +16,14 @@ export const login = async (req, res) => {
       res.cookie("accessToken", loginResult.token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax"
       });
 
       res.cookie("refreshToken", loginResult.refreshToken, {
         maxAge: 60 * 60 * 24 * 1000,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax"
       });
       res.status(200).json({ userHasVerification: false });
