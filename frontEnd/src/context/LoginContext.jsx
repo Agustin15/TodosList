@@ -25,6 +25,7 @@ export const LoginProvider = ({ children }) => {
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(user),
+        credentials: "include",
         headers: {
           "Content-type": "application/json"
         }

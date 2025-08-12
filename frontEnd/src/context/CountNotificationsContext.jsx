@@ -12,14 +12,12 @@ export const CountNotificationsProvider = ({ children }) => {
     try {
       const response = await fetch("/api/notification/" + state, {
         method: "GET",
-        headers: {
-          credentials: "include"
-        }
+        credentials: "include"
       });
 
       const result = await response.json();
       if (!response.ok) {
-        if (response.status == 401) location.href = urlFront + "/login";
+        if (response.status == 401) location.href = urlFront + "login";
         throw result.messageError;
       }
       data = result;

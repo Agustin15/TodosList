@@ -134,7 +134,6 @@ export const VerificationTwoStepProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     } finally {
-     
       setDecodeToken(data);
     }
   };
@@ -144,6 +143,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
     try {
       const response = await fetch("/api/verificationTwoStep/", {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json"
         }

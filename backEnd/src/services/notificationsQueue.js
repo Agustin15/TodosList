@@ -4,7 +4,7 @@ import { SubscriptionPushService } from "./subscriptionPushService.js";
 import { NotificationService } from "./notificationService.js";
 import { ScheduledJobService } from "./scheduledJobService.js";
 import { socketConnection } from "../app.js";
-import { redisConnection } from "../config/ConnectionRedis.js";
+import { redisConnection } from "../config/connectionRedis.js";
 
 export const NotificationToQueue = {
   deleteNotificationFromQueue: async (idJob) => {

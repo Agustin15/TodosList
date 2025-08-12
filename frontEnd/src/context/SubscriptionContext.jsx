@@ -28,7 +28,6 @@ export const SubscriptionProvider = ({ children }) => {
       let register = await getRegisterSW();
       let subscription = await register.pushManager.getSubscription();
       setSubscribed(subscription);
-      
     } catch (error) {
       console.log(error);
     } finally {
@@ -140,6 +139,7 @@ export const SubscriptionProvider = ({ children }) => {
         "/api/subscription/" + JSON.stringify(param),
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json"
           }
@@ -164,6 +164,7 @@ export const SubscriptionProvider = ({ children }) => {
     try {
       const response = await fetch("/api/subscription/", {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify({
           subscription: subscription
         }),

@@ -103,9 +103,9 @@ export const NotificationProvider = ({ children }) => {
         "/api/notification/" + notification.idNotification,
         {
           method: "PATCH",
+          credentials: "include",
           headers: {
-            "Content-type": "application/json",
-            credentials: "include"
+            "Content-type": "application/json"
           },
           body: JSON.stringify({ newState: "seen" })
         }
@@ -113,7 +113,7 @@ export const NotificationProvider = ({ children }) => {
 
       const result = await response.json();
       if (!response.ok) {
-        if (response.status == 401) location.href = urlFront + "/login";
+        if (response.status == 401) location.href = urlFront + "login";
         else throw result.messageError;
       }
       return result;
@@ -129,14 +129,12 @@ export const NotificationProvider = ({ children }) => {
     try {
       const response = await fetch("/api/notification/", {
         method: "GET",
-        headers: {
-          credentials: "include"
-        }
+        credentials: "include"
       });
 
       const result = await response.json();
       if (!response.ok) {
-        if (response.status == 401) location.href = urlFront + "/login";
+        if (response.status == 401) location.href = urlFront + "login";
         throw result.messageError;
       }
       data = result;

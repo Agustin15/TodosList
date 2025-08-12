@@ -1,4 +1,4 @@
-import { VerificationTwoStep } from "../model/VerificationTwoStepModel.js";
+import { VerificationTwoStep } from "../model/verificationTwoStepModel.js";
 import { UserService } from "../services/userService.js";
 import bcrypt from "bcrypt";
 
