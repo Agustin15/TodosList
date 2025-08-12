@@ -125,6 +125,7 @@ export class Task {
     }
   }
   async getTasksThisWeekByStateAndUser(firstSunday, nextSaturday) {
+
     try {
       const [results] = await connection.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=?

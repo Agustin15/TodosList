@@ -70,6 +70,7 @@ export const ListTasksService = {
         nextSaturday
       );
 
+
       tasksThisWeekUser = await Promise.all(
         tasksThisWeekUser.map(async (task) => {
           let dateTask = new Date(task.datetimeTask);

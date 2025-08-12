@@ -58,11 +58,11 @@ export const Storage = () => {
     let measure = "Bytes";
 
     switch (true) {
-      case bytesUsed >= 1000:
+      case bytesUsed >= 1000 && bytesUsed < Math.pow(10, 6):
         bytesUsedConverted = bytesUsed / 1000;
         measure = "KB";
         break;
-      case bytesUsed >= Math.pow(10, 6):
+      case bytesUsed >= Math.pow(10, 6) && bytesUsed < Math.pow(10, 9):
         bytesUsedConverted = bytesUsed / Math.pow(10, 6);
         measure = "MB";
         break;
@@ -71,7 +71,11 @@ export const Storage = () => {
         measure = "GB";
         break;
     }
-    return { bytesUsedConverted: bytesUsedConverted, measure: measure };
+ 
+    return {
+      bytesUsedConverted: bytesUsedConverted.toFixed(1),
+      measure: measure
+    };
   };
 
   return (

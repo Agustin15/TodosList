@@ -17,7 +17,7 @@ idTask int primary key auto_increment,
 icon varchar(11) not null,
 descriptionTask varchar(130) not null,
 datetimeTask datetime not null,
-isCompleted bit not null,
+isCompleted tinyint not null,
 idUser int not null,
 CONSTRAINT fk_idUser FOREIGN KEY(idUser) REFERENCES users(idUser),
 CONSTRAINT check_isCompleted CHECK(isCompleted=1 OR isCompleted=0),
@@ -76,7 +76,7 @@ CONSTRAINT check_idNotificationSubscriptions CHECK(idNotification>0)
 
 CREATE TABLE verifications_two_step(
 idVerification int primary key auto_increment,
-enabled bit not null,
+enabled tinyint not null,
 idUser int not null,
 CONSTRAINT fk_idUserVerification FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE,
 CONSTRAINT check_enabled CHECK(enabled=1 OR enabled=0),
@@ -114,7 +114,6 @@ IF NEW.datetimeSend<=CURDATE() THEN
 END IF;
 END;
 // delimiter ;
-
 
 delimiter //
 CREATE TRIGGER check_datetimeUpload BEFORE INSERT ON files
