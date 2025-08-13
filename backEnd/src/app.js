@@ -16,7 +16,7 @@ import { ConnectionSocket } from "./config/connectionSocket.js";
 import { helpQueryClientRoutes } from "./routes/helpQueryClientRoutes.js";
 import { verificationTwoStepRoutes } from "./routes/verificationTwoStepRoutes.js";
 import { verificationCodeRoutes } from "./routes/verificationCodeRoutes.js";
-
+export let socketConnection;
 const app = express();
 export const server = createServer(app);
 app.use(express.json());
@@ -36,14 +36,14 @@ app.use("/notification", notificationRoutes);
 app.use("/helpQuery", helpQueryClientRoutes);
 app.use("/logout", logoutRoutes);
 
-NotificationToQueue.workerNotificationQueue();
-export const socketConnection = new ConnectionSocket(server);
+try {
+  NotificationToQueue.workerNotificationQueue();
 
-socketConnection.io.on("connection", (socket) => {
-  socketConnection.propSocket = socket;
-});
+  socketConnection = new ConnectionSocket(server);
 
-app.use((error, req, res, next) => {
-  console.log("Error", error);
-  res.status(500).json({ messageError: "Internal Server error" });
-});
+  socketConnection.io.on("connection", (socket) => {
+    socketConnection.propSocket = socket;
+  });
+} catch (error) {
+  console.log(error);
+}

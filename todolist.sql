@@ -12,6 +12,8 @@ CONSTRAINT check_lastname CHECK(REGEXP_LIKE(lastname,'^[A-Za-z]')),
 CONSTRAINT check_email CHECK(REGEXP_LIKE(email,'^[A-Za-z0-9]+@[a-z]+\\.[a-zA-Z]'))
 );
 
+delete from users where idUser=1;
+
 CREATE TABLE tasks(
 idTask int primary key auto_increment,
 icon varchar(11) not null,
@@ -19,7 +21,7 @@ descriptionTask varchar(130) not null,
 datetimeTask datetime not null,
 isCompleted tinyint not null,
 idUser int not null,
-CONSTRAINT fk_idUser FOREIGN KEY(idUser) REFERENCES users(idUser),
+CONSTRAINT fk_idUser FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE,
 CONSTRAINT check_isCompleted CHECK(isCompleted=1 OR isCompleted=0),
 CONSTRAINT check_idUserTasks CHECK(idUser>0)
 );

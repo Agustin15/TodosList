@@ -7,7 +7,7 @@ export const addSubscriptionUser = async (req, res) => {
     if (!req.body.subscription) {
       throw new Error("subscription undefined");
     }
-    
+
     const subscription = req.body.subscription;
 
     const subscriptionAdded = await SubscriptionPushService.addSubscriptionUser(
@@ -37,6 +37,22 @@ export const deleteSubscription = async (req, res) => {
       await SubscriptionPushService.deleteSubscription(endpoint);
 
     res.status(200).json(deletedSubscription);
+  } catch (error) {
+    let errorCodeResponse = error.message.includes("Authentication")
+      ? 401
+      : 404;
+    res.status(errorCodeResponse).json({ messageError: error.message });
+  }
+};
+
+export const getSubscriptionByUser = async (req, res) => {
+  try {
+    const validAuth = await authRequest(req, res);
+
+    const subscriptionsUser =
+      await SubscriptionPushService.getSubscriptionsByIdUser(validAuth.idUser);
+
+    res.status(200).json(subscriptionsUser);
   } catch (error) {
     let errorCodeResponse = error.message.includes("Authentication")
       ? 401

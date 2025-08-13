@@ -1,5 +1,6 @@
 import styles from "./Notification.module.css";
 import iconNotification from "../../assets/img/notificationTitle.png";
+import iconNotificationDisabled from "../../assets/img/notificationDisabled.png";
 import iconSubscribed from "../../assets/img/subscribed.png";
 import iconListNotifications from "../../assets/img/listNotificationsLogo.png";
 import gifLoaderNotifications from "../../assets/img/loader.gif";
@@ -13,7 +14,13 @@ import { useSubscription } from "../../context/SubscriptionContext";
 import { useNotification } from "../../context/NotificationContext";
 
 export const Notifications = () => {
-  const { subscribed, styleAlert, notifyMeAlert, loader } = useSubscription();
+  const {
+    subscribed,
+    styleAlert,
+    notifyMeAlert,
+    loader,
+    errorGetSubscriptions
+  } = useSubscription();
 
   const { notifications, loaderNotifications } = useNotification();
 
@@ -32,7 +39,7 @@ export const Notifications = () => {
         <div className={styles.header}>
           <div className={styles.containBtnNotification}>
             <div className={styles.columnContainBtnNotification}>
-              {!loader && (
+              {!loader && !errorGetSubscriptions && (
                 <button onClick={notifyMeAlert}>
                   <GlassEffect />
                   <img
@@ -40,6 +47,12 @@ export const Notifications = () => {
                   ></img>
                   <span>{subscribed ? "subscribed" : "Subscribe push"}</span>
                 </button>
+              )}
+              {!loader && errorGetSubscriptions && (
+                <div className={styles.containErrorSubscriptions}>
+                  <img src={iconNotificationDisabled}></img>
+                  <span>Failed to get user subscription </span>
+                </div>
               )}
             </div>
           </div>

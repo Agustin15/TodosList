@@ -45,7 +45,7 @@ export const NotificationToQueue = {
     }
   },
 
-  workerNotificationQueue: () => {
+  workerNotificationQueue: async () => {
     let sent = false;
     let myWorker;
 

@@ -16,6 +16,7 @@ const SubscriptionContext = createContext();
 export const SubscriptionProvider = ({ children }) => {
   const [styleAlert, setStyleAlert] = useState(stylesAlert.alertHability);
   const [subscribed, setSubscribed] = useState();
+  const [errorGetSubscriptions, setErrorGetSubscriptions] = useState(false);
   const [loader, setLoader] = useState(true);
   const { windowWidth } = useWindowSize();
 
@@ -27,7 +28,19 @@ export const SubscriptionProvider = ({ children }) => {
     try {
       let register = await getRegisterSW();
       let subscription = await register.pushManager.getSubscription();
-      setSubscribed(subscription);
+      let subscriptionsUser = await fetchGetSubscriptionUser();
+
+      if (!subscriptionsUser) setErrorGetSubscriptions(true);
+      else {
+        if (subscription && subscriptionsUser.length > 0) {
+          let subscriptionFound = subscriptionsUser.find(
+            (subscriptionUser) =>
+              subscriptionUser.endpointURL == subscription.endpoint
+          );
+
+          if (subscriptionFound) setSubscribed(subscriptionFound);
+        }
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -115,7 +128,7 @@ export const SubscriptionProvider = ({ children }) => {
     if (confirmUnsubscription) {
       let deleteSubs = await fetchDeleteSubscriptions();
       if (!deleteSubs) {
-        setMsjErrorSubscription("Error to unsubscribe");
+        AlertFormSwal("Error to unsubscribe", "Oops", "error", windowWidth);
       } else {
         let unsubscribe = await subscribed.unsubscribe();
         if (unsubscribe) {
@@ -186,10 +199,39 @@ export const SubscriptionProvider = ({ children }) => {
       return data;
     }
   };
+
+  const fetchGetSubscriptionUser = async () => {
+    let data;
+    setLoader(true);
+    try {
+      const response = await fetch("/api/subscription/", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        if (response.status == 404) {
+          location.href = urlFront + "login";
+        }
+      } else {
+        data = result;
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
+      return data;
+    }
+  };
+
   return (
     <SubscriptionContext.Provider
       value={{
         styleAlert,
+        errorGetSubscriptions,
         notifyMeAlert,
         subscribed,
         loader

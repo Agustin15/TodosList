@@ -116,6 +116,20 @@
     width: 65px;
     height: 65px;
 }
+.containErrorSubscriptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-left: 2rem;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.containErrorSubscriptions img {
+    width: 31px;
+    height: 31px;
+}
 
 @media only screen and (max-width: 699px) {
     .rowNotifications {
@@ -187,6 +201,13 @@
         width: 97px;
         height: 97px;
         opacity: 95%;
+    }
+    .containErrorSubscriptions {
+        margin-left: 0;
+    }
+    .loadingNotifications img {
+        width: 45px;
+        height: 45px;
     }
 }
 
@@ -271,5 +292,8 @@
     .loadingNotifications img {
         width: 65px;
         height: 65px;
+    }
+    .containErrorSubscriptions {
+        margin-left: 0;
     }
 }

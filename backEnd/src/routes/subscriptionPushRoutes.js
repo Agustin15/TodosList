@@ -1,7 +1,11 @@
 import express from "express";
-import { addSubscriptionUser,deleteSubscription} from "../controllers/subscriptionPushController.js";
+import {
+  addSubscriptionUser,
+  deleteSubscription,
+  getSubscriptionByUser
+} from "../controllers/subscriptionPushController.js";
 export const subscriptionRoutes = express.Router();
 
-subscriptionRoutes.post("/",addSubscriptionUser);
-subscriptionRoutes.delete("/:paramDelete",deleteSubscription);
-
+subscriptionRoutes.post("/", addSubscriptionUser);
+subscriptionRoutes.get("/", getSubscriptionByUser);
+subscriptionRoutes.delete("/:paramDelete", deleteSubscription);

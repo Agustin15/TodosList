@@ -7,6 +7,13 @@ class ConnectionRedis {
   #notificationQueue;
 
   constructor() {
+    if (
+      !process.env.HOST_REDIS ||
+      !process.env.PORT_REDIS ||
+      !process.env.PASSWORD_REDIS
+    ) {
+      throw new Error("Config variables of redis are not defined");
+    }
     this.#host = process.env.HOST_REDIS;
     this.#port = process.env.PORT_REDIS;
     this.#password = process.env.PASSWORD_REDIS;
