@@ -6,7 +6,7 @@ import { useFiles } from "../../context/FilesContext";
 import Header from "../header/Header";
 import { Storage } from "./storage/Storage";
 import { SearchFile } from "./SearchFile";
-import { UserDataProvider } from "../../context/userDataContext";
+import { UserDataProvider } from "../../context/UserDataContext";
 import { MenuProvider } from "../../context/MenuContext";
 import { NotFiles } from "./notFiles/NotFiles";
 import { Pagination } from "./pagination/Pagination";

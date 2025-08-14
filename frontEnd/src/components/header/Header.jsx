@@ -4,7 +4,7 @@ import menuOpen from "../../assets/img/menuOpen.png";
 import accountIcon from "../../assets/img/profile.png";
 import logOutIcon from "../../assets/img/logOut.png";
 import { useEffect } from "react";
-import { useDataUser } from "../../context/userDataContext";
+import { useDataUser } from "../../context/UserDataContext";
 import { useMenu } from "../../context/MenuContext";
 import { OptionsMenu } from "./optionsMenu/OptionsMenu";
 import { SubscriptionProvider } from "../../context/SubscriptionContext";

@@ -8,7 +8,7 @@ import EditPassword from "./editPassword/EditPassword";
 import Modal from "../modal/Modal";
 import ContentBody from "./contentBody/ContentBody";
 import { useEffect, useState } from "react";
-import { useDataUser } from "../../context/userDataContext";
+import { useDataUser } from "../../context/UserDataContext";
 import { FormEditEmailProvider } from "../../context/FormEditEmailContext";
 import { FormEditPasswordProvider } from "../../context/FormEditPasswordContext";
 import { VerificationTwoStepProvider } from "../../context/verificationTwoStep/VerificationTwoStepContext";

@@ -4,7 +4,7 @@ import Header from "../header/Header";
 import iconTitleDashboard from "../../assets/img/iconTitleDashboard.png";
 import { Title } from "../title/Title";
 import { TasksThisWeek } from "./tasksThisWeek/TasksThisWeek";
-import { UserDataProvider } from "../../context/userDataContext";
+import { UserDataProvider } from "../../context/UserDataContext";
 import { MenuProvider } from "../../context/MenuContext";
 
 export const Dashboard = () => {

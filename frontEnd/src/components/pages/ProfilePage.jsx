@@ -1,5 +1,5 @@
 import Profile from "../profile/Profile";
-import { UserDataProvider } from "../../context/userDataContext";
+import { UserDataProvider } from "../../context/UserDataContext";
 
 const ProfilePage = () => {
   return (

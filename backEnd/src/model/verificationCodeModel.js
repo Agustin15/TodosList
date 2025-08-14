@@ -63,7 +63,7 @@ export class VerificationCode {
     }
   }
   generateExpirationTime() {
-    //expiration in 1 minute
+    //expiration in five minutes
     this.propExpirationTime = Date.now() + VerificationCode.durationCode;
   }
 

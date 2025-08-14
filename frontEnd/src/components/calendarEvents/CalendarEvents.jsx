@@ -12,7 +12,7 @@ import styles from "./CalendarEvents.module.css";
 import { Wrapper } from "./styledWrapper.js";
 import { useState, useEffect } from "react";
 import { FormTaskProvider } from "../../context/formTaskContext/FormTaskContext.jsx";
-import { UserDataProvider } from "../../context/userDataContext";
+import { UserDataProvider } from "../../context/UserDataContext";
 import { useCalendarEvents } from "../../context/CalendarEventsContext";
 import { FilterOptionTasksProvider } from "../../context/FilterOptionTasksContext";
 

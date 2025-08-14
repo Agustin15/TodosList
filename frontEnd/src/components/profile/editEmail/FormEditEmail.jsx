@@ -5,7 +5,7 @@ import iconWarningInput from "../../../assets/img/warningInput.png";
 import loadingForm from "../../../assets/img/loadingForm.gif";
 import { useFormEditEmail } from "../../../context/FormEditEmailContext";
 import { useFormEditPassword } from "../../../context/FormEditPasswordContext";
-import { useDataUser } from "../../../context/userDataContext";
+import { useDataUser } from "../../../context/UserDataContext";
 import { useEffect } from "react";
 import { AlertFormSwal } from "../../sweetAlert/sweetAlert.js";
 import { useWindowSize } from "../../../context/WindowSizeContext.jsx";
