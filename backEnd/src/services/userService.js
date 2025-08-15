@@ -1,4 +1,5 @@
 import { User } from "../model/userModel.js";
+import { UsersRolsService } from "./usersRolsService.js";
 import bcrypt from "bcrypt";
 import connection from "../config/database.js";
 
@@ -11,7 +12,7 @@ export const UserService = {
       userModel.propLastname = userToAdd.lastname;
 
       connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-      
+
       await connection.beginTransaction();
       const userFoundByEmail = await UserService.findUserByEmail(
         userToAdd.email
@@ -29,6 +30,15 @@ export const UserService = {
       if (userCreated == 0) {
         throw new Error("Error to add user");
       }
+
+      const userAdded =await UserService.findUserByEmail(userToAdd.email);
+
+      if (!userAdded) {
+        throw new Error("User recently added not found");
+      }
+
+      await UsersRolsService.addUserRol(userAdded.idUser);
+      
       await connection.commit();
       return userCreated;
     } catch (error) {

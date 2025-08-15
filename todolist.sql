@@ -1,9 +1,15 @@
-CREATE DATABASE IF NOT EXISTS TODOLIST;
-use TODOLIST;
+CREATE DATABASE IF NOT EXISTS todolist;
+use todolist;
+
+CREATE TABLE rols(
+idRol int primary key auto_increment, 
+rol varchar(5) not null unique,
+CONSTRAINT check_rol CHECK(rol LIKE "Admin" OR rol LIKE "User")
+);
 
 CREATE TABLE users(
 idUser int primary key auto_increment,
-nameUser varchar(20) not null check(REGEXP_LIKE(nameUser,'^[A-Za-z]')),
+nameUser varchar(20) not null,
 lastname varchar(20) not null,
 email varchar(30) not null unique,
 passwordUser varchar(60) not null,
@@ -12,6 +18,13 @@ CONSTRAINT check_lastname CHECK(REGEXP_LIKE(lastname,'^[A-Za-z]')),
 CONSTRAINT check_email CHECK(REGEXP_LIKE(email,'^[A-Za-z0-9]+@[a-z]+\\.[a-zA-Z]'))
 );
 
+CREATE TABLE rols_users(
+idRol int, 
+idUser int,
+PRIMARY KEY(idRol,idUser),
+CONSTRAINT fk_rol FOREIGN KEY(idRol) REFERENCES rols(idRol),
+CONSTRAINT fk_userRol FOREIGN KEY(idUser) REFERENCES users(idUser)
+);
 
 CREATE TABLE tasks(
 idTask int primary key auto_increment,
@@ -156,3 +169,6 @@ IF NEW.expirationTime<=(UNIX_TIMESTAMP(NOW())*1000)THEN
 END IF;
 END
 // delimiter ;
+
+INSERT INTO rols (rol) VALUE("Admin");
+INSERT INTO rols (rol) VALUE("User");
