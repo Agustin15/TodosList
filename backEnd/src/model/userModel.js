@@ -84,7 +84,7 @@ export class User {
   async post() {
     try {
       const [result] = await connection.execute(
-        "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)",
+        "INSERT INTO users (nameUser,lastname,email,passwordUser,created) VALUES (?,?,?,?,NOW())",
         [
           this.propName,
           this.propLastname,
@@ -92,6 +92,7 @@ export class User {
           this.propPassword
         ]
       );
+
       return result.affectedRows;
     } catch (error) {
       throw new Error(error);
@@ -101,7 +102,7 @@ export class User {
   async patchPasswordUserById() {
     try {
       const [result] = await connection.execute(
-        "Update users set passwordUser=? where idUser=?",
+        "Update users set passwordUser=?,lastModified=NOW() where idUser=?",
         [this.propPassword, this.propIdUser]
       );
       return result.affectedRows;
@@ -109,11 +110,11 @@ export class User {
       throw new Error(error);
     }
   }
-
+  
   async patchPasswordUserByEmail() {
     try {
       const [result] = await connection.execute(
-        "Update users set passwordUser=? where email=?",
+        "Update users set passwordUser=?,lastModified=NOW() where email=?",
         [this.propPassword, this.propEmailAddress]
       );
       return result.affectedRows;
@@ -124,7 +125,7 @@ export class User {
   async patchEmailUserById() {
     try {
       const [result] = await connection.execute(
-        "Update users set email=? where idUser=?",
+        "Update users set email=?,lastModified=NOW() where idUser=?",
         [this.propEmailAddress, this.propIdUser]
       );
       return result.affectedRows;
@@ -136,7 +137,7 @@ export class User {
   async put() {
     try {
       const [result] = await connection.execute(
-        "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?",
+        "Update users set nameUser=?,lastname=?,email=?,passwordUser=?,lastModified=NOW() where idUser=?",
         [
           this.propName,
           this.propLastname,

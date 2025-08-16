@@ -120,7 +120,7 @@ export const NotificationProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      location.href = `tasks/${notification.idTask}`;
+       location.href = "/tasks?idTask=" + notification.idTask;
     }
   };
 

@@ -53,6 +53,7 @@ export const NotificationToQueue = {
       myWorker = new Worker(
         "notifications",
         async (job) => {
+         
           const task = job.data.payload;
           const payloadNotification = Buffer.from(
             JSON.stringify(job.data.payload)

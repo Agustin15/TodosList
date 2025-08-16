@@ -4,7 +4,7 @@ use todolist;
 CREATE TABLE rols(
 idRol int primary key auto_increment, 
 rol varchar(5) not null unique,
-CONSTRAINT check_rol CHECK(rol LIKE "Admin" OR rol LIKE "User")
+CONSTRAINT check_rol CHECK(rol in ("Admin","User"))
 );
 
 CREATE TABLE users(
@@ -13,6 +13,8 @@ nameUser varchar(20) not null,
 lastname varchar(20) not null,
 email varchar(30) not null unique,
 passwordUser varchar(60) not null,
+created datetime not null,
+lastModified datetime,
 CONSTRAINT check_name CHECK(REGEXP_LIKE(nameUser,'^[A-Za-z]')),
 CONSTRAINT check_lastname CHECK(REGEXP_LIKE(lastname,'^[A-Za-z]')),
 CONSTRAINT check_email CHECK(REGEXP_LIKE(email,'^[A-Za-z0-9]+@[a-z]+\\.[a-zA-Z]'))
@@ -62,7 +64,7 @@ datetimeSend datetime not null,
 state varchar(7) not null,
 idTask int not null,
 CONSTRAINT fk_idTaskNotification FOREIGN KEY(idTask) REFERENCES tasks(idTask ) ON DELETE CASCADE,
-CONSTRAINT check_state CHECK(state LIKE "pending" OR state LIKE "seen" OR state LIKE "sent")
+CONSTRAINT check_state CHECK(state in("pending","seen","sent"))
 );
 
 CREATE TABLE scheduled_jobs(
