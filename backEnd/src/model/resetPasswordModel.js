@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class ResetPassword {
   #user;
@@ -40,7 +40,7 @@ export class ResetPassword {
 
   async patchPasswordUserByEmail() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Update users set passwordUser=? where email=?",
         [this.propNewPassword, this.propUser.emailAddress]
       );

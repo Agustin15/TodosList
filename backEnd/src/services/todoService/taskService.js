@@ -1,4 +1,4 @@
-import connection from "../../config/database.js";
+import { connectionMysql } from "../../config/database.js";
 import { Task } from "../../model/todoModel.js";
 import { FileService } from "../fileService.js";
 import { NotificationService } from "../notificationService.js";
@@ -73,8 +73,10 @@ export const TaskService = {
 
   createTask: async (task, idUser, files) => {
     try {
-      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-      await connection.beginTransaction();
+      await connectionMysql.connectionCreated.execute(
+        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
+      );
+      await connectionMysql.connectionCreated.beginTransaction();
 
       taskModel.propIdUser = idUser;
       taskModel.propIcon = task.icon;
@@ -124,18 +126,20 @@ export const TaskService = {
         );
       }
 
-      await connection.commit();
+      await connectionMysql.connectionCreated.commit();
       return taskAddedFound;
     } catch (error) {
-      await connection.rollback();
+      await connectionMysql.connectionCreated.rollback();
       throw error;
     }
   },
 
   updateTask: async (task, files, idTask, idUser) => {
     try {
-      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-      await connection.beginTransaction();
+      await connectionMysql.connectionCreated.execute(
+        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
+      );
+      await connectionMysql.connectionCreated.beginTransaction();
 
       taskModel.propIcon = task.icon;
       taskModel.propDescription = task.descriptionTask;
@@ -159,7 +163,7 @@ export const TaskService = {
       if (files.length > 0) {
         await FileService.verifyAmountSizeOfFiles(files, idUser);
       }
-      
+
       let filesChanged = await FileService.findFilesChanged(idTask, files);
       if (filesChanged.filesForAdd.length > 0) {
         await FileService.addFile(idTask, filesChanged.filesForAdd);
@@ -196,7 +200,7 @@ export const TaskService = {
         await NotificationService.addNotification(subscriptions, task, idUser);
       }
 
-      await connection.commit();
+      await connectionMysql.connectionCreated.commit();
 
       let filesTask = await FileService.findFilesByIdTask(idTask);
       taskUpdatedFound.filesUploaded = filesTask;
@@ -204,7 +208,7 @@ export const TaskService = {
 
       return taskUpdatedFound;
     } catch (error) {
-      await connection.rollback();
+      await connectionMysql.connectionCreated.rollback();
       throw error;
     }
   },
@@ -232,8 +236,10 @@ export const TaskService = {
     try {
       let jobId;
 
-      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-      await connection.beginTransaction();
+      connectionMysql.connectionCreated.execute(
+        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
+      );
+      await connectionMysql.connectionCreated.beginTransaction();
 
       let notificationFound =
         await NotificationService.findNotificationByIdTask(idTask);
@@ -255,10 +261,10 @@ export const TaskService = {
 
       if (jobId) await NotificationToQueue.deleteNotificationFromQueue(jobId);
 
-      await connection.commit();
+      await connectionMysql.connectionCreated.commit();
       return deletedTask;
     } catch (error) {
-      await connection.rollback();
+      await connectionMysql.connectionCreated.rollback();
       throw error;
     }
   }

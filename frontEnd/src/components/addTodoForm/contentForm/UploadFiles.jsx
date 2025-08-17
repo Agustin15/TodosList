@@ -1,6 +1,6 @@
 import iconFileUploaded from "../../../assets/img/attachmentFiles.png";
 import iconFile from "../../../assets/img/file.png";
-import iconNotFiles from "../../../assets/img/notFilesUploaded.png";
+import iconNotFiles from "../../../assets/img/notFiles.png";
 import iconDelete from "../../../assets/img/delete.png";
 import classesStyle from "./ContentForm.module.css";
 import { useForm } from "../../../context/formTaskContext/FormTaskContext";

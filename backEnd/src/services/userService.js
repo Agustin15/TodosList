@@ -1,7 +1,7 @@
 import { User } from "../model/userModel.js";
 import { UsersRolsService } from "./usersRolsService.js";
 import bcrypt from "bcrypt";
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 const userModel = new User();
 
@@ -11,9 +11,11 @@ export const UserService = {
       userModel.propName = userToAdd.name;
       userModel.propLastname = userToAdd.lastname;
 
-      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connectionMysql.connectionCreated.execute(
+        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
+      );
 
-      await connection.beginTransaction();
+      await connectionMysql.connectionCreated.beginTransaction();
       const userFoundByEmail = await UserService.findUserByEmail(
         userToAdd.email
       );
@@ -31,18 +33,18 @@ export const UserService = {
         throw new Error("Error to add user");
       }
 
-      const userAdded =await UserService.findUserByEmail(userToAdd.email);
+      const userAdded = await UserService.findUserByEmail(userToAdd.email);
 
       if (!userAdded) {
         throw new Error("User recently added not found");
       }
 
       await UsersRolsService.addUserRol(userAdded.idUser);
-      
-      await connection.commit();
+
+      await connectionMysql.connectionCreated.commit();
       return userCreated;
     } catch (error) {
-      await connection.rollback();
+      await connectionMysql.connectionCreated.rollback();
       throw error;
     }
   },

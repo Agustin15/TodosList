@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 export class Task {
   #idTask;
   #idUser;
@@ -68,7 +68,7 @@ export class Task {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO tasks (icon,descriptionTask,datetimeTask,isCompleted,idUser) VALUES (?,?,?,?,?)",
         [
           this.propIcon,
@@ -85,7 +85,7 @@ export class Task {
   }
   async put() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Update tasks set icon=?,descriptionTask=?,datetimeTask=?,isCompleted=? where idTask=?",
         [
           this.propIcon,
@@ -103,7 +103,7 @@ export class Task {
 
   async patchStateTask() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Update tasks set isCompleted=? where idTask=?",
         [this.propIsCompleted, this.propIdTask]
       );
@@ -115,7 +115,7 @@ export class Task {
   }
   async delete() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "delete from tasks where idTask=?",
         [this.propIdTask]
       );
@@ -125,9 +125,8 @@ export class Task {
     }
   }
   async getTasksThisWeekByStateAndUser(firstSunday, nextSaturday) {
-
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=?
          ORDER BY datetimeTask desc`,
         [this.propIdUser, firstSunday, nextSaturday, this.propIsCompleted]
@@ -141,7 +140,7 @@ export class Task {
 
   async getTasksThisWeekUser(firstSunday, nextSaturday) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? ORDER BY datetimeTask desc`,
         [this.propIdUser, firstSunday, nextSaturday]
       );
@@ -153,7 +152,7 @@ export class Task {
   }
   async getTasksThisWeekByStateAndUserLimit(firstSunday, nextSaturday, index) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         `select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && isCompleted=? ORDER 
         BY datetimeTask desc LIMIT 10 OFFSET ${index} `,
         [this.propIdUser, firstSunday, nextSaturday, this.propIsCompleted]
@@ -167,7 +166,7 @@ export class Task {
 
   async getTasksByWeekday(firstSunday, nextSaturday, weekday) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && weekday(datetimeTask)=?",
         [this.propIdUser, firstSunday, nextSaturday, weekday]
       );
@@ -179,7 +178,7 @@ export class Task {
 
   async getTasksStateByWeekday(firstSunday, nextSaturday, weekday) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from tasks where idUser=? && datetimeTask>=? && datetimeTask<=? && weekday(datetimeTask)=? && isCompleted=?",
         [
           this.propIdUser,
@@ -196,7 +195,7 @@ export class Task {
   }
   async getTasksLimitByFilterOption(year, month, index) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=? 
         order by datetimeTask desc LIMIT 10 OFFSET ${index}`,
         [this.propIdUser, year, month, this.propIsCompleted]
@@ -210,7 +209,7 @@ export class Task {
 
   async getQuantityTasksByFilterOption(year, month) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=? && isCompleted=?`,
         [this.propIdUser, year, month, this.propIsCompleted]
       );
@@ -223,7 +222,7 @@ export class Task {
 
   async getTaskById() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from tasks where idUser=? && idTask=?",
         [this.propIdUser, this.propIdTask]
       );
@@ -235,7 +234,7 @@ export class Task {
 
   async getTaskRecentlyAdded() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from tasks where idUser=? && descriptionTask=? && datetimeTask=?",
         [this.propIdUser, this.propDescription, this.propDatetime]
       );
@@ -246,7 +245,7 @@ export class Task {
   }
   async getYearsTask() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select DISTINCT YEAR(datetimeTask) from tasks where idUser=?",
         [this.propIdUser]
       );
@@ -257,7 +256,7 @@ export class Task {
   }
   async getAllTasksByUser() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from tasks where idUser=?",
         [this.propIdUser]
       );

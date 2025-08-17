@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class SubscriptionPush {
   #idUser;
@@ -46,7 +46,7 @@ export class SubscriptionPush {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO subscriptions (endpointURL,p256dh,auth,idUser) values (?,?,?,?)",
         [
           this.propEndpointURL,
@@ -65,7 +65,7 @@ export class SubscriptionPush {
 
   async delete() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "delete from subscriptions where endpointURL=?",
         [this.propEndpointURL]
       );
@@ -77,7 +77,7 @@ export class SubscriptionPush {
   }
   async getSubscriptionsByIdUser() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from subscriptions where idUser=?",
         [this.propIdUser]
       );
@@ -89,7 +89,7 @@ export class SubscriptionPush {
 
   async getSubscriptionByEndpoint() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from subscriptions where endpointURL=?",
         [this.propEndpointURL]
       );

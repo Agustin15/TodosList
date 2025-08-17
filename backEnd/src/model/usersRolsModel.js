@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class UsersRols {
   #idRol;
@@ -23,7 +23,7 @@ export class UsersRols {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO rols_users(idRol,idUser) VALUES(?,?)",
         [this.propIdRol, this.propIdUser]
       );

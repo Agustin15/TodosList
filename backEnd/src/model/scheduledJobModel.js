@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class ScheduledJob {
   #idNotification;
@@ -15,7 +15,7 @@ export class ScheduledJob {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO scheduled_jobs (idNotification) values (?)",
         [this.propIdNotification]
       );
@@ -27,7 +27,7 @@ export class ScheduledJob {
   }
   async getJobByIdNotification() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "select * from scheduled_jobs where idNotification=?",
         [this.propIdNotification]
       );

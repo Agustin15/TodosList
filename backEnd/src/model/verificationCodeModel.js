@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 import nodemailer from "nodemailer";
 import { randomInt } from "node:crypto";
 
@@ -69,7 +69,7 @@ export class VerificationCode {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO verifications_code (codeOfVerification,expirationTime,idVerification) values(?,?,?)",
         [this.propCodeHash, this.propExpirationTime, this.propIdVerification]
       );
@@ -82,7 +82,7 @@ export class VerificationCode {
 
   async getVerificationCodeByCode() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from verifications_code where codeOfVerification=?",
         [this.propCode]
       );
@@ -95,7 +95,7 @@ export class VerificationCode {
 
   async getVerificationsCodeByIdVerification() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from verifications_code where idVerification=?",
         [this.propIdVerification]
       );

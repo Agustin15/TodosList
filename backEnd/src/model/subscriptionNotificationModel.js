@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class SubscriptionNotification {
   #idNotification;
@@ -25,7 +25,7 @@ export class SubscriptionNotification {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO notifications_subscription (idNotification,endpointURL) values (?,?)",
         [this.propIdNotification, this.propEndpointURL]
       );
@@ -37,7 +37,7 @@ export class SubscriptionNotification {
   }
   async getPendingNotificationsByEndpoint(state) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from notifications_subscription inner join notifications on notifications_subscription.idNotification" +
           "=notifications.idNotification where notifications_subscription.endpointURL=? and notifications.state=?",
         [this.propEndpointURL, state]
@@ -50,7 +50,7 @@ export class SubscriptionNotification {
 
   async getNotificationSubscriptionByIdNotifi() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from notifications_subscription where idNotification=?",
         [this.propIdNotification]
       );
@@ -62,7 +62,7 @@ export class SubscriptionNotification {
   }
   async getSubscriptionsDistinctByIdNotification() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from notifications_subscription where idNotification=? and endpointURL!=?",
         [this.propIdNotification, this.propEndpointURL]
       );

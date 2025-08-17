@@ -6,12 +6,24 @@ import { useRef } from "react";
 import { useTasks } from "../../../context/TaskContext";
 
 export const ColumnOne = ({ setStateCheckbox, stateCheckbox }) => {
-  const { errors, refDatetimeTask, handleChange, values } = useForm();
+  const {
+    errors,
+    setErrors,
+    refDatetimeTask,
+    handleChange,
+    values,
+    setValues
+  } = useForm();
   const refCheckBoxNotification = useRef();
   const { subscribed } = useSubscription();
   const { formatDate } = useTasks();
+  
   const valueCheckboxNotification = () => {
     setStateCheckbox(refCheckBoxNotification.current.checked ? true : false);
+    if (!refCheckBoxNotification.current.checked) {
+      setValues({ ...values, ["datetimeNotification"]: "" });
+      setErrors({ ...errors, ["datetimeNotification"]: "" });
+    }
   };
 
   return (

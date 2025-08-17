@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class Rol {
   #idRol;
@@ -41,7 +41,7 @@ export class Rol {
 
   async getRolByName() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from rols where rol=?",
         [this.propName]
       );

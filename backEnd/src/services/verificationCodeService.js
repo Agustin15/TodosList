@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 import { VerificationCode } from "../model/verificationCodeModel.js";
 import { VerificationTwoStepService } from "../services/verificationTwoStepService.js";
 import bcrypt from "bcrypt";
@@ -11,8 +11,11 @@ export const VerificationCodeService = {
     try {
       let result;
 
-      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-      await connection.beginTransaction();
+      await connectionMysql.connectionCreated.execute(
+        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
+      );
+      await connectionMysql.connectionCreated.beginTransaction();
+
       const verificationFound =
         await VerificationTwoStepService.findVerificationByUser(idUser);
 
@@ -61,10 +64,10 @@ export const VerificationCodeService = {
         result = newVerificationToken;
       }
 
-      await connection.commit();
+      await connectionMysql.connectionCreated.commit();
       return result;
     } catch (error) {
-      await connection.rollback();
+      await connectionMysql.connectionCreated.rollback();
       throw error;
     }
   },

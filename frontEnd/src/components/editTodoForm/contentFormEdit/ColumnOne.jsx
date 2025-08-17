@@ -8,8 +8,9 @@ import { useEffect } from "react";
 export const ColumnOne = () => {
   const { subscribed } = useSubscription();
   const { formatDate } = useTasks();
-  const { stateCheckbox, setStateCheckbox, handleChange, values } = useForm();
-  const { refDatetimeTask, errors } = useForm();
+  const { stateCheckbox, setStateCheckbox, handleChange, values, setValues } =
+    useForm();
+  const { refDatetimeTask, errors, setErrors } = useForm();
 
   useEffect(() => {
     if (values.datetimeNotification && values.datetimeNotification.length > 0) {
@@ -19,6 +20,10 @@ export const ColumnOne = () => {
 
   const valueCheckboxNotification = (event) => {
     setStateCheckbox(event.target.checked ? true : false);
+    if (!event.target.checked) {
+      setValues({ ...values, ["datetimeNotification"]: "" });
+      setErrors({ ...errors, ["datetimeNotification"]: "" });
+    }
   };
 
   return (

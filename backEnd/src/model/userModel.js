@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class User {
   #name;
@@ -23,7 +23,7 @@ export class User {
   set propName(value) {
     if (!value || value.length == 0 || !this.#verifyValidString(value))
       throw new Error("Enter a valid name");
-    this.#name = this.#toUpperCase(value);
+    this.#name = this.#toUpperCase(value).trim();
   }
   get propLastname() {
     return this.#lastname;
@@ -33,7 +33,7 @@ export class User {
     if (!value || value.length == 0 || !this.#verifyValidString(value))
       throw new Error("Enter a valid lastname");
 
-    this.#lastname = this.#toUpperCase(value);
+    this.#lastname = this.#toUpperCase(value).trim();
   }
   get propEmailAddress() {
     return this.#emailAddress;
@@ -45,7 +45,7 @@ export class User {
     if (!value || !regexEmail.test(value))
       throw new Error("Enter a valid email");
 
-    this.#emailAddress = value;
+    this.#emailAddress = value.trim();
   }
 
   get propPassword() {
@@ -59,7 +59,7 @@ export class User {
       throw new Error(
         "Weak password (min 8 chars and must has mayus and minus letters and some number)"
       );
-    this.#password = value;
+    this.#password = value.trim();
   }
 
   #verifyValidString(value) {
@@ -83,7 +83,7 @@ export class User {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO users (nameUser,lastname,email,passwordUser,created) VALUES (?,?,?,?,NOW())",
         [
           this.propName,
@@ -101,7 +101,7 @@ export class User {
 
   async patchPasswordUserById() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionMysql.execute(
         "Update users set passwordUser=?,lastModified=NOW() where idUser=?",
         [this.propPassword, this.propIdUser]
       );
@@ -110,10 +110,10 @@ export class User {
       throw new Error(error);
     }
   }
-  
+
   async patchPasswordUserByEmail() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Update users set passwordUser=?,lastModified=NOW() where email=?",
         [this.propPassword, this.propEmailAddress]
       );
@@ -124,7 +124,7 @@ export class User {
   }
   async patchEmailUserById() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Update users set email=?,lastModified=NOW() where idUser=?",
         [this.propEmailAddress, this.propIdUser]
       );
@@ -136,7 +136,7 @@ export class User {
 
   async put() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Update users set nameUser=?,lastname=?,email=?,passwordUser=?,lastModified=NOW() where idUser=?",
         [
           this.propName,
@@ -154,7 +154,7 @@ export class User {
 
   async getUserByEmail() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from users where email=?",
         [this.propEmailAddress]
       );
@@ -166,7 +166,7 @@ export class User {
 
   async getUserById() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from users where idUser=?",
         [this.propIdUser]
       );

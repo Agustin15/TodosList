@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 
 export class Notification {
   #idNotification;
@@ -50,7 +50,7 @@ export class Notification {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO notifications (datetimeSend,state,idTask) values (?,?,?)",
         [this.propDatetimeSend, this.propState, this.propIdTask]
       );
@@ -63,7 +63,7 @@ export class Notification {
 
   async patchStateNotification() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "update notifications set state=? where idNotification=?",
         [this.propState, this.propIdNotification]
       );
@@ -75,7 +75,7 @@ export class Notification {
 
   async patchDatetimeNotification() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "update notifications set datetimeSend=? where idNotification=?",
         [this.propDatetimeSend, this.propIdNotification]
       );
@@ -87,7 +87,7 @@ export class Notification {
 
   async getNotificationByIdTask() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from notifications where idTask=?",
         [this.propIdTask]
       );
@@ -98,7 +98,7 @@ export class Notification {
   }
   async getNotificationsSentTasksUser(idUser) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? && notifications.state!=? order by notifications.datetimeSend desc",
         [idUser, this.propState]
       );
@@ -111,7 +111,7 @@ export class Notification {
 
   async getNotificationsOfUserByState(idUser) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? &&" +
           " notifications.state=?",
         [idUser, this.propState]
@@ -123,7 +123,7 @@ export class Notification {
   }
   async delete() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "delete from notifications where idNotification=?",
         [this.propIdNotification]
       );

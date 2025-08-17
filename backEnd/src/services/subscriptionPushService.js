@@ -1,7 +1,7 @@
 import { SubscriptionPush } from "../model/subscripcionPushModel.js";
 import { SubscriptionNotificationService } from "./subscriptionNotificationService.js";
 import { NotificationService } from "./notificationService.js";
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 const subscriptionPushModel = new SubscriptionPush();
 
 export const SubscriptionPushService = {
@@ -23,8 +23,10 @@ export const SubscriptionPushService = {
   },
   deleteSubscription: async (endpoint) => {
     try {
-      connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
-      connection.beginTransaction();
+      await connectionMysql.connectionCreated.execute(
+        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
+      );
+      await connectionMysql.connectionCreated.beginTransaction();
 
       let notificationsPending =
         await SubscriptionNotificationService.findPendingNotificationsByEndpoint(
@@ -62,10 +64,10 @@ export const SubscriptionPushService = {
       if (deletedSubscription == 0)
         throw new Error("Failed to delete subscription");
 
-      connection.commit();
+      await connectionMysql.connectionCreated.commit();
       return deletedSubscription;
     } catch (error) {
-      connection.rollback();
+      await connectionMysql.connectionCreated.rollback();
       throw error;
     }
   },

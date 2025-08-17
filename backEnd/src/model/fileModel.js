@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 export class File {
   #idTask;
   #idFile;
@@ -53,12 +53,11 @@ export class File {
     this.#file = value;
   }
 
-
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "Insert into files (nameFile,typeFile,datetimeUpload,fileTask,idTask) values(?,?,CURDATE(),?,?)",
-        [this.propNameFile, this.propTypeFile,this.propFile, this.propIdTask]
+        [this.propNameFile, this.propTypeFile, this.propFile, this.propIdTask]
       );
       return result.affectedRows;
     } catch (error) {
@@ -68,7 +67,7 @@ export class File {
 
   async delete() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "delete from files where idFile=?",
         [this.propIdFile]
       );
@@ -80,7 +79,7 @@ export class File {
 
   async getFilesByIdTask() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "select * from files where idTask=?",
         [this.propIdTask]
       );
@@ -92,7 +91,7 @@ export class File {
 
   async getQuantityFilesByUser(idUser) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=?",
         [idUser]
       );
@@ -104,7 +103,7 @@ export class File {
 
   async getFilesByUserLimit(offset, idUser) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         `select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=? order by 
         files.datetimeUpload desc LIMIT 10 OFFSET ${offset}`,
         [idUser]
@@ -117,7 +116,7 @@ export class File {
   }
   async getAllFilesUser(idUser) {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select files.fileTask from files inner join tasks on files.idTask=tasks.idTask where" +
           " tasks.idUser=?",
         [idUser]

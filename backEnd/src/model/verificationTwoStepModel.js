@@ -1,4 +1,4 @@
-import connection from "../config/database.js";
+import { connectionMysql } from "../config/database.js";
 export class VerificationTwoStep {
   #idUser;
   #enabled = false;
@@ -22,7 +22,7 @@ export class VerificationTwoStep {
 
   async post() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "INSERT INTO verifications_two_step (enabled,idUser) values (?,?)",
         [this.propEnabled, this.propIdUser]
       );
@@ -35,7 +35,7 @@ export class VerificationTwoStep {
 
   async patch() {
     try {
-      const [result] = await connection.execute(
+      const [result] = await connectionMysql.connectionCreated.execute(
         "update verifications_two_step set enabled=? where idUser=?",
         [this.propEnabled, this.propIdUser]
       );
@@ -48,7 +48,7 @@ export class VerificationTwoStep {
 
   async getVerificationByUser() {
     try {
-      const [results] = await connection.execute(
+      const [results] = await connectionMysql.connectionCreated.execute(
         "select * from verifications_two_step where idUser=?",
         [this.propIdUser]
       );
