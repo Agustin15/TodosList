@@ -7,6 +7,7 @@ rol varchar(5) not null unique,
 CONSTRAINT check_rol CHECK(rol in ("Admin","User"))
 );
 
+
 CREATE TABLE users(
 idUser int primary key auto_increment,
 nameUser varchar(20) not null,
@@ -101,7 +102,7 @@ CONSTRAINT fk_idVerification FOREIGN KEY(idVerification) REFERENCES verification
 delimiter //
 CREATE PROCEDURE checkDatetimeTask(IN datetimeTask DATETIME)
 BEGIN
-IF datetimeTask<=CURDATE() THEN
+IF datetimeTask<=NOW() THEN
  SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "La fecha de la tarea debe ser mayor a la fecha actual";
 END IF;
@@ -111,7 +112,7 @@ END//
 delimiter //
 CREATE PROCEDURE checkDatetimeSend(IN datetimeSend DATETIME,IN idTask INT)
 BEGIN
-IF datetimeSend<=CURDATE() OR datetimeSend>(select datetimeTask from tasks where tasks.idTask=idTask) THEN
+IF datetimeSend<=NOW() OR datetimeSend>(select datetimeTask from tasks where tasks.idTask=idTask) THEN
  SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "La fecha de envio de la notificacion debe ser mayor a la fecha actual y no debe ser mayor a la 
  fecha de la tarea";
@@ -149,7 +150,8 @@ END IF;
 END;
 // delimiter ;
 
-delimiter //checkDatetimeTask
+delimiter //
+
 CREATE TRIGGER check_datetimeUpload BEFORE INSERT ON files
 FOR EACH ROW 
 BEGIN
