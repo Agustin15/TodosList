@@ -2,12 +2,26 @@ import styles from "./RowFile.module.css";
 import iconOpenFile from "../../../assets/img/openDocument.png";
 import iconDownload from "../../../assets/img/download.png";
 import { useFiles } from "../../../context/FilesContext";
-import { useTasks } from "../../../context/TaskContext";
 import iconFile from "../../../assets/img/fileAttachment.png";
 
 export const RowFile = ({ index, file }) => {
   const { handleDownload, generateLink, getMime } = useFiles();
-  const { formatDate } = useTasks();
+
+  const formatDate = (date) => {
+    let dateToFormat = new Date(date);
+    let year = dateToFormat.getFullYear();
+    let month = dateToFormat.getMonth() + 1;
+    let day = dateToFormat.getDate();
+
+    let dateString =
+      (day < 10 ? `0${day}` : day) +
+      "-" +
+      (month < 10 ? `0${month}` : month) +
+      "-" +
+      year;
+
+    return dateString;
+  };
 
   return (
     <tr className={index % 2 == 0 ? styles.rowWhite : styles.rowGray}>
