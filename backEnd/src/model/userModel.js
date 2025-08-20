@@ -65,7 +65,7 @@ export class User {
   #verifyValidString(value) {
     let valid = true;
     for (let f = 0; f < value.length; f++) {
-      if (!value[f].match(/[a-z]/i) || [f] == "") {
+      if (!/[a-z]/i.test(value) || [f] == "") {
         return false;
       }
     }
