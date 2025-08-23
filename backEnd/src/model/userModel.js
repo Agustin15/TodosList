@@ -84,7 +84,7 @@ export class User {
   async post() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO users (nameUser,lastname,email,passwordUser,created) VALUES (?,?,?,?,NOW())",
+        "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)",
         [
           this.propName,
           this.propLastname,
@@ -102,7 +102,7 @@ export class User {
   async patchPasswordUserById() {
     try {
       const [result] = await connectionMysql.connectionMysql.execute(
-        "Update users set passwordUser=?,lastModified=NOW() where idUser=?",
+        "Update users set passwordUser=? where idUser=?",
         [this.propPassword, this.propIdUser]
       );
       return result.affectedRows;
@@ -114,7 +114,7 @@ export class User {
   async patchPasswordUserByEmail() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "Update users set passwordUser=?,lastModified=NOW() where email=?",
+        "Update users set passwordUser=? where email=?",
         [this.propPassword, this.propEmailAddress]
       );
       return result.affectedRows;
@@ -125,7 +125,7 @@ export class User {
   async patchEmailUserById() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "Update users set email=?,lastModified=NOW() where idUser=?",
+        "Update users set email=? where idUser=?",
         [this.propEmailAddress, this.propIdUser]
       );
       return result.affectedRows;
@@ -137,7 +137,7 @@ export class User {
   async put() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "Update users set nameUser=?,lastname=?,email=?,passwordUser=?,lastModified=NOW() where idUser=?",
+        "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?",
         [
           this.propName,
           this.propLastname,

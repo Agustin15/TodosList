@@ -56,7 +56,7 @@ export class File {
   async post() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "Insert into files (nameFile,typeFile,datetimeUpload,fileTask,idTask) values(?,?,CURDATE(),?,?)",
+        "Insert into files (nameFile,typeFile,fileTask,idTask) values(?,?,?,?)",
         [this.propNameFile, this.propTypeFile, this.propFile, this.propIdTask]
       );
       return result.affectedRows;

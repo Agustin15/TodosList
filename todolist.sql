@@ -7,15 +7,14 @@ rol varchar(5) not null unique,
 CONSTRAINT check_rol CHECK(rol in ("Admin","User"))
 );
 
-
 CREATE TABLE users(
 idUser int primary key auto_increment,
 nameUser varchar(20) not null,
 lastname varchar(20) not null,
 email varchar(30) not null unique,
 passwordUser varchar(60) not null,
-created datetime not null,
-lastModified datetime,
+created datetime default current_timestamp not null,
+lastModified  datetime default current_timestamp on update current_timestamp,
 CONSTRAINT check_name CHECK(REGEXP_LIKE(nameUser,'^[A-Za-z]')),
 CONSTRAINT check_lastname CHECK(REGEXP_LIKE(lastname,'^[A-Za-z]')),
 CONSTRAINT check_email CHECK(REGEXP_LIKE(email,'^[A-Za-z0-9]+@[a-z]+\\.[a-zA-Z]'))
@@ -44,7 +43,7 @@ CREATE TABLE files(
 idFile int primary key auto_increment,
 nameFile varchar(50) not null,
 typeFile varchar(50) not null,
-datetimeUpload datetime not null,
+datetimeUpload datetime default current_timestamp not null,
 fileTask mediumblob not null,
 idTask int not null,
 CONSTRAINT fk_idTask FOREIGN KEY(idTask) REFERENCES tasks(idTask) ON DELETE CASCADE
@@ -99,6 +98,9 @@ idVerification int not null,
 CONSTRAINT fk_idVerification FOREIGN KEY(idVerification) REFERENCES verifications_two_step(idVerification)
 );
 
+
+/*PROCEDURES*/
+
 delimiter //
 CREATE PROCEDURE checkDatetimeTask(IN datetimeTask DATETIME)
 BEGIN
@@ -119,6 +121,8 @@ IF datetimeSend<=NOW() OR datetimeSend>(select datetimeTask from tasks where tas
 END IF;
 END//
 // delimiter ;
+
+/*TRIGGERS*/
 
 delimiter //
 CREATE TRIGGER check_datetimeTask BEFORE INSERT ON tasks 
@@ -146,18 +150,6 @@ FOR EACH ROW
 BEGIN
 IF OLD.datetimeSend!=NEW.datetimeSend THEN
 CALL checkDatetimeSend(NEW.datetimeSend,OLD.idTask);
-END IF;
-END;
-// delimiter ;
-
-delimiter //
-
-CREATE TRIGGER check_datetimeUpload BEFORE INSERT ON files
-FOR EACH ROW 
-BEGIN
-IF NEW.datetimeUpload<CURDATE() or NEW.datetimeUpload>CURDATE() THEN
- SIGNAL SQLSTATE '45000'
- SET MESSAGE_TEXT = "La fecha de subida del archivo debe ser igual a la fecha actual";
 END IF;
 END;
 // delimiter ;
