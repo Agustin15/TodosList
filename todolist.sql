@@ -54,6 +54,7 @@ CREATE TABLE subscriptions(
 endpointURL varchar(200) NOT NULL primary key,
 p256dh varchar(100) NOT NULL,
 auth varchar(50) NOT NULL,
+created datetime default current_timestamp NOT NULL,
 idUser int NOT NULL,
 CONSTRAINT fk_idUserSubscription FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE
 );
