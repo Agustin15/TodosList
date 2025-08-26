@@ -70,19 +70,21 @@ export const LineChart = () => {
     <div className={styles.containChart}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <div className={styles.containSelect}>
-            <div className={styles.search}>
-              <select ref={refSelect}>
-                {years &&
-                  years.map((year, index) => (
-                    <option key={index}>{Object.values(year)}</option>
-                  ))}
-              </select>
-              <button onClick={searchDataChartByYear}>
-                <img src={iconSearch}></img>
-              </button>
+          {years && (
+            <div className={styles.containSelect}>
+              <div className={styles.search}>
+                <select ref={refSelect}>
+                  {years &&
+                    years.map((year, index) => (
+                      <option key={index}>{Object.values(year)}</option>
+                    ))}
+                </select>
+                <button onClick={searchDataChartByYear}>
+                  <img src={iconSearch}></img>
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           <div className={styles.title}>
             <h3>
               Monthly Tasks {refSelect.current && refSelect.current.value}
