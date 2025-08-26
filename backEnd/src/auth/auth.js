@@ -22,7 +22,9 @@ export const authRequest = async (req, res) => {
 
         return decodeToken;
       } catch (error) {
-        throw new Error("Authentication failed,invalid token");
+        throw new Error("Authentication failed,invalid token", {
+          cause: { code: 401 }
+        });
       }
     }
   } catch (error) {
@@ -40,7 +42,9 @@ export const authRequestByHeader = async (req, res) => {
   let decodeToken;
   try {
     if (!token) {
-      throw new Error("Invalid Authentication,token not found");
+      throw new Error("Invalid Authentication,token not found", {
+        cause: { code: 401 }
+      });
     }
 
     if (!secretKey) {
@@ -52,7 +56,9 @@ export const authRequestByHeader = async (req, res) => {
         algorithm: "HS256"
       });
     } catch {
-      throw new Error("Invalid Authentication,invalid token");
+      throw new Error("Invalid Authentication,invalid token", {
+        cause: { code: 401 }
+      });
     }
 
     return decodeToken;
@@ -73,7 +79,9 @@ const newAccessToken = async (req, res) => {
 
   try {
     if (!refreshToken) {
-      throw new Error("Authentication failed,invalid refresh token");
+      throw new Error("Authentication failed,invalid refresh token", {
+        cause: { code: 401 }
+      });
     }
     const decodedRefreshToken = jwt.verify(refreshToken, refreshKey);
 
@@ -84,7 +92,9 @@ const newAccessToken = async (req, res) => {
     );
 
     if (!newToken) {
-      throw new Error("Authentication failed,error to create access token");
+      throw new Error("Authentication failed,error to create access token", {
+        cause: { code: 401 }
+      });
     }
     res.cookie("accessToken", newToken, {
       maxAge: 60 * 60 * 1000,

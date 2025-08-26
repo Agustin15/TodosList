@@ -12,17 +12,19 @@ export const getNotificationsSentTasksUser = async (req, res) => {
 
     res.status(200).json(notifications);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
 export const getNotificationsOfUserByState = async (req, res) => {
   try {
     let validAuth = await authRequest(req, res);
-    if (!req.params.state) throw new Error("State undefined");
+    if (!req.params.state)
+      throw new Error("State undefined", {
+        cause: { code: 400 }
+      });
 
     const notificationsFound =
       await NotificationService.findNotificationsOfUserByState(
@@ -32,19 +34,24 @@ export const getNotificationsOfUserByState = async (req, res) => {
 
     res.status(200).json(notificationsFound);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
 export const updateStateNotification = async (req, res) => {
   try {
     let validAuth = await authRequest(req, res);
-    if (!req.params.id) throw new Error("idNotification undefined");
+    if (!req.params.id)
+      throw new Error("idNotification undefined", {
+        cause: { code: 400 }
+      });
 
-    if (!req.body.newState) throw new Error("newState undefined");
+    if (!req.body.newState)
+      throw new Error("newState undefined", {
+        cause: { code: 400 }
+      });
 
     const notificationUpdated =
       await NotificationService.updateStateNotification(
@@ -55,10 +62,8 @@ export const updateStateNotification = async (req, res) => {
 
     res.status(200).json(notificationUpdated);
   } catch (error) {
-    console.log(error);
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };

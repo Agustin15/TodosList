@@ -1,6 +1,5 @@
 import styles from "./FilterOption.module.css";
 import { useFilterOptionTasks } from "../../context/FilterOptionTasksContext";
-import { useTasks } from "../../context/TaskContext";
 import { useState } from "react";
 
 export const Filter = ({ setRefs, years }) => {

@@ -5,9 +5,15 @@ export const addVerificationTwoStep = async (req, res) => {
   try {
     const validAuth = await authRequest(req, res);
 
-    if (!req.body) throw new Error("Body request null");
+    if (!req.body)
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
 
-    if (!req.body.confirmPassword) throw new Error("confirmPassword undefined");
+    if (!req.body.confirmPassword)
+      throw new Error("confirmPassword undefined", {
+        cause: { code: 400 }
+      });
 
     let confirmPassword = req.body.confirmPassword;
 
@@ -19,10 +25,9 @@ export const addVerificationTwoStep = async (req, res) => {
 
     res.status(201).json({ verificationAdded: verificationAdded });
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };
 
@@ -35,20 +40,28 @@ export const getVerificationTwoStepByUser = async (req, res) => {
 
     res.status(200).json(verificationFound);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
 export const updateStateVerificationByUser = async (req, res) => {
   try {
-    if (!req.body) throw new Error("Body request null");
+    if (!req.body)
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
 
-    if (req.body.newState == null) throw new Error("newState undefined");
+    if (req.body.newState == null)
+      throw new Error("newState undefined", {
+        cause: { code: 400 }
+      });
 
-    if (!req.body.confirmPassword) throw new Error("confirmPassword undefined");
+    if (!req.body.confirmPassword)
+      throw new Error("confirmPassword undefined", {
+        cause: { code: 400 }
+      });
 
     let confirmPassword = req.body.confirmPassword;
     let newState = req.body.newState;
@@ -64,9 +77,8 @@ export const updateStateVerificationByUser = async (req, res) => {
 
     res.status(200).json(verificationFound);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };

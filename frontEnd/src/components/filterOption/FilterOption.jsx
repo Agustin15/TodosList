@@ -28,6 +28,7 @@ export const FilterOption = ({ setTaskNotFound, setOpenModalAdd }) => {
 
   const setSelectYears = async () => {
     const yearsTasks = await getYearsOfTasks();
+
     if (years) {
       setYears(yearsTasks);
     }

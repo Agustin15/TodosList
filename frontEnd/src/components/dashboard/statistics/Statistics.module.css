@@ -24,20 +24,42 @@
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   background-color: white;
-  box-shadow: 2px 2px 2px gray;
   height: 21rem;
   border-radius: 7px;
+  border: 1px solid rgb(221, 221, 221);
   width: 99%;
   padding: 1rem;
   padding-top: 0;
-  border: 1px solid rgb(219, 219, 219);
   position: relative;
 }
 
 .containDoughnutChart {
-  height: 11rem;
+  height: 12rem;
   width: 52%;
   gap: 1rem;
+}
+
+.containDoughnutChart .quantity {
+  width: 99%;
+  color: rgb(63, 63, 63);
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.4rem;
+}
+
+.containDoughnutChart .quantity div {
+  border-radius: 99%;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+.containDoughnutChart .quantity .referenceRed {
+  background-color: rgb(231, 49, 88);
+}
+
+.containDoughnutChart .quantity .referenceGreen {
+  background-color: rgb(16, 190, 83);
 }
 
 .containDoughnutChart .noData,
@@ -150,12 +172,12 @@
   }
   .containDoughnutChart,
   .containBarChart {
-    height: 17rem;
+    height: 18rem;
     width: 81%;
   }
 
   .containDoughnutChart {
-    height: 11rem;
+    height: 12rem;
     width: 75%;
     gap: 1rem;
   }

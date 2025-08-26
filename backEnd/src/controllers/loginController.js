@@ -5,8 +5,14 @@ export const login = async (req, res) => {
       throw new Error("Body request null");
     }
 
-    if (!req.body.email) throw new Error("email undefined");
-    if (!req.body.password) throw new Error("password undefined");
+    if (!req.body.email)
+      throw new Error("email undefined", {
+        cause: { code: 400 }
+      });
+    if (!req.body.password)
+      throw new Error("password undefined", {
+        cause: { code: 400 }
+      });
 
     const { email, password } = req.body;
 
@@ -33,6 +39,8 @@ export const login = async (req, res) => {
         tokenVerification: loginResult.tokenVerification
       });
   } catch (error) {
-    res.status(401).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 401)
+      .json({ messageError: error.message });
   }
 };

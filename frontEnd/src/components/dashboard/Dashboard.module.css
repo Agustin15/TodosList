@@ -53,16 +53,16 @@
 @media only screen and (min-width: 700px) and (max-width: 1024px) {
     .containDashboard {
         display: flex;
-        justify-content: start;
+        justify-content: center;
         align-items: start;
-        padding-bottom: 3rem;
+        padding-bottom: 1rem;
         height: auto;
         margin-top: 0;
     }
 
     .rowDashboard {
         gap: 1rem;
-        width: 97%;
+        width: 100%;
         height: auto;
         padding-bottom: 2rem;
         margin-left: 0;

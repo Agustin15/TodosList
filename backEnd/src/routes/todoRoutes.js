@@ -16,13 +16,13 @@ import {
 import { getTasksForCalendarByUser } from "../controllers/todoController/calendarTasks.js";
 import {
   getTasksByWeekday,
-  getTasksThisWeekUser
+  getTasksThisWeekUser,
+  getDataForChartTasksMonthly
 } from "../controllers/todoController/dashboardTasks.js";
 
 import multer from "multer";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 
 export const tasksRouter = express.Router();
 
@@ -35,6 +35,9 @@ tasksRouter.get("/:optionGetTasks", (req, res) => {
 
     case "getTasksThisWeekUser":
       return getTasksThisWeekUser(req, res);
+
+    case "getDataForChartTasksMonthly":
+      return getDataForChartTasksMonthly(req, res);
 
     case "getTasksThisWeekByStateAndUser":
       return getTasksThisWeekByStateAndUser(req, res);

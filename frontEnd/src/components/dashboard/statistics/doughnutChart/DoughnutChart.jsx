@@ -1,42 +1,9 @@
 import { ContainRingChart } from "./ContainRingChart";
-import { useTasks } from "../../../../context/TaskContext";
 import styles from "../Statistics.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useDashboard } from "../../../../context/DashboardContext";
 
 export const DoughnutChart = () => {
-  const { tasksThisWeek } = useTasks();
-  const [tasksCompleted, setTasksCompleted] = useState();
-  const [tasksIncompleted, setTasksIncompleted] = useState();
-
-  useEffect(() => {
-    statisticsDoughnutChart();
-  }, [tasksThisWeek]);
-
-  const statisticsDoughnutChart = () => {
-    let percentajeCompleted = 0,
-      percentajeIncompleted = 0;
-
-    let tasksCompleted = tasksThisWeek.reduce((ac, task) => {
-      if (task.isCompleted) {
-        ac++;
-      }
-      return ac;
-    }, 0);
-
-    let tasksIncompleted = tasksThisWeek.reduce((ac, task) => {
-      if (!task.isCompleted) {
-        ac++;
-      }
-      return ac;
-    }, 0);
-
-    if (tasksThisWeek.length > 0) {
-      percentajeCompleted = (tasksCompleted * 100) / tasksThisWeek.length;
-      percentajeIncompleted = (tasksIncompleted * 100) / tasksThisWeek.length;
-    }
-    setTasksCompleted(percentajeCompleted);
-    setTasksIncompleted(percentajeIncompleted);
-  };
+  const { tasksCompleted, tasksIncompleted, quantity } = useDashboard();
 
   return (
     <div className={styles.rowRings}>
@@ -45,6 +12,7 @@ export const DoughnutChart = () => {
         tasksCompleted={tasksCompleted}
         tasksIncompleted={tasksIncompleted}
         title={"Completed tasks this week"}
+        quantity={quantity.completed}
       ></ContainRingChart>
 
       <ContainRingChart
@@ -52,6 +20,7 @@ export const DoughnutChart = () => {
         tasksCompleted={tasksCompleted}
         tasksIncompleted={tasksIncompleted}
         title={"Incomplete tasks this week"}
+        quantity={quantity.incompleted}
       ></ContainRingChart>
     </div>
   );

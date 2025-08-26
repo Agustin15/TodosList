@@ -220,6 +220,31 @@ export class Task {
     }
   }
 
+  async getQuantityTasksByMonthAndYear(month, year) {
+    try {
+      const [results] = await connectionMysql.connectionCreated.execute(
+        `select * from tasks where idUser=? && YEAR(datetimeTask)=? && MONTH(datetimeTask)=?`,
+        [this.propIdUser, year, month]
+      );
+
+      return results.length;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  async getQuantityTasksInYear(year) {
+    try {
+      const [result] = await connectionMysql.connectionCreated.execute(
+        `select COUNT(*) as average from tasks where idUser=? && YEAR(datetimeTask)=? `,
+        [this.propIdUser, year]
+      );
+
+      return result[0].average;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   async getTaskById() {
     try {
       const [results] = await connectionMysql.connectionCreated.execute(
@@ -246,9 +271,10 @@ export class Task {
   async getYearsTask() {
     try {
       const [results] = await connectionMysql.connectionCreated.execute(
-        "select DISTINCT YEAR(datetimeTask) from tasks where idUser=?",
+        "select DISTINCT YEAR(datetimeTask) as year from tasks where idUser=?",
         [this.propIdUser]
       );
+
       return results;
     } catch (error) {
       throw new Error(error);

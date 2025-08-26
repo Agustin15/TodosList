@@ -5,10 +5,16 @@ import { authRequestByHeader } from "../auth/auth.js";
 export const sendEmailToReset = async (req, res) => {
   try {
     if (!req.body) {
-      throw new Error("Body request null");
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
     }
 
-    if (!req.body.mail) throw new Error("Email undefined");
+    if (!req.body.mail)
+      throw new Error("Email undefined", {
+        cause: { code: 400 }
+      });
+
     if (!process.env.JWT_SECRET_KEY)
       throw new Error("JWT secret key not declared");
 
@@ -27,7 +33,9 @@ export const sendEmailToReset = async (req, res) => {
 
     res.status(200).json(emailSent);
   } catch (error) {
-    res.status(500).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };
 
@@ -39,7 +47,11 @@ export const updatePasswordByEmail = async (req, res) => {
       throw new Error("Body request null");
     }
 
-    if (!req.body.newPassword) throw new Error("New password undefined");
+    if (!req.body.newPassword)
+      throw new Error("New password undefined", {
+        cause: { code: 400 }
+      });
+      
     const newPassword = req.body.newPassword;
 
     const passwordUpdated = await ResetPasswordService.updatePasswordByEmail(
@@ -49,9 +61,8 @@ export const updatePasswordByEmail = async (req, res) => {
 
     res.status(200).json(passwordUpdated);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };

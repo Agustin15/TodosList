@@ -4,6 +4,7 @@ import Header from "../header/Header";
 import iconTitleDashboard from "../../assets/img/iconTitleDashboard.png";
 import { Title } from "../title/Title";
 import { TasksThisWeek } from "./tasksThisWeek/TasksThisWeek";
+import { LineChart } from "./chartTaskByMonth/LineChart";
 import { UserDataProvider } from "../../context/UserDataContext";
 import { MenuProvider } from "../../context/MenuContext";
 
@@ -21,6 +22,7 @@ export const Dashboard = () => {
               <Statistics></Statistics>
               <TasksThisWeek></TasksThisWeek>
             </div>
+            <LineChart />
           </div>
         </MenuProvider>
       </div>

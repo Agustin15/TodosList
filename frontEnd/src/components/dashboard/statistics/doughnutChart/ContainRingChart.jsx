@@ -10,7 +10,8 @@ export const ContainRingChart = ({
   option,
   tasksCompleted,
   tasksIncompleted,
-  title
+  title,
+  quantity
 }) => {
   const { tasksThisWeek, loadingState } = useTasks();
   const chart = useRef();
@@ -33,7 +34,7 @@ export const ContainRingChart = ({
               option == "completed" ? "Tasks Completed" : "Tasks Incomplete",
             y: option == "completed" ? tasksCompleted : tasksIncompleted,
 
-            color: option == "completed" ? "#39e76b" : "#d10909"
+            color: option == "completed" ? "#39e76b" : "rgb(223, 44, 74)"
           },
           {
             name: "Tasks restants",
@@ -73,6 +74,16 @@ export const ContainRingChart = ({
               ref={chart}
               options={optionsDoughnut}
             ></CanvasJSChart>
+          </div>
+          <div className={styles.quantity}>
+            <div
+              className={
+                option == "completed"
+                  ? styles.referenceGreen
+                  : styles.referenceRed
+              }
+            ></div>
+            <span>Quantity:{quantity}</span>
           </div>
         </>
       ) : (

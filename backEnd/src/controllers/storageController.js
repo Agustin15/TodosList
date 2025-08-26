@@ -11,9 +11,8 @@ export const getStorageFilesUsedByUser = async (req, res) => {
 
     res.status(200).json({ storageUsed });
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };

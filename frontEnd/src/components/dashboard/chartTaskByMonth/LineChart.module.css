@@ -1,0 +1,204 @@
+.containChart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 99%;
+    height: 28rem;
+    padding-bottom: 3rem;
+    margin-top: 2rem;
+}
+
+.containChart .content {
+    text-align: center;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    width: 95%;
+    height: 99%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(230, 230, 230);
+}
+
+.containChart .content .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 99%;
+}
+
+.containChart .header .containSelect {
+    width: 97%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    position: absolute;
+    margin-top: -0.5rem;
+}
+
+.containChart .header .search select {
+    width: 8rem;
+    height: 1.9rem;
+    border-radius: 4px;
+    padding-right: 2rem;
+    border: 1px solid rgb(190, 190, 190);
+    outline: none;
+}
+.containChart .header .search button {
+    width: 2.6rem;
+    height: 1.9rem;
+    border-radius: 3px;
+    border: none;
+    position: absolute;
+    background: linear-gradient(rgb(55, 159, 201), rgb(52, 152, 192));
+    outline: none;
+    margin-left: -2rem;
+    cursor: pointer;
+}
+
+.containChart .header .search button:hover {
+    background: linear-gradient(rgb(55, 159, 201), rgb(42, 129, 163));
+}
+.containChart .header .search button img {
+    width: 17px;
+    height: 17px;
+}
+.containChart .content .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 16px;
+    padding-bottom: 1rem;
+}
+
+.containChart .content .title img {
+    width: 32px;
+    height: 32px;
+}
+
+.containChart .content .containLoading,
+.containChart .content .noData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
+    gap: 1rem;
+    color: rgb(112, 112, 112);
+    font-size: 22px;
+}
+
+.containChart .content .containLoading img {
+    width: 42px;
+    height: 42px;
+    opacity: 76%;
+}
+
+.containChart .content .noData img {
+    width: 72px;
+    height: 72px;
+    opacity: 76%;
+}
+@media only screen and (max-width: 699px) {
+    .containChart {
+        margin-top: 2.5rem;
+        height: 22rem;
+    }
+    .containChart .content .header {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        width: 99%;
+    }
+
+    .containChart .header .containSelect {
+        width: 0;
+        margin-top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .containChart .header .containSelect select {
+        height: 1.8rem;
+    }
+
+    .containChart .header .containSelect button {
+        width: 2.3rem;
+        height: 1.8rem;
+    }
+    .containChart .header .containSelect button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .containChart .content .title {
+        font-size: 14px;
+    }
+
+    .containChart .content .title img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .containChart .content {
+        width: 84%;
+    }
+
+    .containChart .content .containLoading,
+    .containChart .content .noData {
+        font-size: 18px;
+    }
+
+    .containChart .content .noData {
+        font-size: 15px;
+    }
+    .containChart .content .containLoading img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .containChart .content .noData img {
+        width: 52px;
+        height: 52px;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containChart {
+        margin-top: 2.5rem;
+        height: 19rem;
+        width: 100%;
+    }
+
+    .containChart .content .title {
+        font-size: 16px;
+    }
+
+    .containChart .content .title img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .containChart .content {
+        width: 88%;
+    }
+
+    .containChart .content .containLoading,
+    .containChart .content .noData {
+        font-size: 18px;
+    }
+
+    .containChart .content .containLoading img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .containChart .content .noData img {
+        width: 72px;
+        height: 72px;
+    }
+}

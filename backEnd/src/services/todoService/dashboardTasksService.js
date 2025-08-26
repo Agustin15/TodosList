@@ -1,6 +1,7 @@
 import { Task } from "../../model/todoModel.js";
 import { TaskService } from "./taskService.js";
 import { FileService } from "../fileService.js";
+
 const taskModel = new Task();
 
 export const DashboardTasksService = {
@@ -19,7 +20,7 @@ export const DashboardTasksService = {
         "Thursday",
         "Friday",
         "Saturday",
-        "Sunday",
+        "Sunday"
       ];
 
       let tasksIncompleteByWeekday = await Promise.all(
@@ -100,6 +101,50 @@ export const DashboardTasksService = {
       );
 
       return tasksThisWeekUser;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getDataForChartTasksMonthly: async (idUser, year) => {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "Novemeber",
+      "December"
+    ];
+
+    try {
+      taskModel.propIdUser = idUser;
+
+      const tasksByMonth = await Promise.all(
+        months.map(async (month, index) => {
+          const quantityTasks = await taskModel.getQuantityTasksByMonthAndYear(
+            index + 1,
+            year
+          );
+
+          return {
+            year: year,
+            month: index,
+            quantityTasks: quantityTasks
+          };
+        })
+      );
+
+      let quantityTasksInYear = await taskModel.getQuantityTasksInYear(year);
+
+      const average = quantityTasksInYear / months.length;
+
+      return { tasksByMonth: tasksByMonth, average: average };
     } catch (error) {
       throw error;
     }

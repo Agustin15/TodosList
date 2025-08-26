@@ -5,14 +5,20 @@ import jwt from "jsonwebtoken";
 export const sendVerificationCode = async (req, res) => {
   try {
     if (!req.body) {
-      throw new Error("Body request null");
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
     }
 
     if (!req.body.idUser) {
-      throw new Error("idUser undefined");
+      throw new Error("idUser undefined", {
+        cause: { code: 400 }
+      });
     }
     if (!req.body.option) {
-      throw new Error("option undefined");
+      throw new Error("option undefined", {
+        cause: { code: 400 }
+      });
     }
 
     let { idUser, option } = req.body;
@@ -22,10 +28,9 @@ export const sendVerificationCode = async (req, res) => {
 
     res.status(200).json(newVerificationToken);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };
 
@@ -42,19 +47,27 @@ export const comprobateVerificationCode = async (req, res) => {
     const decodeToken = await authRequestByHeader(req, res);
 
     if (!process.env.JWT_SECRET_KEY)
-      throw new Error("JWT secret key not declared");
+      throw new Error("JWT secret key not declared", {
+        cause: { code: 500 }
+      });
     if (!process.env.JWT_SECRET_KEY_REFRESH)
-      throw new Error("JWT secret refresh key not declared");
+      throw new Error("JWT secret refresh key not declared", {
+        cause: { code: 500 }
+      });
 
     const secretKey = process.env.JWT_SECRET_KEY;
     const secretKeyRefresh = process.env.JWT_SECRET_KEY;
 
     if (!req.body) {
-      throw new Error("Body request null");
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
     }
 
     if (!req.body.codeEntered) {
-      throw new Error("codeEntered undefined");
+      throw new Error("codeEntered undefined", {
+        cause: { code: 400 }
+      });
     }
 
     const { codeEntered } = req.body;
@@ -96,9 +109,8 @@ export const comprobateVerificationCode = async (req, res) => {
 
     res.status(200).json(verificationCodeValid);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 401)
+      .json({ messageError: error.message });
   }
 };

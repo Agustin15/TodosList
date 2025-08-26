@@ -12,10 +12,9 @@ export const getYearsOfTasks = async (req, res) => {
 
     res.status(200).json(yearsTasks);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
@@ -24,7 +23,9 @@ export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (!req.params) {
-      throw new Error("Params request null");
+      throw new Error("Params request null", {
+        cause: { code: 400 }
+      });
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
@@ -40,10 +41,9 @@ export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
 
     res.status(200).json(tasks);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
@@ -52,7 +52,9 @@ export const getTasksThisWeekByStateAndUser = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (!req.params) {
-      throw new Error("Params request null");
+      throw new Error("Params request null", {
+        cause: { code: 400 }
+      });
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
@@ -63,10 +65,9 @@ export const getTasksThisWeekByStateAndUser = async (req, res) => {
 
     res.status(200).json(tasks);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
@@ -75,7 +76,9 @@ export const getTasksByDayAndState = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (!req.params) {
-      throw new Error("Params request null");
+      throw new Error("Params request null", {
+        cause: { code: 400 }
+      });
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
@@ -87,10 +90,9 @@ export const getTasksByDayAndState = async (req, res) => {
 
     res.status(200).json(tasks);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 export const getTasksLimitByFilterOption = async (req, res) => {
@@ -99,13 +101,17 @@ export const getTasksLimitByFilterOption = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (Object.values(req.params.optionGetTasks).length == 0) {
-      throw new Error("optionGetTasks undefined");
+      throw new Error("optionGetTasks undefined", {
+        cause: { code: 400 }
+      });
     }
 
     const params = JSON.parse(req.params.optionGetTasks);
 
     if (typeof params.offset === "undefined")
-      throw new Error("Offset undefined");
+      throw new Error("Offset undefined", {
+        cause: { code: 400 }
+      });
 
     if (!params.year) throw new Error("Year undefined");
 
@@ -121,10 +127,9 @@ export const getTasksLimitByFilterOption = async (req, res) => {
 
     res.status(200).json(tasks);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
@@ -134,7 +139,9 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (Object.values(req.params.optionGetTasks).length == 0) {
-      throw new Error("optionGetTasks undefined");
+      throw new Error("optionGetTasks undefined", {
+        cause: { code: 400 }
+      });
     }
     const params = JSON.parse(req.params.optionGetTasks);
 
@@ -154,10 +161,9 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
 
     res.status(200).json(tasks);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
@@ -165,7 +171,9 @@ export const getTaskById = async (req, res) => {
   try {
     const validAuthRequest = await authRequest(req, res);
     if (Object.values(req.params.optionGetTasks).length == 0) {
-      throw new Error("optionGetTasks undefined");
+      throw new Error("optionGetTasks undefined", {
+        cause: { code: 400 }
+      });
     }
 
     const { id } = JSON.parse(req.params.optionGetTasks);
@@ -181,10 +189,9 @@ export const getTaskById = async (req, res) => {
 
     res.status(200).json(taskFoundById);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };
 
@@ -193,7 +200,9 @@ export const createTask = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
-      throw new Error("Body request null");
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
     }
 
     const task = req.body;
@@ -207,10 +216,9 @@ export const createTask = async (req, res) => {
 
     res.status(201).json(taskCreated);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };
 
@@ -219,10 +227,15 @@ export const updateTask = async (req, res) => {
     const validAuthRequest = await authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
-      throw new Error("Body request null");
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
     }
 
-    if (!req.params.id) throw new Error("idTask undefined");
+    if (!req.params.id)
+      throw new Error("idTask undefined", {
+        cause: { code: 400 }
+      });
 
     let task = req.body;
     let files = req.files;
@@ -236,10 +249,9 @@ export const updateTask = async (req, res) => {
 
     res.status(200).json(taskUpdated);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };
 
@@ -247,10 +259,14 @@ export const updateStateTask = async (req, res) => {
   try {
     const validAuthRequest = await authRequest(req, res);
     if (req.body.newState == null) {
-      throw new Error("Body request null");
+      throw new Error("Body request null", {
+        cause: { code: 400 }
+      });
     }
     if (!req.params.id) {
-      throw new Error("idTask undefined");
+      throw new Error("idTask undefined", {
+        cause: { code: 400 }
+      });
     }
 
     const taskStateUpdated = await TaskService.updateStateTask(
@@ -261,10 +277,9 @@ export const updateStateTask = async (req, res) => {
 
     res.status(200).json(taskStateUpdated);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 502;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 500)
+      .json({ messageError: error.message });
   }
 };
 
@@ -272,16 +287,17 @@ export const deleteTask = async (req, res) => {
   try {
     await authRequest(req, res);
     if (!req.params.id) {
-      throw new Error("idTask undefined");
+      throw new Error("idTask undefined", {
+        cause: { code: 400 }
+      });
     }
 
     let deletedTask = await TaskService.deleteTask(Number(req.params.id));
 
     res.status(201).json(deletedTask);
   } catch (error) {
-    let errorCodeResponse = error.message.includes("Authentication")
-      ? 401
-      : 404;
-    res.status(errorCodeResponse).json({ messageError: error.message });
+    res
+      .status(error.cause ? error.cause.code : 404)
+      .json({ messageError: error.message });
   }
 };

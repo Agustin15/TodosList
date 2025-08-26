@@ -2,51 +2,21 @@ import iconBarChart from "../../../../assets/img/chartBar.png";
 import iconNoData from "../../../../assets/img/notDataChart.png";
 import iconLoadPie from "../../../../assets/img/iconLoadPie.gif";
 import CanvasJSReact from "@canvasjs/react-charts";
-import { useTasks } from "../../../../context/TaskContext";
-import styles from "../Statistics.module.css";
-import { useState, useEffect } from "react";
+import { useDashboard } from "../../../../context/DashboardContext";
 import { useWindowSize } from "../../../../context/WindowSizeContext";
+import styles from "../Statistics.module.css";
+
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const BarChart = () => {
-  const { loadingState, tasksIncompleteByWeekday, tasksCompleteByWeekday } =
-    useTasks();
+  const {
+    datapointsCompleteByWeekday,
+    datapointsIncompleteByWeekday,
+    loadingState
+  } = useDashboard();
   const { windowWidth } = useWindowSize();
-  const [datapointsCompleteByWeekday, setDatapointsCompleteByWeekday] =
-    useState([]);
-  const [datapointsIncompleteByWeekday, setDatapointsIncompleteByWeekday] =
-    useState([]);
 
   let CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
-  useEffect(() => {
-    let quantity = tasksIncompleteByWeekday.reduce((ac, task) => {
-      return (ac += task.quantity);
-    }, 0);
-
-    if (quantity > 0) {
-      setDatapointsIncompleteByWeekday(datapoints(tasksIncompleteByWeekday));
-    }
-  }, [tasksIncompleteByWeekday]);
-
-  useEffect(() => {
-    let quantity = tasksCompleteByWeekday.reduce((ac, task) => {
-      return (ac += task.quantity);
-    }, 0);
-    if (quantity > 0) {
-      setDatapointsCompleteByWeekday(datapoints(tasksCompleteByWeekday));
-    }
-  }, [tasksCompleteByWeekday]);
-
-  const datapoints = (tasks) => {
-    let dataPoints = tasks.map((tasks) => {
-      return {
-        label: tasks.weekday,
-        y: tasks.quantity
-      };
-    });
-    return dataPoints;
-  };
 
   const optionsBar = {
     animationEnabled: true,
@@ -55,7 +25,8 @@ export const BarChart = () => {
 
     axisY: {
       title: "Tasks",
-      includeZero: true
+      includeZero: true,
+      gridThickness: 0
     },
 
     legend: {
@@ -84,7 +55,7 @@ export const BarChart = () => {
       {
         type: "stackedColumn",
         name: "Incomplete",
-        color: "#d10909",
+        color: "rgb(223, 44, 74)",
         showInLegend: true,
         dataPoints: datapointsIncompleteByWeekday,
         click: function (event) {

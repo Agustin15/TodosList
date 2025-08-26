@@ -38,16 +38,47 @@
   width: 100%;
   background-color: white;
   border-bottom: 1px solid rgb(206, 206, 206);
-  padding-bottom: 1rem;
 }
 
 .header .rowHeader {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
   width: 100%;
   background-color: white;
 }
+
+.header .rowHeader ul {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  list-style: none;
+  font-size: 17px;
+  width: 100%;
+}
+
+.header .rowHeader ul li {
+  background-color: rgb(243, 243, 243);
+  padding: 0.5rem;
+  text-align: center;
+  width: 4rem;
+  cursor: pointer;
+  border-right: 1px solid rgb(190, 190, 190);
+  border-top: 1px solid rgb(190, 190, 190);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.header .rowHeader ul li:hover {
+  background-color: white;
+}
+
+.header .rowHeader ul .selected {
+  background-color: white;
+}
+
 .header .title {
   display: flex;
   align-items: center;

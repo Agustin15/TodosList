@@ -11,6 +11,7 @@ export const ListTasksService = {
       taskModel.propIdUser = idUser;
 
       const yearsTasks = await taskModel.getYearsTask();
+
       return yearsTasks;
     } catch (error) {
       throw error;
