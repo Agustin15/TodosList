@@ -9,10 +9,13 @@ import AlertInputLogin from "../../signUp/alertInputLogin/AlertInputLogin.jsx";
 import { useFormUser } from "../../../context/FormUserContext";
 import { useEffect } from "react";
 import { useLogin } from "../../../context/LoginContext";
-
+import { useCookies } from "react-cookie";
+import { LoggedIn } from "../loggedIn/LoggedIn.jsx";
+import { UserDataProvider } from "../../../context/UserDataContext.jsx";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const ContentLogin = () => {
+  const [cookies] = useCookies();
   const {
     user,
     passwordIcon,
@@ -53,59 +56,67 @@ const ContentLogin = () => {
           <img src={loginIcon}></img>
           <h3>Enter your data for sign in</h3>
         </div>
-        <form onSubmit={handleSubmitSignIn}>
-          <div className={classesStyle.containUsername}>
-            <label>Email</label>
-            <input
-              autoComplete="off"
-              name="email"
-              type="text"
-              placeholder="Enter email"
-            ></input>
-            {errorsInputsSignIn["email"] && (
-              <AlertInputLogin error={errorsInputsSignIn["email"]} />
-            )}
-          </div>
-          <div className={classesStyle.containPassword}>
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              ref={passwordInput}
-              autoComplete="off"
-            ></input>
-            <img
-              className={classesStyle.showPassword}
-              ref={passwordIcon}
-              onClick={handlePassword}
-              src={hiddenEye}
-            ></img>
-            {errorsInputsSignIn["password"] && (
-              <AlertInputLogin error={errorsInputsSignIn["password"]} />
-            )}
-          </div>
-          <a
-            className={classesStyle.forgotPassword}
-            href={`${urlFront}resetPassword`}
-          >
-            Do you forgot your password?
-          </a>
+        {!cookies.loggedIn ? (
+          <>
+            <form onSubmit={handleSubmitSignIn}>
+              <div className={classesStyle.containUsername}>
+                <label>Email</label>
+                <input
+                  autoComplete="off"
+                  name="email"
+                  type="text"
+                  placeholder="Enter email"
+                ></input>
+                {errorsInputsSignIn["email"] && (
+                  <AlertInputLogin error={errorsInputsSignIn["email"]} />
+                )}
+              </div>
+              <div className={classesStyle.containPassword}>
+                <label>Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  ref={passwordInput}
+                  autoComplete="off"
+                ></input>
+                <img
+                  className={classesStyle.showPassword}
+                  ref={passwordIcon}
+                  onClick={handlePassword}
+                  src={hiddenEye}
+                ></img>
+                {errorsInputsSignIn["password"] && (
+                  <AlertInputLogin error={errorsInputsSignIn["password"]} />
+                )}
+              </div>
+              <a
+                className={classesStyle.forgotPassword}
+                href={`${urlFront}resetPassword`}
+              >
+                Do you forgot your password?
+              </a>
 
-          <div className={classesStyle.containSignIn}>
-            <button type="submit">
-              Log in
-              {loading && <img src={gifLoading}></img>}
-            </button>
-          </div>
-          <div className={classesStyle.haveAccountResponsive}>
-            <p>
-              Don't have an account?
-              <a href={`${urlFront}signup`}> Sign up</a>
-            </p>
-          </div>
-          {resultForm && <AlertForm />}
-        </form>
+              <div className={classesStyle.containSignIn}>
+                <button type="submit">
+                  Log in
+                  {loading && <img src={gifLoading}></img>}
+                </button>
+              </div>
+              <div className={classesStyle.haveAccountResponsive}>
+                <p>
+                  Don't have an account?
+                  <a href={`${urlFront}signup`}> Sign up</a>
+                </p>
+              </div>
+              {resultForm && <AlertForm />}
+            </form>
+          </>
+        ) : (
+          <UserDataProvider>
+            <LoggedIn></LoggedIn>
+          </UserDataProvider>
+        )}
       </div>
     </>
   );

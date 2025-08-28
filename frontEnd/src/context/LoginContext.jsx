@@ -1,15 +1,23 @@
 import { createContext, useContext, useState } from "react";
 import errorIcon from "../assets/img/errorIcon.ico";
 import { useFormUser } from "./FormUserContext";
+import { useCookies } from "react-cookie";
 const LoginContext = createContext();
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 export const LoginProvider = ({ children }) => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const { setResultForm } = useFormUser();
   const [loading, setLoading] = useState(false);
 
   const login = async (resultLogin) => {
     if (!resultLogin.userHasVerification) {
+      setCookie("loggedIn", true, {
+        maxAge: 60 * 60 * 24,
+        sameSite: true,
+        secure: true
+      });
+
       location.href = `${urlFront}dashboard`;
     } else {
       location.href = `${urlFront}verificationTwoStep?token=${JSON.stringify(
@@ -55,7 +63,9 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ fetchLogin, loading }}>
+    <LoginContext.Provider
+      value={{ fetchLogin, loading}}
+    >
       {children}
     </LoginContext.Provider>
   );

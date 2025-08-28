@@ -8,11 +8,13 @@ import {
 import { useWindowSize } from "../WindowSizeContext.jsx";
 import { useState } from "react";
 import { configKeyboard } from "./configKeyboard.js";
+import { useCookies } from "react-cookie";
 
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 const VerificationTwoStepContext = createContext();
 
 export const VerificationTwoStepProvider = ({ children }) => {
+  const [cookie, setCookie, removeCookie] = useCookies();
   const { windowWidth } = useWindowSize();
   const [loading, setLoading] = useState(false);
   const [decodeToken, setDecodeToken] = useState();
@@ -106,7 +108,14 @@ export const VerificationTwoStepProvider = ({ children }) => {
       AlertFormSwal(error, "Oops", "error", windowWidth);
     } finally {
       setLoading(false);
-      if (data) location.href = urlFront + "dashboard";
+      if (data) {
+        setCookie("loggedIn", true, {
+          maxAge: 60 * 60 * 24,
+          sameSite: true,
+          secure: true
+        });
+        location.href = urlFront + "dashboard";
+      }
     }
   };
 

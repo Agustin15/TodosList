@@ -1,9 +1,11 @@
 import { createContext, useContext, useState } from "react";
+import { useCookies } from "react-cookie";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const UserDataContext = createContext();
 
 export const UserDataProvider = ({ children }) => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [user, setUser] = useState("");
   const [loadingUser, setLoadingUser] = useState(false);
   const [loadingForm, setLoadingForm] = useState(false);
@@ -109,7 +111,7 @@ export const UserDataProvider = ({ children }) => {
     }
   };
 
-  const logoutSession = async () => {
+  const logoutSession = async (option) => {
     try {
       const response = await fetch("/api/logout/", {
         method: "GET",
@@ -119,7 +121,9 @@ export const UserDataProvider = ({ children }) => {
       const result = await response.json();
 
       if (result.logout) {
-        location.href = urlFront + "login";
+        removeCookie("loggedIn");
+
+        if (option != "logoutInLoginPage") location.href = urlFront + "login";
       }
     } catch (error) {
       console.log(error);

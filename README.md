@@ -29,6 +29,8 @@
 - [react-router](https://github.com/remix-run/react-router)
 - [canvasjs/react-charts](https://canvasjs.com/react-charts/)
 - [react-doc-viewer](https://github.com/cyntler/react-doc-viewer)
+- [react-cookie](https://github.com/bendotcodes/cookies/tree/main/packages/react-cookie)
+- [socket.io-client](https://github.com/socketio/socket.io)
 - [fullcalendar/react](https://fullcalendar.io/docs/react)
 - [fullcalendar/core](https://fullcalendar.io/docs/react)
 - [fullcalendar/daygrid](https://fullcalendar.io/docs/react)
@@ -72,9 +74,11 @@
 
 **_Dependencias:_**
 
+- [dotenv](https://github.com/motdotla/dotenv)
 - [express](https://github.com/expressjs/express)
 - [nodemon](https://github.com/remy/nodemon)
 - [nodemail](https://github.com/nomospace/nodemail)
+- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
 - [cookie-parser](https://github.com/expressjs/cookie-parser)
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 - [multer](https://github.com/expressjs/multer)
@@ -83,6 +87,8 @@
 - [webpush](https://github-com.translate.goog/web-push-libs/web-push?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc#readme)
 - [bullmq](https://docs.bullmq.io/)
 - [socket.io](https://github.com/socketio/socket.io)
+
+
 
 **_Configuracion del archivo .env_**
 

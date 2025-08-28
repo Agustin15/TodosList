@@ -1,0 +1,96 @@
+.containAlert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: 5rem;
+    animation-name: showAlert;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    transform: scale(0);
+}
+
+@keyframes showAlert {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.alertLoggedIn {
+    display: flex;
+    width: 21rem;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px rgb(156, 156, 156);
+    background: white;
+}
+
+.alertLoggedIn .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    width: 100%;
+    border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.alertLoggedIn .column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 16px;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.alertLoggedIn .column p {
+    margin-left: 0.5rem;
+}
+
+.alertLoggedIn .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgb(196, 196, 196);
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(rgb(228, 228, 228), rgb(201, 201, 201));
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.alertLoggedIn .row button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: white;
+    border: none;
+    box-shadow: 2px 2px 2px gray;
+    width: 5rem;
+    height: 1.8rem;
+    border-radius: 99px;
+    cursor: pointer;
+}
+
+.alertLoggedIn .row button:hover {
+    box-shadow: none;
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1024px) {
+    .containAlert {
+       margin-top: 2rem;
+       padding-bottom: 1.5rem;
+    }
+}

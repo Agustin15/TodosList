@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { SocketProvider } from "./context/SocketContext.jsx";
 import { WindowSizeProvider } from "./context/WindowSizeContext.jsx";
+import { CookiesProvider } from "react-cookie";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -10,7 +11,9 @@ createRoot(document.getElementById("root")).render(
     <StrictMode>
       <SocketProvider>
         <WindowSizeProvider>
-          <App />
+          <CookiesProvider defaultSetOptions={{ path: "/" }}>
+            <App />
+          </CookiesProvider>
         </WindowSizeProvider>
       </SocketProvider>
     </StrictMode>
@@ -30,7 +33,6 @@ if ("serviceWorker" in navigator) {
       } else if (registration.active) {
         console.log("Service worker active");
       }
-
     } catch (error) {
       console.error(`Registration failed with ${error}`);
     }
