@@ -8,13 +8,16 @@ import { useDataUser } from "../../context/UserDataContext";
 import { useMenu } from "../../context/MenuContext";
 import { OptionsMenu } from "./optionsMenu/OptionsMenu";
 import { SubscriptionProvider } from "../../context/SubscriptionContext";
+import { useCookies } from "react-cookie";
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Header = () => {
   const { user, getUserData, loadingUser, logoutSession } = useDataUser();
+  const [cookies] = useCookies();
   const { headerClass, handleHideMenu } = useMenu();
 
   useEffect(() => {
+    if (!cookies.loggedIn) location.href = urlFront + "login";
     getUserData();
   }, []);
 

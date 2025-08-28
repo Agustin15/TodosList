@@ -12,13 +12,17 @@ import { useDataUser } from "../../context/UserDataContext";
 import { FormEditEmailProvider } from "../../context/FormEditEmailContext";
 import { FormEditPasswordProvider } from "../../context/FormEditPasswordContext";
 import { VerificationTwoStepProvider } from "../../context/verificationTwoStep/VerificationTwoStepContext";
+import { useCookies } from "react-cookie";
+const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
 const Profile = () => {
+  const [cookies] = useCookies();
   const [modalEditEmail, setModalEditEmail] = useState(false);
   const [modalEditPassword, setModalEditPassword] = useState(false);
   const { user, setValues, loadingUser, getUserData } = useDataUser();
 
   useEffect(() => {
+    if (!cookies.loggedIn) location.href = urlFront + "login";
     getUserData();
   }, []);
 
