@@ -14,20 +14,22 @@ export const NotificationService = {
         new Date(task.datetimeTask).getTime()
       )
         throw new Error(
-          "Datetime notification must be less or same that datetime task"
+          "Datetime notification must be less or same that datetime task",
+          { cause: { code: 400 } }
         );
 
       notificationModel.propIdTask = task.idTask;
       notificationModel.propDatetimeSend = task.datetimeNotification;
       notificationModel.propState = "pending";
       let notificationAdded = await notificationModel.post();
-      if (notificationAdded == 0) throw new Error("Failed to add notification");
+      if (notificationAdded == 0)
+        throw new Error("Failed to add notification", { cause: { code: 500 } });
 
       let notificationFound =
         await NotificationService.findNotificationByIdTask(task.idTask);
 
       if (notificationFound.length == 0) {
-        throw new Error("Notification not found");
+        throw new Error("Notification not found", { cause: { code: 404 } });
       }
       await ScheduledJobService.addJob(notificationFound[0].idNotification);
 
@@ -100,7 +102,9 @@ export const NotificationService = {
         await notificationModel.patchDatetimeNotification();
 
       if (notificationUpdated == 0)
-        throw new Error("Failed to update notification");
+        throw new Error("Failed to update notification", {
+          cause: { code: 500 }
+        });
 
       return notificationUpdated;
     } catch (error) {
@@ -117,7 +121,9 @@ export const NotificationService = {
         await notificationModel.patchStateNotification();
 
       if (notificationUpdated == 0)
-        throw new Error("Failed to update state notification");
+        throw new Error("Failed to update state notification", {
+          cause: { code: 500 }
+        });
 
       if (newState == "seen") {
         let notificationsNotSeen =

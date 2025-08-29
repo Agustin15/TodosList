@@ -8,7 +8,7 @@ export const ResetPasswordService = {
       const userFound = await UserService.findUserByEmail(email);
 
       if (!userFound) {
-        throw new Error("Email not recognized");
+        throw new Error("Email not recognized", { cause: { code: 404 } });
       }
       resetPassword.propUser = userFound;
       resetPassword.propToken = token;
@@ -25,7 +25,7 @@ export const ResetPasswordService = {
       const userFound = await UserService.findUserByEmail(email);
 
       if (!userFound) {
-        throw new Error("Email not recognized");
+        throw new Error("Email not recognized", { cause: { code: 404 } });
       }
       resetPassword.propUser = userFound;
       resetPassword.propNewPassword = newPassword;

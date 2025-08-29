@@ -8,9 +8,13 @@ export const LoginService = {
   login: async (email, password) => {
     try {
       if (!process.env.JWT_SECRET_KEY)
-        throw new Error("JWT secret key not declared");
+        throw new Error("JWT secret key not declared", {
+          cause: { code: 500 }
+        });
       if (!process.env.JWT_SECRET_KEY_REFRESH)
-        throw new Error("JWT secret refresh key not declared");
+        throw new Error("JWT secret refresh key not declared", {
+          cause: { code: 500 }
+        });
 
       const secretKey = process.env.JWT_SECRET_KEY;
       const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
@@ -18,7 +22,9 @@ export const LoginService = {
       let userFound = await UserService.findUserByEmail(email);
 
       if (!userFound) {
-        throw new Error("Authentication failed,invalid user entered");
+        throw new Error("Authentication failed,invalid user entered", {
+          cause: { code: 404 }
+        });
       }
 
       let verifyPassword = await bcrypt.compare(
@@ -26,7 +32,9 @@ export const LoginService = {
         userFound.passwordUser
       );
       if (!verifyPassword)
-        throw new Error("Authentication failed,invalid password entered");
+        throw new Error("Authentication failed,invalid password entered", {
+          cause: { code: 401 }
+        });
 
       const verificationTwoStepFound =
         await VerificationTwoStepService.findVerificationByUser(
@@ -54,7 +62,9 @@ export const LoginService = {
           await VerificationCodeService.sendVerificationCode(userFound.idUser);
 
         if (!verificationCodeSent)
-          throw new Error("Failed to send verification code");
+          throw new Error("Failed to send verification code", {
+            cause: { code: 500 }
+          });
 
         const tokenVerification = jwt.sign(
           { email: userFound.email, idUser: userFound.idUser },

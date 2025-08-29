@@ -21,7 +21,10 @@ const app = express();
 export const server = createServer(app);
 app.use(express.json());
 
-app.use(cookieParser());
+app.get("/", (req, res) => {
+  res.send("Welcome todolist server");
+});
+
 app.use("/todos", tasksRouter);
 app.use("/files", filesRoutes);
 app.use("/storage", storageRoutes);

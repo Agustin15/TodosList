@@ -39,7 +39,7 @@ export const NotificationToQueue = {
         );
 
       if (!notificationQueueAdded)
-        throw new Error("Failed to add job to queue");
+        throw new Error("Failed to add job to queue", { cause: { code: 500 } });
     } catch (error) {
       throw error;
     }
@@ -53,7 +53,6 @@ export const NotificationToQueue = {
       myWorker = new Worker(
         "notifications",
         async (job) => {
-         
           const task = job.data.payload;
           const payloadNotification = Buffer.from(
             JSON.stringify(job.data.payload)
@@ -61,11 +60,17 @@ export const NotificationToQueue = {
           const idUser = job.data.idUser;
 
           if (!process.env.VAPID_PUBLIC_KEY)
-            throw new Error("Vapid private key not declared");
+            throw new Error("Vapid private key not declared", {
+              cause: { code: 500 }
+            });
           if (!process.env.VAPID_PRIVATE_KEY)
-            throw new Error("Vapid public key not declared");
+            throw new Error("Vapid public key not declared", {
+              cause: { code: 500 }
+            });
           if (!process.env.MAILTO_EMAIL_NOTFICATION_SERVER)
-            throw new Error("Mailto email not declared");
+            throw new Error("Mailto email not declared", {
+              cause: { code: 500 }
+            });
 
           let vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
           let vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
@@ -77,7 +82,9 @@ export const NotificationToQueue = {
             await SubscriptionPushService.getSubscriptionsByIdUser(idUser);
 
           if (userSubscriptions.length == 0)
-            throw new Error("Error, subscriptions not found");
+            throw new Error("Error, subscriptions not found", {
+              cause: { code: 404 }
+            });
 
           for (let f = 0; f < userSubscriptions.length; f++) {
             const subscription = {
@@ -101,7 +108,7 @@ export const NotificationToQueue = {
               await NotificationService.findNotificationByIdTask(task.idTask);
 
             if (notificationFound.length == 0) {
-              throw new Error("task notification not found");
+              throw new Error("task notification not found",{ cause: { code: 404 } });
             }
 
             await NotificationService.updateStateNotification(

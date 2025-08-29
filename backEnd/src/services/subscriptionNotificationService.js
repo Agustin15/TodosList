@@ -21,7 +21,7 @@ export const SubscriptionNotificationService = {
       }
 
       if (errorAdd)
-        throw new Error("Failed to add notification of subscription");
+        throw new Error("Failed to add notification of subscription",{ cause: { code: 404 } });
     } catch (error) {
       throw error;
     }

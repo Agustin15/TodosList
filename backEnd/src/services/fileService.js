@@ -19,7 +19,7 @@ export const FileService = {
     }
 
     if (errorAdded) {
-      throw new Error("Error to add file");
+      throw new Error("Error to add file", { cause: { code: 500 } });
     }
 
     return { result: true };
@@ -37,7 +37,7 @@ export const FileService = {
     }
 
     if (errorDeleted) {
-      throw new Error("Error to delete file");
+      throw new Error("Error to delete file",{ cause: { code: 500 } });
     }
 
     return { result: true };
@@ -131,14 +131,14 @@ export const FileService = {
     }, 0);
 
     if (amountSize > 10 * Math.pow(10, 6))
-      throw new Error("Limit amount size of 10MB of files exceeded");
+      throw new Error("Limit amount size of 10MB of files exceeded",{ cause: { code: 500 } });
 
     const storageUsedUser = await StorageService.getStorageFilesUsedByUser(
       idUser
     );
 
     if (storageUsedUser.bytesUsed + amountSize > storageUsedUser.limitSize)
-      throw new Error("This amount size files exceed your limit storage");
+      throw new Error("This amount size files exceed your limit storage",{ cause: { code: 400 } });
   },
 
   findAllFilesUser: async (idUser) => {

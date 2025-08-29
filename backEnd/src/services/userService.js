@@ -21,7 +21,7 @@ export const UserService = {
       );
 
       if (userFoundByEmail) {
-        throw new Error("Email is already taken");
+        throw new Error("Email is already taken", { cause: { code: 409 } });
       }
 
       const hash = await bcrypt.hash(userToAdd.password, 10);
@@ -30,13 +30,15 @@ export const UserService = {
       const userCreated = await userModel.post();
 
       if (userCreated == 0) {
-        throw new Error("Error to add user");
+        throw new Error("Error to add user", { cause: { code: 500 } });
       }
 
       const userAdded = await UserService.findUserByEmail(userToAdd.email);
 
       if (!userAdded) {
-        throw new Error("User recently added not found");
+        throw new Error("User recently added not found", {
+          cause: { code: 404 }
+        });
       }
 
       await UsersRolsService.addUserRol(userAdded.idUser);
@@ -97,7 +99,7 @@ export const UserService = {
     try {
       const userFound = await UserService.findUserByIdUser(idUser);
       if (!userFound) {
-        throw new Error("User not found");
+        throw new Error("User not found", { cause: { code: 404 } });
       }
 
       const passwordVerify = await bcrypt.compare(
@@ -106,7 +108,7 @@ export const UserService = {
       );
 
       if (!passwordVerify) {
-        throw new Error("Invalid current password");
+        throw new Error("Invalid current password", { cause: { code: 401 } });
       }
 
       const hash = await bcrypt.hash(newPassword, 10);
@@ -116,7 +118,7 @@ export const UserService = {
       let userUpdated = await userModel.patchPasswordUserById();
 
       if (userUpdated == 0) {
-        throw new Error("Error to update user");
+        throw new Error("Error to update user", { cause: { code: 500 } });
       }
 
       return userUpdated;
@@ -134,7 +136,9 @@ export const UserService = {
 
       const passwordUpdated = await userModel.patchPasswordUserByEmail();
       if (passwordUpdated == 0) {
-        throw new Error("Error to update password user");
+        throw new Error("Error to update password user", {
+          cause: { code: 500 }
+        });
       }
       return passwordUpdated;
     } catch (error) {
@@ -147,7 +151,7 @@ export const UserService = {
       let userFound = await UserService.findUserByIdUser(idUser);
 
       if (!userFound) {
-        throw new Error("User not found");
+        throw new Error("User not found", { cause: { code: 404 } });
       }
 
       userModel.propName = name;
@@ -158,7 +162,7 @@ export const UserService = {
 
       const userUpdated = await userModel.put();
       if (userUpdated == 0) {
-        throw new Error("User not updated");
+        throw new Error("User not updated", { cause: { code: 500 } });
       }
 
       userFound = await UserService.findUserByIdUser(idUser);
@@ -177,13 +181,15 @@ export const UserService = {
       const userEmailUsed = await UserService.findUserByEmail(newEmail);
 
       if (userEmailUsed) {
-        throw new Error("Failed to update, email in use");
+        throw new Error("Failed to update, email in use", {
+          cause: { code: 409 }
+        });
       }
 
       userFound = await UserService.findUserByIdUser(idUser);
 
       if (!userFound) {
-        throw new Error("User not found");
+        throw new Error("User not found", { cause: { code: 404 } });
       }
 
       const passwordVerify = await bcrypt.compare(
@@ -200,14 +206,17 @@ export const UserService = {
 
       let resultUpdated = await userModel.patchEmailUserById();
 
-      if (resultUpdated == 0) throw new Error("Failed to update email user");
+      if (resultUpdated == 0)
+        throw new Error("Failed to update email user", {
+          cause: { code: 500 }
+        });
 
       userFound = await UserService.findUserByIdUser(idUser);
       userFound.name = userFound.nameUser;
       delete userFound.nameUser;
 
       if (!userFound) {
-        throw new Error("User not found");
+        throw new Error("User not found", { cause: { code: 404 } });
       }
       return userFound;
     } catch (error) {

@@ -20,7 +20,9 @@ export const VerificationCodeService = {
         await VerificationTwoStepService.findVerificationByUser(idUser);
 
       if (!verificationFound)
-        throw new Error("Verification two step not found");
+        throw new Error("Verification two step not found", {
+          cause: { code: 404 }
+        });
 
       await verificationCodeModel.generateCode();
       verificationCodeModel.generateExpirationTime();
@@ -37,19 +39,27 @@ export const VerificationCodeService = {
       const verificationCodeAdded = await verificationCodeModel.post();
 
       if (!verificationCodeAdded)
-        throw new Error("Failed to add verification code");
+        throw new Error("Failed to add verification code", {
+          cause: { code: 500 }
+        });
 
       const userFound = await UserService.findUserByIdUser(idUser);
 
-      if (!userFound) throw new Error("User not found");
+      if (!userFound)
+        throw new Error("User not found", { cause: { code: 404 } });
 
       result = await verificationCodeModel.sendCodeByEmail(userFound.email);
 
-      if (!result) throw new Error("Failed to send verification email");
+      if (!result)
+        throw new Error("Failed to send verification email", {
+          cause: { code: 500 }
+        });
 
       if (option == "sendAgain") {
         if (!process.env.JWT_SECRET_KEY)
-          throw new Error("JWT secret key not declared");
+          throw new Error("JWT secret key not declared", {
+            cause: { code: 500 }
+          });
         const secretKey = process.env.JWT_SECRET_KEY;
 
         const newVerificationToken = jwt.sign(
@@ -78,7 +88,9 @@ export const VerificationCodeService = {
         await VerificationTwoStepService.findVerificationByUser(idUser);
 
       if (!verificationTwoStepFound)
-        throw new Error("Verification two step not found");
+        throw new Error("Verification two step not found", {
+          cause: { code: 404 }
+        });
 
       verificationCodeModel.propIdVerification =
         verificationTwoStepFound.idVerification;
@@ -87,7 +99,9 @@ export const VerificationCodeService = {
         await verificationCodeModel.getVerificationsCodeByIdVerification();
 
       if (verificationsCodeFound.length == 0)
-        throw new Error("Verifications code not found");
+        throw new Error("Verifications code not found", {
+          cause: { code: 404 }
+        });
 
       let notMatch = 0;
       for (const verificationCodeFound of verificationsCodeFound) {
@@ -102,7 +116,9 @@ export const VerificationCodeService = {
       }
 
       if (notMatch == verificationsCodeFound.length)
-        throw new Error("Verification code entered not recognized");
+        throw new Error("Verification code entered not recognized", {
+          cause: { code: 401 }
+        });
     } catch (error) {
       throw error;
     }

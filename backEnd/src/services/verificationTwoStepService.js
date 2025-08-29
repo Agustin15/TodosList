@@ -12,11 +12,15 @@ export const VerificationTwoStepService = {
 
       const userFound = await UserService.findUserByIdUser(idUser);
 
-      if (!userFound) throw new Error("User not found");
+      if (!userFound)
+        throw new Error("User not found", { cause: { code: 404 } });
 
       let match = await bcrypt.compare(confirmPassword, userFound.passwordUser);
 
-      if (!match) throw new Error("Password entered is incorrect");
+      if (!match)
+        throw new Error("Password entered is incorrect", {
+          cause: { code: 401 }
+        });
 
       const verificationTwoStepAdded = await verificationTwoStepModel.post();
 
@@ -28,7 +32,6 @@ export const VerificationTwoStepService = {
 
   changeStateVerificationTwoStep: async (idUser, newState, confirmPassword) => {
     try {
- 
       verificationTwoStepModel.propIdUser = idUser;
       verificationTwoStepModel.propEnabled = newState;
 

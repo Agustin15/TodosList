@@ -63,7 +63,8 @@ export const TaskService = {
 
       const taskFound = await taskModel.getTaskRecentlyAdded();
 
-      if (taskFound.length == 0) throw new Error("Error,task not found");
+      if (taskFound.length == 0)
+        throw new Error("Error,task not found", { cause: { code: 404 } });
 
       return taskFound[0];
     } catch (error) {
@@ -87,7 +88,7 @@ export const TaskService = {
       const taskCreated = await taskModel.post();
 
       if (taskCreated == 0) {
-        throw new Error("Error to add task");
+        throw new Error("Error to add task", { cause: { code: 500 } });
       }
 
       let taskAddedFound = await TaskService.findTaskRecentlyAdded(
@@ -150,7 +151,7 @@ export const TaskService = {
       const taskUpdated = await taskModel.put();
 
       if (taskUpdated == 0) {
-        throw new Error("Failed to update task");
+        throw new Error("Failed to update task", { cause: { code: 500 } });
       }
 
       let taskUpdatedFound = await TaskService.findTasksByIdTask(
@@ -220,7 +221,10 @@ export const TaskService = {
 
       const taskStateUpdated = await taskModel.patchStateTask();
 
-      if (taskStateUpdated == 0) throw new Error("Failed to update state task");
+      if (taskStateUpdated == 0)
+        throw new Error("Failed to update state task", {
+          cause: { code: 500 }
+        });
 
       let task = await TaskService.findTasksByIdTask(idTask, idUser);
       let filesTask = await FileService.findFilesByIdTask(idTask);
@@ -257,7 +261,8 @@ export const TaskService = {
 
       let deletedTask = await taskModel.delete();
 
-      if (deletedTask == 0) throw new Error("Failed to delete task");
+      if (deletedTask == 0)
+        throw new Error("Failed to delete task", { cause: { code: 500 } });
 
       if (jobId) await NotificationToQueue.deleteNotificationFromQueue(jobId);
 

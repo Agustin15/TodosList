@@ -141,7 +141,7 @@ export const ListTasksService = {
       const taskFoundById = await taskModel.getTaskById();
 
       if (!taskFoundById || taskFoundById.length == 0) {
-        throw new Error("Task not found");
+        throw new Error("Task not found", { cause: { code: 404 } });
       }
 
       let filesTask = await FileService.findFilesByIdTask(idTask);
@@ -168,7 +168,7 @@ export const ListTasksService = {
       let nextSaturday = TaskService.getNextSaturday();
 
       if (days.indexOf(day.toLowerCase()) == -1)
-        throw new Error("Day not valid");
+        throw new Error("Day not valid",{ cause: { code: 404 } });
 
       taskModel.propIdUser = idUser;
       taskModel.propIsCompleted = stateTasks;

@@ -7,7 +7,10 @@ export const ScheduledJobService = {
     try {
       scheduledJobModel.propIdNotification = idNotification;
       let resultAdded = await scheduledJobModel.post();
-      if (resultAdded == 0) throw new Error("Failed to add scheduled job");
+      if (resultAdded == 0)
+        throw new Error("Failed to add scheduled job", {
+          cause: { code: 500 }
+        });
 
       return resultAdded;
     } catch (error) {
@@ -19,7 +22,10 @@ export const ScheduledJobService = {
     try {
       scheduledJobModel.propIdNotification = idNotification;
       let result = await scheduledJobModel.getJobByIdNotification();
-      if (result.length == 0) throw new Error("Job of notification not found");
+      if (result.length == 0)
+        throw new Error("Job of notification not found", {
+          cause: { code: 404 }
+        });
 
       return result[0];
     } catch (error) {

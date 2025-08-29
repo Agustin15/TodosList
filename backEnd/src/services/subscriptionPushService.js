@@ -14,7 +14,8 @@ export const SubscriptionPushService = {
     try {
       const subscriptionAdded = await subscriptionPushModel.post();
 
-      if (subscriptionAdded == 0) throw new Error("Failed to add subscription");
+      if (subscriptionAdded == 0)
+        throw new Error("Failed to add subscription", { cause: { code: 500 } });
 
       return subscriptionAdded;
     } catch (error) {
@@ -55,14 +56,18 @@ export const SubscriptionPushService = {
         }
 
         if (errorDelete)
-          throw new Error("Failed to delete pending notification");
+          throw new Error("Failed to delete pending notification", {
+            cause: { code: 500 }
+          });
       }
 
       subscriptionPushModel.propEndpointURL = endpoint;
       const deletedSubscription = await subscriptionPushModel.delete();
 
       if (deletedSubscription == 0)
-        throw new Error("Failed to delete subscription");
+        throw new Error("Failed to delete subscription", {
+          cause: { code: 500 }
+        });
 
       await connectionMysql.connectionCreated.commit();
       return deletedSubscription;
