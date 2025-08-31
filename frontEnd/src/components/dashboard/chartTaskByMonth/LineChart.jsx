@@ -29,7 +29,7 @@ export const LineChart = () => {
   const dataToChart = async () => {
     const years = await getYearsOfTasks();
 
-    if (years) {
+    if (years.length > 0) {
       setYears(years);
       getDataPointsLineChart(new Date().getFullYear());
     }

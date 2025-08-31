@@ -142,6 +142,9 @@ export const DashboardTasksService = {
 
       let quantityTasksInYear = await taskModel.getQuantityTasksInYear(year);
 
+      if (quantityTasksInYear == 0) {
+        return null;
+      }
       const average = quantityTasksInYear / months.length;
 
       return { tasksByMonth: tasksByMonth, average: average };
