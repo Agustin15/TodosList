@@ -26,6 +26,8 @@ export const SubscriptionProvider = ({ children }) => {
 
   const stateSubscribe = async () => {
     try {
+      let subscriptionFound;
+
       let register = await getRegisterSW();
       let subscription = await register.pushManager.getSubscription();
       let subscriptionsUser = await fetchGetSubscriptionUser();
@@ -33,10 +35,10 @@ export const SubscriptionProvider = ({ children }) => {
       if (!subscriptionsUser) setErrorGetSubscriptions(true);
       else {
         if (subscription && subscriptionsUser.length > 0) {
-          let subscriptionFound = subscriptionsUser.find(
-            (subscriptionUser) =>
-              subscriptionUser.endpointURL == subscription.endpoint
-          );
+          subscriptionsUser.forEach((subscriptionUser) => {
+            if (subscriptionUser.endpointURL == subscription.endpoint)
+              subscriptionFound = subscription;
+          });
 
           if (subscriptionFound) setSubscribed(subscriptionFound);
         }
@@ -133,7 +135,6 @@ export const SubscriptionProvider = ({ children }) => {
         let unsubscribe = await subscribed.unsubscribe();
         if (unsubscribe) {
           setSubscribed();
-          setEndpointSubscription();
           showAlert();
         }
       }
@@ -143,10 +144,9 @@ export const SubscriptionProvider = ({ children }) => {
   const fetchDeleteSubscriptions = async () => {
     let data;
     let param = {
-      endpoint: encodeURIComponent(
-        subscribed ? subscribed.endpoint : endpointSubscription
-      )
+      endpoint: encodeURIComponent(subscribed.endpoint)
     };
+
     try {
       const response = await fetch(
         "/api/subscription/" + JSON.stringify(param),
@@ -160,9 +160,10 @@ export const SubscriptionProvider = ({ children }) => {
       );
       const result = await response.json();
       if (!response.ok) {
-        if (response.status == 404) {
+        if (response.status == 401) {
           location.href = urlFront + "login";
-        }
+        } else throw error;
+
       } else {
         data = result;
       }
@@ -187,7 +188,7 @@ export const SubscriptionProvider = ({ children }) => {
       });
       const result = await response.json();
       if (!response.ok) {
-        if (response.status == 404) {
+        if (response.status == 401) {
           location.href = urlFront + "login";
         }
       } else {
@@ -213,7 +214,7 @@ export const SubscriptionProvider = ({ children }) => {
       });
       const result = await response.json();
       if (!response.ok) {
-        if (response.status == 404) {
+        if (response.status == 401) {
           location.href = urlFront + "login";
         }
       } else {
