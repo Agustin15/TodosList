@@ -3,7 +3,7 @@ import AlertErrorInput from "../../addTodoForm/alertErrorInput/AlertErrorInput";
 import { useForm } from "../../../context/formTaskContext/FormTaskContext";
 import { useSubscription } from "../../../context/SubscriptionContext";
 import { useTasks } from "../../../context/TaskContext";
-import { useEffect } from "react";
+
 
 export const ColumnOne = () => {
   const { subscribed } = useSubscription();
@@ -11,12 +11,6 @@ export const ColumnOne = () => {
   const { stateCheckbox, setStateCheckbox, handleChange, values, setValues } =
     useForm();
   const { refDatetimeTask, errors, setErrors } = useForm();
-
-  useEffect(() => {
-    if (values.datetimeNotification && values.datetimeNotification.length > 0) {
-      setStateCheckbox(true);
-    }
-  }, [values]);
 
   const valueCheckboxNotification = (event) => {
     setStateCheckbox(event.target.checked ? true : false);
@@ -63,9 +57,7 @@ export const ColumnOne = () => {
             <input
               onClick={(event) => valueCheckboxNotification(event)}
               type="checkbox"
-              defaultChecked={
-                values.datetimeNotification.length > 0 ? true : false
-              }
+              defaultChecked={stateCheckbox}
             ></input>
             <label>Notification date:</label>
           </div>

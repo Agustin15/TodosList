@@ -12,6 +12,7 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const {
     validationForm,
     stateCheckbox,
+    setStateCheckbox,
     verifiyChangedValues,
     setUpdateEnabled,
     createFiles,
@@ -23,6 +24,10 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const { updateTask } = useTasks();
 
   useEffect(() => {
+
+    if(task.datetimeNotification.length>0)
+    setStateCheckbox(true);
+  
     setValues({
       ...task,
       ["filesUploaded"]: createFiles(task.filesUploaded)
