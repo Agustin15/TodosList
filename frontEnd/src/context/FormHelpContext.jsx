@@ -108,7 +108,12 @@ export const FormHelpProvider = ({ children }) => {
     handleChange({ target: { files: files, name: "files", value: "" } });
   };
 
-  const closeForm = (closeForm) => {
+  const closeForm = (setOpenFormHelp) => {
+    cleanForm();
+    setOpenFormHelp(false);
+  };
+  
+  const cleanForm = () => {
     setErrors({
       name: "",
       email: "",
@@ -123,7 +128,7 @@ export const FormHelpProvider = ({ children }) => {
       files: []
     });
 
-    closeForm();
+    document.querySelector("#inputFiles").value = "";
   };
 
   const handleSubmit = async (event) => {
@@ -148,13 +153,15 @@ export const FormHelpProvider = ({ children }) => {
     } else {
       const resultSentQuery = await fetchSendQuery(values);
 
-      if (resultSentQuery)
+      if (resultSentQuery) {
+        cleanForm();
         AlertFormSwal(
           "Query sent succesfully!",
           "Success",
           "success",
           windowWidth
         );
+      }
     }
   };
 

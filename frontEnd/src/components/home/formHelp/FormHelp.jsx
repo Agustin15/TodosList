@@ -1,11 +1,10 @@
 import styles from "./FormHelp.module.css";
-import iconError from "../../../assets/img/warningInput.png";
 import gifLoadingForm from "../../../assets/img/loadingForm.gif";
 import { useFormHelp } from "../../../context/FormHelpContext";
 import { UploadFiles } from "./uploadFiles/UploadFiles";
 
 export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
-  const { errors, handleChange, closeForm, handleSubmit, loadingForm } =
+  const { errors, values, closeForm, handleChange, handleSubmit, loadingForm } =
     useFormHelp();
 
   return (
@@ -31,6 +30,7 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
               <input
                 name="name"
                 autoComplete="off"
+                value={values.name}
                 onChange={(event) => handleChange(event)}
                 placeholder="Enter name"
                 type="text"
@@ -45,6 +45,7 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
             <div className={styles.columnInput}>
               <label>Email:</label>
               <input
+                value={values.email}
                 onChange={(event) => handleChange(event)}
                 name="email"
                 autoComplete="off"
@@ -61,6 +62,7 @@ export const FormHelp = ({ openFormHelp, setOpenFormHelp }) => {
             <div className={styles.columnInput}>
               <label>Query:</label>
               <textarea
+                value={values.description}
                 onChange={(event) => handleChange(event)}
                 name="description"
                 placeholder="Describe your problem please"
