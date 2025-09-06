@@ -197,7 +197,7 @@ export const FormHelpProvider = ({ children }) => {
       return result;
     } catch (error) {
       console.log(error);
-      AlertFormSwal(error, "Oops", "error", windowWidth);
+      AlertFormSwal("Failed to send query", "Oops", "error", windowWidth);
     } finally {
       setLoadingForm(false);
       return data;
