@@ -67,7 +67,7 @@ export class ResetPassword {
 
     const info = await transporter.sendMail({
       from: process.env.APP_MAIL,
-      to: this.propUser.emailAddress,
+      to: this.propUser.email,
       subject: "Reset password",
       html: `<!DOCTYPE html>
 <html lang="en">
@@ -85,7 +85,7 @@ export class ResetPassword {
             <div class="title">
                 <h3>Password reset TODOLIST </h3>
             </div>
-            <p>Hello!, we have received a request to change password for username <a style="font-weight: bold;">${this.propUser.emailAddress}</a>.</p>
+            <p>Hello!, we have received a request to change password for username <a style="font-weight: bold;">${this.propUser.email}</a>.</p>
             <p>Please enter the following link to set a new password</p>
             <a style="text-decoration: underline; color:blue;" href="http://localhost:5173/newPassword?token=${this.propToken}">New Password </a>
         </div>

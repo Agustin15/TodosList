@@ -13,7 +13,7 @@ export const ResetPasswordService = {
       resetPassword.propUser = userFound;
       resetPassword.propToken = token;
 
-      const emailSent = resetPassword.sendEmailToReset();
+      const emailSent = await resetPassword.sendEmailToReset();
 
       return emailSent;
     } catch (error) {
@@ -30,7 +30,7 @@ export const ResetPasswordService = {
       resetPassword.propUser = userFound;
       resetPassword.propNewPassword = newPassword;
 
-      const userPasswordUpdated = resetPassword.patchPasswordUserByEmail();
+      const userPasswordUpdated = await resetPassword.patchPasswordUserByEmail();
 
       return userPasswordUpdated;
     } catch (error) {
