@@ -21,14 +21,13 @@ export const sendQueryClient = async (req, res) => {
       });
     const { name, description, emailClient } = req.body;
 
-    const emailSent = helpQueryService.sendEmailQuery(
+    const emailSent = await helpQueryService.sendEmailQuery(
       name,
       description,
       emailClient,
       req.files
     );
 
-    if (!emailSent) throw new Error("Could not send the query");
     res.status(200).json({ emailSent: emailSent.messageId });
   } catch (error) {
     res
