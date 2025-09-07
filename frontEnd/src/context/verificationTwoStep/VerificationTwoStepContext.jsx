@@ -59,6 +59,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
           },
           body: JSON.stringify({
             idUser: decodeToken.idUser,
+            idRol: decodeToken.idRol,
             option: "sendAgain"
           })
         }
@@ -88,6 +89,7 @@ export const VerificationTwoStepProvider = ({ children }) => {
           JSON.stringify({ option: "comprobateVerificationCode" }),
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${JSON.stringify(token)}`
