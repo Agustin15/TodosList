@@ -42,7 +42,7 @@ export class ResetPassword {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
         "Update users set passwordUser=? where email=?",
-        [this.propNewPassword, this.propUser.emailAddress]
+        [this.propNewPassword, this.propUser.email]
       );
       return result.affectedRows;
     } catch (error) {

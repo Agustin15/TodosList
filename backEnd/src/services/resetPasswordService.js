@@ -1,5 +1,6 @@
 import { ResetPassword } from "../model/resetPasswordModel.js";
 import { UserService } from "./userService.js";
+import bcryp, { hash } from "bcrypt";
 
 const resetPassword = new ResetPassword();
 export const ResetPasswordService = {
@@ -27,10 +28,14 @@ export const ResetPasswordService = {
       if (!userFound) {
         throw new Error("Email not recognized", { cause: { code: 404 } });
       }
-      resetPassword.propUser = userFound;
-      resetPassword.propNewPassword = newPassword;
 
-      const userPasswordUpdated = await resetPassword.patchPasswordUserByEmail();
+      const hash = await bcryp.hash(newPassword, 10);
+
+      resetPassword.propUser = userFound;
+      resetPassword.propNewPassword = hash;
+
+      const userPasswordUpdated =
+        await resetPassword.patchPasswordUserByEmail();
 
       return userPasswordUpdated;
     } catch (error) {
