@@ -52,8 +52,12 @@ export class ResetPassword {
 
   sendEmailToReset = async () => {
     if (!process.env.APP_MAIL) throw new Error("App mail not declared");
+
     if (!process.env.PASSWORD_APP_MAIL)
       throw new Error("App password mail not declared");
+
+    if (!process.env.LOCALHOST_URL_FRONT)
+      throw new Error("Localhost url frontend not declared");
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -87,7 +91,7 @@ export class ResetPassword {
             </div>
             <p>Hello!, we have received a request to change password for username <a style="font-weight: bold;">${this.propUser.email}</a>.</p>
             <p>Please enter the following link to set a new password</p>
-            <a style="text-decoration: underline; color:blue;" href="http://localhost:5173/newPassword?token=${this.propToken}">New Password </a>
+            <a style="text-decoration: underline; color:blue;" href="${process.env.LOCALHOST_URL_FRONT}/newPassword?token=${this.propToken}">New Password </a>
         </div>
         <div>
             <p>If you are not the one who should receive this message, please ignore it.</p>
