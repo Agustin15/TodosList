@@ -7,7 +7,7 @@ import { UserService } from "./userService.js";
 const verificationCodeModel = new VerificationCode();
 
 export const VerificationCodeService = {
-  sendVerificationCode: async (idUser, option) => {
+  sendVerificationCode: async (idUser, idRol, option) => {
     try {
       let result;
 
@@ -17,7 +17,10 @@ export const VerificationCodeService = {
       await connectionMysql.connectionCreated.beginTransaction();
 
       const verificationFound =
-        await VerificationTwoStepService.findVerificationByUser(idUser);
+        await VerificationTwoStepService.findVerificationByUserAndRol(
+          idUser,
+          idRol
+        );
 
       if (!verificationFound)
         throw new Error("Verification two step not found", {
@@ -63,7 +66,7 @@ export const VerificationCodeService = {
         const secretKey = process.env.JWT_SECRET_KEY;
 
         const newVerificationToken = jwt.sign(
-          { email: userFound.email, idUser: idUser },
+          { email: userFound.email, idUser: idUser, idRol: idRol },
           secretKey,
           {
             algorithm: "HS256",
@@ -82,10 +85,10 @@ export const VerificationCodeService = {
     }
   },
 
-  comprobateVerificationCode: async (codeEntered, idUser) => {
+  comprobateVerificationCode: async (codeEntered, idUser,idRol) => {
     try {
       const verificationTwoStepFound =
-        await VerificationTwoStepService.findVerificationByUser(idUser);
+        await VerificationTwoStepService.findVerificationByUserAndRol(idUser,idRol);
 
       if (!verificationTwoStepFound)
         throw new Error("Verification two step not found", {

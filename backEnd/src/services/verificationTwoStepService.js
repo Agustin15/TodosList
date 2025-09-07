@@ -5,9 +5,10 @@ import bcrypt from "bcrypt";
 const verificationTwoStepModel = new VerificationTwoStep();
 
 export const VerificationTwoStepService = {
-  addVerificationTwoStep: async (idUser, confirmPassword) => {
+  addVerificationTwoStep: async (idUser, idRol, confirmPassword) => {
     try {
       verificationTwoStepModel.propIdUser = idUser;
+      verificationTwoStepModel.propIdRol = idRol;
       verificationTwoStepModel.propEnabled = 1;
 
       const userFound = await UserService.findUserByIdUser(idUser);
@@ -30,9 +31,15 @@ export const VerificationTwoStepService = {
     }
   },
 
-  changeStateVerificationTwoStep: async (idUser, newState, confirmPassword) => {
+  changeStateVerificationTwoStep: async (
+    idUser,
+    idRol,
+    newState,
+    confirmPassword
+  ) => {
     try {
       verificationTwoStepModel.propIdUser = idUser;
+      verificationTwoStepModel.propIdRol = idRol;
       verificationTwoStepModel.propEnabled = newState;
 
       const userFound = await UserService.findUserByIdUser(idUser);
@@ -51,12 +58,13 @@ export const VerificationTwoStepService = {
     }
   },
 
-  findVerificationByUser: async (idUser) => {
+  findVerificationByUserAndRol: async (idUser, idRol) => {
     try {
       verificationTwoStepModel.propIdUser = idUser;
+      verificationTwoStepModel.propIdRol = idRol;
 
       let verificationTwoStepFound =
-        await verificationTwoStepModel.getVerificationByUser();
+        await verificationTwoStepModel.getVerificationByUserAndRol();
 
       if (verificationTwoStepFound.length > 0)
         return verificationTwoStepFound[0];

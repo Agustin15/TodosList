@@ -20,6 +20,7 @@ export const addVerificationTwoStep = async (req, res) => {
     const verificationAdded =
       await VerificationTwoStepService.addVerificationTwoStep(
         validAuth.idUser,
+        validAuth.idRol,
         confirmPassword
       );
 
@@ -31,12 +32,15 @@ export const addVerificationTwoStep = async (req, res) => {
   }
 };
 
-export const getVerificationTwoStepByUser = async (req, res) => {
+export const getVerificationTwoStepByUserAndRol = async (req, res) => {
   try {
     const validAuth = await authRequest(req, res);
 
     const verificationFound =
-      await VerificationTwoStepService.findVerificationByUser(validAuth.idUser);
+      await VerificationTwoStepService.findVerificationByUserAndRol(
+        validAuth.idUser,
+        validAuth.idRol
+      );
 
     res.status(200).json(verificationFound);
   } catch (error) {
@@ -46,8 +50,10 @@ export const getVerificationTwoStepByUser = async (req, res) => {
   }
 };
 
-export const updateStateVerificationByUser = async (req, res) => {
+export const updateStateVerificationByUserAndRol = async (req, res) => {
   try {
+    const validAuth = await authRequest(req, res);
+    
     if (!req.body)
       throw new Error("Body request null", {
         cause: { code: 400 }
@@ -66,11 +72,10 @@ export const updateStateVerificationByUser = async (req, res) => {
     let confirmPassword = req.body.confirmPassword;
     let newState = req.body.newState;
 
-    const validAuth = await authRequest(req, res);
-
     const verificationFound =
       await VerificationTwoStepService.changeStateVerificationTwoStep(
         validAuth.idUser,
+        validAuth.idRol,
         newState,
         confirmPassword
       );

@@ -1,6 +1,7 @@
 import { connectionMysql } from "../config/database.js";
 export class VerificationTwoStep {
   #idUser;
+  #idRol;
   #enabled = false;
 
   set propIdUser(value) {
@@ -11,6 +12,16 @@ export class VerificationTwoStep {
 
   get propIdUser() {
     return this.#idUser;
+  }
+
+  set propIdRol(value) {
+    if (typeof value != "number")
+      throw new Error("Invalid idRol,it must be a number");
+    this.#idRol = value;
+  }
+
+  get propIdRol() {
+    return this.#idRol;
   }
   set propEnabled(value) {
     this.#enabled = value;
@@ -23,8 +34,8 @@ export class VerificationTwoStep {
   async post() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO verifications_two_step (enabled,idUser) values (?,?)",
-        [this.propEnabled, this.propIdUser]
+        "INSERT INTO verifications_two_step (enabled,idUser,idRol) values (?,?,?)",
+        [this.propEnabled, this.propIdUser, this.propIdRol]
       );
 
       return result.affectedRows;
@@ -36,8 +47,8 @@ export class VerificationTwoStep {
   async patch() {
     try {
       const [result] = await connectionMysql.connectionCreated.execute(
-        "update verifications_two_step set enabled=? where idUser=?",
-        [this.propEnabled, this.propIdUser]
+        "update verifications_two_step set enabled=? where idUser=? and idRol=?",
+        [this.propEnabled, this.propIdUser, this.propIdRol]
       );
 
       return result.affectedRows;
@@ -46,11 +57,11 @@ export class VerificationTwoStep {
     }
   }
 
-  async getVerificationByUser() {
+  async getVerificationByUserAndRol() {
     try {
       const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from verifications_two_step where idUser=?",
-        [this.propIdUser]
+        "select * from verifications_two_step where idUser=? and idRol=?",
+        [this.propIdUser, this.propIdRol]
       );
 
       return results;

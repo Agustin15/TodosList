@@ -15,16 +15,23 @@ export const sendVerificationCode = async (req, res) => {
         cause: { code: 400 }
       });
     }
+
+    if (!req.body.idRol) {
+      throw new Error("idRol undefined", {
+        cause: { code: 400 }
+      });
+    }
+
     if (!req.body.option) {
       throw new Error("option undefined", {
         cause: { code: 400 }
       });
     }
 
-    let { idUser, option } = req.body;
+    let { idUser, idRol, option } = req.body;
 
     const newVerificationToken =
-      await VerificationCodeService.sendVerificationCode(idUser, option);
+      await VerificationCodeService.sendVerificationCode(idUser, idRol, option);
 
     res.status(200).json(newVerificationToken);
   } catch (error) {
@@ -75,17 +82,22 @@ export const comprobateVerificationCode = async (req, res) => {
     const verificationCodeValid =
       await VerificationCodeService.comprobateVerificationCode(
         codeEntered,
-        decodeToken.idUser
+        decodeToken.idUser,
+        decodeToken.idRol
       );
 
     if (verificationCodeValid) {
-      const token = jwt.sign({ idUser: decodeToken.idUser }, secretKey, {
-        algorithm: "HS256",
-        expiresIn: "1h"
-      });
+      const token = jwt.sign(
+        { idUser: decodeToken.idUser, idRol: decodeToken.idRol },
+        secretKey,
+        {
+          algorithm: "HS256",
+          expiresIn: "1h"
+        }
+      );
 
       const refreshToken = jwt.sign(
-        { idUser: decodeToken.idUser },
+        { idUser: decodeToken.idUser, idRol: decodeToken.idRol },
         secretKeyRefresh,
         {
           algorithm: "HS256",
@@ -96,13 +108,13 @@ export const comprobateVerificationCode = async (req, res) => {
       res.cookie("accessToken", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax"
       });
       res.cookie("refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 1000,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax"
       });
     }

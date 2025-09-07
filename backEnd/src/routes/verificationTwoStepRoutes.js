@@ -1,11 +1,11 @@
 import express from "express";
 import {
-  getVerificationTwoStepByUser,
+  getVerificationTwoStepByUserAndRol,
   addVerificationTwoStep,
-  updateStateVerificationByUser
+  updateStateVerificationByUserAndRol
 } from "../controllers/verificationTwoStepController.js";
 export const verificationTwoStepRoutes = express.Router();
 
-verificationTwoStepRoutes.get("/", getVerificationTwoStepByUser);
+verificationTwoStepRoutes.get("/", getVerificationTwoStepByUserAndRol);
 verificationTwoStepRoutes.post("/", addVerificationTwoStep);
-verificationTwoStepRoutes.patch("/", updateStateVerificationByUser);
+verificationTwoStepRoutes.patch("/", updateStateVerificationByUserAndRol);

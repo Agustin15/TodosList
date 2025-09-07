@@ -19,6 +19,8 @@ import { verificationCodeRoutes } from "./routes/verificationCodeRoutes.js";
 
 const app = express();
 export const server = createServer(app);
+
+app.use(cookieParser());
 app.use(express.json());
 
 app.get("/", (req, res) => {

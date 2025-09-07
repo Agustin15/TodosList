@@ -8,7 +8,7 @@ export const RolService = {
       rolModel.propName = name;
       const rolFound = await rolModel.getRolByName();
       if (!rolFound)
-        throw new Error("Failed to found rol", { cause: { code: 500 } });
+        throw new Error("Failed to found rol", { cause: { code: 404 } });
 
       return rolFound;
     } catch (error) {

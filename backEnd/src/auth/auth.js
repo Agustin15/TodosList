@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 export const authRequest = async (req, res) => {
   if (!process.env.JWT_SECRET_KEY)
     throw new Error("JWT secret key not declared");
-
   const secretKey = process.env.JWT_SECRET_KEY;
   let token;
   try {
@@ -86,7 +85,7 @@ const newAccessToken = async (req, res) => {
     const decodedRefreshToken = jwt.verify(refreshToken, refreshKey);
 
     const newToken = jwt.sign(
-      { idUser: decodedRefreshToken.idUser },
+      { idUser: decodedRefreshToken.idUser, idRol: decodedRefreshToken.idRol },
       secretKey,
       { algorithm: "HS256", expiresIn: "1h" }
     );

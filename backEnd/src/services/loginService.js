@@ -3,6 +3,7 @@ import { VerificationTwoStepService } from "./verificationTwoStepService.js";
 import { VerificationCodeService } from "./verificationCodeService.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { RolService } from "./rolService.js";
 
 export const LoginService = {
   login: async (email, password) => {
@@ -36,19 +37,26 @@ export const LoginService = {
           cause: { code: 401 }
         });
 
+      const rolFound = await RolService.findRolByName("User");
+
       const verificationTwoStepFound =
-        await VerificationTwoStepService.findVerificationByUser(
-          userFound.idUser
+        await VerificationTwoStepService.findVerificationByUserAndRol(
+          userFound.idUser,
+          rolFound.idRol
         );
 
       if (!verificationTwoStepFound || verificationTwoStepFound.enabled == 0) {
-        const token = jwt.sign({ idUser: userFound.idUser }, secretKey, {
-          algorithm: "HS256",
-          expiresIn: "1h"
-        });
+        const token = jwt.sign(
+          { idUser: userFound.idUser, idRol: rolFound.idRol },
+          secretKey,
+          {
+            algorithm: "HS256",
+            expiresIn: "1h"
+          }
+        );
 
         const refreshToken = jwt.sign(
-          { idUser: userFound.idUser },
+          { idUser: userFound.idUser, idRol: rolFound.idRol },
           secretKeyRefresh,
           {
             algorithm: "HS256",
@@ -59,7 +67,10 @@ export const LoginService = {
         return { login: true, token: token, refreshToken: refreshToken };
       } else {
         const verificationCodeSent =
-          await VerificationCodeService.sendVerificationCode(userFound.idUser);
+          await VerificationCodeService.sendVerificationCode(
+            userFound.idUser,
+            rolFound.idRol
+          );
 
         if (!verificationCodeSent)
           throw new Error("Failed to send verification code", {
@@ -67,7 +78,11 @@ export const LoginService = {
           });
 
         const tokenVerification = jwt.sign(
-          { email: userFound.email, idUser: userFound.idUser },
+          {
+            email: userFound.email,
+            idUser: userFound.idUser,
+            idRol: rolFound.idRol
+          },
           secretKey,
           {
             algorithm: "HS256",
