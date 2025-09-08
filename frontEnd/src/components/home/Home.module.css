@@ -147,7 +147,6 @@ body {
 }
 
 .containSlider .pagination {
-    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -329,7 +328,8 @@ body {
         height: 24rem;
         color: white;
         align-items: start;
-        width: 99%;
+        margin-left: 0%;
+        width: auto;
         margin-top: 1.5rem;
         position: relative;
     }
@@ -349,6 +349,7 @@ body {
         flex-direction: column;
         justify-content: start;
         gap: 1rem;
+        width: 98%;
         align-items: center;
     }
 
@@ -469,7 +470,7 @@ body {
         height: 24rem;
         color: white;
         align-items: start;
-        width: 99%;
+        width: auto;
         margin-top: 2rem;
         position: relative;
     }
