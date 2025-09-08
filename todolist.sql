@@ -83,12 +83,13 @@ ON DELETE CASCADE,
 CONSTRAINT fk_endpointUrl FOREIGN KEY(endpointURL) REFERENCES subscriptions(endpointURL) ON DELETE CASCADE
 );
 
-
 CREATE TABLE verifications_two_step(
 idVerification int primary key auto_increment,
 enabled tinyint not null,
 idUser int not null,
+idRol int not null,
 CONSTRAINT fk_idUserVerification FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE,
+CONSTRAINT fk_idRolVerification FOREIGN KEY(idRol) REFERENCES rols(idRol) ON DELETE CASCADE,
 CONSTRAINT check_enabled CHECK(enabled=1 OR enabled=0)
 );
 
