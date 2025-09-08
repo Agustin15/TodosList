@@ -12,13 +12,19 @@ export const RowFile = ({ index, file }) => {
     let year = dateToFormat.getFullYear();
     let month = dateToFormat.getMonth() + 1;
     let day = dateToFormat.getDate();
+    let hour = dateToFormat.getHours();
+    let minutes = dateToFormat.getMinutes();
 
     let dateString =
-      (day < 10 ? `0${day}` : day) +
+      year +
       "-" +
       (month < 10 ? `0${month}` : month) +
       "-" +
-      year;
+      (day < 10 ? `0${day}` : day) +
+      " " +
+      (hour < 10 ? `0${hour}` : hour) +
+      ":" +
+      (minutes < 10 ? `0${minutes}` : minutes);
 
     return dateString;
   };
