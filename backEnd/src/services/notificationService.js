@@ -7,7 +7,7 @@ import { socketConnection } from "../app.js";
 const notificationModel = new Notification();
 
 export const NotificationService = {
-  addNotification: async (subscriptions, task, idUser) => {
+  addNotification: async (subscriptions, task, idUser, connection) => {
     try {
       if (
         new Date(task.datetimeNotification).getTime() >=
@@ -21,28 +21,37 @@ export const NotificationService = {
       notificationModel.propIdTask = task.idTask;
       notificationModel.propDatetimeSend = task.datetimeNotification;
       notificationModel.propState = "pending";
-      let notificationAdded = await notificationModel.post();
+      let notificationAdded = await notificationModel.post(connection);
+
       if (notificationAdded == 0)
         throw new Error("Failed to add notification", { cause: { code: 500 } });
 
       let notificationFound =
-        await NotificationService.findNotificationByIdTask(task.idTask);
+        await NotificationService.findNotificationByIdTask(
+          task.idTask,
+          connection
+        );
 
       if (notificationFound.length == 0) {
         throw new Error("Notification not found", { cause: { code: 404 } });
       }
-      await ScheduledJobService.addJob(notificationFound[0].idNotification);
+      await ScheduledJobService.addJob(
+        notificationFound[0].idNotification,
+        connection
+      );
 
       let jobNotificationFound =
         await ScheduledJobService.getJobByIdNotification(
-          notificationFound[0].idNotification
+          notificationFound[0].idNotification,
+          connection
         );
 
       let idJob = `'${jobNotificationFound.idJob}'`;
 
       await SubscriptionNotificationService.addNotificationsSubscriptions(
         notificationFound[0].idNotification,
-        subscriptions
+        subscriptions,
+        connection
       );
 
       await NotificationToQueue.scheduleNotificationToQueue(
@@ -54,10 +63,12 @@ export const NotificationService = {
       throw error;
     }
   },
-  findNotificationByIdTask: async (idTask) => {
+  findNotificationByIdTask: async (idTask, connection) => {
     try {
       notificationModel.propIdTask = idTask;
-      let notification = await notificationModel.getNotificationByIdTask();
+      let notification = await notificationModel.getNotificationByIdTask(
+        connection
+      );
 
       return notification;
     } catch (error) {
@@ -93,13 +104,13 @@ export const NotificationService = {
     }
   },
 
-  updateNotification: async (idNotification, newDatetime) => {
+  updateNotification: async (idNotification, newDatetime, connection) => {
     try {
       notificationModel.propIdNotification = idNotification;
       notificationModel.propDatetimeSend = new Date(newDatetime);
 
       let notificationUpdated =
-        await notificationModel.patchDatetimeNotification();
+        await notificationModel.patchDatetimeNotification(connection);
 
       if (notificationUpdated == 0)
         throw new Error("Failed to update notification", {
@@ -144,14 +155,17 @@ export const NotificationService = {
     }
   },
 
-  deleteNotification: async (idNotification) => {
+  deleteNotification: async (idNotification, connection) => {
     try {
       notificationModel.propIdNotification = idNotification;
 
       let jobNotificationFound =
-        await ScheduledJobService.getJobByIdNotification(idNotification);
+        await ScheduledJobService.getJobByIdNotification(
+          idNotification,
+          connection
+        );
 
-      let deleted = await notificationModel.delete();
+      let deleted = await notificationModel.delete(connection);
 
       await NotificationToQueue.deleteNotificationFromQueue(
         `'${jobNotificationFound.idJob}'`

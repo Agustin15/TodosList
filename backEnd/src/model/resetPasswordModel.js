@@ -40,7 +40,7 @@ export class ResetPassword {
 
   async patchPasswordUserByEmail() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "Update users set passwordUser=? where email=?",
         [this.propNewPassword, this.propUser.email]
       );

@@ -3,10 +3,10 @@ import { Rol } from "../model/rolModel.js";
 const rolModel = new Rol();
 
 export const RolService = {
-  findRolByName: async (name) => {
+  findRolByName: async (name, connection) => {
     try {
       rolModel.propName = name;
-      const rolFound = await rolModel.getRolByName();
+      const rolFound = await rolModel.getRolByName(connection);
       if (!rolFound)
         throw new Error("Failed to found rol", { cause: { code: 404 } });
 

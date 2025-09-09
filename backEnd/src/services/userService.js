@@ -11,11 +11,6 @@ export const UserService = {
       userModel.propName = userToAdd.name;
       userModel.propLastname = userToAdd.lastname;
 
-      await connectionMysql.connectionCreated.execute(
-        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-      );
-
-      await connectionMysql.connectionCreated.beginTransaction();
       const userFoundByEmail = await UserService.findUserByEmail(
         userToAdd.email
       );
@@ -27,13 +22,22 @@ export const UserService = {
       const hash = await bcrypt.hash(userToAdd.password, 10);
 
       userModel.propPassword = hash;
-      const userCreated = await userModel.post();
+
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
+
+      const userCreated = await userModel.post(connection);
 
       if (userCreated == 0) {
         throw new Error("Error to add user", { cause: { code: 500 } });
       }
 
-      const userAdded = await UserService.findUserByEmail(userToAdd.email);
+      const userAdded = await UserService.findUserByEmail(
+        userToAdd.email,
+        connection
+      );
 
       if (!userAdded) {
         throw new Error("User recently added not found", {
@@ -41,12 +45,14 @@ export const UserService = {
         });
       }
 
-      await UsersRolsService.addUserRol(userAdded.idUser);
+      await UsersRolsService.addUserRol(userAdded.idUser, connection);
+      await connection.commit();
 
-      await connectionMysql.connectionCreated.commit();
+      connection.release();
+
       return userCreated;
     } catch (error) {
-      await connectionMysql.connectionCreated.rollback();
+      await connection.rollback();
       throw error;
     }
   },
@@ -62,21 +68,21 @@ export const UserService = {
     }
   },
 
-  findUserByEmail: async (email) => {
+  findUserByEmail: async (email, connection) => {
     try {
       userModel.propEmailAddress = email;
 
-      const userFound = await userModel.getUserByEmail();
+      const userFound = await userModel.getUserByEmail(connection);
       return userFound[0];
     } catch (error) {
       throw error;
     }
   },
 
-  findUserByIdUser: async (idUser) => {
+  findUserByIdUser: async (idUser, connection) => {
     try {
       userModel.propIdUser = parseInt(idUser);
-      const userFound = await userModel.getUserById();
+      const userFound = await userModel.getUserById(connection);
       return userFound[0];
     } catch (error) {
       throw error;
@@ -160,17 +166,26 @@ export const UserService = {
       userModel.propPassword = userFound.passwordUser;
       userModel.propEmailAddress = userFound.email;
 
-      const userUpdated = await userModel.put();
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
+
+      const userUpdated = await userModel.put(connection);
       if (userUpdated == 0) {
         throw new Error("User not updated", { cause: { code: 500 } });
       }
 
-      userFound = await UserService.findUserByIdUser(idUser);
+      userFound = await UserService.findUserByIdUser(idUser, connection);
       userFound.name = userFound.nameUser;
       delete userFound.nameUser;
 
+      connection.commit();
+      connection.release();
+
       return userFound;
     } catch (error) {
+      connection.rollback();
       throw error;
     }
   },
@@ -204,22 +219,32 @@ export const UserService = {
       userModel.propEmailAddress = newEmail;
       userModel.propIdUser = idUser;
 
-      let resultUpdated = await userModel.patchEmailUserById();
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
+
+      let resultUpdated = await userModel.patchEmailUserById(connection);
 
       if (resultUpdated == 0)
         throw new Error("Failed to update email user", {
           cause: { code: 500 }
         });
 
-      userFound = await UserService.findUserByIdUser(idUser);
+      userFound = await UserService.findUserByIdUser(idUser, connection);
       userFound.name = userFound.nameUser;
       delete userFound.nameUser;
 
       if (!userFound) {
         throw new Error("User not found", { cause: { code: 404 } });
       }
+
+      await connection.commit();
+      connection.release();
+
       return userFound;
     } catch (error) {
+      await connection.rollback();
       throw error;
     }
   }

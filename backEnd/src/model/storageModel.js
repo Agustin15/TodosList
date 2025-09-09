@@ -26,11 +26,11 @@ export class Storage {
     return this.#file;
   }
 
-  async calculateStorageFilesUsedByUser() {
+  async calculateStorageFilesUsedByUser(connection) {
     let bytesUsed = 0;
 
     try {
-      const files = await this.#getFilesByIdUser();
+      const files = await this.#getFilesByIdUser(connection);
       if (files.length > 0) {
         bytesUsed = files.reduce((ac, file) => {
           return (ac += file.fileTask.length);
@@ -46,9 +46,12 @@ export class Storage {
     }
   }
 
-  async #getFilesByIdUser() {
+  async #getFilesByIdUser(connection) {
     try {
-      const filesUser = await this.propFile.getAllFilesUser(this.propIdUser);
+      const filesUser = await this.propFile.getAllFilesUser(
+        this.propIdUser,
+        connection
+      );
       return filesUser;
     } catch (error) {
       throw new Error(error);

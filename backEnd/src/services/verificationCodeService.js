@@ -11,11 +11,6 @@ export const VerificationCodeService = {
     try {
       let result;
 
-      await connectionMysql.connectionCreated.execute(
-        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-      );
-      await connectionMysql.connectionCreated.beginTransaction();
-
       const verificationFound =
         await VerificationTwoStepService.findVerificationByUserAndRol(
           idUser,
@@ -27,7 +22,13 @@ export const VerificationCodeService = {
           cause: { code: 404 }
         });
 
-      await verificationCodeModel.generateCode();
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
+
+      await verificationCodeModel.generateCode(connection);
+
       verificationCodeModel.generateExpirationTime();
       verificationCodeModel.propIdVerification =
         verificationFound.idVerification;
@@ -39,14 +40,16 @@ export const VerificationCodeService = {
 
       verificationCodeModel.propCodeHash = codeHash;
 
-      const verificationCodeAdded = await verificationCodeModel.post();
+      const verificationCodeAdded = await verificationCodeModel.post(
+        connection
+      );
 
       if (!verificationCodeAdded)
         throw new Error("Failed to add verification code", {
           cause: { code: 500 }
         });
 
-      const userFound = await UserService.findUserByIdUser(idUser);
+      const userFound = await UserService.findUserByIdUser(idUser, connection);
 
       if (!userFound)
         throw new Error("User not found", { cause: { code: 404 } });
@@ -77,18 +80,23 @@ export const VerificationCodeService = {
         result = newVerificationToken;
       }
 
-      await connectionMysql.connectionCreated.commit();
+      await connection.commit();
+      connection.release();
+
       return result;
     } catch (error) {
-      await connectionMysql.connectionCreated.rollback();
+      await connection.rollback();
       throw error;
     }
   },
 
-  comprobateVerificationCode: async (codeEntered, idUser,idRol) => {
+  comprobateVerificationCode: async (codeEntered, idUser, idRol) => {
     try {
       const verificationTwoStepFound =
-        await VerificationTwoStepService.findVerificationByUserAndRol(idUser,idRol);
+        await VerificationTwoStepService.findVerificationByUserAndRol(
+          idUser,
+          idRol
+        );
 
       if (!verificationTwoStepFound)
         throw new Error("Verification two step not found", {

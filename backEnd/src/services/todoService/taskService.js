@@ -43,25 +43,25 @@ export const TaskService = {
     }
   },
 
-  findTasksByIdTask: async (idTask, idUser) => {
+  findTasksByIdTask: async (idTask, idUser, connection) => {
     try {
       taskModel.propIdTask = idTask;
       taskModel.propIdUser = idUser;
 
-      const taskFound = await taskModel.getTaskById();
+      const taskFound = await taskModel.getTaskById(connection);
       return taskFound;
     } catch (error) {
       throw new Error(error);
     }
   },
 
-  findTaskRecentlyAdded: async (idUser, description, datetime) => {
+  findTaskRecentlyAdded: async (idUser, description, datetime, connection) => {
     try {
       taskModel.propIdUser = idUser;
       taskModel.propDescription = description;
       taskModel.propDatetime = datetime;
 
-      const taskFound = await taskModel.getTaskRecentlyAdded();
+      const taskFound = await taskModel.getTaskRecentlyAdded(connection);
 
       if (taskFound.length == 0)
         throw new Error("Error,task not found", { cause: { code: 404 } });
@@ -74,18 +74,18 @@ export const TaskService = {
 
   createTask: async (task, idUser, files) => {
     try {
-      await connectionMysql.connectionCreated.execute(
-        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-      );
-      await connectionMysql.connectionCreated.beginTransaction();
-
       taskModel.propIdUser = idUser;
       taskModel.propIcon = task.icon;
       taskModel.propDescription = task.descriptionTask;
       taskModel.propDatetime = task.datetimeTask;
       taskModel.propIsCompleted = 0;
 
-      const taskCreated = await taskModel.post();
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
+
+      const taskCreated = await taskModel.post(connection);
 
       if (taskCreated == 0) {
         throw new Error("Error to add task", { cause: { code: 500 } });
@@ -94,13 +94,18 @@ export const TaskService = {
       let taskAddedFound = await TaskService.findTaskRecentlyAdded(
         idUser,
         task.descriptionTask,
-        task.datetimeTask
+        task.datetimeTask,
+        connection
       );
 
       if (files.length > 0) {
-        await FileService.verifyAmountSizeOfFiles(files, idUser);
+        await FileService.verifyAmountSizeOfFiles(files, idUser, connection);
 
-        let fileAdded = await FileService.addFile(taskAddedFound.idTask, files);
+        let fileAdded = await FileService.addFile(
+          taskAddedFound.idTask,
+          files,
+          connection
+        );
 
         if (!fileAdded.result) {
           errorAddFile = true;
@@ -108,13 +113,18 @@ export const TaskService = {
       }
 
       let filesTask = await FileService.findFilesByIdTask(
-        taskAddedFound.idTask
+        taskAddedFound.idTask,
+        connection
       );
+
       taskAddedFound.filesUploaded = filesTask;
       taskAddedFound.datetimeNotification = task.datetimeNotification;
 
       let userSubscriptions =
-        await SubscriptionPushService.getSubscriptionsByIdUser(idUser);
+        await SubscriptionPushService.getSubscriptionsByIdUser(
+          idUser,
+          connection
+        );
 
       if (
         userSubscriptions.length > 0 &&
@@ -123,32 +133,35 @@ export const TaskService = {
         await NotificationService.addNotification(
           userSubscriptions,
           taskAddedFound,
-          idUser
+          idUser,
+          connection
         );
       }
 
-      await connectionMysql.connectionCreated.commit();
+      await connection.commit();
+      connection.release();
+
       return taskAddedFound;
     } catch (error) {
-      await connectionMysql.connectionCreated.rollback();
+      await connection.rollback();
       throw error;
     }
   },
 
   updateTask: async (task, files, idTask, idUser) => {
     try {
-      await connectionMysql.connectionCreated.execute(
-        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-      );
-      await connectionMysql.connectionCreated.beginTransaction();
-
       taskModel.propIcon = task.icon;
       taskModel.propDescription = task.descriptionTask;
       taskModel.propDatetime = task.datetimeTask;
       taskModel.propIsCompleted = parseInt(task.state);
       taskModel.propIdTask = idTask;
 
-      const taskUpdated = await taskModel.put();
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
+
+      const taskUpdated = await taskModel.put(connection);
 
       if (taskUpdated == 0) {
         throw new Error("Failed to update task", { cause: { code: 500 } });
@@ -156,16 +169,21 @@ export const TaskService = {
 
       let taskUpdatedFound = await TaskService.findTasksByIdTask(
         idTask,
-        idUser
+        idUser,
+        connection
       );
 
       taskUpdatedFound = taskUpdatedFound[0];
 
       if (files.length > 0) {
-        await FileService.verifyAmountSizeOfFiles(files, idUser);
+        await FileService.verifyAmountSizeOfFiles(files, idUser, connection);
       }
 
-      let filesChanged = await FileService.findFilesChanged(idTask, files);
+      let filesChanged = await FileService.findFilesChanged(
+        idTask,
+        files,
+        connection
+      );
       if (filesChanged.filesForAdd.length > 0) {
         await FileService.addFile(idTask, filesChanged.filesForAdd);
       }
@@ -174,42 +192,57 @@ export const TaskService = {
       }
 
       let notification = await NotificationService.findNotificationByIdTask(
-        idTask
+        idTask,
+        connection
       );
+
       task.idTask = idTask;
 
       if (notification.length > 0) {
         if (task.datetimeNotification.length == 0) {
           await NotificationService.deleteNotification(
-            notification[0].idNotification
+            notification[0].idNotification,
+            connection
           );
         } else {
           await NotificationService.updateNotification(
             notification[0].idNotification,
-            task.datetimeNotification
+            task.datetimeNotification,
+            connection
           );
 
           await NotificationToQueue.updateNotificationQueue(
             notification[0].idNotification,
             task,
-            idUser
+            idUser,
+            connection
           );
         }
       } else if (task.datetimeNotification.length > 0) {
         let subscriptions =
-          await SubscriptionPushService.getSubscriptionsByIdUser(idUser);
-        await NotificationService.addNotification(subscriptions, task, idUser);
+          await SubscriptionPushService.getSubscriptionsByIdUser(
+            idUser,
+            connection
+          );
+        await NotificationService.addNotification(
+          subscriptions,
+          task,
+          idUser,
+          connection
+        );
       }
 
-      await connectionMysql.connectionCreated.commit();
+      let filesTask = await FileService.findFilesByIdTask(idTask, connection);
 
-      let filesTask = await FileService.findFilesByIdTask(idTask);
       taskUpdatedFound.filesUploaded = filesTask;
       taskUpdatedFound.datetimeNotification = task.datetimeNotification;
 
+      await connection.commit();
+      connection.release();
+
       return taskUpdatedFound;
     } catch (error) {
-      await connectionMysql.connectionCreated.rollback();
+      await connection.rollback();
       throw error;
     }
   },
@@ -240,18 +273,19 @@ export const TaskService = {
     try {
       let jobId;
 
-      connectionMysql.connectionCreated.execute(
-        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-      );
-      await connectionMysql.connectionCreated.beginTransaction();
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
 
       let notificationFound =
-        await NotificationService.findNotificationByIdTask(idTask);
+        await NotificationService.findNotificationByIdTask(idTask, connection);
 
       if (notificationFound.length > 0) {
         let jobNotificationFound =
           await ScheduledJobService.getJobByIdNotification(
-            notificationFound[0].idNotification
+            notificationFound[0].idNotification,
+            connection
           );
 
         jobId = `'${jobNotificationFound.idJob}'`;
@@ -259,17 +293,19 @@ export const TaskService = {
 
       taskModel.propIdTask = idTask;
 
-      let deletedTask = await taskModel.delete();
+      let deletedTask = await taskModel.delete(connection);
 
       if (deletedTask == 0)
         throw new Error("Failed to delete task", { cause: { code: 500 } });
 
       if (jobId) await NotificationToQueue.deleteNotificationFromQueue(jobId);
 
-      await connectionMysql.connectionCreated.commit();
+      await connection.commit();
+      connection.release();
+
       return deletedTask;
     } catch (error) {
-      await connectionMysql.connectionCreated.rollback();
+      await connection.rollback();
       throw error;
     }
   }

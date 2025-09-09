@@ -3,7 +3,7 @@ import { StorageService } from "./storageService.js";
 const fileModel = new File();
 
 export const FileService = {
-  addFile: async (idTask, files) => {
+  addFile: async (idTask, files, connection) => {
     let errorAdded = false;
     for (const file of files) {
       fileModel.propFile = file.buffer;
@@ -11,7 +11,7 @@ export const FileService = {
       fileModel.propTypeFile = file.mimetype;
       fileModel.propIdTask = idTask;
 
-      let fileAdded = await fileModel.post();
+      let fileAdded = await fileModel.post(connection);
 
       if (fileAdded == 0) {
         errorAdded = true;
@@ -37,15 +37,15 @@ export const FileService = {
     }
 
     if (errorDeleted) {
-      throw new Error("Error to delete file",{ cause: { code: 500 } });
+      throw new Error("Error to delete file", { cause: { code: 500 } });
     }
 
     return { result: true };
   },
 
-  findFilesByIdTask: async (idTask) => {
+  findFilesByIdTask: async (idTask, connection) => {
     fileModel.propIdTask = idTask;
-    let filesTask = await fileModel.getFilesByIdTask();
+    let filesTask = await fileModel.getFilesByIdTask(connection);
 
     filesTask = filesTask.map((file) => {
       file.fileTask = file.fileTask.toString("base64");
@@ -54,9 +54,9 @@ export const FileService = {
     return filesTask;
   },
 
-  findFilesChanged: async (idTask, filesUpdated) => {
+  findFilesChanged: async (idTask, filesUpdated, connection) => {
     try {
-      const filesTask = await FileService.findFilesByIdTask(idTask);
+      const filesTask = await FileService.findFilesByIdTask(idTask, connection);
       let filesForAdd = FileService.searchFilesForAdd(
         idTask,
         filesUpdated,
@@ -125,20 +125,25 @@ export const FileService = {
     }
   },
 
-  verifyAmountSizeOfFiles: async (files, idUser) => {
+  verifyAmountSizeOfFiles: async (files, idUser, connection) => {
     const amountSize = files.reduce((ac, file) => {
       return (ac += file.size);
     }, 0);
 
     if (amountSize > 10 * Math.pow(10, 6))
-      throw new Error("Limit amount size of 10MB of files exceeded",{ cause: { code: 500 } });
+      throw new Error("Limit amount size of 10MB of files exceeded", {
+        cause: { code: 500 }
+      });
 
     const storageUsedUser = await StorageService.getStorageFilesUsedByUser(
-      idUser
+      idUser,
+      connection
     );
 
     if (storageUsedUser.bytesUsed + amountSize > storageUsedUser.limitSize)
-      throw new Error("This amount size files exceed your limit storage",{ cause: { code: 400 } });
+      throw new Error("This amount size files exceed your limit storage", {
+        cause: { code: 400 }
+      });
   },
 
   findAllFilesUser: async (idUser) => {

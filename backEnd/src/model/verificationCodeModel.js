@@ -55,10 +55,12 @@ export class VerificationCode {
     }
     return true;
   }
-  async generateCode() {
+  async generateCode(connection) {
     while (true) {
       this.propCode = randomInt(VerificationCode.min, VerificationCode.max);
-      const verificationCodesFound = await this.getVerificationCodeByCode();
+      const verificationCodesFound = await this.getVerificationCodeByCode(
+        connection
+      );
       if (verificationCodesFound.length == 0) break;
     }
   }
@@ -67,27 +69,41 @@ export class VerificationCode {
     this.propExpirationTime = Date.now() + VerificationCode.durationCode;
   }
 
-  async post() {
+  async post(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO verifications_code (codeOfVerification,expirationTime,idVerification) values(?,?,?)",
-        [this.propCodeHash, this.propExpirationTime, this.propIdVerification]
-      );
+      let sqlQuery =
+        "INSERT INTO verifications_code (codeOfVerification,expirationTime,idVerification) values(?,?,?)";
+      let params = [
+        this.propCodeHash,
+        this.propExpirationTime,
+        this.propIdVerification
+      ];
 
-      return result.affectedRows;
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async getVerificationCodeByCode() {
+  async getVerificationCodeByCode(connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from verifications_code where codeOfVerification=?",
-        [this.propCode]
-      );
+      let sqlQuery =
+        "select * from verifications_code where codeOfVerification=?";
+      let params = [this.propCode];
 
-      return results;
+      if (connection) {
+        const [results] = await connection.execute(sqlQuery, params);
+        return results;
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        return results;
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -95,7 +111,7 @@ export class VerificationCode {
 
   async getVerificationsCodeByIdVerification() {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         "select * from verifications_code where idVerification=?",
         [this.propIdVerification]
       );

@@ -13,26 +13,34 @@ export class ScheduledJob {
     this.#idNotification = value;
   }
 
-  async post() {
+  async post(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO scheduled_jobs (idNotification) values (?)",
-        [this.propIdNotification]
-      );
+      let sqlQuery = "INSERT INTO scheduled_jobs (idNotification) values (?)";
+      let params = [this.propIdNotification];
 
-      return result.affectedRows;
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getJobByIdNotification() {
+  async getJobByIdNotification(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "select * from scheduled_jobs where idNotification=?",
-        [this.propIdNotification]
-      );
+      let sqlQuery = "select * from scheduled_jobs where idNotification=?";
+      let params = [this.propIdNotification];
 
-      return result;
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result;
+      }
     } catch (error) {
       throw new Error(error);
     }

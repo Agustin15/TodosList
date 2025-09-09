@@ -33,7 +33,7 @@ export class VerificationTwoStep {
 
   async post() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "INSERT INTO verifications_two_step (enabled,idUser,idRol) values (?,?,?)",
         [this.propEnabled, this.propIdUser, this.propIdRol]
       );
@@ -46,7 +46,7 @@ export class VerificationTwoStep {
 
   async patch() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "update verifications_two_step set enabled=? where idUser=? and idRol=?",
         [this.propEnabled, this.propIdUser, this.propIdRol]
       );
@@ -59,7 +59,7 @@ export class VerificationTwoStep {
 
   async getVerificationByUserAndRol() {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         "select * from verifications_two_step where idUser=? and idRol=?",
         [this.propIdUser, this.propIdRol]
       );

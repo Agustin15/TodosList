@@ -2,7 +2,11 @@ import { SubscriptionNotification } from "../model/subscriptionNotificationModel
 const subscriptionNotificationModel = new SubscriptionNotification();
 
 export const SubscriptionNotificationService = {
-  addNotificationsSubscriptions: async (idNotification, subscriptions) => {
+  addNotificationsSubscriptions: async (
+    idNotification,
+    subscriptions,
+    connection
+  ) => {
     let errorAdd = false;
 
     try {
@@ -12,7 +16,7 @@ export const SubscriptionNotificationService = {
           subscription.endpointURL;
 
         let notificationSubscriptionAdded =
-          await subscriptionNotificationModel.post();
+          await subscriptionNotificationModel.post(connection);
 
         if (notificationSubscriptionAdded == 0) {
           errorAdd = true;
@@ -21,7 +25,9 @@ export const SubscriptionNotificationService = {
       }
 
       if (errorAdd)
-        throw new Error("Failed to add notification of subscription",{ cause: { code: 404 } });
+        throw new Error("Failed to add notification of subscription", {
+          cause: { code: 404 }
+        });
     } catch (error) {
       throw error;
     }

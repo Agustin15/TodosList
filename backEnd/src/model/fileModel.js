@@ -53,13 +53,24 @@ export class File {
     this.#file = value;
   }
 
-  async post() {
+  async post(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "Insert into files (nameFile,typeFile,fileTask,idTask) values(?,?,?,?)",
-        [this.propNameFile, this.propTypeFile, this.propFile, this.propIdTask]
-      );
-      return result.affectedRows;
+      let sqlQuery =
+        "Insert into files (nameFile,typeFile,fileTask,idTask) values(?,?,?,?)";
+      let params = [
+        this.propNameFile,
+        this.propTypeFile,
+        this.propFile,
+        this.propIdTask
+      ];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -67,7 +78,7 @@ export class File {
 
   async delete() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "delete from files where idFile=?",
         [this.propIdFile]
       );
@@ -77,13 +88,18 @@ export class File {
     }
   }
 
-  async getFilesByIdTask() {
+  async getFilesByIdTask(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "select * from files where idTask=?",
-        [this.propIdTask]
-      );
-      return result;
+      let sqlQuery = "select * from files where idTask=?";
+      let params = [this.propIdTask];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result;
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -91,7 +107,7 @@ export class File {
 
   async getQuantityFilesByUser(idUser) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         "select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=?",
         [idUser]
       );
@@ -103,7 +119,7 @@ export class File {
 
   async getFilesByUserLimit(offset, idUser) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         `select * from files inner join tasks on files.idTask=tasks.idTask where tasks.idUser=? order by 
         files.datetimeUpload desc LIMIT 10 OFFSET ${offset}`,
         [idUser]
@@ -114,15 +130,20 @@ export class File {
       throw new Error(error);
     }
   }
-  async getAllFilesUser(idUser) {
+  async getAllFilesUser(idUser, connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      let sqlQuery =
         "select files.fileTask from files inner join tasks on files.idTask=tasks.idTask where" +
-          " tasks.idUser=?",
-        [idUser]
-      );
+        " tasks.idUser=?";
+      let params = [idUser];
 
-      return results;
+      if (connection) {
+        const [results] = await connection.execute(sqlQuery, params);
+        return results;
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        return results;
+      }
     } catch (error) {
       throw new Error(error);
     }

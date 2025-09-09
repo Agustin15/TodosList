@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-class ConnectionMysql {
+class ConnectionPoolMysql {
   #host;
   #user;
   #name;
   #password;
-  connectionCreated;
+  pool;
 
   constructor() {
     try {
@@ -25,7 +25,7 @@ class ConnectionMysql {
       this.propName = process.env.DATABASE_NAME;
       this.propPassword = process.env.DATABASE_PASSWORD;
 
-      this.#createConnection();
+      this.#createPool();
     } catch (error) {
       console.log("Database connection failed," + error);
       process.exit(1);
@@ -66,13 +66,20 @@ class ConnectionMysql {
     return this.#password;
   }
 
-  #createConnection = async () => {
+  #createPool = () => {
     try {
-      this.connectionCreated = await mysql.createConnection({
+      this.pool = mysql.createPool({
         host: this.propHost,
         user: this.propUser,
         password: this.propPassword,
-        database: this.propName
+        database: this.propName,
+        waitForConnections: true,
+        connectionLimit: 10,
+        maxIdle: 10,
+        idleTimeout: 60000,
+        queueLimit: 0,
+        enableKeepAlive: true,
+        keepAliveInitialDelay: 0
       });
     } catch (error) {
       console.error("Database connection failed," + error);
@@ -80,4 +87,4 @@ class ConnectionMysql {
     }
   };
 }
-export const connectionMysql = new ConnectionMysql();
+export const connectionMysql = new ConnectionPoolMysql();

@@ -46,7 +46,7 @@ export class SubscriptionPush {
 
   async post() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "INSERT INTO subscriptions (endpointURL,p256dh,auth,idUser) values (?,?,?,?)",
         [
           this.propEndpointURL,
@@ -63,25 +63,34 @@ export class SubscriptionPush {
     }
   }
 
-  async delete() {
+  async delete(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "delete from subscriptions where endpointURL=?",
-        [this.propEndpointURL]
-      );
+      let sqlQuery = "delete from subscriptions where endpointURL=?";
+      let params = [this.propEndpointURL];
 
-      return result.affectedRows;
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getSubscriptionsByIdUser() {
+  async getSubscriptionsByIdUser(connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from subscriptions where idUser=?",
-        [this.propIdUser]
-      );
-      return results;
+      let sqlQuery = "select * from subscriptions where idUser=?";
+      let params = [this.propIdUser];
+
+      if (connection) {
+        const [results] = await connectionMysql.execute(sqlQuery, params);
+        return results;
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        return results;
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -89,7 +98,7 @@ export class SubscriptionPush {
 
   async getSubscriptionByEndpoint() {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         "select * from subscriptions where endpointURL=?",
         [this.propEndpointURL]
       );

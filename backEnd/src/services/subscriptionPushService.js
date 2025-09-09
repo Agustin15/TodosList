@@ -24,15 +24,15 @@ export const SubscriptionPushService = {
   },
   deleteSubscription: async (endpoint) => {
     try {
-      await connectionMysql.connectionCreated.execute(
-        "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-      );
-      await connectionMysql.connectionCreated.beginTransaction();
-
       let notificationsPending =
         await SubscriptionNotificationService.findPendingNotificationsByEndpoint(
           endpoint
         );
+
+      const connection = await connectionMysql.pool.getConnection();
+
+      await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+      await connection.beginTransaction();
 
       if (notificationsPending.length > 0) {
         let errorDelete = false;
@@ -46,7 +46,8 @@ export const SubscriptionPushService = {
 
           if (subscriptions.length == 0) {
             let deleted = await NotificationService.deleteNotification(
-              notification.idNotification
+              notification.idNotification,
+              connection
             );
             if (deleted == 0) {
               errorDelete = true;
@@ -62,25 +63,29 @@ export const SubscriptionPushService = {
       }
 
       subscriptionPushModel.propEndpointURL = endpoint;
-      const deletedSubscription = await subscriptionPushModel.delete();
+      const deletedSubscription = await subscriptionPushModel.delete(
+        connection
+      );
 
       if (deletedSubscription == 0)
         throw new Error("Failed to delete subscription", {
           cause: { code: 500 }
         });
 
-      await connectionMysql.connectionCreated.commit();
+      await connection.commit();
+      connection.release();
+      
       return deletedSubscription;
     } catch (error) {
-      await connectionMysql.connectionCreated.rollback();
+      await connection.rollback();
       throw error;
     }
   },
-  getSubscriptionsByIdUser: async (idUser) => {
+  getSubscriptionsByIdUser: async (idUser, connection) => {
     try {
       subscriptionPushModel.propIdUser = idUser;
       const userSubscriptions =
-        await subscriptionPushModel.getSubscriptionsByIdUser();
+        await subscriptionPushModel.getSubscriptionsByIdUser(connection);
       return userSubscriptions;
     } catch (error) {
       throw error;

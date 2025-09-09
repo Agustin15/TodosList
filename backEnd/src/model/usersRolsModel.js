@@ -21,14 +21,18 @@ export class UsersRols {
     return this.#idUser;
   }
 
-  async post() {
+  async post(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO rols_users(idRol,idUser) VALUES(?,?)",
-        [this.propIdRol, this.propIdUser]
-      );
+      let sqlQuery = "INSERT INTO rols_users(idRol,idUser) VALUES(?,?)";
+      let params = [this.propIdRol, this.propIdUser];
 
-      return result.affectedRows;
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }

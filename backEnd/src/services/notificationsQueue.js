@@ -108,7 +108,9 @@ export const NotificationToQueue = {
               await NotificationService.findNotificationByIdTask(task.idTask);
 
             if (notificationFound.length == 0) {
-              throw new Error("task notification not found",{ cause: { code: 404 } });
+              throw new Error("task notification not found", {
+                cause: { code: 404 }
+              });
             }
 
             await NotificationService.updateStateNotification(
@@ -148,10 +150,14 @@ export const NotificationToQueue = {
     });
   },
 
-  updateNotificationQueue: async (idNotification, task, idUser) => {
+  updateNotificationQueue: async (idNotification, task, idUser, connection) => {
     try {
       let jobNotificationFound =
-        await ScheduledJobService.getJobByIdNotification(idNotification);
+        await ScheduledJobService.getJobByIdNotification(
+          idNotification,
+          connection
+        );
+        
       let idJob = `'${jobNotificationFound.idJob}'`;
       await NotificationToQueue.deleteNotificationFromQueue(idJob);
       await NotificationToQueue.scheduleNotificationToQueue(

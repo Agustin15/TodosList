@@ -81,19 +81,25 @@ export class User {
     return newValue.join("");
   }
 
-  async post() {
+  async post(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)",
-        [
-          this.propName,
-          this.propLastname,
-          this.propEmailAddress,
-          this.propPassword
-        ]
-      );
+      let sqlQuery =
+        "INSERT INTO users (nameUser,lastname,email,passwordUser) VALUES (?,?,?,?)";
 
-      return result.affectedRows;
+      let params = [
+        this.propName,
+        this.propLastname,
+        this.propEmailAddress,
+        this.propPassword
+      ];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -101,7 +107,7 @@ export class User {
 
   async patchPasswordUserById() {
     try {
-      const [result] = await connectionMysql.connectionMysql.execute(
+      const [result] = await connectionMysql.pool.query(
         "Update users set passwordUser=? where idUser=?",
         [this.propPassword, this.propIdUser]
       );
@@ -113,7 +119,7 @@ export class User {
 
   async patchPasswordUserByEmail() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "Update users set passwordUser=? where email=?",
         [this.propPassword, this.propEmailAddress]
       );
@@ -122,55 +128,76 @@ export class User {
       throw new Error(error);
     }
   }
-  async patchEmailUserById() {
+  async patchEmailUserById(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "Update users set email=? where idUser=?",
-        [this.propEmailAddress, this.propIdUser]
-      );
-      return result.affectedRows;
+      let sqlQuery = "Update users set email=? where idUser=?";
+      let params = [this.propEmailAddress, this.propIdUser];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async put() {
+  async put(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?",
-        [
-          this.propName,
-          this.propLastname,
-          this.propEmailAddress,
-          this.propPassword,
-          this.propIdUser
-        ]
-      );
-      return result.affectedRows;
+      let sqlQuery =
+        "Update users set nameUser=?,lastname=?,email=?,passwordUser=? where idUser=?";
+      let params = [
+        this.propName,
+        this.propLastname,
+        this.propEmailAddress,
+        this.propPassword,
+        this.propIdUser
+      ];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async getUserByEmail() {
+  async getUserByEmail(connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from users where email=?",
-        [this.propEmailAddress]
-      );
-      return results;
+      let sqlQuery = "select * from users where email=?";
+      let params = [this.propEmailAddress];
+
+      if (connection) {
+        const [results] = await connection.execute(sqlQuery, params);
+        return results;
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        return results;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async getUserById() {
+  async getUserById(connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from users where idUser=?",
-        [this.propIdUser]
-      );
-      return results;
+      let sqlQuery = "select * from users where idUser=?";
+      let params = [this.propIdUser];
+
+      if (connection) {
+        const [results] = await connection.execute(sqlQuery, params);
+        return results;
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        return results;
+      }
     } catch (error) {
       throw new Error(error);
     }

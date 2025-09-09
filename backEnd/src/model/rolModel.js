@@ -39,15 +39,20 @@ export class Rol {
     return newValue.join("");
   }
 
-  async getRolByName() {
+  async getRolByName(connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from rols where rol=?",
-        [this.propName]
-      );
+      let sqlQuery = "select * from rols where rol=?";
+      let params = [this.propName];
 
-      if (results.length == 0) return null;
-      else return results[0];
+      if (connection) {
+        const [results] = await connectionMysql.execute(sqlQuery, params);
+        if (results.length == 0) return null;
+        else return results[0];
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        if (results.length == 0) return null;
+        else return results[0];
+      }
     } catch (error) {
       throw new Error(error);
     }

@@ -48,14 +48,19 @@ export class Notification {
     this.#state = value;
   }
 
-  async post() {
+  async post(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "INSERT INTO notifications (datetimeSend,state,idTask) values (?,?,?)",
-        [this.propDatetimeSend, this.propState, this.propIdTask]
-      );
+      let sqlQuery =
+        "INSERT INTO notifications (datetimeSend,state,idTask) values (?,?,?)";
+      let params = [this.propDatetimeSend, this.propState, this.propIdTask];
 
-      return result.affectedRows;
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
@@ -63,7 +68,7 @@ export class Notification {
 
   async patchStateNotification() {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
+      const [result] = await connectionMysql.pool.query(
         "update notifications set state=? where idNotification=?",
         [this.propState, this.propIdNotification]
       );
@@ -73,32 +78,43 @@ export class Notification {
     }
   }
 
-  async patchDatetimeNotification() {
+  async patchDatetimeNotification(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "update notifications set datetimeSend=? where idNotification=?",
-        [this.propDatetimeSend, this.propIdNotification]
-      );
-      return result.affectedRows;
+      let sqlQuery =
+        "update notifications set datetimeSend=? where idNotification=?";
+      let params = [this.propDatetimeSend, this.propIdNotification];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async getNotificationByIdTask() {
+  async getNotificationByIdTask(connection) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
-        "select * from notifications where idTask=?",
-        [this.propIdTask]
-      );
-      return results;
+      let sqlQuery = "select * from notifications where idTask=?";
+      let params = [this.propIdTask];
+
+      if (connection) {
+        const [results] = await connection.execute(sqlQuery, params);
+        return results;
+      } else {
+        const [results] = await connectionMysql.pool.query(sqlQuery, params);
+        return results;
+      }
     } catch (error) {
       throw new Error(error);
     }
   }
   async getNotificationsSentTasksUser(idUser) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? && notifications.state!=? order by notifications.datetimeSend desc",
         [idUser, this.propState]
       );
@@ -111,7 +127,7 @@ export class Notification {
 
   async getNotificationsOfUserByState(idUser) {
     try {
-      const [results] = await connectionMysql.connectionCreated.execute(
+      const [results] = await connectionMysql.pool.query(
         "select * from notifications inner join tasks on notifications.idTask=tasks.idTask where tasks.idUser=? &&" +
           " notifications.state=?",
         [idUser, this.propState]
@@ -121,13 +137,18 @@ export class Notification {
       throw new Error(error);
     }
   }
-  async delete() {
+  async delete(connection) {
     try {
-      const [result] = await connectionMysql.connectionCreated.execute(
-        "delete from notifications where idNotification=?",
-        [this.propIdNotification]
-      );
-      return result.affectedRows;
+      let sqlQuery = "delete from notifications where idNotification=?";
+      let params = [this.propIdNotification];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error);
     }
