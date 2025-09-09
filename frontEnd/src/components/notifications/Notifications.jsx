@@ -39,6 +39,7 @@ export const Notifications = () => {
         <div className={styles.header}>
           <div className={styles.containBtnNotification}>
             <div className={styles.columnContainBtnNotification}>
+              {loader && <p>loading subscription ...</p>}
               {!loader && !errorGetSubscriptions && (
                 <button onClick={notifyMeAlert}>
                   <GlassEffect />

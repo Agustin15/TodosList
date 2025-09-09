@@ -46,6 +46,11 @@
     color: red;
 }
 
+.columnContainBtnNotification p {
+    color: rgb(133, 133, 133);
+    margin-left: 2rem;
+}
+
 .header button {
     width: 9rem;
     height: 2rem;
@@ -169,6 +174,12 @@
         color: red;
     }
 
+    .columnContainBtnNotification p {
+        color: rgb(133, 133, 133);
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
     .header button {
         width: 11rem;
         height: 2.3rem;
@@ -240,6 +251,12 @@
         align-items: start;
         gap: 0.4rem;
         color: red;
+    }
+
+    .columnContainBtnNotification p {
+        color: rgb(133, 133, 133);
+        margin-left: 0;
+        margin-top: 0.5rem;
     }
 
     .header button {

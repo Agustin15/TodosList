@@ -100,7 +100,7 @@ export const Home = () => {
             <div className={styles.description}>
               <h3>Welcome to Todolist!</h3>
               <p>
-                you will can be manage his tasks like never before!, you has the
+                you will be able manage his tasks like never before!, you has the
                 possibility of see the statistics of your week for has a better
                 visualization of tasks completed and incomplete.
               </p>
