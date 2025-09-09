@@ -184,11 +184,12 @@ export const TaskService = {
         files,
         connection
       );
+
       if (filesChanged.filesForAdd.length > 0) {
-        await FileService.addFile(idTask, filesChanged.filesForAdd);
+        await FileService.addFile(idTask, filesChanged.filesForAdd, connection);
       }
       if (filesChanged.filesForDelete.length > 0) {
-        await FileService.deleteFile(filesChanged.filesForDelete);
+        await FileService.deleteFile(filesChanged.filesForDelete, connection);
       }
 
       let notification = await NotificationService.findNotificationByIdTask(
@@ -204,7 +205,10 @@ export const TaskService = {
             notification[0].idNotification,
             connection
           );
-        } else {
+        } else if (
+          new Date(task.datetimeNotification).getTime() !=
+          new Date(notification[0].datetimeSend).getTime()
+        ) {
           await NotificationService.updateNotification(
             notification[0].idNotification,
             task.datetimeNotification,

@@ -24,10 +24,8 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
   const { updateTask } = useTasks();
 
   useEffect(() => {
+    if (task.datetimeNotification.length > 0) setStateCheckbox(true);
 
-    if(task.datetimeNotification.length>0)
-    setStateCheckbox(true);
-  
     setValues({
       ...task,
       ["filesUploaded"]: createFiles(task.filesUploaded)
@@ -49,7 +47,20 @@ const EditTodoForm = ({ task, setOpenModalUpdate }) => {
     const formData = new FormData(event.target);
 
     for (const array of formData.entries()) {
-      validation = validationForm(array[0], array[1]);
+      if (array[0] == "datetimeNotification") {
+        if (
+          new Date(array[1]).getTime() !=
+          new Date(task.datetimeNotification).getTime()
+        ) {
+          validation =
+            array[1].length > 0 &&
+            new Date(array[1]).getTime() <=
+              new Date(values.datetimeTask).getTime() &&
+            new Date(array[1]).getTime() > Date.now();
+        }
+      } else {
+        validation = validationForm(array[0], array[1]);
+      }
       if (!validation) break;
     }
 

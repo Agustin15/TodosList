@@ -63,7 +63,7 @@ export const comprobateVerificationCode = async (req, res) => {
       });
 
     const secretKey = process.env.JWT_SECRET_KEY;
-    const secretKeyRefresh = process.env.JWT_SECRET_KEY;
+    const secretKeyRefresh = process.env.JWT_SECRET_KEY_REFRESH;
 
     if (!req.body) {
       throw new Error("Body request null", {

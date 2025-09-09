@@ -76,13 +76,18 @@ export class File {
     }
   }
 
-  async delete() {
+  async delete(connection) {
     try {
-      const [result] = await connectionMysql.pool.query(
-        "delete from files where idFile=?",
-        [this.propIdFile]
-      );
-      return result.affectedRows;
+      let sqlQuery = "delete from files where idFile=?";
+      let params = [this.propIdFile];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        return result.affectedRows;
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        return result.affectedRows;
+      }
     } catch (error) {
       throw new Error(error.message);
     }

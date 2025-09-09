@@ -76,18 +76,27 @@ const newAccessToken = async (req, res) => {
   const secretKey = process.env.JWT_SECRET_KEY;
   const refreshToken = req.cookies.refreshToken;
 
+  let decodedRefreshToken;
+
   try {
     if (!refreshToken) {
       throw new Error("Authentication failed,invalid refresh token", {
         cause: { code: 401 }
       });
     }
-    const decodedRefreshToken = jwt.verify(refreshToken, refreshKey);
+
+    try {
+      decodedRefreshToken = jwt.verify(refreshToken, refreshKey);
+    } catch (error) {
+      throw new Error("Authentication failed,failed to verify token", {
+        cause: { code: 401 }
+      });
+    }
 
     const newToken = jwt.sign(
       { idUser: decodedRefreshToken.idUser, idRol: decodedRefreshToken.idRol },
       secretKey,
-      { algorithm: "HS256", expiresIn: "1h" }
+      { algorithm: "HS256", expiresIn: 60 }
     );
 
     if (!newToken) {

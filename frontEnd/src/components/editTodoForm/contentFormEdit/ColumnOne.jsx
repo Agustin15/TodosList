@@ -4,7 +4,6 @@ import { useForm } from "../../../context/formTaskContext/FormTaskContext";
 import { useSubscription } from "../../../context/SubscriptionContext";
 import { useTasks } from "../../../context/TaskContext";
 
-
 export const ColumnOne = () => {
   const { subscribed } = useSubscription();
   const { formatDate } = useTasks();
@@ -64,7 +63,6 @@ export const ColumnOne = () => {
           {!subscribed && <a>(You must subscribe for this option)</a>}
 
           <input
-            min={formatDate(new Date())}
             disabled={subscribed && stateCheckbox ? false : true}
             name="datetimeNotification"
             value={

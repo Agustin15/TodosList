@@ -30,7 +30,7 @@ export class SubscriptionNotification {
       let params = [this.propIdNotification, this.propEndpointURL];
 
       if (connection) {
-        const [result] = await connectionMysql.execute(sqlQuery, params);
+        const [result] = await connection.execute(sqlQuery, params);
         return result.affectedRows;
       } else {
         const [result] = await connectionMysql.pool.query(sqlQuery, params);

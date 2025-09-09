@@ -25,12 +25,12 @@ export const FileService = {
     return { result: true };
   },
 
-  deleteFile: async (files) => {
+  deleteFile: async (files,connection) => {
     let errorDeleted = false;
 
     for (const file of files) {
       fileModel.propIdFile = file.idFile;
-      let fileDeleted = await fileModel.delete();
+      let fileDeleted = await fileModel.delete(connection);
       if (fileDeleted == 0) {
         errorDeleted = true;
       }

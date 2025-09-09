@@ -45,7 +45,7 @@ export class Rol {
       let params = [this.propName];
 
       if (connection) {
-        const [results] = await connectionMysql.execute(sqlQuery, params);
+        const [results] = await connection.execute(sqlQuery, params);
         if (results.length == 0) return null;
         else return results[0];
       } else {

@@ -33,7 +33,6 @@ export const login = async (req, res) => {
         sameSite: "lax"
       });
 
-    
       res.status(200).json({ userHasVerification: false });
     } else if (loginResult.tokenVerification)
       res.status(200).json({

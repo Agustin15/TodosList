@@ -286,7 +286,7 @@ export class Task {
       let sqlQuery =
         "select * from tasks where idUser=? && descriptionTask=? && datetimeTask=?";
       let params = [this.propIdUser, this.propDescription, this.propDatetime];
-
+      
       if (connection) {
         const [results] = await connection.execute(sqlQuery, params);
         return results;

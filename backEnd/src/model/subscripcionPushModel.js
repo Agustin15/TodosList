@@ -85,7 +85,7 @@ export class SubscriptionPush {
       let params = [this.propIdUser];
 
       if (connection) {
-        const [results] = await connectionMysql.execute(sqlQuery, params);
+        const [results] = await connection.execute(sqlQuery, params);
         return results;
       } else {
         const [results] = await connectionMysql.pool.query(sqlQuery, params);
