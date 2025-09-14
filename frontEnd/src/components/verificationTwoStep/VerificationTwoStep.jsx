@@ -61,7 +61,7 @@ export const VerificationTwoStep = () => {
           </h3>
         </div>
         <input
-          inputMode="numeric"
+          inputMode="none"
           ref={refInput}
           placeholder="* * * * * *"
           maxLength={6}
