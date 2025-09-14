@@ -61,8 +61,8 @@ export const VerificationTwoStep = () => {
           </h3>
         </div>
         <input
+          inputMode="numeric"
           ref={refInput}
-          type="text"
           placeholder="* * * * * *"
           maxLength={6}
           onKeyDown={(event) => event.preventDefault()}
