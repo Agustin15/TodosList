@@ -17,8 +17,6 @@ const TodoListPage = () => {
               <TodoList></TodoList>
             </FilterOptionTasksProvider>
           </TaskProvider>
-
-          
         </UserDataProvider>
       </MenuProvider>
     </div>

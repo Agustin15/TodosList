@@ -5,7 +5,6 @@ import {
   useReducer,
   useState
 } from "react";
-import { useLocation } from "react-router-dom";
 
 const urlFront = import.meta.env.VITE_LOCALHOST_FRONT;
 
@@ -32,10 +31,9 @@ export const TaskProvider = ({ children }) => {
   const [tasksIncompleteByWeekday, setTasksIncompleteByWeekday] = useState([]);
   const [tasksCompleteByWeekday, setTasksCompleteByWeekday] = useState([]);
   const [loadingState, setLoadingState] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
-    if ((location.pathname = "/dashboard")) {
+    if (location.href == urlFront + "dashboard") {
       getTasksThisWeekUser();
       getTasksByWeekday();
     }
@@ -307,6 +305,7 @@ export const TaskProvider = ({ children }) => {
         }
         throw result.messageError;
       }
+
       if (result) {
         data = result;
         dispatch({ type: "setTasks", payload: result });
