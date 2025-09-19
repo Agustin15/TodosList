@@ -31,6 +31,7 @@ export const TaskProvider = ({ children }) => {
   const [tasksIncompleteByWeekday, setTasksIncompleteByWeekday] = useState([]);
   const [tasksCompleteByWeekday, setTasksCompleteByWeekday] = useState([]);
   const [loadingState, setLoadingState] = useState(false);
+  const [loadingChartColumn, setLoadingChartColumn] = useState(false);
 
   useEffect(() => {
     if (location.href == urlFront + "dashboard") {
@@ -77,7 +78,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   const getTasksByWeekday = async () => {
-    setLoadingState(true);
+    setLoadingChartColumn(true);
 
     const optionGetTasks = {
       option: "getTasksByWeekday"
@@ -107,7 +108,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoadingState(false);
+      setLoadingChartColumn(false);
     }
   };
 
@@ -359,6 +360,7 @@ export const TaskProvider = ({ children }) => {
         tasks,
         dispatch,
         loadingState,
+        loadingChartColumn,
         addTask,
         updateTask,
         patchStateTask,

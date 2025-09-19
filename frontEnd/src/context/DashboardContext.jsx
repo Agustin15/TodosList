@@ -9,7 +9,7 @@ const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
   const { loadingState, tasksIncompleteByWeekday, tasksCompleteByWeekday } =
     useTasks();
-  const { tasksThisWeek } = useTasks();
+  const { tasksThisWeek, loadingChartColumn } = useTasks();
 
   //useState for barChart
   const [datapointsCompleteByWeekday, setDatapointsCompleteByWeekday] =
@@ -180,9 +180,10 @@ export const DashboardProvider = ({ children }) => {
         averageTasksByMonth,
         getYearsOfTasks,
         loadingLineChart,
+        loadingState,
+        loadingChartColumn,
         datapointsCompleteByWeekday,
-        datapointsIncompleteByWeekday,
-        loadingState
+        datapointsIncompleteByWeekday
       }}
     >
       {children}

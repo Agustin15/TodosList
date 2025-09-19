@@ -12,7 +12,7 @@ export const BarChart = () => {
   const {
     datapointsCompleteByWeekday,
     datapointsIncompleteByWeekday,
-    loadingState
+    loadingChartColumn
   } = useDashboard();
   const { windowWidth } = useWindowSize();
 
@@ -74,7 +74,7 @@ export const BarChart = () => {
         <h3>Chart state tasks this week</h3>
         <img src={iconBarChart}></img>
       </div>
-      {loadingState ? (
+      {loadingChartColumn ? (
         <div className={styles.containLoading}>
           <img src={iconLoadPie}></img>
           <span>loading chart ...</span>
