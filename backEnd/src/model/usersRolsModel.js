@@ -37,4 +37,24 @@ export class UsersRols {
       throw new Error(error);
     }
   }
+  async getUserRol(connection) {
+    try {
+      let sqlQuery = "select * from rols_users where idUser=? and idRol=?";
+      let params = [this.propIdRol, this.propIdUser];
+
+      if (connection) {
+        const [result] = await connection.execute(sqlQuery, params);
+        if (result.length == 0) return null;
+
+        return result[0];
+      } else {
+        const [result] = await connectionMysql.pool.query(sqlQuery, params);
+        if (result.length == 0) return null;
+
+        return result[0];
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }

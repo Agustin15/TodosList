@@ -18,5 +18,20 @@ export const UsersRolsService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  getUserRol: async (idUser, idRol, connection) => {
+    try {
+      usersRolsModel.propIdRol = parseInt(idRol);
+      usersRolsModel.propIdUser = parseInt(idUser);
+
+      const result = await usersRolsModel.getUserRol(connection);
+      if (!result)
+        throw new Error("User rol not found ", { cause: { code: 404 } });
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 };

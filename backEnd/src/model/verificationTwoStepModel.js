@@ -1,27 +1,26 @@
 import { connectionMysql } from "../config/database.js";
 export class VerificationTwoStep {
-  #idUser;
-  #idRol;
+  #idRolUser;
   #enabled = false;
 
-  set propIdUser(value) {
+  set propIdRolUser(value) {
     if (typeof value != "number")
-      throw new Error("Invalid idUser,it must be a number");
-    this.#idUser = value;
+      throw new Error("Invalid idRolUser,it must be a number");
+    this.#idRolUser = value;
   }
 
-  get propIdUser() {
-    return this.#idUser;
+  get propIdRolUser() {
+    return this.#idRolUser;
   }
 
   set propIdRol(value) {
     if (typeof value != "number")
       throw new Error("Invalid idRol,it must be a number");
-    this.#idRol = value;
+    this.#idRolUser = value;
   }
 
   get propIdRol() {
-    return this.#idRol;
+    return this.#idRolUser;
   }
   set propEnabled(value) {
     this.#enabled = value;
@@ -34,8 +33,8 @@ export class VerificationTwoStep {
   async post() {
     try {
       const [result] = await connectionMysql.pool.query(
-        "INSERT INTO verifications_two_step (enabled,idUser,idRol) values (?,?,?)",
-        [this.propEnabled, this.propIdUser, this.propIdRol]
+        "INSERT INTO verifications_two_step (enabled,idRolUser) values (?,?)",
+        [this.propEnabled, this.propIdRol]
       );
 
       return result.affectedRows;
@@ -47,8 +46,8 @@ export class VerificationTwoStep {
   async patch() {
     try {
       const [result] = await connectionMysql.pool.query(
-        "update verifications_two_step set enabled=? where idUser=? and idRol=?",
-        [this.propEnabled, this.propIdUser, this.propIdRol]
+        "update verifications_two_step set enabled=? where idRolUser=?",
+        [this.propEnabled, this.propIdRolUser]
       );
 
       return result.affectedRows;
@@ -60,8 +59,8 @@ export class VerificationTwoStep {
   async getVerificationByUserAndRol() {
     try {
       const [results] = await connectionMysql.pool.query(
-        "select * from verifications_two_step where idUser=? and idRol=?",
-        [this.propIdUser, this.propIdRol]
+        "select * from verifications_two_step where idRolUser=?",
+        [this.propIdRolUser]
       );
 
       return results;
