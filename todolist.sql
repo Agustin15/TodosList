@@ -21,9 +21,9 @@ CONSTRAINT check_email CHECK(REGEXP_LIKE(email,'^[A-Za-z0-9]+@[a-z]+\\.[a-zA-Z]'
 );
 
 CREATE TABLE rols_users(
+idRolUser int primary key auto_increment,
 idRol int, 
 idUser int,
-PRIMARY KEY(idRol,idUser),
 CONSTRAINT fk_rol FOREIGN KEY(idRol) REFERENCES rols(idRol),
 CONSTRAINT fk_userRol FOREIGN KEY(idUser) REFERENCES users(idUser)
 );
@@ -237,9 +237,6 @@ END IF;
 END
 // delimiter ;
 
-
 CALL AddRol("Admin");
 CALL AddRol("User");
-
-
 
