@@ -102,16 +102,15 @@ CONSTRAINT fk_idVerification FOREIGN KEY(idVerification) REFERENCES verification
 delimiter // 
 CREATE PROCEDURE AddRol(IN nameRol VARCHAR(5))
 BEGIN
-DECLARE errorFound INT default 0;
+
 IF EXISTS (select * from rols where rol=nameRol) THEN
  SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "Ya existe un rol con este nombre";
 END IF;
 
-INSERT INTO rols VALUES(nameRol);
-SELECT COUNT(*) INTO errorFound FROM Errors;
+INSERT INTO rols (rol) VALUES(nameRol);
 
-IF @errorFound!=0 THEN
+IF (SELECT ROW_COUNT())=0 THEN
  SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "Error inesperado al agregar rol";
 END IF;
@@ -122,7 +121,6 @@ delimiter //
 CREATE PROCEDURE AddUser(IN paramNameUser VARCHAR(20),IN paramLastname VARCHAR(20),IN parmaEmail VARCHAR(30),
 paramPasswordUser VARCHAR(60))
 BEGIN
-DECLARE errorFound INT default 0;
 
 IF EXISTS (select * from users where email=paramEmail) THEN
 SIGNAL SQLSTATE '45000'
@@ -130,9 +128,8 @@ SIGNAL SQLSTATE '45000'
 END IF;
 
 INSERT INTO users VALUES(paramNameUser,paramLastname,paramEmail,paramPasswordUser);
-SELECT COUNT(*) INTO errorFound FROM Errors;
 
-IF @errorFound!=0 THEN
+IF (SELECT ROW_COUNT())=0 THEN
 SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "Error inesperado al agregar usuario";
 END IF;
@@ -143,7 +140,6 @@ END
 delimiter // 
 CREATE PROCEDURE AddUserRol(IN paramIdRol INT,IN paramIdUser INT)
 BEGIN
-DECLARE errorFound INT default 0;
 
 IF NOT EXISTS (select * from users where idUser=paramIdUser) THEN
  SIGNAL SQLSTATE '45000'
@@ -160,10 +156,9 @@ SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "El usuario ingresado ya tiene este rol";
 END IF;
 
-INSERT INTO rols_users VALUES(paramIdRol,paramIdUser);
-SELECT COUNT(*) INTO errorFound FROM Errors;
+INSERT INTO rols_users (idRol,idUser) VALUES(paramIdRol,paramIdUser);
 
-IF @errorFound!=0 THEN
+IF (SELECT ROW_COUNT())=0 THEN
  SIGNAL SQLSTATE '45000'
  SET MESSAGE_TEXT = "Error inesperado al agregar rol del usuario";
 END IF;
