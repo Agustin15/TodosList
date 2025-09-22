@@ -23,13 +23,14 @@ export const SubscriptionPushService = {
     }
   },
   deleteSubscription: async (endpoint) => {
+    let connection;
     try {
       let notificationsPending =
         await SubscriptionNotificationService.findPendingNotificationsByEndpoint(
           endpoint
         );
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -74,11 +75,15 @@ export const SubscriptionPushService = {
 
       await connection.commit();
       connection.release();
-      
+
       return deletedSubscription;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   },
   getSubscriptionsByIdUser: async (idUser, connection) => {

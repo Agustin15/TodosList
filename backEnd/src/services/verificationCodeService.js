@@ -8,6 +8,7 @@ const verificationCodeModel = new VerificationCode();
 
 export const VerificationCodeService = {
   sendVerificationCode: async (idUser, idRol, option) => {
+    let connection;
     try {
       let result;
 
@@ -22,7 +23,7 @@ export const VerificationCodeService = {
           cause: { code: 404 }
         });
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -85,8 +86,12 @@ export const VerificationCodeService = {
 
       return result;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   },
 

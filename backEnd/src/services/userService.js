@@ -7,6 +7,7 @@ const userModel = new User();
 
 export const UserService = {
   createUser: async (userToAdd) => {
+    let connection;
     try {
       userModel.propName = userToAdd.name;
       userModel.propLastname = userToAdd.lastname;
@@ -23,7 +24,7 @@ export const UserService = {
 
       userModel.propPassword = hash;
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -52,8 +53,12 @@ export const UserService = {
 
       return userCreated;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   },
 
@@ -153,6 +158,7 @@ export const UserService = {
   },
 
   updateUserById: async (name, lastname, idUser) => {
+    let connection;
     try {
       let userFound = await UserService.findUserByIdUser(idUser);
 
@@ -166,7 +172,7 @@ export const UserService = {
       userModel.propPassword = userFound.passwordUser;
       userModel.propEmailAddress = userFound.email;
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -185,13 +191,17 @@ export const UserService = {
 
       return userFound;
     } catch (error) {
-      connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   },
 
   updateEmailUser: async (newEmail, password, idUser) => {
-    let userFound;
+    let userFound, connection;
     try {
       const userEmailUsed = await UserService.findUserByEmail(newEmail);
 
@@ -244,8 +254,12 @@ export const UserService = {
 
       return userFound;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   }
 };

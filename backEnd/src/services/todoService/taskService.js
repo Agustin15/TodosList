@@ -73,6 +73,7 @@ export const TaskService = {
   },
 
   createTask: async (task, idUser, files) => {
+    let connection;
     try {
       taskModel.propIdUser = idUser;
       taskModel.propIcon = task.icon;
@@ -80,7 +81,7 @@ export const TaskService = {
       taskModel.propDatetime = task.datetimeTask;
       taskModel.propIsCompleted = 0;
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -143,12 +144,17 @@ export const TaskService = {
 
       return taskAddedFound;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   },
 
   updateTask: async (task, files, idTask, idUser) => {
+    let connection;
     try {
       taskModel.propIcon = task.icon;
       taskModel.propDescription = task.descriptionTask;
@@ -156,7 +162,7 @@ export const TaskService = {
       taskModel.propIsCompleted = parseInt(task.state);
       taskModel.propIdTask = idTask;
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -246,8 +252,12 @@ export const TaskService = {
 
       return taskUpdatedFound;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   },
 
@@ -274,10 +284,11 @@ export const TaskService = {
   },
 
   deleteTask: async (idTask) => {
+    let connection;
     try {
       let jobId;
 
-      const connection = await connectionMysql.pool.getConnection();
+      connection = await connectionMysql.pool.getConnection();
 
       await connection.execute("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
       await connection.beginTransaction();
@@ -309,8 +320,12 @@ export const TaskService = {
 
       return deletedTask;
     } catch (error) {
-      await connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw error;
+    } finally {
+      if (connection) connection.release();
     }
   }
 };
