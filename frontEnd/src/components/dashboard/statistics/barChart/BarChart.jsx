@@ -26,7 +26,12 @@ export const BarChart = () => {
     axisY: {
       title: "Tasks",
       includeZero: true,
-      gridThickness: 0
+      gridColor: "rgba(206, 206, 206, 1)",
+      lineColor: "rgba(206, 206, 206, 1)"
+    },
+
+    axisX: {
+      lineColor: "rgba(206, 206, 206, 1)"
     },
 
     legend: {

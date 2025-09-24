@@ -49,7 +49,6 @@ idTask int not null,
 CONSTRAINT fk_idTask FOREIGN KEY(idTask) REFERENCES tasks(idTask) ON DELETE CASCADE
 );
 
-
 CREATE TABLE subscriptions(
 endpointURL varchar(200) NOT NULL primary key,
 p256dh varchar(100) NOT NULL,
@@ -232,4 +231,5 @@ END
 
 CALL AddRol("Admin");
 CALL AddRol("User");
+
 
