@@ -16,6 +16,8 @@ export const TaskService = {
     );
 
     if (dateCurrent.getDay() == 0) {
+      dateCurrent.setUTCHours(0, 0, 0, 0);
+
       return dateCurrent;
     } else {
       let millisecondsDays = 3600000 * 24 * dateCurrent.getDay();
@@ -35,6 +37,7 @@ export const TaskService = {
     );
 
     if (dateCurrent.getDay() == 6) {
+      dateCurrent.setUTCHours(23, 59, 0, 0);
       return dateCurrent;
     } else {
       let differencesDays = 6 - dateCurrent.getDay();
