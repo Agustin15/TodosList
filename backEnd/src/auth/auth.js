@@ -113,7 +113,7 @@ const newAccessToken = (req, res) => {
     const newToken = jwt.sign(
       { idUser: decodedRefreshToken.idUser, idRol: decodedRefreshToken.idRol },
       secretKey,
-      { algorithm: "HS256", expiresIn: 60 }
+      { algorithm: "HS256", expiresIn: "1h" }
     );
 
     if (!newToken) {
