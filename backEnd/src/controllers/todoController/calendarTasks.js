@@ -4,7 +4,7 @@ import { CalendarTasksService } from "../../services/todoService/calendarTasksSe
 export const getTasksForCalendarByUser = async (req, res) => {
   let tasks;
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     tasks = await CalendarTasksService.getTasksForCalendarByUser(
       validAuthRequest.idUser

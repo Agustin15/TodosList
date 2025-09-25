@@ -3,7 +3,7 @@ import { authRequest } from "../auth/auth.js";
 
 export const addSubscriptionUser = async (req, res) => {
   try {
-    const validAuthenticacion = await authRequest(req, res);
+    const validAuthenticacion = authRequest(req, res);
     if (!req.body.subscription) {
       throw new Error("subscription undefined", {
         cause: { code: 400 }
@@ -27,7 +27,7 @@ export const addSubscriptionUser = async (req, res) => {
 
 export const deleteSubscription = async (req, res) => {
   try {
-    await authRequest(req, res);
+    authRequest(req, res);
     let paramDelete = JSON.parse(req.params.paramDelete);
     if (!paramDelete.endpoint)
       throw new Error("endpoint subscription undefined", {
@@ -49,7 +49,7 @@ export const deleteSubscription = async (req, res) => {
 
 export const getSubscriptionByUser = async (req, res) => {
   try {
-    const validAuth = await authRequest(req, res);
+    const validAuth = authRequest(req, res);
 
     const subscriptionsUser =
       await SubscriptionPushService.getSubscriptionsByIdUser(validAuth.idUser);

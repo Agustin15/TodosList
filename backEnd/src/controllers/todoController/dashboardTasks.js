@@ -3,7 +3,7 @@ import { authRequest } from "../../auth/auth.js";
 
 export const getTasksByWeekday = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     let tasks = await DashboardTasksService.getTasksByWeekday(
       validAuthRequest.idUser
@@ -19,7 +19,7 @@ export const getTasksByWeekday = async (req, res) => {
 
 export const getTasksThisWeekUser = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     let tasksThisWeekUser = await DashboardTasksService.getTasksThisWeekUser(
       validAuthRequest.idUser
@@ -35,7 +35,7 @@ export const getTasksThisWeekUser = async (req, res) => {
 
 export const getDataForChartTasksMonthly = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (!req.params)
       throw new Error("params request null", {

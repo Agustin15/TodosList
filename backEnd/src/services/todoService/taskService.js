@@ -21,6 +21,9 @@ export const TaskService = {
       let millisecondsDays = 3600000 * 24 * dateCurrent.getDay();
       let firstSundayMillieseconds = dateCurrent.getTime() - millisecondsDays;
       let firstSunday = new Date(firstSundayMillieseconds);
+
+      firstSunday.setUTCHours(0, 0, 0, 0);
+
       return firstSunday;
     }
   },
@@ -39,6 +42,8 @@ export const TaskService = {
 
       let nextSaturdayMillieseconds = dateCurrent.getTime() + millisecondsDays;
       let nextSaturday = new Date(nextSaturdayMillieseconds);
+
+      nextSaturday.setUTCHours(23, 59, 0, 0);
       return nextSaturday;
     }
   },

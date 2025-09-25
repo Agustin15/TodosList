@@ -1,37 +1,54 @@
 import jwt from "jsonwebtoken";
 
-export const authRequest = async (req, res) => {
-  if (!process.env.JWT_SECRET_KEY)
-    throw new Error("JWT secret key not declared");
-  const secretKey = process.env.JWT_SECRET_KEY;
-  let token;
+export const verifyAccessToken = (token, secretKey) => {
   try {
-    token = req.cookies.accessToken;
+    const decodeToken = jwt.verify(token, secretKey, {
+      algorithm: "HS256"
+    });
 
-    if (!token) {
-      let newToken = await newAccessToken(req, res);
-      token = newToken;
-    }
-
-    if (secretKey) {
-      try {
-        const decodeToken = jwt.verify(token, secretKey, {
-          algorithm: "HS256"
-        });
-
-        return decodeToken;
-      } catch (error) {
-        throw new Error("Authentication failed,invalid token", {
-          cause: { code: 401 }
-        });
-      }
-    }
+    return decodeToken;
   } catch (error) {
     throw error;
   }
 };
 
-export const authRequestByHeader = async (req, res) => {
+export const authRequest = (req, res) => {
+  if (!process.env.JWT_SECRET_KEY)
+    throw new Error("JWT secret key not declared");
+
+  const secretKey = process.env.JWT_SECRET_KEY;
+
+  let token, decodeToken;
+
+  try {
+    token = req.cookies.accessToken;
+
+    if (!token) {
+      let newToken = newAccessToken(req, res);
+      token = newToken;
+    }
+
+    if (secretKey) {
+      try {
+        decodeToken = verifyAccessToken(token, secretKey);
+      } catch (error) {
+        if (error.message == "jwt expired") {
+          let newToken = newAccessToken(req, res);
+          decodeToken = verifyAccessToken(newToken, secretKey);
+        } else {
+          throw new Error("Authentication failed,invalid token", {
+            cause: { code: 401 }
+          });
+        }
+      }
+    }
+    return decodeToken;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const authRequestByHeader = (req, res) => {
   if (!process.env.JWT_SECRET_KEY)
     throw new Error("JWT Secret key not declared");
 
@@ -66,7 +83,7 @@ export const authRequestByHeader = async (req, res) => {
   }
 };
 
-const newAccessToken = async (req, res) => {
+const newAccessToken = (req, res) => {
   if (!process.env.JWT_SECRET_KEY)
     throw new Error("JWT secret key not declared");
   if (!process.env.JWT_SECRET_KEY_REFRESH)
@@ -104,6 +121,7 @@ const newAccessToken = async (req, res) => {
         cause: { code: 401 }
       });
     }
+
     res.cookie("accessToken", newToken, {
       maxAge: 60 * 60 * 1000,
       httpOnly: true,

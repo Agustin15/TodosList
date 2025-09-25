@@ -41,7 +41,7 @@ export const sendEmailToReset = async (req, res) => {
 
 export const updatePasswordByEmail = async (req, res) => {
   try {
-    const decodeToken = await authRequestByHeader(req, res);
+    const decodeToken = authRequestByHeader(req, res);
 
     if (!req.body || Object.values(req.body).length == 0) {
       throw new Error("Body request null");

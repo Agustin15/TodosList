@@ -14,24 +14,25 @@ export const DashboardTasksService = {
       taskModel.propIsCompleted = 0;
 
       const days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
+        { day: "Sunday", weekday: 6 },
+        { day: "Monday", weekday: 0 },
+        { day: "Tuesday", weekday: 1 },
+        { day: "Wednesday", weekday: 2 },
+        { day: "Thursday", weekday: 3 },
+        { day: "Friday", weekday: 4 },
+        { day: "Saturday", weekday: 5 }
       ];
 
       let tasksIncompleteByWeekday = await Promise.all(
-        days.map(async (day, index) => {
+        days.map(async (day) => {
           let tasksWeekday = await taskModel.getTasksStateByWeekday(
             firstSunday,
             nextSaturday,
-            index
+            day.weekday
           );
+
           return {
-            weekday: day,
+            weekday: day.day,
             quantity: tasksWeekday.length
           };
         })
@@ -39,15 +40,15 @@ export const DashboardTasksService = {
 
       taskModel.propIsCompleted = 1;
       let tasksCompleteByWeekday = await Promise.all(
-        days.map(async (day, index) => {
+        days.map(async (day) => {
           let tasksCompleteWeekday = await taskModel.getTasksStateByWeekday(
             firstSunday,
             nextSaturday,
-            index
+            day.weekday
           );
 
           return {
-            weekday: day,
+            weekday: day.day,
             quantity: tasksCompleteWeekday.length
           };
         })

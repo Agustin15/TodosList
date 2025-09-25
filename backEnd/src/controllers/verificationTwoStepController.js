@@ -3,7 +3,7 @@ import { VerificationTwoStepService } from "../services/verificationTwoStepServi
 
 export const addVerificationTwoStep = async (req, res) => {
   try {
-    const validAuth = await authRequest(req, res);
+    const validAuth = authRequest(req, res);
 
     if (!req.body)
       throw new Error("Body request null", {
@@ -34,7 +34,7 @@ export const addVerificationTwoStep = async (req, res) => {
 
 export const getVerificationTwoStepByUserAndRol = async (req, res) => {
   try {
-    const validAuth = await authRequest(req, res);
+    const validAuth = authRequest(req, res);
 
     const verificationFound =
       await VerificationTwoStepService.findVerificationByUserAndRol(
@@ -52,8 +52,8 @@ export const getVerificationTwoStepByUserAndRol = async (req, res) => {
 
 export const updateStateVerificationByUserAndRol = async (req, res) => {
   try {
-    const validAuth = await authRequest(req, res);
-    
+    const validAuth = authRequest(req, res);
+
     if (!req.body)
       throw new Error("Body request null", {
         cause: { code: 400 }

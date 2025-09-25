@@ -3,7 +3,7 @@ import { FileService } from "../services/fileService.js";
 
 export const findQuantityFilesByIdUser = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    let validAuth = authRequest(req, res);
 
     const quantityFiles = await FileService.findQuantityFilesByIdUser(
       validAuth.idUser
@@ -19,7 +19,7 @@ export const findQuantityFilesByIdUser = async (req, res) => {
 
 export const findLimitFilesByIdUser = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    let validAuth = authRequest(req, res);
     const { offset } = JSON.parse(req.params.getFilesParams);
     if (typeof offset === "undefined") {
       throw new Error("Offset undefined", {

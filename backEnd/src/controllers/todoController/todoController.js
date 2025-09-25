@@ -4,7 +4,7 @@ import { ListTasksService } from "../../services/todoService/listTasksService.js
 
 export const getYearsOfTasks = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     const yearsTasks = await ListTasksService.getYearsOfTasks(
       validAuthRequest.idUser
@@ -20,7 +20,7 @@ export const getYearsOfTasks = async (req, res) => {
 
 export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (!req.params) {
       throw new Error("Params request null", {
@@ -49,7 +49,7 @@ export const getTasksThisWeekByStateAndUserLimit = async (req, res) => {
 
 export const getTasksThisWeekByStateAndUser = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (!req.params) {
       throw new Error("Params request null", {
@@ -73,7 +73,7 @@ export const getTasksThisWeekByStateAndUser = async (req, res) => {
 
 export const getTasksByDayAndState = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (!req.params) {
       throw new Error("Params request null", {
@@ -98,7 +98,7 @@ export const getTasksByDayAndState = async (req, res) => {
 export const getTasksLimitByFilterOption = async (req, res) => {
   let tasks;
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (Object.values(req.params.optionGetTasks).length == 0) {
       throw new Error("optionGetTasks undefined", {
@@ -136,7 +136,7 @@ export const getTasksLimitByFilterOption = async (req, res) => {
 export const getQuantityTasksByFilterOption = async (req, res) => {
   let tasks;
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (Object.values(req.params.optionGetTasks).length == 0) {
       throw new Error("optionGetTasks undefined", {
@@ -169,7 +169,7 @@ export const getQuantityTasksByFilterOption = async (req, res) => {
 
 export const getTaskById = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
     if (Object.values(req.params.optionGetTasks).length == 0) {
       throw new Error("optionGetTasks undefined", {
         cause: { code: 400 }
@@ -197,7 +197,7 @@ export const getTaskById = async (req, res) => {
 
 export const createTask = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null", {
@@ -224,7 +224,7 @@ export const createTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null", {
@@ -257,7 +257,7 @@ export const updateTask = async (req, res) => {
 
 export const updateStateTask = async (req, res) => {
   try {
-    const validAuthRequest = await authRequest(req, res);
+    const validAuthRequest = authRequest(req, res);
     if (req.body.newState == null) {
       throw new Error("Body request null", {
         cause: { code: 400 }
@@ -285,7 +285,7 @@ export const updateStateTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
   try {
-    await authRequest(req, res);
+    authRequest(req, res);
     if (!req.params.id) {
       throw new Error("idTask undefined", {
         cause: { code: 400 }

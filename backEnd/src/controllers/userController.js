@@ -40,7 +40,7 @@ export const getUserByEmail = async (req, res) => {
 
 export const getUserDataByToken = async (req, res) => {
   try {
-    const validAuth = await authRequest(req, res);
+    const validAuth = authRequest(req, res);
 
     let userFound = await UserService.findUserByIdUser(validAuth.idUser);
     userFound.name = userFound.nameUser;
@@ -56,7 +56,7 @@ export const getUserDataByToken = async (req, res) => {
 
 export const updatePasswordUserById = async (req, res) => {
   try {
-    const decodeTokenAuth = await authRequest(req, res);
+    const decodeTokenAuth = authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null", {
@@ -93,7 +93,7 @@ export const updatePasswordUserById = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
   try {
-    await authRequest(req, res);
+    authRequest(req, res);
 
     if (Object.values(req.body).length == 0) {
       throw new Error("Body request null", {
@@ -133,7 +133,7 @@ export const updateUserById = async (req, res) => {
 
 export const updateEmailUser = async (req, res) => {
   try {
-    const validAuth = await authRequest(req, res);
+    const validAuth = authRequest(req, res);
     if (!req.body.newEmail) {
       throw new Error("New email undefined", {
         cause: { code: 400 }

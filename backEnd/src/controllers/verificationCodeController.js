@@ -43,7 +43,7 @@ export const sendVerificationCode = async (req, res) => {
 
 export const dataToken = async (req, res) => {
   try {
-    const decodeToken = await authRequestByHeader(req, res);
+    const decodeToken = authRequestByHeader(req, res);
     res.status(200).json(decodeToken);
   } catch (error) {
     res.status(401).json({ messageError: error.message });
@@ -51,7 +51,7 @@ export const dataToken = async (req, res) => {
 };
 export const comprobateVerificationCode = async (req, res) => {
   try {
-    const decodeToken = await authRequestByHeader(req, res);
+    const decodeToken = authRequestByHeader(req, res);
 
     if (!process.env.JWT_SECRET_KEY)
       throw new Error("JWT secret key not declared", {

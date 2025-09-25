@@ -13,7 +13,6 @@ export const TasksThisWeek = () => {
       <div className={stylesTasksThisWeek.header}>
         <h3>Task this week</h3>
         <img src={iconTask}></img>
-       
       </div>
 
       <ul className={stylesTasksThisWeek.list}>

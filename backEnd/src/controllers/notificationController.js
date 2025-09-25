@@ -3,7 +3,7 @@ import { authRequest } from "../auth/auth.js";
 
 export const getNotificationsSentTasksUser = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    let validAuth = authRequest(req, res);
 
     let notifications =
       await NotificationService.findNotificationsSentTasksUser(
@@ -20,7 +20,7 @@ export const getNotificationsSentTasksUser = async (req, res) => {
 
 export const getNotificationsOfUserByState = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    let validAuth = authRequest(req, res);
     if (!req.params.state)
       throw new Error("State undefined", {
         cause: { code: 400 }
@@ -42,7 +42,7 @@ export const getNotificationsOfUserByState = async (req, res) => {
 
 export const updateStateNotification = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    let validAuth = authRequest(req, res);
     if (!req.params.id)
       throw new Error("idNotification undefined", {
         cause: { code: 400 }

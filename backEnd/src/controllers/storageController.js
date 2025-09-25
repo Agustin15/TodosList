@@ -3,7 +3,7 @@ import { authRequest } from "../auth/auth.js";
 
 export const getStorageFilesUsedByUser = async (req, res) => {
   try {
-    let validAuth = await authRequest(req, res);
+    let validAuth = authRequest(req, res);
 
     const storageUsed = await StorageService.getStorageFilesUsedByUser(
       validAuth.idUser

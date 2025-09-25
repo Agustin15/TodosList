@@ -231,5 +231,3 @@ END
 
 CALL AddRol("Admin");
 CALL AddRol("User");
-
-
