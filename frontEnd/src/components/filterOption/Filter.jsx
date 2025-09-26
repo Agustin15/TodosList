@@ -28,12 +28,23 @@ export const Filter = ({ setRefs, years }) => {
     "December"
   ];
   const handleSearch = async () => {
+    filter();
+  };
+
+  const handleChange = async () => {
+    setCheckedThisWeek(refCheckBoxThisWeek.current.checked);
+    filter();
+  };
+
+  const filter = async () => {
     await queryTasksDependingOptions(1);
+
     setRefs(
       refCheckBoxThisWeek.current.checked
         ? [refCheckBoxThisWeek, refSelectState]
         : [refSelectMonth, refSelectState, refSelectYear]
     );
+
     setIndexSelected(1);
   };
 
@@ -43,9 +54,7 @@ export const Filter = ({ setRefs, years }) => {
         <span>This Week</span>
         <input
           ref={refCheckBoxThisWeek}
-          onChange={() =>
-            setCheckedThisWeek(refCheckBoxThisWeek.current.checked)
-          }
+          onChange={handleChange}
           type="checkbox"
           value={"thisWeek"}
           defaultChecked
