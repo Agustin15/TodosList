@@ -24,8 +24,8 @@ CREATE TABLE rols_users(
 idRolUser int primary key auto_increment,
 idRol int, 
 idUser int,
-CONSTRAINT fk_rol FOREIGN KEY(idRol) REFERENCES rols(idRol),
-CONSTRAINT fk_userRol FOREIGN KEY(idUser) REFERENCES users(idUser)
+CONSTRAINT fk_rol FOREIGN KEY(idRol) REFERENCES rols(idRol) ON DELETE CASCADE,
+CONSTRAINT fk_userRol FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE
 );
 
 CREATE TABLE tasks(
@@ -35,7 +35,7 @@ descriptionTask varchar(130) not null,
 datetimeTask datetime not null,
 isCompleted tinyint not null,
 idUser int not null,
-CONSTRAINT fk_idUser FOREIGN KEY(idUser) REFERENCES users(idUser) ON DELETE CASCADE,
+CONSTRAINT fk_idUser FOREIGN KEY(idUser) REFERENCES users(idUser) ,
 CONSTRAINT check_isCompleted CHECK(isCompleted=1 OR isCompleted=0)
 );
 

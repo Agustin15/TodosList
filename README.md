@@ -99,13 +99,14 @@
     DATABASE_PASSWORD=<My Password Database>
     JWT_SECRET_KEY=<My JWT Secret Key>
     JWT_SECRET_KEY_REFRESH=<My JWT Secret Key>
-    USER_MAIL=<My Mail From Send Email With Nodemail>
-    PASSWORD_APP_MAIL=<My Password App Mail>
-    PORT_REDIS=<My Port of Redis server>
+    APP_MAIL=<My Mail From Send Email With Nodemail>
+    PASSWORD_APP_MAIL=<App password from my service Mail>
+    PORT_REDIS=6379
+    HOST_REDIS=localhost
     VAPID_PRIVATE_KEY=<My Vapid Private Key Generate in https://vapidkeys.com/>
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTIFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
-    LOCALHOST_URL_FRONT=http://localhost:PORT/
+    LOCALHOST_URL_FRONT=http://localhost:PORT
 
 > ### Instalar servidor Redis usando docker
 
