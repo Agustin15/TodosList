@@ -101,8 +101,9 @@
     JWT_SECRET_KEY_REFRESH=<My JWT Secret Key>
     APP_MAIL=<My Mail From Send Email With Nodemail>
     PASSWORD_APP_MAIL=<App password from my service Mail>
-    PORT_REDIS=6379
-    HOST_REDIS=localhost
+    PORT_REDIS=<My Port Redis>
+    HOST_REDIS=<My Localhost database>
+    PASSWORD_REDIS=<My Password Redis>
     VAPID_PRIVATE_KEY=<My Vapid Private Key Generate in https://vapidkeys.com/>
     VAPID_PUBLIC_KEY=<Same My Vapid Public Key of Frontend env>
     MAILTO_EMAIL_NOTIFICATION_SERVER=<My MailtoEmail in https://vapidkeys.com/ >
